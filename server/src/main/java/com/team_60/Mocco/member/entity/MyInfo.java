@@ -40,4 +40,7 @@ public class MyInfo extends Auditable {
 
     @Column(length = 200)
     private String github_repository3;
+
+    @OneToOne(mappedBy = "myInfo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Member member;
 }

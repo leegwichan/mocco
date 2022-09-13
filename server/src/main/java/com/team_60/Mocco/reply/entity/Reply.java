@@ -34,8 +34,8 @@ public class Reply extends Auditable {
     private ReplyStatus replyStatus = ReplyStatus.REPLY_ACTIVE;
 
     public enum ReplyStatus{
-        REPLY_ACTIVE("REPLY_ACTIVE"),
-        REPLY_DELETE("REPLY_DELETE");
+        REPLY_ACTIVE("reply_active"),
+        REPLY_DELETE("reply_delete");
 
         @Getter
         private String status;
