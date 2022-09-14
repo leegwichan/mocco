@@ -2,6 +2,7 @@ package com.team_60.Mocco.comment.entity;
 
 import com.team_60.Mocco.audit.Auditable;
 import com.team_60.Mocco.member.entity.Member;
+import com.team_60.Mocco.reply.entity.Reply;
 import com.team_60.Mocco.study.entity.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.Setter;
 import org.springframework.boot.CommandLineRunner;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,9 +37,12 @@ public class Comment extends Auditable {
     @JoinColumn(name = "STUDY_ID")
     private Study study;
 
+    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY)
+    private List<Reply> replyList = new ArrayList<>();
+
     public enum CommentStatus{
-        COMMENT_ACTIVE("COMMENT_ACTIVE"),
-        COMMENT_DELETE("COMMENT_DELETE");
+        COMMENT_ACTIVE("comment_active"),
+        COMMENT_DELETE("comment_delete");
 
         @Getter
         private String status;

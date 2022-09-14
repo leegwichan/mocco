@@ -34,15 +34,15 @@ public class Alarm extends Auditable {
     @JoinColumn(name = "STUDY_ID")
     private Study study;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "WARNING_ID")
     private Warning warning;
 
     public enum AlarmType {
-        STUDY_ENTER("STUDY_ENTER"),
-        STUDY_OPEN("STUDY_OPEN"),
-        STUDY_WARNING("STUDY_WARNING"),
-        STUDY_NOT_OPEN("STUDY_NOT_OPEN");
+        STUDY_ENTER("study_enter"),
+        STUDY_OPEN("study_open"),
+        STUDY_WARNING("study_warning"),
+        STUDY_NOT_OPEN("study_not_open");
 
         @Getter
         private String type;
