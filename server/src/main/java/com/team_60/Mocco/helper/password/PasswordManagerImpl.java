@@ -12,7 +12,7 @@ import java.util.Random;
 @Profile("deploy")
 @Component
 @RequiredArgsConstructor
-public class PasswordManagerDeployEnvironment implements NewPasswordManager {
+public class PasswordManagerImpl implements NewPasswordManager {
 
     private final EmailSendable emailSend;
 

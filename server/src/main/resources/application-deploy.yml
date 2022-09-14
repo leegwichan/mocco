@@ -21,3 +21,16 @@ mail:
     auth: true
     starttls:
       enable: true
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_S3_ACCESSKEY}
+      secretKey: ${AWS_S3_SECRETKEY}
+    s3:
+      bucket: codestates-39-team17-image
+      dir: CCoMo
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

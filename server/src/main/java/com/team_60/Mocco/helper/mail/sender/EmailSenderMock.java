@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 @Profile("!deploy")
-public class MockEmailSender implements EmailSendable{
+public class EmailSenderMock implements EmailSendable{
 
     @Override
     public void send(String[] to, String subject, String Message) throws InterruptedException {
