@@ -16,6 +16,7 @@ import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
@@ -30,7 +31,7 @@ public class Member extends Auditable {
     @Column(length = 50, nullable = false)
     private String email;
 
-    @Column(length = 25, nullable = false)
+    @Column(length = 70, nullable = false)
     private String password;
 
     @Column(length = 10, nullable = false)
@@ -41,6 +42,16 @@ public class Member extends Auditable {
 
     @Column
     private String provider_id;
+
+    private String roles;
+
+    public List<String> getRoleList() {
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
+
 
     @OneToOne
     @JoinColumn(name = "MYINFO_ID")
