@@ -18,8 +18,8 @@
     "sourceType": "module"
   },
   "rules": {
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     "react/react-in-jsx-scope": 0,
-    "react/jsx-uses-react": 0,
-    "css.lint.unknownProperties": 0
+    "react/jsx-uses-react": 0
   }
 }
