@@ -1,4 +1,4 @@
-package com.team_60.Mocco.helper.mail.test;
+package com.team_60.Mocco.helper.test;
 
 import com.team_60.Mocco.helper.mail.sender.EmailSendable;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
@@ -41,4 +41,8 @@ public class TestController {
         return "image 업로드 성공 : " + url;
     }
 
+    @GetMapping
+    public String checkON(){
+        return "우리팀 화이팅!";
+    }
 }

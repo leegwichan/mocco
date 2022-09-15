@@ -12,7 +12,6 @@ import com.team_60.Mocco.task_check.entity.TaskCheck;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import java.util.List;
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long member_id;
+    private long memberId;
 
     @Column(length = 50, nullable = false)
     private String email;
@@ -41,8 +40,9 @@ public class Member extends Auditable {
     private String provider;
 
     @Column
-    private String provider_id;
+    private String providerId;
 
+    @Column
     private String roles;
 
     public List<String> getRoleList() {
@@ -52,14 +52,12 @@ public class Member extends Auditable {
         return new ArrayList<>();
     }
 
-
-    @OneToOne
-    @JoinColumn(name = "MYINFO_ID")
-    private MyInfo myInfo;
-
     @OneToOne
     @JoinColumn(name = "STUDY_ID")
     private Study study;
+    
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private MyInfo myInfo = new MyInfo();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<TaskCheck> taskCheckList = new ArrayList<>();

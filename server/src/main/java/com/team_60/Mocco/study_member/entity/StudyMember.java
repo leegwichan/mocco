@@ -19,7 +19,7 @@ import java.util.List;
 public class StudyMember extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long study_member_id;
+    private long studyMemberId;
 
     @ManyToOne
     @JoinColumn(name = "STUDY_ID")
@@ -34,11 +34,11 @@ public class StudyMember extends Auditable {
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private StudyMemberStatus member_status = StudyMemberStatus.ACTIVE;
+    private StudyMemberStatus memberStatus = StudyMemberStatus.ACTIVE;
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private StudyMemberEvaluationStatus evaluation_status = StudyMemberEvaluationStatus.BEFORE_EVALUATION;
+    private StudyMemberEvaluationStatus evaluationStatus = StudyMemberEvaluationStatus.BEFORE_EVALUATION;
 
     public enum StudyMemberStatus{
         ACTIVE("active"),
