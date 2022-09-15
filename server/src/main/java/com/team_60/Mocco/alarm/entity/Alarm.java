@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Alarm extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long alarm_id;
+    private long alarmId;
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 100, nullable = false)

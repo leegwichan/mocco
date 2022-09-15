@@ -6,6 +6,7 @@ import com.team_60.Mocco.helper.password.NewPasswordManager;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
     private final NewPasswordManager newPasswordManager;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public Member findMember(long memberId) {
@@ -25,6 +27,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Member createMember(Member member) {
         findMemberByEmailExpectByNull(member.getEmail());
+        member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         return memberRepository.save(member);
     }
 
@@ -42,7 +45,8 @@ public class MemberServiceImpl implements MemberService{
         }
 
         Optional.ofNullable(member.getPassword())
-                .ifPresent(password -> findMember.setPassword(password));
+                .ifPresent(password ->
+                    findMember.setPassword(bCryptPasswordEncoder.encode(member.getPassword())));
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickName -> {
                     if (!nickName.equals(findMember.getNickname())){
@@ -85,9 +89,9 @@ public class MemberServiceImpl implements MemberService{
     public void resetMemberPasswordByEmail(String email) {
         Member findMember = findMemberByEmailExpectByPresent(email);
         String newPassword  = newPasswordManager.makeNewPasswordAndSendTextEmail(email);
+        String encodePassword = bCryptPasswordEncoder.encode(newPassword);
 
-        // TODO 비밀번호 암호화 필요
-        findMember.setPassword(newPassword);
+        findMember.setPassword(encodePassword);
         memberRepository.save(findMember);
     }
 

@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Proposal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long proposal_id;
+    private long proposalId;
 
     @Column(length = 30, nullable = false)
     private String content;

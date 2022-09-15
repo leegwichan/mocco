@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class TaskCheck extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long task_check_id;
+    private long taskCheckId;
 
     @Column(length = 200, nullable = false)
     private String image;
