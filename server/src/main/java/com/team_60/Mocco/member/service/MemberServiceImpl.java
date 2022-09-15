@@ -2,6 +2,7 @@ package com.team_60.Mocco.member.service;
 
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.helper.password.NewPasswordManager;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final NewPasswordManager newPasswordManager;
 
     @Override
     public Member findMember(long memberId) {
@@ -30,10 +32,15 @@ public class MemberServiceImpl implements MemberService{
     public Member updateMember(Member member) {
         Member findMember = findVerifiedMember(member.getMemberId());
 
+
         Optional.ofNullable(member.getPassword())
                 .ifPresent(password -> findMember.setPassword(password));
         Optional.ofNullable(member.getNickname())
-                .ifPresent(nickName -> findMember.setNickname(nickName));
+                .ifPresent(nickName -> {
+                    findMemberByNicknameExpectNull(member.getNickname());
+                    findMember.setNickname(nickName);
+                });
+
         Optional.ofNullable(member.getMyInfo().getIntroduction())
                 .ifPresent(introduction -> findMember.getMyInfo().setIntroduction(introduction));
         Optional.ofNullable(member.getMyInfo().getLocation())
@@ -62,10 +69,37 @@ public class MemberServiceImpl implements MemberService{
         return findMember;
     }
 
+    @Override
+    public void findMemberByNicknameExpectNull(String nickname) {
+        memberRepository.findByNickname(nickname)
+                .ifPresent(m -> {
+                    throw new BusinessLogicException(ExceptionCode.NICKNAME_ALREADY_EXIST);
+                });
+    }
+
+    @Override
+    public void resetMemberPasswordByEmail(String email) {
+        Member findMember = findMemberByEmailExpectByPresent(email);
+        String newPassword  = newPasswordManager.makeNewPasswordAndSendTextEmail(email);
+
+        // TODO 비밀번호 암호화 필요
+        findMember.setPassword(newPassword);
+        memberRepository.save(findMember);
+    }
+
     private void findMemberByEmailExpectByNull(String email){
         memberRepository.findByEmail(email)
             .ifPresent( m -> {
                 throw new BusinessLogicException(ExceptionCode.EMAIL_ALREADY_EXIST);
             });
+    }
+
+    private Member findMemberByEmailExpectByPresent(String email){
+        Member findMember = memberRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.EMAIL_NOT_EXIST)
+                );
+
+        return findMember;
     }
 }

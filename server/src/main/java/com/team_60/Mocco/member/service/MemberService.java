@@ -9,4 +9,6 @@ public interface MemberService {
     Member updateMember(Member member);
     void deleteMember(long memberId);
     Member findVerifiedMember(long memberId);
+    void findMemberByNicknameExpectNull(String nickname);
+    void resetMemberPasswordByEmail(String email);
 }

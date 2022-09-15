@@ -8,10 +8,7 @@ import com.team_60.Mocco.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/register")
@@ -32,6 +29,23 @@ public class MemberControllerNotSecured {
 
         return new ResponseEntity(
                 new SingleResponseDto<>(response), HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/nickname-check")
+    public ResponseEntity nicknameDuplicationCheck(@RequestParam("nickname") String nickname){
+
+        memberService.findMemberByNicknameExpectNull(nickname);
+        return new ResponseEntity(
+                new SingleResponseDto(nickname), HttpStatus.OK);
+    }
+
+    @GetMapping("/finding-password")
+    public ResponseEntity resetPassword(@RequestParam String email){
+
+        memberService.resetMemberPasswordByEmail(email);
+        return new ResponseEntity(
+                new SingleResponseDto<>(email), HttpStatus.OK
         );
     }
 }
