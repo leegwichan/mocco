@@ -39,21 +39,6 @@ public class SecurityService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final RedisTemplate redisTemplate;
 
-    public ResponseEntity signUp(Request.SignUp signUp){
-        if(memberRepository.existsByEmail(signUp.getEmail())){
-            log.info("이미 회원가입된 이메일입니다.");
-            return null;
-        }
-        Member member = new Member();
-        member.setEmail(signUp.getEmail());
-        member.setPassword(bCryptPasswordEncoder.encode(signUp.getPassword()));
-        member.setNickname(signUp.getNickname());
-        member.setRoles("ROLE_USER");
-        memberRepository.save(member);
-
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
-
     public ResponseEntity login(Request.Login login, HttpServletResponse response) throws IOException {
 
         Member member = memberRepository.findByEmail(login.getEmail()).orElse(null);
@@ -68,7 +53,7 @@ public class SecurityService {
                 .set("RefreshToken:"+authentication.getName(),tokenInfo.get(REFRESH_TOKEN_HEADER), REFRESH_TOKEN_EXP, TimeUnit.MILLISECONDS);
 
         Response.Member responseDto = Response.Member.builder()
-                .memberId(member.getMember_id())
+                .memberId(member.getMemberId())
                 .nickname(member.getNickname())
                 .roles(member.getRoles())
                 .build();
@@ -130,6 +115,7 @@ public class SecurityService {
         log.info("Token 정보가 갱신되었습니다.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 //권한 추가해주는 기능
 //    public ResponseEntity authority(HttpServletRequest request){
 //

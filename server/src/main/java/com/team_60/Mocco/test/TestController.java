@@ -1,17 +1,22 @@
-package com.team_60.Mocco.helper.test;
+package com.team_60.Mocco.test;
 
 import com.team_60.Mocco.helper.mail.sender.EmailSendable;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/test")
@@ -39,6 +44,13 @@ public class TestController {
                 multipartFile.getOriginalFilename(), fileSize, ImageUploadType.MEMBER_PROFILE);
 
         return "image 업로드 성공 : " + url;
+    }
+
+    @GetMapping("/userTest")
+    public ResponseEntity userTest(HttpServletRequest request){
+        log.info("ROLE_USER TEST");
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping

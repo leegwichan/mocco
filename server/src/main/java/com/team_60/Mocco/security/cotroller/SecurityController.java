@@ -1,5 +1,10 @@
 package com.team_60.Mocco.security.cotroller;
 
+import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.member.dto.MemberDto;
+import com.team_60.Mocco.member.entity.Member;
+import com.team_60.Mocco.member.mapper.MemberMapper;
+import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.security.dto.Request;
 import com.team_60.Mocco.security.dto.Response;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
@@ -8,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +27,9 @@ import java.io.IOException;
 public class SecurityController {
     private final JwtTokenProvider jwtTokenProvider;
     private final SecurityService securityService;
+    private final MemberService memberService;
+    private final MemberMapper mapper;
 
-
-    @PostMapping("/signup")
-    public ResponseEntity signIn(@RequestBody Request.SignUp signUp){
-        return securityService.signUp(signUp);
-    }
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody Request.Login login, HttpServletResponse response) throws IOException {
         return securityService.login(login,response);
@@ -40,24 +43,34 @@ public class SecurityController {
         return securityService.refresh(request,response);
 
     }
-//    @GetMapping("/authority")
-//    public ResponseEntity authority(HttpServletRequest request){
-//        log.info("add ROLE_ADMIN");
-//        return securityService.authority(request);
-//    }
 
-    @GetMapping("/userTest")
-    public ResponseEntity userTest(HttpServletRequest request){
-        log.info("ROLE_USER TEST");
+    @PostMapping("/signup")
+    public ResponseEntity postMapping(@RequestBody MemberDto.Post requestBody){
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        Member member = mapper.memberPostDtoToMember(requestBody);
+
+        Member postMember = memberService.createMember(member);
+        MemberDto.Response response = mapper.memberToMemberResponseDto(postMember);
+
+        return new ResponseEntity(
+                new SingleResponseDto<>(response), HttpStatus.CREATED
+        );
     }
-//    @GetMapping("/adminTest")
-//    public ResponseEntity adminTest(){
-//        log.info("ROLE_ADMIN TEST");
-//
-//        return new ResponseEntity(HttpStatus.OK);
-//    }
 
+    @GetMapping("/nickname-check")
+    public ResponseEntity nicknameDuplicationCheck(@RequestParam("nickname") String nickname){
 
+        memberService.findMemberByNicknameExpectNull(nickname);
+        return new ResponseEntity(
+                new SingleResponseDto(nickname), HttpStatus.OK);
+    }
+
+    @GetMapping("/finding-password")
+    public ResponseEntity resetPassword(@RequestParam String email){
+
+        memberService.resetMemberPasswordByEmail(email);
+        return new ResponseEntity(
+                new SingleResponseDto<>(email), HttpStatus.OK
+        );
+    }
 }
