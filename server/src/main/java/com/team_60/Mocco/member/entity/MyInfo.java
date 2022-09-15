@@ -4,7 +4,6 @@ import com.team_60.Mocco.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.*;
 
@@ -15,10 +14,10 @@ import javax.persistence.*;
 public class MyInfo extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long myinfo_id;
+    private long myInfoId;
 
     @Column(length = 200)
-    private String profile_image;
+    private String profileImage;
 
     @Column(length = 500)
     private String introduction;
@@ -27,20 +26,21 @@ public class MyInfo extends Auditable {
     private String location;
 
     @Column(nullable = false)
-    private int evaluation_total = 0;
+    private int evaluationTotal = 0;
 
     @Column(nullable = false)
-    private int evaluation_number = 0;
+    private int evaluationNumber = 0;
 
     @Column(length = 200)
-    private String github_repository1;
+    private String githubRepository1;
 
     @Column(length = 200)
-    private String github_repository2;
+    private String githubRepository2;
 
     @Column(length = 200)
-    private String github_repository3;
+    private String githubRepository3;
 
-    @OneToOne(mappedBy = "myInfo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 }
