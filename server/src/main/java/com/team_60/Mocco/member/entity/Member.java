@@ -15,6 +15,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
@@ -29,7 +30,7 @@ public class Member extends Auditable {
     @Column(length = 50, nullable = false)
     private String email;
 
-    @Column(length = 25, nullable = false)
+    @Column(length = 70, nullable = false)
     private String password;
 
     @Column(length = 10, nullable = false)
@@ -41,12 +42,22 @@ public class Member extends Auditable {
     @Column
     private String providerId;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private MyInfo myInfo = new MyInfo();
+    @Column
+    private String roles;
+
+    public List<String> getRoleList() {
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
 
     @OneToOne
     @JoinColumn(name = "STUDY_ID")
     private Study study;
+    
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private MyInfo myInfo = new MyInfo();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<TaskCheck> taskCheckList = new ArrayList<>();
