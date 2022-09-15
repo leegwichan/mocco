@@ -48,9 +48,11 @@ public interface MemberMapper {
         List<StudyDto.SubResponse> doneStudy = new ArrayList();
 
         for (StudyMember studyMember : member.getStudyMemberList()){
-            if (studyMember.getStudy().getStudyStatus() == Study.StudyStatus.STUDY_PROGRESS){
+            if (studyMember.getStudy().getStudyStatus() == Study.StudyStatus.STUDY_PROGRESS ||
+                    (studyMember.getStudy().getStudyStatus() == Study.StudyStatus.STUDY_COMPLETE &&
+                    studyMember.getEvaluationStatus() == StudyMember.StudyMemberEvaluationStatus.BEFORE_EVALUATION)){
                 progressStudy.add(StudyMapper.studyToStudySubResponseDto(studyMember.getStudy()));
-            } else if (studyMember.getStudy().getStudyStatus() == Study.StudyStatus.STUDY_PROGRESS){
+            } else if (studyMember.getEvaluationStatus() == StudyMember.StudyMemberEvaluationStatus.COMPLETE){
                 doneStudy.add(StudyMapper.studyToStudySubResponseDto(studyMember.getStudy()));
             }
         }
