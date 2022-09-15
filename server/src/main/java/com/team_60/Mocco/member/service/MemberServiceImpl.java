@@ -31,26 +31,30 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Member updateMember(Member member) {
         Member findMember = findVerifiedMember(member.getMemberId());
-
+        String[] repositories = new String[]{member.getMyInfo().getGithubRepository1(),
+                member.getMyInfo().getGithubRepository2(),
+                member.getMyInfo().getGithubRepository3()};
+        if (repositories[0] != null || repositories[1] != null || repositories[2] != null){
+            checkGithubRepositories(repositories);
+            findMember.getMyInfo().setGithubRepository1(repositories[0]);
+            findMember.getMyInfo().setGithubRepository2(repositories[1]);
+            findMember.getMyInfo().setGithubRepository3(repositories[2]);
+        }
 
         Optional.ofNullable(member.getPassword())
                 .ifPresent(password -> findMember.setPassword(password));
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickName -> {
-                    findMemberByNicknameExpectNull(member.getNickname());
-                    findMember.setNickname(nickName);
+                    if (!nickName.equals(findMember.getNickname())){
+                        findMemberByNicknameExpectNull(member.getNickname());
+                        findMember.setNickname(nickName);
+                    }
                 });
 
         Optional.ofNullable(member.getMyInfo().getIntroduction())
                 .ifPresent(introduction -> findMember.getMyInfo().setIntroduction(introduction));
         Optional.ofNullable(member.getMyInfo().getLocation())
                 .ifPresent(location -> findMember.getMyInfo().setLocation(location));
-        Optional.ofNullable(member.getMyInfo().getGithubRepository1())
-                .ifPresent(repository -> findMember.getMyInfo().setGithubRepository1(repository));
-        Optional.ofNullable(member.getMyInfo().getGithubRepository2())
-                .ifPresent(repository -> findMember.getMyInfo().setGithubRepository2(repository));
-        Optional.ofNullable(member.getMyInfo().getGithubRepository3())
-                .ifPresent(repository -> findMember.getMyInfo().setGithubRepository3(repository));
 
         return memberRepository.save(findMember);
     }
@@ -101,5 +105,19 @@ public class MemberServiceImpl implements MemberService{
                 );
 
         return findMember;
+    }
+
+    private void checkGithubRepositories(String[] repositories){
+        for (int i=0; i< repositories.length-1; i++){
+            for (int j=i+1; j<repositories.length; j++){
+                if (repositories[i].equals(repositories[j]))
+                    throw new BusinessLogicException(ExceptionCode.GITHUB_REPOSITORY_DUPLICATION);
+            }
+        }
+
+        for (String repository : repositories){
+            if (repository.length() < 20 || !repository.substring(0,19).equals("https://github.com/"))
+                throw new BusinessLogicException(ExceptionCode.NOT_GITHUB_REPOSITORY);
+        }
     }
 }
