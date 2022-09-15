@@ -23,7 +23,7 @@ public class SecurityController {
     private final SecurityService securityService;
 
 
-    @PostMapping("/sign-up")
+    @PostMapping("/signup")
     public ResponseEntity signIn(@RequestBody Request.SignUp signUp){
         return securityService.signUp(signUp);
     }

@@ -24,17 +24,4 @@ public class Request {
          }
     }
 
-    @Getter
-    @Setter
-    public static class Refresh{
-        private String accessToken;
-        private String refreshToken;
-    }
-
-    @Getter
-    @Setter
-    public static class Logout{
-        private String accessToken;
-        private String refreshToken;
-    }
 }
