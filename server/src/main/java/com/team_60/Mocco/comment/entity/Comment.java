@@ -20,7 +20,7 @@ import java.util.List;
 public class Comment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long comment_id;
+    private long commentId;
 
     @Column(length = 300, nullable = false)
     private String content;

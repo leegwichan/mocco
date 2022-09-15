@@ -19,7 +19,7 @@ import java.util.List;
 public class Task extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long task_id;
+    private long taskId;
 
     @Column(nullable = false)
     private LocalDate deadline;

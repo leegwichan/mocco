@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Chatting extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long chatting_id;
+    private long chattingId;
 
     @Column
     private String content;
