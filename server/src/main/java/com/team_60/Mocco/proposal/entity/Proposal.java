@@ -1,5 +1,6 @@
 package com.team_60.Mocco.proposal.entity;
 
+import com.team_60.Mocco.audit.Auditable;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.entity.Study;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Proposal {
+public class Proposal extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long proposalId;
