@@ -51,11 +51,12 @@ public class Study extends Auditable {
     @Column(length = 200)
     private String image;
 
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member teamLeader;
+
     @OneToOne(mappedBy = "study", cascade = CascadeType.PERSIST)
     private ChattingRoom chattingRoom;
-
-    @OneToOne(mappedBy = "study", cascade = CascadeType.REMOVE)
-    private Member teamLeader;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Task> taskList = new ArrayList<>();

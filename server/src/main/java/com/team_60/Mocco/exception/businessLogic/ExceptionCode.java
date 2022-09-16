@@ -17,7 +17,8 @@ public enum ExceptionCode {
     FAIL_DECODE_TOKEN(403,"토큰 검증에 실패하였습니다."),
     BAD_REFRESH_TOKEN(403,"Refresh Token 정보가 일치하지 않습니다."),
     BAD_REQUEST(403,"잘못된 요청입니다."),
-    BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다.");
+    BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다."),
+    STUDY_NOT_FOUND(404, "스터디를 찾을 수 없습니다.");
 
     @Getter
     private int status;
