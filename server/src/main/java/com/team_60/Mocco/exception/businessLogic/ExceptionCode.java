@@ -13,7 +13,9 @@ public enum ExceptionCode {
     NOT_GITHUB_REPOSITORY(400, "잘못된 github repository 입니다."),
     STUDY_NOT_FOUND(404, "스터디를 찾을 수 없습니다."),
     COMMENT_NOT_FOUND(404, "코멘트를 찾을 수 없습니다."),
-    COMMENT_DELETED(400, "삭제된 코멘트입니다.");
+    COMMENT_DELETED(400, "삭제된 코멘트입니다."),
+    REPLY_NOT_FOUND(404, "대댓글을 찾을 수 없습니다."),
+    REPLY_DELETED(400, "삭제된 대댓글입니다.");
 
 
     @Getter
