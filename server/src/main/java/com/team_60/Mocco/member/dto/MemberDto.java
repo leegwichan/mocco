@@ -53,4 +53,13 @@ public class MemberDto {
         private List<StudyDto.SubResponse> doneStudy;
 
     }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class SubResponse{
+        private long memberId;
+        private String nickname;
+        private String profileImage;
+    }
 }
