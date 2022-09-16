@@ -57,8 +57,8 @@ public class ProposalController {
                 new SingleResponseDto(response), HttpStatus.OK);
     }
 
-    @PatchMapping("/approve/{proposal-id}")
-    public ResponseEntity refuseProposal(@PathVariable("proposal-id") long proposalId){
+    @PatchMapping("/denied/{proposal-id}")
+    public ResponseEntity deniedProposal(@PathVariable("proposal-id") long proposalId){
 
         Proposal patchProposal = proposalService.refuseProposal(proposalId);
         ProposalDto.Response response = mapper.proposalToProposalResponseDto(patchProposal);

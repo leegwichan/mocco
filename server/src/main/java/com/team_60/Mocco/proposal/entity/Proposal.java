@@ -23,7 +23,7 @@ public class Proposal extends Auditable {
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20)
-    private ProposalStatus proposalStatus;
+    private ProposalStatus proposalStatus = ProposalStatus.PROPOSAL_WAITING;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
