@@ -12,5 +12,4 @@ public interface StudyService {
     Page<Study> findStudies(int page, int size);
     Page<Study> searchStudies(String query, int page, int size);
     Study findVerifiedStudy(long studyId);
-
 }

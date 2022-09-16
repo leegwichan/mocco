@@ -3,13 +3,19 @@ package com.team_60.Mocco.study.service;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.study.entity.Study;
+import com.team_60.Mocco.study.repository.StudyRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class StudyServiceImpl implements StudyService{
+
+    private final StudyRepository studyRepository;
+
     @Override
     public Study createStudy(Study study) {
         //taskList 가 null 인지 체크(null 불가) 15개 이하
@@ -58,7 +64,6 @@ public class StudyServiceImpl implements StudyService{
             return findStudy;
         }
     }
-
 
     private void validateStudy(Study study){
         //스터디 유효성 검사?
