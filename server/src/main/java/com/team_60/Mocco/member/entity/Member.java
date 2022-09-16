@@ -52,7 +52,7 @@ public class Member extends Auditable {
         return new ArrayList<>();
     }
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teamLeader", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Study> studyLeaderList = new ArrayList<>();
     
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)

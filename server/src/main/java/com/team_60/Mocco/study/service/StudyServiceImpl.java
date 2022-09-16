@@ -22,6 +22,7 @@ public class StudyServiceImpl implements StudyService{
         //인원이 2명 이상 5명 이하인지 확인
         //스터디 기간 최소 7일 최대 180일
         //멤버에 스터디 아이디 추가
+        return null;
     }
 
     @Override
@@ -58,11 +59,10 @@ public class StudyServiceImpl implements StudyService{
         //studyId에 맞는 스터디 반환
     @Override
     public Study findVerifiedStudy(long studyId) {
-            Optional<Study> optionalStudy = studyRepository.findById(studyId);
-            Study findStudy = optionalStudy.orElseThrow(() ->
-                    new BusinessLogicException(ExceptionCode.STUDY_NOT_FOUND));
-            return findStudy;
-        }
+        Optional<Study> optionalStudy = studyRepository.findById(studyId);
+        Study findStudy = optionalStudy.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.STUDY_NOT_FOUND));
+        return findStudy;
     }
 
     private void validateStudy(Study study){

@@ -57,7 +57,6 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Comment deleteComment(long commentId) {
         Comment findComment = findVerifiedComment(commentId);
-        findComment.setStudy(null);
         findComment.setMember(null);
         findComment.setContent(null);
         findComment.setCommentStatus(Comment.CommentStatus.COMMENT_DELETE);

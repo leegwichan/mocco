@@ -11,14 +11,17 @@ public class StudyInfoController {
     public ResponseEntity getBoards(@RequestParam int size,
                                     @RequestParam int page){
         //스터디 여러개 보이는 페이지(페이지네이션 필요)
+        return null;
    }
     @GetMapping("/board/{study-id}")
-    public ResponseEntity getBoard(@PathVariable){
+    public ResponseEntity getBoard(/*@PathVariable*/){
         //스터디 모집 글 상세 페이지 (댓글. 대댓글도 조회)
+        return null;
     }
     @GetMapping("/search")
     public ResponseEntity getFoundBoard(@RequestParam String query){
         //검색어 입력 받아 검색어가 있는 스터디 조회해서 보여주는 페이지(페이지네이션)
+        return null;
     }
 
 
