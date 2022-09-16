@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Reply extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long reply_id;
+    private long replyId;
 
     @Column(length = 300, nullable = false)
     private String content;

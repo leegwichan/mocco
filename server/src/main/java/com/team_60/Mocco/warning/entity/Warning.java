@@ -17,7 +17,7 @@ public class Warning {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long warning_id;
+    private long warningId;
 
     @ManyToOne
     @JoinColumn(name = "STUDY_MEMBER_ID")

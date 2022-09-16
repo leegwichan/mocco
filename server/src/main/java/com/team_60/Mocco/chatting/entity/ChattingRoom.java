@@ -17,7 +17,7 @@ import java.util.List;
 public class ChattingRoom extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long chatting_room_id;
+    private long chattingRoomId;
 
     @OneToOne
     @JoinColumn(name = "STUDY_ID")

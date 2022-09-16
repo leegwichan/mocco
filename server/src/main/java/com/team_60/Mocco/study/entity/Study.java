@@ -25,10 +25,10 @@ import java.util.List;
 public class Study extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long study_id;
+    private long studyId;
 
     @Column(length = 30, nullable = false)
-    private String team_name;
+    private String teamName;
 
     @Column(length = 50, nullable = false)
     private String summary;
@@ -40,10 +40,10 @@ public class Study extends Auditable {
     private String rule;
 
     @Column(nullable = false)
-    private LocalDate start_date;
+    private LocalDate startDate;
 
     @Column(nullable = false)
-    private LocalDate end_date;
+    private LocalDate endDate;
 
     @Column(nullable = false)
     private int capacity;
@@ -51,11 +51,12 @@ public class Study extends Auditable {
     @Column(length = 200)
     private String image;
 
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member teamLeader;
+
     @OneToOne(mappedBy = "study", cascade = CascadeType.PERSIST)
     private ChattingRoom chattingRoom;
-
-    @OneToOne(mappedBy = "study", cascade = CascadeType.REMOVE)
-    private Member team_leader;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Task> taskList = new ArrayList<>();
