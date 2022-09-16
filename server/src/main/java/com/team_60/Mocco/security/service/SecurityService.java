@@ -2,6 +2,7 @@ package com.team_60.Mocco.security.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.security.dto.Request;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static com.team_60.Mocco.exception.businessLogic.ExceptionCode.*;
 import static com.team_60.Mocco.security.filter.JwtConstants.*;
 
 @Slf4j
@@ -44,7 +46,7 @@ public class SecurityService {
         Member member = memberRepository.findByEmail(login.getEmail()).orElse(null);
         if(member == null){
             log.info("해당하는 유저가 존재하지 않습니다.");
-            return null;
+            throw new BusinessLogicException(USERNAME_NOT_FOUND);
         }
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -61,6 +63,9 @@ public class SecurityService {
         return new ResponseEntity(responseDto, HttpStatus.OK);
     }
     public ResponseEntity logout(HttpServletRequest request){
+        if(request.getHeader(ACCESS_TOKEN_HEADER).isEmpty()){
+            throw new BusinessLogicException(BAD_REQUEST);
+        }
         String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
         //1. AccessToken 검증
         if(!jwtTokenProvider.validateToken(accessToken)){
@@ -99,11 +104,11 @@ public class SecurityService {
         // (추가) 로그아웃되어 Redis 에 RefreshToken 이 존재하지 않는 경우 처리
         if(ObjectUtils.isEmpty(refreshToken)) {
             log.info("잘못된 요청입니다.");
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            throw new BusinessLogicException(BAD_REQUEST);
         }
         if(!refreshToken.equals(request.getHeader(REFRESH_TOKEN_HEADER))) {
             log.info("Refresh Token 정보가 일치하지 않습니다.");
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            throw new BusinessLogicException(BAD_REFRESH_TOKEN);
         }
 
         //4. 새로운 토큰 생성

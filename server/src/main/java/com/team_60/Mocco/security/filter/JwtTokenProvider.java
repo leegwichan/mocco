@@ -4,6 +4,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.security.dto.Response;
@@ -74,7 +76,7 @@ public class JwtTokenProvider {
             Claim claim = getClaim(accessToken);
             String email = JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("email").asString();
 
-            if (claim == null) throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            if (claim == null) throw new BusinessLogicException(ExceptionCode.CLAIM_NOT_EXIST);
 
             Member member = memberRepository.findByEmail(email).orElse(null);
 
@@ -94,8 +96,10 @@ public class JwtTokenProvider {
             JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(token);
             return true;
         } catch (JWTVerificationException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage() + "오류 발생");
+            if(e.getClass().getSimpleName().equals("TokenExpiredException")){
+                throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
+            }
+            throw new BusinessLogicException(ExceptionCode.FAIL_DECODE_TOKEN);
         } catch (Exception e) {
             log.info("CustomAuthorizationFilter : JWT 토큰이 잘못되었습니다. message : {}", e.getMessage());
         }
@@ -114,9 +118,7 @@ public class JwtTokenProvider {
         try{
             return JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("auth");
         } catch (TokenExpiredException e){
-            e.printStackTrace();
-            log.info(e.getMessage());
-            return null;
+            throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
         }
     }
 
