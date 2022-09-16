@@ -52,9 +52,8 @@ public class Member extends Auditable {
         return new ArrayList<>();
     }
 
-    @OneToOne
-    @JoinColumn(name = "STUDY_ID")
-    private Study study;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Study> studyLeaderList = new ArrayList<>();
     
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private MyInfo myInfo = new MyInfo();
