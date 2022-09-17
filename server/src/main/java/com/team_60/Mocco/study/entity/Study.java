@@ -9,9 +9,7 @@ import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.proposal.entity.Proposal;
 import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.task.entity.Task;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,6 +18,8 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Study extends Auditable {

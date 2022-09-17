@@ -16,6 +16,7 @@ public enum ExceptionCode {
     COMMENT_DELETED(400, "삭제된 코멘트입니다."),
     REPLY_NOT_FOUND(404, "대댓글을 찾을 수 없습니다."),
     REPLY_DELETED(400, "삭제된 대댓글입니다."),
+    NOT_SAME_USER(400,"잘못된 유저 접근입니다."),
 
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),
     CLAIM_NOT_EXIST(403,"권한 정보가 없는 토큰입니다."),
