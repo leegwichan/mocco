@@ -37,6 +37,7 @@ public class MemberServiceImpl implements MemberService{
         String[] repositories = new String[]{member.getMyInfo().getGithubRepository1(),
                 member.getMyInfo().getGithubRepository2(),
                 member.getMyInfo().getGithubRepository3()};
+
         if (repositories[0] != null || repositories[1] != null || repositories[2] != null){
             checkGithubRepositories(repositories);
             findMember.getMyInfo().setGithubRepository1(repositories[0]);
@@ -54,6 +55,8 @@ public class MemberServiceImpl implements MemberService{
                         findMember.setNickname(nickName);
                     }
                 });
+        Optional.ofNullable(member.getMyInfo().getProfileImage())
+                        .ifPresent(image -> findMember.getMyInfo().setProfileImage(image));
 
         Optional.ofNullable(member.getMyInfo().getIntroduction())
                 .ifPresent(introduction -> findMember.getMyInfo().setIntroduction(introduction));
