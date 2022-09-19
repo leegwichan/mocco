@@ -1,8 +1,10 @@
 package com.team_60.Mocco.reply.service;
 
+import com.team_60.Mocco.comment.entity.Comment;
 import com.team_60.Mocco.comment.service.CommentService;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.reply.entity.Reply;
 import com.team_60.Mocco.reply.repository.ReplyRepository;
@@ -21,21 +23,37 @@ public class ReplyServiceImpl implements ReplyService{
 
     @Override
     public Reply findReply(long replyId) {
-        return null;
+        return findVerifiedReply(replyId);
     }
 
     @Override
     public Reply createReply(Reply reply) {
-        return null;
+
+        Member findMember = memberService.findVerifiedMember(reply.getMember().getMemberId());
+        Comment findComment = commentService.findVerifiedComment(reply.getComment().getCommentId());
+        reply.setMember(findMember);
+        reply.setComment(findComment);
+
+        return replyRepository.save(reply);
     }
 
     @Override
     public Reply updateReply(Reply reply) {
-        return null;
+        Reply findReply = findVerifiedReply(reply.getReplyId());
+        if (findReply.getReplyStatus() == Reply.ReplyStatus.REPLY_DELETE)
+            throw new BusinessLogicException(ExceptionCode.REPLY_DELETED);
+
+        Optional.ofNullable(reply.getContent())
+                .ifPresent(content -> findReply.setContent(content));
+        return replyRepository.save(findReply);
     }
 
     @Override
     public Reply deleteReply(long replyId) {
+        Reply findReply = findVerifiedReply(replyId);
+        findReply.setMember(null);
+        findReply.setContent(null);
+        findReply.setReplyStatus(Reply.ReplyStatus.REPLY_DELETE);
         return null;
     }
 

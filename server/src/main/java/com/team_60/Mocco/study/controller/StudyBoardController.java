@@ -40,6 +40,7 @@ public class StudyBoardController {
         //스터디 모집 글 작성 페이지
         log.info("모집글 작성 페이지");
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PostMapping
@@ -55,6 +56,7 @@ public class StudyBoardController {
         return new ResponseEntity(
                 new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(createdStudy)),
                 HttpStatus.CREATED);
+
     }
 
     @PostMapping("/image")
@@ -79,6 +81,7 @@ public class StudyBoardController {
                 new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(updatedStudy)),
                 HttpStatus.OK);
     }
+    
     @DeleteMapping("/{study-id}")
     public ResponseEntity deleteStudy(@PathVariable("study-id") long studyId,
                                       HttpServletRequest request){
@@ -89,5 +92,6 @@ public class StudyBoardController {
         }
         studyService.deleteStudy(studyId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+
     }
 }

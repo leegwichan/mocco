@@ -24,12 +24,14 @@ public class StudyInfoController {
     public ResponseEntity getBoards(@RequestParam int page,
                                     @RequestParam int size){
         //스터디 여러개 보이는 페이지(페이지네이션 필요)
+
         Page<Study> studyPage = studyService.findStudies(page -1,size);
         List<Study> studyList = studyPage.getContent();
         return new ResponseEntity(
                 new MultiResponseDto<>(studyMapper.studiesToStudySubResponseDtos(studyList),studyPage),
                 HttpStatus.OK);
    }
+   
     @GetMapping("/board/{study-id}")
     public ResponseEntity getBoard(@PathVariable("study-id") long studyId){
         //스터디 모집 글 상세 페이지 (댓글. 대댓글도 조회)
@@ -38,6 +40,7 @@ public class StudyInfoController {
                 new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(study)),
                         HttpStatus.OK);
     }
+    
     @GetMapping("/search")
     public ResponseEntity getFoundBoard(@RequestParam String query,
                                         @RequestParam int page,
@@ -49,6 +52,5 @@ public class StudyInfoController {
                 new MultiResponseDto<>(studyMapper.studiesToStudySubResponseDtos(findStudyList),findStudyPage),
                         HttpStatus.OK);
     }
-
 
 }

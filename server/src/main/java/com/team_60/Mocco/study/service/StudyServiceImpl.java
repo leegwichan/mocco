@@ -47,6 +47,7 @@ public class StudyServiceImpl implements StudyService{
         member.getStudyLeaderList().add(createdStudy);
         //memberRepository.save(member);
         return createdStudy;
+
     }
     @Override
     public Study updateStudy(Study study, HttpServletRequest request) {
@@ -105,11 +106,11 @@ public class StudyServiceImpl implements StudyService{
         //studyId에 맞는 스터디 반환
     @Override
     public Study findVerifiedStudy(long studyId) {
-            Optional<Study> optionalStudy = studyRepository.findById(studyId);
-            Study findStudy = optionalStudy.orElseThrow(() ->
-                    new BusinessLogicException(STUDY_NOT_FOUND));
-            return findStudy;
-        }
+        Optional<Study> optionalStudy = studyRepository.findById(studyId);
+        Study findStudy = optionalStudy.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.STUDY_NOT_FOUND));
+        return findStudy;
+    }
 
     private void validateStudy(Study study){
         //스터디 유효성 검사?
