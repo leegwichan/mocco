@@ -35,7 +35,7 @@ public class MemberSubController {
                 new SingleResponseDto(url), HttpStatus.OK);
     }
 
-    @PatchMapping("/{member-id}")
+    @PatchMapping("/password/{member-id}")
     public ResponseEntity patchPassword(@PathVariable("member-id") long memberId,
                                       @RequestBody MemberDto.PatchPassword requestBody){
 
