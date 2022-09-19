@@ -1,8 +1,6 @@
 package com.team_60.Mocco.security.service;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.security.dto.Request;
@@ -16,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -27,7 +24,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static com.team_60.Mocco.exception.businessLogic.ExceptionCode.*;
+import static com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode.*;
 import static com.team_60.Mocco.security.filter.JwtConstants.*;
 
 @Slf4j

@@ -3,6 +3,7 @@ package com.team_60.Mocco.study.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team_60.Mocco.comment.dto.CommentDto;
 import com.team_60.Mocco.comment.entity.Comment;
+import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.reply.dto.ReplyDto;
 import com.team_60.Mocco.reply.entity.Reply;
 import com.team_60.Mocco.task.dto.TaskDto;
@@ -38,7 +39,7 @@ public class StudyDto {
         private String summary;
         private String detail;
         private String rule;
-        private List<TaskDto.Request> taskList;
+        private List<TaskDto> taskList;
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate startDate;
         @JsonFormat(pattern = "yyyy-MM-dd")
@@ -54,11 +55,12 @@ public class StudyDto {
         private String teamName;
         private String summary;
         private String detail;
-        private String teamLeaderNickname;
         private String rule;
         private int capacity;
         private LocalDate startDate;
         private LocalDate endDate;
+        private MemberDto.SubResponse member;
+        private List<TaskDto> taskList;
         private List<CommentDto.Response> commentList;
     }
 }

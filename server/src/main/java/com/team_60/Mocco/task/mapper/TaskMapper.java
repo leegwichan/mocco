@@ -7,7 +7,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
-    Task taskRequestDtoToTask (TaskDto.Request request);
-    List<Task> taskRequestDtoListToTaskList(List<TaskDto.Request> requestList);
+
+    Task taskRequestDtoToTask (TaskDto request);
+    List<Task> taskRequestDtoListToTaskList(List<TaskDto> requestList);
 
 }

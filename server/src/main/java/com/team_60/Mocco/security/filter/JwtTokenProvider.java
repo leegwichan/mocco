@@ -4,11 +4,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
-import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
-import com.team_60.Mocco.security.dto.Response;
 import com.team_60.Mocco.security.oauth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import com.auth0.jwt.JWT;
@@ -17,8 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
