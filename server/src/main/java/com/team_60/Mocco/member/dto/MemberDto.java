@@ -34,6 +34,7 @@ public class MemberDto {
         private String githubRepository1;
         private String githubRepository2;
         private String githubRepository3;
+        private String profileImage;
     }
 
     @AllArgsConstructor

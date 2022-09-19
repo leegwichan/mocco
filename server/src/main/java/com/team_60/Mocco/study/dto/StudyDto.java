@@ -1,12 +1,13 @@
 package com.team_60.Mocco.study.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.team_60.Mocco.comment.dto.CommentDto;
 import com.team_60.Mocco.comment.entity.Comment;
+import com.team_60.Mocco.reply.dto.ReplyDto;
 import com.team_60.Mocco.reply.entity.Reply;
+import com.team_60.Mocco.task.dto.TaskDto;
 import com.team_60.Mocco.task.entity.Task;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,15 +27,21 @@ public class StudyDto {
     @Getter
     @Setter
     @NoArgsConstructor
+    @Builder
+    @AllArgsConstructor
     public static class Request{
+        private long memberId;
+        private long studyId;
         private String teamName;
         private int capacity;
         private String image;
         private String summary;
         private String detail;
         private String rule;
-        private List<Task> taskList;
+        private List<TaskDto.Request> taskList;
+        @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate startDate;
+        @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate endDate;
     }
 
@@ -43,10 +50,15 @@ public class StudyDto {
     @Setter
     @NoArgsConstructor
     public static class Response{
+        private long studyId;
         private String teamName;
         private String summary;
+        private String detail;
         private String teamLeaderNickname;
-        private List<Comment> commentList;
-        private List<Reply> replyList;
+        private String rule;
+        private int capacity;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private List<CommentDto.Response> commentList;
     }
 }

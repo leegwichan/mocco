@@ -24,13 +24,15 @@ public enum ExceptionCode {
     STUDY_MEMBER_OVER_CAPACITY(400, "수용 인원보다 많은 수의 멤버를 뽑을 수 없습니다."),
     STUDY_MEMBER_ALREADY_INVITED(400, "이미 해당 스터디의 스터디원입니다."),
 
+
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),
     CLAIM_NOT_EXIST(403,"권한 정보가 없는 토큰입니다."),
     TOKEN_EXPIRED_EXCEPTION(403,"이미 만료된 토큰입니다."),
     FAIL_DECODE_TOKEN(403,"토큰 검증에 실패하였습니다."),
     BAD_REFRESH_TOKEN(403,"Refresh Token 정보가 일치하지 않습니다."),
     BAD_REQUEST(403,"잘못된 요청입니다."),
-    BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다.");
+    BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다."),
+    NOT_SAME_USER(400,"잘못된 유저 접근입니다.");
 
     @Getter
     private int status;
