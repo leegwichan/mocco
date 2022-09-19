@@ -26,7 +26,7 @@ public class Reply extends Auditable {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "COMMENT_ID")
+    @JoinColumn(name = "COMMENT_ID", nullable = false)
     private Comment comment;
 
     @Enumerated(value = EnumType.STRING)

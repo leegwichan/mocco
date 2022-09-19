@@ -1,6 +1,7 @@
 package com.team_60.Mocco.reply.dto;
 
 import com.team_60.Mocco.member.dto.MemberDto;
+import com.team_60.Mocco.reply.entity.Reply;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,10 +31,11 @@ public class ReplyDto {
     @Getter
     @Setter
     public static class Response{
-        private long responseId;
+        private long replyId;
         private String content;
         private String createdAt;
         private String modifiedAt;
+        private Reply.ReplyStatus replyStatus;
         private MemberDto.SubResponse member;
     }
 }

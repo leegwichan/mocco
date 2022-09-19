@@ -61,6 +61,7 @@ public class ProposalServiceImpl implements ProposalService{
         findProposal.setProposalStatus(Proposal.ProposalStatus.PROPOSAL_ACCEPT);
         studyMemberService.createStudyMember(findProposal.getStudy(), findProposal.getMember());
 
+        // TODO 이거 왜 저장됨??
         return findProposal;
     }
 
@@ -70,7 +71,7 @@ public class ProposalServiceImpl implements ProposalService{
         checkProposalStatus(findProposal);
 
         findProposal.setProposalStatus(Proposal.ProposalStatus.PROPOSAL_DENIED);
-        return findProposal;
+        return proposalRepository.save(findProposal);
     }
 
     private Proposal findVerifiedProposal(long proposalId){

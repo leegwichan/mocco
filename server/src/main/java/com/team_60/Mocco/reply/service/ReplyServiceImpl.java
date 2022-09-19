@@ -52,9 +52,9 @@ public class ReplyServiceImpl implements ReplyService{
     public Reply deleteReply(long replyId) {
         Reply findReply = findVerifiedReply(replyId);
         findReply.setMember(null);
-        findReply.setContent(null);
+        findReply.setContent("");
         findReply.setReplyStatus(Reply.ReplyStatus.REPLY_DELETE);
-        return null;
+        return replyRepository.save(findReply);
     }
 
     private Reply findVerifiedReply(long replyId){
