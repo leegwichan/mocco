@@ -6,16 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-
+@Getter
+@Setter
+@NoArgsConstructor
 public class TaskDto {
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class Request{
         private String content;
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate deadline;
-        private long studyId;
+        private long taskId;
     }
-}
+

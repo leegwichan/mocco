@@ -1,8 +1,6 @@
-package com.team_60.Mocco.exception.dto;
+package com.team_60.Mocco.dto.exception.dto;
 
-import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

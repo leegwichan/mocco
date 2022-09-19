@@ -1,29 +1,27 @@
 package com.team_60.Mocco.study.service;
 
-import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
+import com.team_60.Mocco.task.service.TaskService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.List;
 import java.util.OptionalInt;
-
-import static com.team_60.Mocco.exception.businessLogic.ExceptionCode.NOT_SAME_USER;
-import static com.team_60.Mocco.exception.businessLogic.ExceptionCode.STUDY_NOT_FOUND;
-import static com.team_60.Mocco.security.filter.JwtConstants.ACCESS_TOKEN_HEADER;
-import static com.team_60.Mocco.security.filter.JwtConstants.TOKEN_HEADER_PREFIX;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -32,14 +30,15 @@ public class StudyServiceImpl implements StudyService{
 
     private final StudyRepository studyRepository;
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TaskService taskService;
 
     @Override
     public Study createStudy(Study study) {
+        if(study.getTaskList() == null) throw new BusinessLogicException(ExceptionCode.TASK_NOT_EXIST);
         Member member = memberService.findVerifiedMember(study.getTeamLeader().getMemberId());
         study.setStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS);
         study.setTeamLeader(member);
+        validateStudy(study);
         //스터디 생성
         Study createdStudy = studyRepository.save(study);
 
@@ -59,10 +58,11 @@ public class StudyServiceImpl implements StudyService{
 //        if(findStudy.getTeamLeader().getEmail() != jwtTokenProvider.getEmail(accessToken)){
 //            throw new BusinessLogicException(NOT_SAME_USER);
 //        }
-
         Optional.ofNullable(study.getTeamName())
                 .ifPresent(teamName -> findStudy.setTeamName(teamName));
-        if(!OptionalInt.empty().equals(study.getCapacity())) findStudy.setCapacity(study.getCapacity());
+        if(study.getCapacity() != findStudy.getCapacity() && study.getCapacity() != 0) {
+            findStudy.setCapacity(study.getCapacity());
+        }
         Optional.ofNullable(study.getImage())
                 .ifPresent(image -> findStudy.setImage(image));
         Optional.ofNullable(study.getSummary())
@@ -77,8 +77,10 @@ public class StudyServiceImpl implements StudyService{
                 .ifPresent(endDate -> findStudy.setEndDate(endDate));
         Optional.ofNullable(study.getTaskList())
                 .ifPresent(taskList -> {
+                        taskList.stream().forEach(n -> taskService.updateTask(n));
                         findStudy.getTaskList().clear();
                         findStudy.getTaskList().addAll(taskList);});
+        validateStudy(findStudy);
         return studyRepository.save(findStudy);
     }
     @Override
@@ -113,9 +115,16 @@ public class StudyServiceImpl implements StudyService{
     }
 
     private void validateStudy(Study study){
-        //스터디 유효성 검사?
-        //taskList 가 null 인지 체크(null 불가) 15개 이하
-        //인원이 2명 이상 5명 이하인지 확인
-        //스터디 기간 최소 7일 최대 180일
+
+        study.getTaskList().stream().forEach(n -> taskService.validateTask(n,study));
+        if(study.getStartDate().compareTo(LocalDate.now())<0) {
+            throw new BusinessLogicException(ExceptionCode.STARTDATE_PREVIOUS);
+        }
+        long studyDays = ChronoUnit.DAYS.between(study.getStartDate(), study.getEndDate());
+        log.info(studyDays+" : 스터디 기간 범위");
+        if(studyDays<7 || studyDays>180) {
+            throw new BusinessLogicException(ExceptionCode.NOT_CORRECT_PERIOD);
+        }
+
     }
 }

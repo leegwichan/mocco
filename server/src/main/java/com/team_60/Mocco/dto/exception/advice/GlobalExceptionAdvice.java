@@ -1,7 +1,7 @@
-package com.team_60.Mocco.exception.advice;
+package com.team_60.Mocco.dto.exception.advice;
 
-import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.exception.dto.ErrorResponse;
+import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.dto.exception.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
