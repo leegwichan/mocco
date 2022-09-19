@@ -50,10 +50,15 @@ public class StudyDto {
     @Setter
     @NoArgsConstructor
     public static class Response{
+        private long studyId;
+        private String teamName;
         private String summary;
         private String detail;
         private String teamLeaderNickname;
+        private String rule;
+        private int capacity;
+        private LocalDate startDate;
+        private LocalDate endDate;
         private List<CommentDto.Response> commentList;
-        private List<ReplyDto.Response> replyList;
     }
 }

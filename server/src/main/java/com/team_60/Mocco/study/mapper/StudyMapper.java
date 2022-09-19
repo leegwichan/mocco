@@ -26,7 +26,8 @@ public interface StudyMapper {
     default Study studyRequestDtoToStudy (StudyDto.Request request, List<Task> taskList){
         Member member = new Member();
         member.setMemberId(request.getMemberId());
-        return Study.builder()
+
+        Study study = Study.builder()
                 .studyId(request.getStudyId())
                 .teamLeader(member)
                 .teamName(request.getTeamName())
@@ -39,6 +40,9 @@ public interface StudyMapper {
                 .endDate(request.getEndDate())
                 .taskList(taskList)
                 .build();
+
+        taskList.stream().forEach(task -> task.setStudy(study));
+        return study;
 
     }
     @Mapping(target = "teamLeaderNickname", expression = "java(study.getTeamLeader().getNickname())")

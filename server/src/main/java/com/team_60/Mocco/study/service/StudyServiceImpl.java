@@ -58,9 +58,7 @@ public class StudyServiceImpl implements StudyService{
 //        if(findStudy.getTeamLeader().getEmail() != jwtTokenProvider.getEmail(accessToken)){
 //            throw new BusinessLogicException(NOT_SAME_USER);
 //        }
-        if(!findStudy.getTeamLeader().getStudyLeaderList().contains(findStudy)) {
-            throw new BusinessLogicException(STUDY_NOT_FOUND);
-        }
+
         Optional.ofNullable(study.getTeamName())
                 .ifPresent(teamName -> findStudy.setTeamName(teamName));
         if(!OptionalInt.empty().equals(study.getCapacity())) findStudy.setCapacity(study.getCapacity());
@@ -94,24 +92,14 @@ public class StudyServiceImpl implements StudyService{
 
     @Override
     public Page<Study> findStudies(int page, int size) {
-        List<Study> studyList = studyRepository.findAll();
-        for(Study study : studyList){
-            log.info(study.getStudyId()+" : 스터디 아이디");
-        }
         Pageable pageable = PageRequest.of(page,size,Sort.by("studyId").descending());
-        return new PageImpl<>(studyList, pageable, studyList.size());
+        return studyRepository.findByStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS, pageable);
     }
 
     @Override
     public Page<Study> searchStudies(String query, int page, int size) {
-        List<Study> findStudyList = new ArrayList<>();
-        List<Study> studyList = studyRepository.findAll();
-        for(Study study : studyList){
-            if(study.getSummary().contains(query)) findStudyList.add(study);
-        }
-        log.info(findStudyList.size()+" : 리스트 사이즈");
-        Pageable pageable = PageRequest.of(page,size, Sort.by("studyId").descending());
-        return new PageImpl<>(findStudyList, pageable, findStudyList.size());
+        Pageable pageable = PageRequest.of(page, size, Sort.by("studyId").descending());
+        return studyRepository.findBySummaryContaining(query, pageable);
     }
 
         //studyId에 맞는 스터디 반환
