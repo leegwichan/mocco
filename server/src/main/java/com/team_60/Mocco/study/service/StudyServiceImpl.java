@@ -8,6 +8,7 @@ import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
+import com.team_60.Mocco.study_member.serive.StudyMemberService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
@@ -34,6 +35,7 @@ public class StudyServiceImpl implements StudyService{
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final StudyMemberService studyMemberService;
 
     @Override
     public Study createStudy(Study study) {
@@ -45,7 +47,7 @@ public class StudyServiceImpl implements StudyService{
 
         //멤버에 스터디 아이디 추가
         member.getStudyLeaderList().add(createdStudy);
-        //memberRepository.save(member);
+        studyMemberService.createStudyMember(createdStudy, member);
         return createdStudy;
 
     }
