@@ -45,7 +45,7 @@ public interface StudyMapper {
         return study;
 
     }
-    @Mapping(target = "teamLeaderNickname", expression = "java(study.getTeamLeader().getNickname())")
+    @Mapping(source = "teamLeader", target = "member")
     StudyDto.Response studyToStudyResponseDto (Study study);
 
     List<StudyDto.SubResponse> studiesToStudySubResponseDtos (List<Study> studyList);

@@ -1,7 +1,7 @@
 package com.team_60.Mocco.security.oauth;
 
-import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
