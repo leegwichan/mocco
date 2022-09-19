@@ -38,6 +38,8 @@ public class CommentServiceImpl implements CommentService{
     public Comment createComment(Comment comment) {
         Member findMember = memberService.findVerifiedMember(comment.getMember().getMemberId());
         Study findStudy = studyService.findVerifiedStudy(comment.getStudy().getStudyId());
+        checkStudyStatusIsRecruitProgress(findStudy);
+
         comment.setMember(findMember);
         comment.setStudy(findStudy);
         return commentRepository.save(comment);
@@ -46,6 +48,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Comment updateComment(Comment comment) {
         Comment findComment = findVerifiedComment(comment.getCommentId());
+        checkStudyStatusIsRecruitProgress(findComment.getStudy());
         if (findComment.getCommentStatus() == Comment.CommentStatus.COMMENT_DELETE)
             throw new BusinessLogicException(ExceptionCode.COMMENT_DELETED);
 
@@ -69,5 +72,11 @@ public class CommentServiceImpl implements CommentService{
         Comment findComment = optionalComment.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
         return findComment;
+    }
+
+    public void checkStudyStatusIsRecruitProgress(Study study){
+        if (study.getStudyStatus() != Study.StudyStatus.RECRUIT_PROGRESS){
+            throw new BusinessLogicException(ExceptionCode.STUDY_NOT_RECRUIT);
+        }
     }
 }

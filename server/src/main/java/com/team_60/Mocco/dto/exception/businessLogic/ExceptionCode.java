@@ -12,7 +12,7 @@ public enum ExceptionCode {
     GITHUB_REPOSITORY_DUPLICATION(400, "중복된 github repository를 입력했습니다."),
     NOT_GITHUB_REPOSITORY(400, "잘못된 github repository 입니다."),
     STUDY_NOT_FOUND(404, "스터디를 찾을 수 없습니다."),
-    STUDY_NOT_RECRUIT(400, "스터디가 진행중이 아닙니다."),
+    STUDY_NOT_RECRUIT(400, "스터디가 모집중이 아닙니다."),
     COMMENT_NOT_FOUND(404, "코멘트를 찾을 수 없습니다."),
     COMMENT_DELETED(400, "삭제된 코멘트입니다."),
     REPLY_NOT_FOUND(404, "대댓글을 찾을 수 없습니다."),
