@@ -7,7 +7,6 @@ function StudySection() {
   return (
     <div
       css={css`
-        border: 1px solid yellow;
         display: flex;
         flex-direction: column;
 
@@ -44,8 +43,7 @@ function StudySection() {
             border: none;
           }
 
-          .period,
-          span:nth-child(2) {
+          .info {
             font-size: 25px;
             color: #066ff2;
             margin-bottom: 16px;
@@ -84,8 +82,8 @@ function StudySection() {
             align-items: flex-end;
           `}
         >
-          <span className="period">2022.09.10 ~ 2022.09.20</span>
-          <span>5명</span>
+          <span className="info">2022.09.10 ~ 2022.09.20</span>
+          <span className="info">5명</span>
           <span>사진 김코딩</span>
         </div>
       </div>
