@@ -7,6 +7,7 @@ public interface MemberService {
     Member findMember(long memberId);
     Member createMember(Member member);
     Member updateMember(Member member);
+    Member updatePassword(Member member);
     void deleteMember(long memberId);
     Member findVerifiedMember(long memberId);
     void findMemberByNicknameExpectNull(String nickname);

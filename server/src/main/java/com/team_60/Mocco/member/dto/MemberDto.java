@@ -27,7 +27,6 @@ public class MemberDto {
     @Setter
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Patch{
-        private String password;
         private String nickname;
         private String introduction;
         private String location;
@@ -35,6 +34,14 @@ public class MemberDto {
         private String githubRepository2;
         private String githubRepository3;
         private String profileImage;
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class PatchPassword{
+        private String password;
     }
 
     @AllArgsConstructor

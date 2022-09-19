@@ -26,7 +26,6 @@ public interface MemberMapper {
 
     default Member memberPatchDtoToMember(MemberDto.Patch dto){
         Member member = new Member();
-        member.setPassword(dto.getPassword());
         member.setNickname(dto.getNickname());
         member.setMyInfo(memberPatchDtoToMyInfo(dto));
 
@@ -72,7 +71,7 @@ public interface MemberMapper {
         );
     }
 
-    static MemberDto.SubResponse memberToMemberSubResponseDto(Member member){
+    default MemberDto.SubResponse memberToMemberSubResponseDto(Member member){
         return new MemberDto.SubResponse(
                 member.getMemberId(),
                 member.getNickname(),

@@ -1,5 +1,6 @@
 package com.team_60.Mocco.comment.dto;
 
+import com.team_60.Mocco.comment.entity.Comment;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.reply.dto.ReplyDto;
 import lombok.AllArgsConstructor;
@@ -37,8 +38,9 @@ public class CommentDto {
         private String content;
         private String createdAt;
         private String modifiedAt;
+        private Comment.CommentStatus commentStatus;
         private MemberDto.SubResponse member;
-        private List<ReplyDto.Response> replies;
+        private List<ReplyDto.Response> replyList;
     }
 
 }

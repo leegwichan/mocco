@@ -45,9 +45,6 @@ public class MemberServiceImpl implements MemberService{
             findMember.getMyInfo().setGithubRepository3(repositories[2]);
         }
 
-        Optional.ofNullable(member.getPassword())
-                .ifPresent(password ->
-                    findMember.setPassword(bCryptPasswordEncoder.encode(member.getPassword())));
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickName -> {
                     if (!nickName.equals(findMember.getNickname())){
@@ -62,6 +59,17 @@ public class MemberServiceImpl implements MemberService{
                 .ifPresent(introduction -> findMember.getMyInfo().setIntroduction(introduction));
         Optional.ofNullable(member.getMyInfo().getLocation())
                 .ifPresent(location -> findMember.getMyInfo().setLocation(location));
+
+        return memberRepository.save(findMember);
+    }
+
+    @Override
+    public Member updatePassword(Member member){
+        Member findMember = findVerifiedMember(member.getMemberId());
+
+        Optional.ofNullable(member.getPassword())
+                .ifPresent(password ->
+                        findMember.setPassword(bCryptPasswordEncoder.encode(member.getPassword())));
 
         return memberRepository.save(findMember);
     }

@@ -22,7 +22,7 @@ public class ReplyController {
     public ResponseEntity getReply(@PathVariable("reply-id") long replyId){
 
         Reply findReply = replyService.findReply(replyId);
-        ReplyDto.Response response = ReplyMapper.replyToReplyResponseDto(findReply);
+        ReplyDto.Response response = mapper.replyToReplyResponseDto(findReply);
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.OK);
     }
@@ -32,7 +32,7 @@ public class ReplyController {
 
         Reply reply = mapper.replyPostDtoToReply(requestBody);
         Reply postReply = replyService.createReply(reply);
-        ReplyDto.Response response = ReplyMapper.replyToReplyResponseDto(postReply);
+        ReplyDto.Response response = mapper.replyToReplyResponseDto(postReply);
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.CREATED);
     }
@@ -44,7 +44,7 @@ public class ReplyController {
         Reply reply = mapper.replyPatchDtoToReply(requestBody);
         reply.setReplyId(replyId);
         Reply patchReply = replyService.updateReply(reply);
-        ReplyDto.Response response = ReplyMapper.replyToReplyResponseDto(patchReply);
+        ReplyDto.Response response = mapper.replyToReplyResponseDto(patchReply);
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.OK);
     }
@@ -53,7 +53,7 @@ public class ReplyController {
     public ResponseEntity deleteReply(@PathVariable("reply-id") long replyId){
 
         Reply deleteReply = replyService.deleteReply(replyId);
-        ReplyDto.Response response = ReplyMapper.replyToReplyResponseDto(deleteReply);
+        ReplyDto.Response response = mapper.replyToReplyResponseDto(deleteReply);
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.OK);
     }
