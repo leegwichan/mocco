@@ -62,6 +62,10 @@ public class StudyServiceImpl implements StudyService{
 //        if(findStudy.getTeamLeader().getEmail() != jwtTokenProvider.getEmail(accessToken)){
 //            throw new BusinessLogicException(NOT_SAME_USER);
 //        }
+        if (study.getStudyStatus() != Study.StudyStatus.STUDY_PROGRESS){
+            throw new BusinessLogicException(ExceptionCode.STUDY_NOT_RECRUIT);
+        }
+
         Optional.ofNullable(study.getTeamName())
                 .ifPresent(teamName -> findStudy.setTeamName(teamName));
         if(study.getCapacity() != findStudy.getCapacity() && study.getCapacity() != 0) {
@@ -87,6 +91,14 @@ public class StudyServiceImpl implements StudyService{
         validateStudy(findStudy);
         return studyRepository.save(findStudy);
     }
+
+    @Override
+    public Study finishRecruitStudy(long studyId) {
+        Study findStudy = findVerifiedStudy(studyId);
+        findStudy.setStudyStatus(Study.StudyStatus.RECRUIT_COMPLETE);
+        return studyRepository.save(findStudy);
+    }
+
     @Override
     public void deleteStudy(long studyId) {
         studyRepository.delete(findVerifiedStudy(studyId));
