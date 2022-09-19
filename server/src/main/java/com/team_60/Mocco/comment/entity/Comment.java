@@ -29,7 +29,7 @@ public class Comment extends Auditable {
     @Column (length = 20, nullable = false)
     private CommentStatus commentStatus = CommentStatus.COMMENT_ACTIVE;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

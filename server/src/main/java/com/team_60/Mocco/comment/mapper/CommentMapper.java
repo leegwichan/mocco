@@ -31,24 +31,7 @@ public interface CommentMapper {
 
     Comment commentPatchDtoToComment(CommentDto.Patch dto);
 
-    default CommentDto.Response commentToCommentResponseDto(Comment comment){
-        List<ReplyDto.Response> replies = comment.getReplyList()
-                .stream().map(reply -> ReplyMapper.replyToReplyResponseDto(reply))
-                .collect(Collectors.toList());
+    CommentDto.Response commentToCommentResponseDto(Comment comment);
 
-        return new CommentDto.Response(
-                comment.getCommentId(),
-                comment.getContent(),
-                comment.getCreatedAt(),
-                comment.getModifiedAt(),
-                MemberMapper.memberToMemberSubResponseDto(comment.getMember()),
-                replies
-        );
-    };
-
-    default List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments){
-        return comments.stream()
-                .map(comment -> commentToCommentResponseDto(comment))
-                .collect(Collectors.toList());
-    }
+    List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments);
 }

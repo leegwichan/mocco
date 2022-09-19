@@ -51,14 +51,14 @@ public class CommentServiceImpl implements CommentService{
 
         Optional.ofNullable(comment.getContent())
                 .ifPresent(content -> findComment.setContent(content));
-        return commentRepository.save(comment);
+        return commentRepository.save(findComment);
     }
 
     @Override
     public Comment deleteComment(long commentId) {
         Comment findComment = findVerifiedComment(commentId);
         findComment.setMember(null);
-        findComment.setContent(null);
+        findComment.setContent("");
         findComment.setCommentStatus(Comment.CommentStatus.COMMENT_DELETE);
         return commentRepository.save(findComment);
     }
