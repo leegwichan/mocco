@@ -40,7 +40,7 @@ public class CommentDto {
         private String modifiedAt;
         private Comment.CommentStatus commentStatus;
         private MemberDto.SubResponse member;
-        private List<ReplyDto.Response> replies;
+        private List<ReplyDto.Response> replyList;
     }
 
 }

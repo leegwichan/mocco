@@ -7,6 +7,8 @@ import com.team_60.Mocco.reply.dto.ReplyDto;
 import com.team_60.Mocco.reply.entity.Reply;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ReplyMapper {
     default Reply replyPostDtoToReply(ReplyDto.Post dto){
@@ -24,13 +26,6 @@ public interface ReplyMapper {
 
     Reply replyPatchDtoToReply(ReplyDto.Patch dto);
 
-    static ReplyDto.Response replyToReplyResponseDto(Reply reply){
-        return new ReplyDto.Response(
-                reply.getReplyId(),
-                reply.getContent(),
-                reply.getCreatedAt(),
-                reply.getModifiedAt(),
-                MemberMapper.memberToMemberSubResponseDto(reply.getMember())
-        );
-    }
+    ReplyDto.Response replyToReplyResponseDto(Reply reply);
+    List<ReplyDto.Response> repliesToReplyResponseDtos(List<Reply> replies);
 }

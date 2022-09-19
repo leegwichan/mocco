@@ -71,7 +71,7 @@ public interface MemberMapper {
         );
     }
 
-    static MemberDto.SubResponse memberToMemberSubResponseDto(Member member){
+    default MemberDto.SubResponse memberToMemberSubResponseDto(Member member){
         return new MemberDto.SubResponse(
                 member.getMemberId(),
                 member.getNickname(),

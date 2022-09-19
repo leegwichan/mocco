@@ -13,20 +13,8 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface ProposalMapper {
 
-    default ProposalDto.Response proposalToProposalResponseDto(Proposal proposal){
-        return new ProposalDto.Response(
-                proposal.getProposalId(),
-                proposal.getContent(),
-                proposal.getCreatedAt(),
-                MemberMapper.memberToMemberSubResponseDto(proposal.getMember())
-        );
-    }
-
-    default List<ProposalDto.Response> proposalsToProposalResponseDtos(List<Proposal> proposals){
-        return proposals.stream()
-                .map(proposal -> proposalToProposalResponseDto(proposal))
-                .collect(Collectors.toList());
-    }
+    ProposalDto.Response proposalToProposalResponseDto(Proposal proposal);
+    List<ProposalDto.Response> proposalsToProposalResponseDtos(List<Proposal> proposals);
 
     default Proposal proposalPostDtoToProposal(ProposalDto.Post dto){
         Member member = new Member();
