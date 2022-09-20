@@ -24,4 +24,5 @@ public interface TaskCheckMapper {
     }
 
     TaskCheckDto.Response taskCheckToTaskCheckResponseDto(TaskCheck taskCheck);
+
 }

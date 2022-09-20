@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 public class TaskCheckDto {
 
     @AllArgsConstructor
@@ -25,5 +27,13 @@ public class TaskCheckDto {
         private long taskCheckId;
         private String image;
         private String content;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class SubResponse{
+        private Long taskCheckId;
+        private boolean isTaskChecked;
     }
 }

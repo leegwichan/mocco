@@ -12,14 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api/task-check")
 @RequiredArgsConstructor
 public class TaskCheckController {
     private final TaskCheckService taskCheckService;
     private final TaskCheckMapper mapper;
 
     @GetMapping("/{task-check-id}")
-    public ResponseEntity getTaskCheck(@RequestParam("task-check-id") long taskCheckId){
+    public ResponseEntity getTaskCheck(@PathVariable("task-check-id") long taskCheckId){
 
         TaskCheck taskCheck = taskCheckService.getTaskCheck(taskCheckId);
         TaskCheckDto.Response response = mapper.taskCheckToTaskCheckResponseDto(taskCheck);
