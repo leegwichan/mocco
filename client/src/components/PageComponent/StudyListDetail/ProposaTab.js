@@ -1,6 +1,10 @@
 import { css } from '@emotion/react';
+import Button from '../../Common/Button';
 
 function ProposaTab() {
+  const handleConsole = () => {
+    console.log('성공입니다');
+  };
   return (
     <div
       css={css`
@@ -15,22 +19,10 @@ function ProposaTab() {
           border: 1px solid #d1d1d1;
           border-radius: 5px;
         }
-
-        button {
-          margin-left: 60px;
-          width: 120px;
-          height: 40px;
-          font-size: 20px;
-          font-weight: 500;
-          color: #ffffff;
-          border: none;
-          background-color: #0b6ff2;
-          border-radius: 8px;
-        }
       `}
     >
       <input type="text" placeholder="신청을 위한 한 마디를 적어주세요" />
-      <button>등록</button>
+      <Button text={'삭제'} type={'big_blue'} onClick={handleConsole} />
     </div>
   );
 }
