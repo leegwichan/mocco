@@ -1,8 +1,17 @@
 import { css } from '@emotion/react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import request from '../../../api/index';
+import Task from './Task';
 
-function StudySection() {
-  // const navigate = useNavigate();
+function StudySection({ studyInfo, id, memberInfo, taskInfo }) {
+  const navigate = useNavigate();
+
+  const deleteHandler = () => {
+    return request.delete(`/api/study-board/${id}`).then(() => {
+      console.log('삭제합니다');
+      navigate('/studylist');
+    });
+  };
 
   return (
     <div
@@ -56,13 +65,13 @@ function StudySection() {
         `}
       >
         <div>
-          <span className="title">Title</span>
+          <span className="title">{studyInfo.teamName}</span>
           <button
             css={css`
               background-color: #ffffff;
               color: #0f6ad4;
             `}
-            // onClick={() => navigate('/studylist/modify/:id')}
+            onClick={() => navigate(`/studylist/modify/${id}`)}
           >
             수정
           </button>
@@ -71,6 +80,7 @@ function StudySection() {
               background-color: #6a6464;
               color: #ffffff;
             `}
+            onClick={deleteHandler}
           >
             삭제
           </button>
@@ -82,42 +92,22 @@ function StudySection() {
             align-items: flex-end;
           `}
         >
-          <span className="info">2022.09.10 ~ 2022.09.20</span>
-          <span className="info">5명</span>
-          <span>사진 김코딩</span>
+          <span className="info">{`${studyInfo.startDate} ~ ${studyInfo.endDate}`}</span>
+          <span className="info">{`${studyInfo.capacity}명`}</span>
+          <span>{memberInfo.nickname}</span>
         </div>
       </div>
       <div>
         <div className="detail_title">스터디 요약</div>
-        <div className="study_content">
-          한달 동안 모딥다를 공부하며 기술면접을 준비합니다. 자바스크립트 할 줄
-          아시면 누구나 환영합니다. 한달 동안 모딥다를 공부하며 기술면접을
-          준비합니다. 자바스크립트 할 줄 아시면 누구나 환영합니다.한달 동안
-          모딥다를 공부하며 기술면접을 준비합니다. 자바스크립트 할 줄 아시면
-          누구나 환영합니다.
-        </div>
+        <div className="study_content">{studyInfo.summary}</div>
       </div>
       <div>
         <div className="detail_title">스터디 상세 설명</div>
-        <div className="study_content">
-          안녕하세요, 저는 모꼬스터디의 스터디장인 김코딩입니다. 저희 모꼬
-          스터디는 2022년 9월 19일부터 2022년 10월 19일까지 한 달동안 진행되는
-          스터디로, 모딥다를 함께 공부하고 토론하며 기술 면접을 준비하는
-          스터디입니다. 자바스크립트 공부에 관심이 있으신 분이라면 누구나
-          환영합니다! 저희 스터디는 주 3회, 월 수 금 오후 10시부터 12시까지
-          비대면으로 진행할 예정이며, 참여하고 싶으신 분들은 댓글로 자기소개를
-          간단히 적어주시면 됩니다! 궁금하신 점은 댓글로 바로 물어봐주시면 답변
-          드리겠습니다.
-        </div>
+        <div className="study_content">{studyInfo.detail}</div>
       </div>
       <div>
         <div className="detail_title">스터디 규칙</div>
-        <div className="study_content">
-          주 3회 오후 10시부터 12시까지 진행
-          <br />주 1회 금요일 오후 10시에 전체 회의 참가
-          <br />
-          채팅은 오후 12시 이후 금지
-        </div>
+        <div className="study_content">{studyInfo.rule}</div>
       </div>
       <div
         css={css`
@@ -128,44 +118,11 @@ function StudySection() {
             padding-bottom: 23px;
             border-bottom: 2px solid black;
           }
-
-          .task_box {
-            height: 88px;
-            background-color: #f0f8ff;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            margin-top: 36px;
-
-            .study_rule {
-              font-size: 18px;
-              font-weight: 500;
-              color: #0b6ff2;
-            }
-          }
-
-          .task_info {
-            width: 1003px;
-            height: 54px;
-            background-color: #ffffff;
-            display: flex;
-            align-items: center;
-
-            span {
-              font-size: 15px;
-              margin-left: 35px;
-            }
-          }
         `}
       >
         <div className="task_container">스터디 Task</div>
-        <div className="task_box">
-          <span className="study_rule">규칙1</span>
-          <div className="task_info">
-            <span>1일 1커밋 하기</span>
-          </div>
-        </div>
+        {taskInfo &&
+          taskInfo.map((task) => <Task task={task} key={task.taskId} />)}
       </div>
     </div>
   );
