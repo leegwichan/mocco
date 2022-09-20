@@ -1,7 +1,10 @@
 import { css } from '@emotion/react';
-import Button from '../../Common/Button';
+import Button from '../../../Common/Button';
 
-function QuestionTab() {
+function ProposaTab() {
+  const handleConsole = () => {
+    console.log('성공입니다');
+  };
   return (
     <div
       css={css`
@@ -18,10 +21,10 @@ function QuestionTab() {
         }
       `}
     >
-      <input type="text" placeholder="스터디에 대한 궁금한 점을 물어보세요" />
-      <Button type={'big_blue'} text={'등록'} />
+      <input type="text" placeholder="신청을 위한 한 마디를 적어주세요" />
+      <Button text={'삭제'} type={'big_blue'} onClick={handleConsole} />
     </div>
   );
 }
 
-export default QuestionTab;
+export default ProposaTab;
