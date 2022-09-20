@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'; // eslint-disable-line no-unused-vars
 import request from '../api';
-// import TotalContainer from '../components/PageComponent/Main/TotalContainer';
 import { css } from '@emotion/react';
 import MyProfile from '../components/PageComponent/Main/MyProfile';
 import MyIntro from '../components/PageComponent/Main/MyIntro';
@@ -18,10 +17,9 @@ const infoSection = css`
   display: flex;
   justify-content: space-between;
   margin-top: 33px;
-  margin-bottom: 3%;
-  height: 235px;
+  margin-bottom: 5%;
+  height: 250px;
 `;
-
 const sectionItem = css`
   max-width: 1200px;
   height: 300px;
@@ -38,15 +36,29 @@ const sectionContents = css`
 `;
 function Main() {
   const [userProfile, setUserProfile] = useState({});
+  const [isConnectedGit, setIsConnectedGit] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
+
+  let loginMemberId = 1; //리코일 세팅 전, 테스트를 위해 임의로 (로그인한)memberId 설정
+
   useEffect(() => {
     getUserInfo();
+    // 깃헙 연동 여부
+    if (userProfile.githubId) {
+      setIsConnectedGit(true);
+    }
+    //마이페이지 owner 여부
+    if (userProfile.memberId === loginMemberId) {
+      setIsOwner(true);
+    }
+    console.log(userProfile);
   }, []);
+
   const getUserInfo = () => {
     return request
-      .get('/api/members/1')
+      .get('/api/members/3')
       .then((res) => {
         setUserProfile(res.data.data);
-        console.log(userProfile);
       })
       .catch((err) => {
         console.log(err);
@@ -58,10 +70,12 @@ function Main() {
       <h1 css={title}>{userProfile.nickname}의 페이지</h1>
       <section css={infoSection}>
         <MyProfile
+          isConnectedGit={isConnectedGit}
+          isOwner={isOwner}
           nickname={userProfile.nickname}
-          img={userProfile.profileImage}
-          githubId={userProfile.githubId}
           location={userProfile.location}
+          profileImage={userProfile.profileImage}
+          githubId={userProfile.githubId}
         />
         <MyIntro introduction={userProfile.introduction} />
         <GitHubRepo githubRepositoryList={userProfile.githubRepositoryList} />
