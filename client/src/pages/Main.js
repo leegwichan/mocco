@@ -4,6 +4,9 @@ import { css } from '@emotion/react';
 import MyProfile from '../components/PageComponent/Main/MyProfile';
 import MyIntro from '../components/PageComponent/Main/MyIntro';
 import GitHubRepo from '../components/PageComponent/Main/GitHubRepo';
+import ProgressList from '../components/PageComponent/Main/ProgressList';
+import DoneList from '../components/PageComponent/Main/DoneList';
+
 const totalContainer = css`
   max-width: 1200px;
   margin: auto;
@@ -33,6 +36,9 @@ const sectionContents = css`
   height: 252px;
   border: 1px solid #d1d1d1;
   border-radius: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 `;
 function Main() {
   const [userProfile, setUserProfile] = useState({});
@@ -51,7 +57,7 @@ function Main() {
     if (userProfile.memberId === loginMemberId) {
       setIsOwner(true);
     }
-    console.log(userProfile);
+    console.log(userProfile.progressStudy);
   }, []);
 
   const getUserInfo = () => {
@@ -86,11 +92,11 @@ function Main() {
       </section>
       <section css={sectionItem}>
         <div css={sectionTitle}>진행중인 스터디</div>
-        <div css={sectionContents}></div>
+        <ProgressList studyList={userProfile.progressStudy} />
       </section>
       <section css={sectionItem}>
         <div css={sectionTitle}>완료된 스터디</div>
-        <div css={sectionContents}></div>
+        <DoneList studyList={userProfile.doneStudy} />
       </section>
     </section>
   );
