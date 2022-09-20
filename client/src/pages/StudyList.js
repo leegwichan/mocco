@@ -25,7 +25,6 @@ function StudyList() {
         <div
           css={css`
             max-width: 1200px;
-            height: calc(100vh-64px);
             margin: auto;
           `}
         >
