@@ -1,24 +1,31 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import request from '../api';
 
 function SignUp() {
+  const [isPasswordConfirmError, setIsPasswordConfirmError] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = (event) => {
     event.preventDefault();
-
-    request({
-      method: 'post',
-      url: '/api/register/signup',
-      data: {
-        email: event.target.email.value,
-        password: event.target.password.value,
-        nickname: event.target.nickname.value,
-      },
-    })
-      .then(() => navigate('/login'))
-      .catch(console.error);
+    console.log('pw :', event.target.password.value);
+    if (event.target.password.value === event.target.passwordConfirm.value) {
+      setIsPasswordConfirmError(false);
+      request({
+        method: 'post',
+        url: '/api/register/signup',
+        data: {
+          email: event.target.email.value,
+          password: event.target.password.value,
+          nickname: event.target.nickname.value,
+        },
+      })
+        .then(() => navigate('/login'))
+        .catch(console.error);
+    } else {
+      setIsPasswordConfirmError(true);
+    }
   };
 
   return (
@@ -149,7 +156,7 @@ function SignUp() {
             ></input>
 
             <label
-              htmlFor="password"
+              htmlFor="passwordConfirm"
               css={css`
                 font-size: 18px;
                 margin-bottom: 12px;
@@ -159,8 +166,8 @@ function SignUp() {
             </label>
             <input
               type="password"
-              name="password"
-              id="password"
+              name="passwordConfirm"
+              id="passwordConfirm"
               css={css`
                 width: 100%;
                 height: 40px;
@@ -170,20 +177,18 @@ function SignUp() {
                 margin-bottom: 12px;
               `}
             ></input>
-            <div
-              css={css`
-                margin-bottom: 12px;
-              `}
-            >
+
+            {isPasswordConfirmError && (
               <p
                 css={css`
+                  margin-bottom: 12px;
                   font-size: 12px;
                   color: red;
                 `}
               >
                 비밀번호가 일치하지 않습니다.
               </p>
-            </div>
+            )}
 
             <div
               css={css`
