@@ -2,17 +2,8 @@ package com.team_60.Mocco.helper.stub;
 
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.dto.StudyDto;
-import com.team_60.Mocco.study.entity.Study;
-import com.team_60.Mocco.task.dto.TaskDto;
-import com.team_60.Mocco.task.entity.Task;
 import lombok.Getter;
-import java.util.List;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-
-import static com.team_60.Mocco.study.entity.Study.StudyStatus.RECRUIT_PROGRESS;
-
 @Getter
 public class StubData {
 

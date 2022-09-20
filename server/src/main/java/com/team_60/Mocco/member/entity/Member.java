@@ -17,10 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
 @Builder
 public class Member extends Auditable {
     @Id
