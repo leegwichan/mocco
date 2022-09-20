@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 import request from '../../../api/index';
 import Task from './Task';
+import Button from '../../Common/Button';
 
 function StudySection({ studyInfo, id, memberInfo, taskInfo }) {
   const navigate = useNavigate();
@@ -44,14 +45,6 @@ function StudySection({ studyInfo, id, memberInfo, taskInfo }) {
             color: #000000;
           }
 
-          button {
-            width: 64px;
-            height: 32px;
-            border-radius: 5px;
-            margin-right: 15px;
-            border: none;
-          }
-
           .info {
             font-size: 25px;
             color: #066ff2;
@@ -66,24 +59,13 @@ function StudySection({ studyInfo, id, memberInfo, taskInfo }) {
       >
         <div>
           <span className="title">{studyInfo.teamName}</span>
-          <button
-            css={css`
-              background-color: #ffffff;
-              color: #0f6ad4;
-            `}
+          <Button
+            type={'small_white'}
+            text={'수정'}
             onClick={() => navigate(`/studylist/modify/${id}`)}
-          >
-            수정
-          </button>
-          <button
-            css={css`
-              background-color: #6a6464;
-              color: #ffffff;
-            `}
-            onClick={deleteHandler}
-          >
-            삭제
-          </button>
+          />
+
+          <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
         </div>
         <div
           css={css`
