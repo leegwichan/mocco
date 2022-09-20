@@ -77,6 +77,13 @@ public class StudyBoardController {
                 new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(updatedStudy)),
                 HttpStatus.OK);
     }
+
+    @PatchMapping("/finish-recruit/{study-id}")
+    public ResponseEntity closeStudyRecruit(@PathVariable("study-id") long studyId){
+        Study study = studyService.finishRecruitStudy(studyId);
+        return new ResponseEntity(
+                new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(study)), HttpStatus.OK);
+    }
     
     @DeleteMapping("/{study-id}")
     public ResponseEntity deleteStudy(@PathVariable("study-id") long studyId,
