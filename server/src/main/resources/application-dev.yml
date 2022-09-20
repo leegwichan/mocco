@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://3.35.141.146:3306/Mocco?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
+    username: ${DEV_MYSQL_USERNAME}
+    password: ${DEV_MYSQL_PASSWORD}
+  hibernate:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true  # (3) SQL pretty print

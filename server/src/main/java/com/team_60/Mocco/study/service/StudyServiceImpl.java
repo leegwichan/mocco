@@ -2,10 +2,9 @@ package com.team_60.Mocco.study.service;
 
 import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.member.entity.Member;
-import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.member.service.MemberService;
-import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
 import com.team_60.Mocco.study_member.serive.StudyMemberService;
@@ -17,13 +16,9 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -45,11 +40,17 @@ public class StudyServiceImpl implements StudyService{
         validateStudy(study);
         //스터디 생성
         Study createdStudy = studyRepository.save(study);
-
         //멤버에 스터디 아이디 추가
         member.getStudyLeaderList().add(createdStudy);
         studyMemberService.createStudyMember(createdStudy, member);
         return createdStudy;
+    }
+    @Override
+    public Study createStubStudy(Study study) {
+        study.setStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS);
+        study.setTeamLeader(StubData.member1);
+        //스터디 생성
+        return studyRepository.save(study);
 
     }
     @Override
