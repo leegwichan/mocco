@@ -43,7 +43,7 @@ const NameAndCapacity = css`
   font-size: 0.8rem;
 `;
 
-function StudyCard() {
+function StudyCard({ studyData }) {
   return (
     <div css={Card}>
       <div css={ImageContainer}>
@@ -53,11 +53,15 @@ function StudyCard() {
         />
       </div>
       <div css={Content}>
-        <div css={Summary}>한 달 동안 모딥다 마스터하는 스터디입니다...</div>
+        <div css={Summary}>
+          {studyData.summary.length > 20
+            ? `${studyData.summary.slice(0, 20)}...`
+            : studyData.summary}
+        </div>
         <hr css={DivideLine} />
         <div css={NameAndCapacity}>
-          <span>스터디 이름</span>
-          <span>정원 n명</span>
+          <span>{studyData.teamName}</span>
+          <span>정원 {studyData.capacity}명</span>
         </div>
       </div>
     </div>

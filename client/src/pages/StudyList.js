@@ -1,9 +1,10 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React, { useEffect, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import SearchBar from '../components/PageComponent/StudyList/SearchBar';
 import StudyCard from '../components/PageComponent/StudyList/StudyCard';
 import MakeStudyButton from '../components/PageComponent/StudyList/MakeStudyButton';
 import StudyListTitle from '../components/PageComponent/StudyList/StudyListTitle';
+import request from '../api/index';
 
 const Header = css`
   width: 100vw;
@@ -43,37 +44,34 @@ const StudyCardContainer = css`
 `;
 
 function StudyList() {
+  const [studyLists, setStudyLists] = useState(null);
+  useEffect(() => {
+    request('/api/study-info/board?page=1&size=16').then((res) => {
+      setStudyLists(res.data.data);
+    });
+  }, []);
   return (
     <>
       <header css={Header} />
       <main css={MainContainer}>
-        <div css={ContentContainer}>
-          <section css={TitleAndButtonContainer}>
-            <StudyListTitle />
-            <MakeStudyButton />
-          </section>
-          <section css={SearchContainer}>
-            <SearchBar />
-          </section>
-          <section css={StudyCardContainer}>
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-            <StudyCard />
-          </section>
-        </div>
+        {studyLists ? (
+          <div css={ContentContainer}>
+            <section css={TitleAndButtonContainer}>
+              <StudyListTitle />
+              <MakeStudyButton />
+            </section>
+            <section css={SearchContainer}>
+              <SearchBar />
+            </section>
+            <section css={StudyCardContainer}>
+              {studyLists.map((studyData, i) => {
+                return <StudyCard key={i} studyData={studyData} />;
+              })}
+            </section>
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
       </main>
     </>
   );
