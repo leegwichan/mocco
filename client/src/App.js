@@ -6,6 +6,7 @@ import Main from './pages/Main';
 import StudyList from './pages/StudyList';
 import MakeStudy from './pages/MakeStudy';
 import StudyListDetail from './pages/StudyListDetail';
+import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
@@ -22,6 +23,7 @@ function App() {
         <Route path="/studylist" element={<StudyList />} />
         <Route path="/makestudy" element={<MakeStudy />} />
         <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
+        <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard" element={<StudyBoard />} />
       </Routes>

@@ -3,13 +3,10 @@ package com.team_60.Mocco.study.controller;
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
-import com.team_60.Mocco.member.entity.Member;
-import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.mapper.StudyMapper;
 import com.team_60.Mocco.study.service.StudyService;
-import com.team_60.Mocco.study.service.StudyServiceImpl;
 import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task.mapper.TaskMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/study-board")
@@ -80,6 +76,13 @@ public class StudyBoardController {
         return new ResponseEntity<>(
                 new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(updatedStudy)),
                 HttpStatus.OK);
+    }
+
+    @PatchMapping("/finish-recruit/{study-id}")
+    public ResponseEntity closeStudyRecruit(@PathVariable("study-id") long studyId){
+        Study study = studyService.finishRecruitStudy(studyId);
+        return new ResponseEntity(
+                new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(study)), HttpStatus.OK);
     }
     
     @DeleteMapping("/{study-id}")

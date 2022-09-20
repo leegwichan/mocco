@@ -3,6 +3,8 @@ package com.team_60.Mocco.task.mapper;
 import com.team_60.Mocco.task.dto.TaskDto;
 import com.team_60.Mocco.task.entity.Task;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
 import java.util.List;
 
 @Mapper(componentModel = "spring")
