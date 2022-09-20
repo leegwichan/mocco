@@ -95,6 +95,10 @@ public class StudyServiceImpl implements StudyService{
     @Override
     public Study finishRecruitStudy(long studyId) {
         Study findStudy = findVerifiedStudy(studyId);
+        if (findStudy.getStudyMemberList().size() <= 1){
+            throw new BusinessLogicException(ExceptionCode.NOT_MEMBER_ABOVE_2);
+        }
+
         findStudy.setStudyStatus(Study.StudyStatus.RECRUIT_COMPLETE);
         return studyRepository.save(findStudy);
     }

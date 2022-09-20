@@ -13,6 +13,7 @@ public enum ExceptionCode {
     NOT_GITHUB_REPOSITORY(400, "잘못된 github repository 입니다."),
     STUDY_NOT_FOUND(404, "스터디를 찾을 수 없습니다."),
     STUDY_NOT_RECRUIT(400, "스터디가 모집중이 아닙니다."),
+    NOT_MEMBER_ABOVE_2(400, "현재 스터디의 스터디원이 1명 이하입니다."),
     STUDY_NOT_PROGRESS(400, "스터디가 진행중이 아닙니다."),
     NOT_STUDY_MEMBER(400, "스터디의 멤버가 아닙니다."),
     COMMENT_NOT_FOUND(404, "코멘트를 찾을 수 없습니다."),
