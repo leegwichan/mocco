@@ -14,3 +14,9 @@ export const commentAtom = atom({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+
+export const mypageOwnerAtom = atom({
+  key: 'mypageOwnerAtom',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});

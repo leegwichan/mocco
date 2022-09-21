@@ -1,11 +1,11 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
 import GitHubBtnBlue from './GitHubBtn/GitHubBtnBlue';
 import GitHubBtnMyGray from './GitHubBtn/GitHubBtnMyGray';
 import GitHubBtnGray from './GitHubBtn/GitHubBtnGray';
 import Avatar from '../../Common/Avatar';
-
+import { useRecoilValue } from 'recoil';
+import { mypageOwnerAtom } from '../../../atom/atom';
 const container = css`
   width: 15%;
   display: flex;
@@ -16,7 +16,7 @@ const container = css`
 
 const roundImg = css`
   border-radius: 100%;
-  max-width: 80%;
+  max-width: 70%;
 `;
 
 const name = css`
@@ -31,7 +31,7 @@ const nameLocation = css`
   width: 100%;
   .locationIcon {
     color: #4391f9;
-    width: 10px;
+    width: 17px;
   }
   .smallText {
     font-size: 8px;
@@ -45,26 +45,17 @@ const nameLocation = css`
   }
 `;
 
-function MyProfile({
-  img,
-  nickname,
-  evaluation,
-  githubId,
-  isConnectedGit,
-  isOwner,
-  profileImage,
-  location,
-}) {
-  const navigate = useNavigate();
-
+function MyProfile({ githubId, isConnectedGit, isOwner }) {
+  const owner = useRecoilValue(mypageOwnerAtom);
   return (
     <section css={container}>
-      {img !== null ? (
-        <img src={profileImage} alt={'프로필 이미지'} css={roundImg} />
-      ) : (
-        <Avatar />
-      )}
-
+      <section css={roundImg}>
+        {owner.profileImage !== null ? (
+          <img src={owner.profileImage} alt={'프로필 이미지'} />
+        ) : (
+          <Avatar css={roundImg} />
+        )}
+      </section>
       <section css={nameLocation}>
         <div className="locationText">
           <svg
@@ -79,16 +70,16 @@ function MyProfile({
               clipRule="evenodd"
             />
           </svg>
-          <div className="smallText">{location}</div>
+          <div className="smallText">{owner.location}</div>
         </div>
-        <div css={name}>{nickname}</div>
+        <div css={name}>{owner.nickname}</div>
       </section>
 
-      <div>평점{evaluation}</div>
+      <div>평점{owner.evaluation}</div>
       {isConnectedGit ? (
         <GitHubBtnBlue githubId={githubId} />
       ) : isOwner ? (
-        <GitHubBtnMyGray onClick={() => navigate('/login')} />
+        <GitHubBtnMyGray />
       ) : (
         <GitHubBtnGray />
       )}

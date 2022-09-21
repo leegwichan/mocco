@@ -1,12 +1,11 @@
 import { css } from '@emotion/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import React from 'react'; // eslint-disable-line no-unused-vars
 
 const Card = css`
   flex-shrink: 0; //찌그러지지 않게
   width: 250px;
   height: 250px;
-  /* margin-right: 30px; */
   margin-bottom: 4rem;
   border-radius: 10px;
   box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
@@ -16,61 +15,67 @@ const Card = css`
   }
 `;
 
+const Container = css`
+  display: flex;
+  .icon {
+    width: 40px;
+    color: #4391f9;
+    &:hover {
+      color: #0b6ff2;
+    }
+  }
+  .none {
+    display: none;
+  }
+`;
 const Slides_Wraper = css`
-  position: relative;
-  width: 1200px;
+  width: 100%;
+  max-width: 1000px;
+  padding: 30px;
   margin: 0 auto;
-  height: 250px;
   overflow: hidden;
-  /* border: 1px solid red;
-  transition: transform(0.5s);
-  height: 100%; */
+  box-sizing: border-box;
 `;
 
 const Slides = css`
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: relative;
+  width: 100%;
+  height: 250px;
   transition: left 0.5s ease-out;
-  li:not(:last-child) {
-    float: left;
-    margin-right: 50px;
+  ul {
+    display: flex;
   }
-  /* display: flex;
-  overflow: hidden;
-  transform: translate(-4vw); */
+  li {
+    float: left;
+    margin-right: 100px;
+  }
 `;
 
-const controls = css`
-  text-align: center;
-  button {
-    background-color: aliceblue;
-    padding: 0 20px;
-    margin: 0px 10px;
-  }
-`;
-function Carousel({ studyList }) {
+function Carousel({ studyArr }) {
   //main > progressList > carousel로 배열 받아와야함
+  // 일단 두개 띄워둔 상태.
+
   const [currentIdx, setCurrentIdx] = useState(0);
   const slides = useRef(null);
-  const slide = useRef(null);
-  const TOTAL_SLIDES = 7; //여러개 로드하기 위해 배열 개수 임의로 설정. 실제 데이터 들어오면'studyList.length'로 바꾸기
-
-  if (studyList) {
-    console.log(studyList.length);
-    const slideWidth = 250;
-    const slideMargin = 30;
-    slides.current.style.width =
-      (slideWidth + slideMargin) * TOTAL_SLIDES - slideMargin + 'px';
+  let length;
+  if (studyArr) {
+    length = studyArr.length;
   }
+  useEffect(() => {
+    const slideWidth = 250;
+    const slideMargin = 100;
+    console.log(studyArr);
+    slides.current.style.width =
+      (slideWidth + slideMargin) * length - slideMargin + 'px';
+  }, []);
 
   function moveSlide(num) {
-    slides.current.style.left = -num * 280 + 'px';
+    slides.current.style.left = -num * 350 + 'px';
     setCurrentIdx(num);
   }
 
   function goNext() {
-    if (currentIdx < TOTAL_SLIDES - 4) {
+    if (currentIdx < length - 3) {
       moveSlide(currentIdx + 1);
       console.log(currentIdx);
     } else {
@@ -82,46 +87,55 @@ function Carousel({ studyList }) {
     if (currentIdx > 0) {
       moveSlide(currentIdx - 1);
     } else {
-      moveSlide(TOTAL_SLIDES - 4);
+      moveSlide(length - 3);
     }
   }
 
   return (
-    <>
+    <div css={Container}>
+      {studyArr && length < 4 ? null : (
+        <svg
+          onClick={goPrev}
+          className="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      )}
       <div css={Slides_Wraper}>
-        <ul css={Slides} ref={slides}>
-          <li css={Card} ref={slide}>
-            1
-          </li>
-          <li css={Card} ref={slide}>
-            2
-          </li>
-          <li css={Card} ref={slide}>
-            3
-          </li>
-          <li css={Card} ref={slide}>
-            4
-          </li>
-          <li css={Card} ref={slide}>
-            5
-          </li>
-          <li css={Card} ref={slide}>
-            6
-          </li>
-          <li css={Card} ref={slide}>
-            7
-          </li>
-        </ul>
+        <div css={Slides} ref={slides}>
+          <ul>
+            <li css={Card}>1</li>
+            <li css={Card}>2</li>
+          </ul>
+        </div>
       </div>
-      <p css={controls}>
-        <button className="prev" onClick={goPrev}>
-          prev
-        </button>
-        <button className="next" onClick={goNext}>
-          next
-        </button>
-      </p>
-    </>
+      {studyArr && length < 4 ? null : (
+        <svg
+          onClick={goNext}
+          className="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      )}
+    </div>
   );
 }
 

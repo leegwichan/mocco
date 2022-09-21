@@ -1,31 +1,33 @@
-import { css } from '@emotion/react';
+import React from 'react'; // eslint-disable-line no-unused-vars
+import { useRecoilValue } from 'recoil';
+import { mypageOwnerAtom } from '../../../../atom/atom';
+// import { css } from '@emotion/react';
+import Carousel from './Carousel';
 
-const Empty = css`
-  height: 252px;
-  border: 1px solid #d1d1d1;
-  border-radius: 8px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  color: #2d2d2d;
-  svg {
-    width: 75px;
-    margin-bottom: 5px;
-    color: #0f6ad5;
-  }
-`;
+// const Empty = css`
+//   height: 252px;
+//   border: 1px solid #d1d1d1;
+//   border-radius: 8px;
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   font-size: 15px;
+//   color: #2d2d2d;
+//   svg {
+//     width: 75px;
+//     margin-bottom: 5px;
+//     color: #0f6ad5;
+//   }
+// `;
 
-function ProgressList({ studyList }) {
-  if (studyList) {
-    console.log(studyList.length);
-  }
-
+function ProgressList() {
+  const owner = useRecoilValue(mypageOwnerAtom);
+  const studyArr = owner.progressStudy;
   return (
     <div>
-      {studyList && studyList.length < 1 ? (
+      {/* {studyArr.length < 1 ? (
         <div css={Empty}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -42,9 +44,9 @@ function ProgressList({ studyList }) {
           </svg>
           <span>진행중인 스터디가 없습니다</span>
         </div>
-      ) : (
-        <div>있음</div>
-      )}
+      ) : ( */}
+      <Carousel studyArr={studyArr} />
+      {/* )} */}
     </div>
   );
 }

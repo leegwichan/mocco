@@ -8,7 +8,8 @@ import ProgressList from '../components/PageComponent/Main/MyStudyList/ProgressL
 import DoneList from '../components/PageComponent/Main/MyStudyList/DoneList';
 import EvalueModal from '../components/PageComponent/Main/Evaluation/EvalueModal';
 import GitHubGrass from '../components/PageComponent/Main/GitHubGrass';
-
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { userInfoState, mypageOwnerAtom } from '../atom/atom';
 const totalContainer = css`
   max-width: 1200px;
   margin: auto;
@@ -29,9 +30,8 @@ const infoSection = css`
 `;
 
 const sectionItem = css`
-  max-width: 1200px;
   height: 300px;
-  margin-bottom: 3%;
+  margin-bottom: 10%; // 원래 3%. 캐러셀 구현하려고 늘려놓음. 버튼 양옆으로 배치한 후 다시 돌려놓기
 `;
 
 const sectionTitle = css`
@@ -40,31 +40,29 @@ const sectionTitle = css`
 `;
 
 function Main() {
-  const [ownerInfo, setOwnerInfo] = useState({});
   const [isConnectedGit, setIsConnectedGit] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
+  const [ownerI, setOwnerI] = useRecoilState(mypageOwnerAtom);
 
-  let loginMemberId = 1; //리코일 세팅 전, 테스트를 위해 임의로 (로그인한)memberId 설정
+  const loginUser = useRecoilValue(userInfoState);
 
   useEffect(() => {
     getUserInfo();
     // 깃헙 연동 여부
-    if (ownerInfo.githubId) {
+    if (ownerI.githubId) {
       setIsConnectedGit(true);
-      console.log(ownerInfo);
     }
     //마이페이지 owner 여부
-    if (ownerInfo.memberId === loginMemberId) {
+    if (ownerI.memberId === loginUser.memberId) {
       setIsOwner(true);
     }
-    console.log(ownerInfo);
   }, []);
 
   const getUserInfo = () => {
     return request
       .get('/api/members/3')
       .then((res) => {
-        setOwnerInfo(res.data.data);
+        setOwnerI(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -73,31 +71,27 @@ function Main() {
 
   return (
     <section css={totalContainer}>
-      <h1 css={title}>{ownerInfo.nickname}의 페이지</h1>
+      <h1 css={title}>{ownerI.nickname}의 페이지</h1>
       <section css={infoSection}>
         <MyProfile
           isConnectedGit={isConnectedGit}
           isOwner={isOwner}
-          nickname={ownerInfo.nickname}
-          location={ownerInfo.location}
-          profileImage={ownerInfo.profileImage}
-          githubId={ownerInfo.githubId}
-          evaluation={ownerInfo.evaluation}
+          githubId={ownerI.githubId}
         />
-        <MyIntro introduction={ownerInfo.introduction} />
-        <GitHubRepo githubRepositoryList={ownerInfo.githubRepositoryList} />
+        <MyIntro introduction={ownerI.introduction} />
+        <GitHubRepo githubRepositoryList={ownerI.githubRepositoryList} />
       </section>
       <section css={sectionItem}>
         <div css={sectionTitle}>GitHub 활동</div>
-        <GitHubGrass githubId={ownerInfo.githubId} />
+        <GitHubGrass githubId={ownerI.githubId} />
       </section>
       <section css={sectionItem}>
         <div css={sectionTitle}>진행중인 스터디</div>
-        <ProgressList studyList={ownerInfo.progressStudy} />
+        <ProgressList />
       </section>
       <section css={sectionItem}>
         <div css={sectionTitle}>완료된 스터디</div>
-        <DoneList studyList={ownerInfo.doneStudy} />
+        <DoneList studyList={ownerI.doneStudy} />
       </section>
       <EvalueModal
         text={'스터디 후기를 작성해주세요'}

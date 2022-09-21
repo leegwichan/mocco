@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
-
-// import StudyCard from './StudyCard';
-
+import Carousel from './Carousel';
+import { useRecoilValue } from 'recoil';
+import { mypageOwnerAtom } from '../../../../atom/atom';
 const Empty = css`
   height: 252px;
   border: 1px solid #d1d1d1;
@@ -20,14 +20,12 @@ const Empty = css`
   }
 `;
 
-function DoneList({ studyList }) {
-  if (studyList) {
-    console.log(studyList.length);
-  }
-
+function DoneList() {
+  const owner = useRecoilValue(mypageOwnerAtom);
+  const studyArr = owner.doneStudy;
   return (
     <div>
-      {studyList && studyList.length < 1 ? (
+      {studyArr && studyArr.length < 1 ? (
         <div css={Empty}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -45,9 +43,10 @@ function DoneList({ studyList }) {
           <span>완료된 스터디가 없습니다</span>
         </div>
       ) : (
-        <div>있음</div>
+        <Carousel studyArr={studyArr} />
       )}
     </div>
   );
 }
+
 export default DoneList;
