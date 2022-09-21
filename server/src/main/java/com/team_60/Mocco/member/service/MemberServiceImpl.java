@@ -27,6 +27,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Member createMember(Member member) {
         findMemberByEmailExpectByNull(member.getEmail());
+        findMemberByNicknameExpectNull(member.getNickname());
         member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         return memberRepository.save(member);
     }
@@ -47,8 +48,8 @@ public class MemberServiceImpl implements MemberService{
 
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickName -> {
-                    if (!nickName.equals(findMember.getNickname())){
-                        findMemberByNicknameExpectNull(member.getNickname());
+                    if (!nickName.equals(nickName)){
+                        findMemberByNicknameExpectNull(nickName);
                         findMember.setNickname(nickName);
                     }
                 });
