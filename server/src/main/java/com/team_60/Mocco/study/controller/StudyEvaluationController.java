@@ -21,12 +21,12 @@ public class StudyEvaluationController {
     private final StudyEvaluationService studyEvaluationService;
     private final StudyEvaluationMapper mapper;
 
-    @GetMapping("/{study-id}")
-    public ResponseEntity getEvaluationInfo(@PathVariable("study-id") long studyId){
+    @GetMapping("/{study-id}/member/{member-id}")
+    public ResponseEntity getEvaluationInfo(@PathVariable("study-id") long studyId,
+                                            @PathVariable("member-id") long memberId){
 
-        // TODO 회원 정보 받아서 이미 평가 했는지 체크하는 기능 넣을 것
-       Study study = studyEvaluationService.getStudyByStudyEvaluation(studyId);
-        StudyEvaluationDto.Response response = mapper.studyToStudyEvaluationResponseDto(study);
+        Study study = studyEvaluationService.getStudyByStudyEvaluation(studyId);
+        StudyEvaluationDto.Response response = mapper.studyToStudyEvaluationResponseDto(study, memberId);
 
         return new ResponseEntity(
                 new SingleResponseDto<>(response), HttpStatus.OK);

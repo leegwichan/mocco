@@ -37,8 +37,8 @@ public interface MemberMapper {
     MyInfo memberPatchDtoToMyInfo(MemberDto.Patch dto);
 
     default MemberDto.Response memberToMemberResponseDto(Member member){
-        int evaluation = member.getMyInfo().getEvaluationNumber() == 0 ?
-                0 : member.getMyInfo().getEvaluationTotal() / member.getMyInfo().getEvaluationNumber();
+        float evaluation = member.getMyInfo().getEvaluationNumber() == 0 ?
+                0 : (float) member.getMyInfo().getEvaluationTotal() / (float) member.getMyInfo().getEvaluationNumber();
 
         List<String> github_repository_list = new ArrayList<>();
         github_repository_list.add(member.getMyInfo().getGithubRepository1());

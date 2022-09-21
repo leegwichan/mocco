@@ -26,12 +26,11 @@ public interface StudyEvaluationMapper {
         return members;
     }
 
-    default StudyEvaluationDto.Response studyToStudyEvaluationResponseDto(Study study/*, long memberId*/){
+    default StudyEvaluationDto.Response studyToStudyEvaluationResponseDto(Study study, long memberId){
 
         List<MemberDto.SubResponse> memberDtoList = new ArrayList<>();
         for(StudyMember studyMember : study.getStudyMemberList()){
-            // TODO 로그인 사람의 정보를 가져와서 거르는 작업이 필요
-            // if (studyMember.getMember().getMemberId() == memberId) continue;
+            if (studyMember.getMember().getMemberId() == memberId) continue;
             memberDtoList.add(MemberMapper.memberToMemberSubResponseDto(studyMember.getMember()));
         }
 

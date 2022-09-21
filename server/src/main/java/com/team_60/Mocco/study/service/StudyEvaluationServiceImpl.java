@@ -41,7 +41,7 @@ public class StudyEvaluationServiceImpl implements StudyEvaluationService{
         Member findMember = memberService.findVerifiedMember(memberId);
         CheckIsEvaluationStatus(findStudy);
         CheckAlreadyEvaluate(findMember, findStudy);
-        CheckAllEvaluate(findStudy, members);
+        CheckAllEvaluate(findStudy, members, memberId);
 
         for (Member member: members){
             Member evaluatedMember = memberService.findMember(member.getMemberId());
@@ -74,20 +74,20 @@ public class StudyEvaluationServiceImpl implements StudyEvaluationService{
         }
         throw new BusinessLogicException(ExceptionCode.NOT_STUDY_MEMBER);
     }
-    private void CheckAllEvaluate(Study study, List<Member> members){
+    private void CheckAllEvaluate(Study study, List<Member> members, long evaluatorMemberId){
 
         if (study.getStudyMemberList().size() -1 != members.size()){
             throw new BusinessLogicException(ExceptionCode.NOT_ALL_EVALUATION);
         }
 
         ArrayList<Long> memberIdArray = new ArrayList<>();
-
         memberRepeat: for (Member member : members){
             for (long memberId : memberIdArray){
                 if (memberId == member.getMemberId()) throw new BusinessLogicException(ExceptionCode.DUPLICATION_EVALUATION);
             }
             memberIdArray.add(member.getMemberId());
 
+            if (evaluatorMemberId == member.getMemberId()) throw new BusinessLogicException(ExceptionCode.NOT_EVALUATION_MEMBER);
             for (StudyMember studyMember : study.getStudyMemberList()){
                 if (studyMember.getMember().getMemberId() == member.getMemberId())
                     continue memberRepeat;
