@@ -52,5 +52,11 @@ public class StudyInfoController {
                 new MultiResponseDto<>(studyMapper.studiesToStudySubResponseDtos(findStudyList),findStudyPage),
                         HttpStatus.OK);
     }
+    @GetMapping("/study-count")
+    public ResponseEntity getStudyCount(){
+        //진행중인 스터디 개수, 모집중인 스터디 개수
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(studyService.countStudies()),HttpStatus.OK);
+    }
 
 }
