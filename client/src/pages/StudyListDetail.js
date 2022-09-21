@@ -1,37 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { css } from '@emotion/react';
-import { useSetRecoilState } from 'recoil';
-import { commentAtom } from '../atom/atom';
-import StudySection from '../components/PageComponent/StudyListDetail/StudySection';
+import StudySection from '../components/PageComponent/StudyListDetail/StudySection/StudySection';
 import TabSection from '../components/PageComponent/StudyListDetail/TabSection';
-import request from '../api/index';
 
 function StudyListDetail() {
-  const { id } = useParams();
-  const [studyInfo, setStudyInfo] = useState({});
-  const [memberInfo, setMemberInfo] = useState({});
-  const [taskInfo, setTaskInfo] = useState([]);
-  const setCommentAtom = useSetRecoilState(commentAtom);
-
-  useEffect(() => {
-    getStudyInfo();
-  }, []);
-
-  const getStudyInfo = () => {
-    return request(
-      `/api/study-info/board/${id}
-    `
-    ).then((res) => {
-      console.log(res);
-      setStudyInfo(res.data.data);
-      setMemberInfo(res.data.data.member);
-      setTaskInfo(res.data.data.taskList);
-      setCommentAtom(res.data.data.commentList);
-    });
-  };
-  // console.log('task', taskInfo);
-
   return (
     <div
       css={css`
@@ -40,22 +11,10 @@ function StudyListDetail() {
         margin-top: 170px;
       `}
     >
-      <StudySection
-        studyInfo={studyInfo}
-        id={id}
-        memberInfo={memberInfo}
-        taskInfo={taskInfo}
-      />
+      <StudySection />
       <TabSection />
     </div>
   );
 }
 
 export default StudyListDetail;
-
-/*teamname
-startdate
-enddate
-capacity
-member.nickname
-studying*/

@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-import request from '../../../api/index';
-import Task from './Task';
-import Button from '../../Common/Button';
+import request from '../../../../api/index';
+import Task from '../Task';
+import Button from '../../../Common/Button';
 
-function StudySection({ studyInfo, id, memberInfo, taskInfo }) {
+function StudyItem({ studyInfo, id, memberInfo, taskInfo }) {
   const navigate = useNavigate();
 
   const deleteHandler = () => {
@@ -110,4 +110,4 @@ function StudySection({ studyInfo, id, memberInfo, taskInfo }) {
   );
 }
 
-export default StudySection;
+export default StudyItem;

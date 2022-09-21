@@ -1,16 +1,19 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import Button from '../../../Common/Button';
+// import { useRecoilValue } from 'recoil';
+// import { userInfoState } from '../../../../atom/atom';
 import request from '../../../../api';
 import { useParams } from 'react-router-dom';
 
 function InputComment() {
   const { id } = useParams();
   const [commentContent, setCommentContent] = useState('');
+  // const userInfo = useRecoilValue(userInfoState);
 
   const commentInfo = {
     content: commentContent,
-    memberId: '1',
+    memberId: 3,
     studyId: id,
   };
 
@@ -22,7 +25,7 @@ function InputComment() {
         setCommentContent('');
         window.location.reload();
       })
-      .err((err) => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -31,6 +34,7 @@ function InputComment() {
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-bottom: 45px;
       `}
     >
       <input

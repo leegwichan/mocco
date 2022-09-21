@@ -41,6 +41,7 @@ function TabSection() {
           .tab:hover,
           .focused {
             color: #0b6ff2;
+            /* border-bottom: 3px solid #0b6ff2; */
             border-top: 10px solid #0b6ff2;
             padding-top: 8px;
           }
