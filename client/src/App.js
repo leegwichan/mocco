@@ -9,13 +9,8 @@ import StudyListDetail from './pages/StudyListDetail';
 import ModifyUser from './pages/ModifyUser';
 import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
-// import { userInfoState } from './atom/atom';
-// import { useRecoilValue } from 'recoil';
 
 function App() {
-  // const userInfo = useRecoilValue(userInfoState);
-
-  // console.log(userInfo);
   return (
     <div>
       <Routes>
