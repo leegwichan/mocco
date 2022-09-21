@@ -12,6 +12,7 @@ public class StudyMemberDto {
     @Getter
     @Setter
     public static class Response{
+        private long studyId;
         private String image;
         private String teamName;
         private int capacity;
