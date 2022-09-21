@@ -1,7 +1,10 @@
 import { css } from '@emotion/react';
 import request from '../api';
+import { useRecoilState } from 'recoil';
+import { userInfoState } from 'States/LoginState';
 
 function LogIn() {
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const onSubmit = (event) => {
     event.preventDefault();
 
