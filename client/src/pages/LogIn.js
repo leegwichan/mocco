@@ -1,7 +1,12 @@
 import { css } from '@emotion/react';
 import request from '../api';
+import { useSetRecoilState } from 'recoil';
+import { userInfoState } from '../atom/atom';
+import { useNavigate } from 'react-router-dom';
 
 function LogIn() {
+  const navigate = useNavigate();
+  const setUserInfoState = useSetRecoilState(userInfoState);
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -13,8 +18,19 @@ function LogIn() {
         password: event.target.password.value,
       },
     })
-      .then(console.log)
-      .catch(console.error);
+      .catch(console.error)
+      .then((res) => {
+        console.log(res.data);
+        return res;
+      })
+      .then((res) =>
+        request({
+          method: 'get',
+          url: `/api/members/${res.data.memberId}`,
+        })
+      )
+      .then((res) => setUserInfoState(res.data.data))
+      .then(() => navigate('/main'));
   };
 
   return (
