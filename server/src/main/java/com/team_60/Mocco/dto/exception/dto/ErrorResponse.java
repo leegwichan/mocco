@@ -21,7 +21,7 @@ public class ErrorResponse {
         private String reason;
     }
 
-    private ErrorResponse(String message, int status, List<FieldError> errors){
+    public ErrorResponse(String message, int status, List<FieldError> errors){
         this.message = message;
         this.status = status;
         this.errors = errors;

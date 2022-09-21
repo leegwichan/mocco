@@ -3,9 +3,7 @@ package com.team_60.Mocco.task.entity;
 import com.team_60.Mocco.audit.Auditable;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task_check.entity.TaskCheck;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,6 +14,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
+@Builder
 public class Task extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
