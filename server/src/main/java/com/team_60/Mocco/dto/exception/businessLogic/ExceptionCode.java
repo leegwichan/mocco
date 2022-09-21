@@ -20,6 +20,7 @@ public enum ExceptionCode {
     NOT_STUDY_EVALUATION_STATUS(400, "이미 투표를 했거나 투표기간이 지났습니다."),
     NOT_EVALUATION_MEMBER(400, "투표 대상이 아닌 사람을 투표했습니다."),
     NOT_ALL_EVALUATION(400, "전 Member 를 투표를 하지 않았습니다."),
+    DUPLICATION_EVALUATION(400, "같은 멤버를 중복 투표하였습니다."),
     COMMENT_NOT_FOUND(404, "코멘트를 찾을 수 없습니다."),
     COMMENT_DELETED(400, "삭제된 코멘트입니다."),
     REPLY_NOT_FOUND(404, "대댓글을 찾을 수 없습니다."),

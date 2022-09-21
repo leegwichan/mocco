@@ -8,10 +8,13 @@ import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study_member.entity.StudyMember;
+import com.team_60.Mocco.study_member.repository.StudyMemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +23,7 @@ public class StudyEvaluationServiceImpl implements StudyEvaluationService{
     private final StudyService studyService;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final StudyMemberRepository studyMemberRepository;
 
     @Override
     public Study getStudyByStudyEvaluation(long studyId) {
@@ -48,6 +52,10 @@ public class StudyEvaluationServiceImpl implements StudyEvaluationService{
                     evaluatedMemberMyInfo.getEvaluationNumber() + 1);
             memberRepository.save(evaluatedMember);
         }
+
+        StudyMember studyMember = studyMemberRepository.findByStudyAndMember(findStudy, findMember).get();
+        studyMember.setEvaluationStatus(StudyMember.StudyMemberEvaluationStatus.COMPLETE);
+        studyMemberRepository.save(studyMember);
     }
 
     private void CheckIsEvaluationStatus(Study study){
@@ -72,7 +80,14 @@ public class StudyEvaluationServiceImpl implements StudyEvaluationService{
             throw new BusinessLogicException(ExceptionCode.NOT_ALL_EVALUATION);
         }
 
+        ArrayList<Long> memberIdArray = new ArrayList<>();
+
         memberRepeat: for (Member member : members){
+            for (long memberId : memberIdArray){
+                if (memberId == member.getMemberId()) throw new BusinessLogicException(ExceptionCode.DUPLICATION_EVALUATION);
+            }
+            memberIdArray.add(member.getMemberId());
+
             for (StudyMember studyMember : study.getStudyMemberList()){
                 if (studyMember.getMember().getMemberId() == member.getMemberId())
                     continue memberRepeat;
