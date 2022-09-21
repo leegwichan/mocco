@@ -43,14 +43,11 @@ const NameAndCapacity = css`
   font-size: 0.8rem;
 `;
 
-function StudyCard({ studyData }) {
+function StudyCard({ studyData, boxRef }) {
   return (
-    <div css={Card}>
+    <div css={Card} ref={boxRef ? boxRef : null}>
       <div css={ImageContainer}>
-        <img
-          src="https://avatars.githubusercontent.com/u/71388830?v=4"
-          alt="스터디 대표 사진"
-        />
+        <img src={studyData.image} alt="스터디 대표 사진" />
       </div>
       <div css={Content}>
         <div css={Summary}>

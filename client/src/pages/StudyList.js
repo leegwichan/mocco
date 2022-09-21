@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useEffect, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import SearchBar from '../components/PageComponent/StudyList/SearchBar';
 import StudyCard from '../components/PageComponent/StudyList/StudyCard';
@@ -44,12 +44,36 @@ const StudyCardContainer = css`
 `;
 
 function StudyList() {
-  const [studyLists, setStudyLists] = useState(null);
-  useEffect(() => {
-    request('/api/study-info/board?page=1&size=16').then((res) => {
-      setStudyLists(res.data.data);
+  const [studyLists, setStudyLists] = useState([]);
+  const [apiPage, setApiPage] = useState(1);
+  const getStudyLists = () => {
+    request(`/api/study-info/board?page=${apiPage}&size=20`).then((res) => {
+      setStudyLists([...studyLists, ...res.data.data]);
+      setApiPage(apiPage + 1);
     });
+  };
+
+  const obeserverRef = useRef();
+  const boxRef = useRef(null);
+
+  useEffect(() => {
+    getStudyLists();
   }, []);
+
+  useEffect(() => {
+    obeserverRef.current = new IntersectionObserver(intersectionObserver);
+    boxRef.current && obeserverRef.current.observe(boxRef.current);
+  }, [studyLists]);
+
+  const intersectionObserver = (entries, io) => {
+    console.log(entries);
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        io.unobserve(entry.target);
+        getStudyLists();
+      }
+    });
+  };
   return (
     <>
       <header css={Header} />
@@ -64,8 +88,17 @@ function StudyList() {
               <SearchBar />
             </section>
             <section css={StudyCardContainer}>
-              {studyLists.map((studyData, i) => {
+              {/* {studyLists.map((studyData, i) => {
                 return <StudyCard key={i} studyData={studyData} />;
+              })} */}
+              {studyLists.map((studyData, i) => {
+                if (studyLists.length - 4 === i) {
+                  return (
+                    <StudyCard key={i} studyData={studyData} boxRef={boxRef} />
+                  );
+                } else {
+                  return <StudyCard key={i} studyData={studyData} />;
+                }
               })}
             </section>
           </div>
