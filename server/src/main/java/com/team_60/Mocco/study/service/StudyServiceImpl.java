@@ -1,7 +1,7 @@
 package com.team_60.Mocco.study.service;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.service.MemberService;

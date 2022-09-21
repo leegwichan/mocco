@@ -1,7 +1,7 @@
 package com.team_60.Mocco.task.service;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task.repository.TaskRepository;

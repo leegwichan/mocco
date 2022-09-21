@@ -1,7 +1,12 @@
-package com.team_60.Mocco.dto.exception.advice;
+package com.team_60.Mocco.exception.advice;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.dto.ErrorResponse;
+import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.dto.ErrorResponse;
+import com.team_60.Mocco.exception.oauth.OAuthLogicException;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,5 +32,20 @@ public class GlobalExceptionAdvice {
         final ErrorResponse response = new ErrorResponse("파일 업로드 형식이 잘못되었습니다.",
                 400, new ArrayList<>());
         return response;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.OK)
+    public SingleResponseDto handleOAuthLogicException(OAuthLogicException e){
+        
+        return new SingleResponseDto(
+                new OAuthDto(e.getOauthId()));
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class OAuthDto{
+        private long oauthId;
     }
 }

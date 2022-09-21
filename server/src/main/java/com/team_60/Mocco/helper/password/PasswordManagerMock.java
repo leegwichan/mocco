@@ -1,7 +1,7 @@
 package com.team_60.Mocco.helper.password;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.mail.sender.EmailSendable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;

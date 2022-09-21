@@ -1,6 +1,6 @@
 package com.team_60.Mocco.security.service;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.security.dto.Request;
@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode.*;
+import static com.team_60.Mocco.exception.businessLogic.ExceptionCode.*;
 import static com.team_60.Mocco.security.filter.JwtConstants.*;
 
 @Slf4j
