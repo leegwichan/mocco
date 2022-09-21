@@ -16,6 +16,7 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
     Page<Study> findByStudyStatus(Study.StudyStatus status, Pageable pageable);
 
     Page<Study> findBySummaryContaining(String summary, Pageable pageable);
-    List<Study> findByStartDate(LocalDate startDate);
-    List<Study> findByEndDate(LocalDate startDate);
+    List<Study> findByStudyStatusAndStartDateBefore(Study.StudyStatus studyStatus, LocalDate startDate);
+    List<Study> findByStudyStatusAndEndDateBefore(Study.StudyStatus studyStatus,LocalDate endDate);
+    List<Study> findByStudyStatusAndEndDate(Study.StudyStatus studyStatus,LocalDate endDate);
 }
