@@ -1,16 +1,14 @@
 package com.team_60.Mocco.test;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.mail.sender.EmailSendable;
 import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 
-import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
-import com.team_60.Mocco.study_member.entity.StudyMember;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Optional;
 import java.util.ArrayList;
 
 
