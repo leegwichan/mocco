@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 const Card = css`
   width: 250px;
@@ -43,25 +44,44 @@ const NameAndCapacity = css`
   font-size: 0.8rem;
 `;
 
+const TextDecorationNone = css`
+  text-decoration: none;
+  color: black;
+  &:hover,
+  &:visited,
+  &:link,
+  &:active,
+  &:focus {
+    text-decoration: none;
+    color: black;
+  }
+`;
+
 function StudyCard({ studyData, boxRef }) {
+  console.log(studyData);
   return (
-    <div css={Card} ref={boxRef ? boxRef : null}>
-      <div css={ImageContainer}>
-        <img src={studyData.image} alt="스터디 대표 사진" />
-      </div>
-      <div css={Content}>
-        <div css={Summary}>
-          {studyData.summary.length > 20
-            ? `${studyData.summary.slice(0, 20)}...`
-            : studyData.summary}
+    <Link
+      to={`/studylist/detail/${studyData.studyId}`}
+      css={TextDecorationNone}
+    >
+      <div css={Card} ref={boxRef ? boxRef : null}>
+        <div css={ImageContainer}>
+          <img src={studyData.image} alt="스터디 대표 사진" />
         </div>
-        <hr css={DivideLine} />
-        <div css={NameAndCapacity}>
-          <span>{studyData.teamName}</span>
-          <span>정원 {studyData.capacity}명</span>
+        <div css={Content}>
+          <div css={Summary}>
+            {studyData.summary.length > 20
+              ? `${studyData.summary.slice(0, 20)}...`
+              : studyData.summary}
+          </div>
+          <hr css={DivideLine} />
+          <div css={NameAndCapacity}>
+            <span>{studyData.teamName}</span>
+            <span>정원 {studyData.capacity}명</span>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
