@@ -48,8 +48,13 @@ function StudyList() {
   const [apiPage, setApiPage] = useState(1);
   const getStudyLists = () => {
     request(`/api/study-info/board?page=${apiPage}&size=20`).then((res) => {
-      setStudyLists([...studyLists, ...res.data.data]);
-      setApiPage(apiPage + 1);
+      console.log(res.data.pageInfo.totalPages);
+      if (res.data.pageInfo.totalPages === apiPage) {
+        return;
+      } else {
+        setStudyLists([...studyLists, ...res.data.data]);
+        setApiPage(apiPage + 1);
+      }
     });
   };
 
