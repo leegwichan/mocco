@@ -1,7 +1,5 @@
 import { css } from '@emotion/react';
 
-// import StudyCard from './StudyCard';
-
 const Empty = css`
   height: 252px;
   border: 1px solid #d1d1d1;
@@ -12,6 +10,7 @@ const Empty = css`
   align-items: center;
   justify-content: center;
   font-size: 15px;
+  color: #2d2d2d;
   svg {
     width: 75px;
     margin-bottom: 5px;
@@ -19,7 +18,7 @@ const Empty = css`
   }
 `;
 
-function DoneList({ studyList }) {
+function ProgressList({ studyList }) {
   if (studyList) {
     console.log(studyList.length);
   }
@@ -41,7 +40,7 @@ function DoneList({ studyList }) {
               d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
             />
           </svg>
-          <span>완료된 스터디가 없습니다</span>
+          <span>진행중인 스터디가 없습니다</span>
         </div>
       ) : (
         <div>있음</div>
@@ -49,4 +48,5 @@ function DoneList({ studyList }) {
     </div>
   );
 }
-export default DoneList;
+
+export default ProgressList;

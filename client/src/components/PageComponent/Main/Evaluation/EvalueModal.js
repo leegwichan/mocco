@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
-import Button from './Button';
+import Button from '../../../Common/Button';
+import Evaluation from './Evalueation';
 
 const Container = css`
   display: flex;
@@ -41,7 +42,7 @@ const ButtonContainer = css`
   width: 100%;
 `;
 
-function Modal({
+function EvalueModal({
   text,
   firstBtnType,
   secondBtnType,
@@ -51,7 +52,9 @@ function Modal({
   return (
     <div css={Container}>
       <section className="title">{text}</section>
-      <section css={InnerContainer}>여기에 child 컴포넌트가 들어가야함</section>
+      <section css={InnerContainer}>
+        <Evaluation /> 내용
+      </section>
       <section css={ButtonContainer}>
         <Button type={`${firstBtnType}`} text={`${firstBtnText}`} />
         <Button type={`${secondBtnType}`} text={`${secondBtnText}`} />
@@ -60,7 +63,4 @@ function Modal({
   );
 }
 
-export default Modal;
-
-// 상태, 자식 컴포넌트를 props로 받아야한다
-// 버튼들도 각기 다른 onClick이벤트를 받아야한다
+export default EvalueModal;
