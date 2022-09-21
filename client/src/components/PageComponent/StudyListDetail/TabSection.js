@@ -65,6 +65,7 @@ function TabSection() {
           border: 1px solid #d1d1d1;
           border-radius: 15px;
           border-top-left-radius: 0px;
+          padding: 40px;
         `}
       >
         {tabList[currentTab].content}

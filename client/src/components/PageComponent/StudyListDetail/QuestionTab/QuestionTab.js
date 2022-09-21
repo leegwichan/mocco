@@ -2,7 +2,8 @@
 import InputComment from './InputComment';
 import { useRecoilValue } from 'recoil';
 import { commentAtom } from '../../../../atom/atom';
-import Comment from './CommentSection';
+import CommentSection from './CommentSection';
+import DeletedComment from '../DeletedComment';
 
 function QuestionTab() {
   // const [isEdit, setIsEdit] = useState(false);
@@ -13,15 +14,19 @@ function QuestionTab() {
     <div>
       <InputComment />
       <ul>
-        {comments &&
-          comments.map((comment) => (
+        {comments.map((comment) =>
+          comment.commentStatus === 'COMMENT_ACTIVE' ? (
             <div key={comment.commentId}>
-              <Comment
+              <CommentSection
                 nickname={comment.member.nickname}
                 content={comment.content}
+                id={comment.commentId}
               />
             </div>
-          ))}
+          ) : (
+            <DeletedComment />
+          )
+        )}
       </ul>
     </div>
   );

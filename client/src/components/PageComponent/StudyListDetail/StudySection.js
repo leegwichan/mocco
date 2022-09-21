@@ -65,7 +65,7 @@ function StudySection({ studyInfo, id, memberInfo, taskInfo }) {
             onClick={() => navigate(`/studylist/modify/${id}`)}
           />
 
-          <Button onClick={deleteHandler} />
+          <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
         </div>
         <div
           css={css`

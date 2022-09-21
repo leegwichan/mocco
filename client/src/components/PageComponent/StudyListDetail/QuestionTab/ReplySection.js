@@ -1,5 +1,5 @@
-function Reply() {
-  return <div>Reply</div>;
+function ReplySection() {
+  return <div>ReplySection</div>;
 }
 
-export default Reply;
+export default ReplySection;

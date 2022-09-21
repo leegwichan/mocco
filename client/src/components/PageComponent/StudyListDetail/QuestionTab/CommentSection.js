@@ -1,7 +1,14 @@
 import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
+import request from '../../../../api';
 
-function Comment({ nickname, content }) {
+function CommentSection({ nickname, content, id }) {
+  const deleteHandler = () => {
+    return request
+      .delete(`/api/comments/${id}`)
+      .then(() => window.location.reload());
+  };
+
   return (
     <div
       css={css`
@@ -39,10 +46,10 @@ function Comment({ nickname, content }) {
       >
         <Button type={'small_blue'} text={'답글'} />
         <Button type={'small_white'} text={'수정'} />
-        <Button type={'small_grey'} text={'삭제'} />
+        <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
       </div>
     </div>
   );
 }
 
-export default Comment;
+export default CommentSection;
