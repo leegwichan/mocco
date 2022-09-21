@@ -4,14 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import request from '../api';
 
 function SignUp() {
-  const [isPasswordConfirmError, setIsPasswordConfirmError] = useState(false);
   const navigate = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState({
+    email: null,
+    nickname: null,
+    password: null,
+  });
 
   const onSubmit = (event) => {
     event.preventDefault();
     console.log('pw :', event.target.password.value);
     if (event.target.password.value === event.target.passwordConfirm.value) {
-      setIsPasswordConfirmError(false);
       request({
         method: 'post',
         url: '/api/register/signup',
@@ -22,9 +26,20 @@ function SignUp() {
         },
       })
         .then(() => navigate('/login'))
-        .catch(console.error);
+        .catch((error) => {
+          if (error.response) {
+            setErrorMessage((prev) => ({
+              ...prev,
+              password: null,
+              email: error.response.data.message,
+            }));
+          }
+        });
     } else {
-      setIsPasswordConfirmError(true);
+      setErrorMessage((prev) => ({
+        ...prev,
+        password: '비밀번호가 일치하지 않습니다.',
+      }));
     }
   };
 
@@ -57,6 +72,8 @@ function SignUp() {
             `}
             onSubmit={onSubmit}
           >
+            {/* 닉네임 입력 input */}
+
             <label
               htmlFor="nickname"
               css={css`
@@ -65,20 +82,42 @@ function SignUp() {
             >
               닉네임
             </label>
-            <input
-              type="text"
-              name="nickname"
-              id="nickname"
+            <div
               css={css`
-                width: 100%;
-                height: 40px;
-                background-color: #ffffff;
-                border-radius: 5px;
-                border: 1px solid #d1d1d1;
+                display: flex;
                 margin-top: 12px;
                 margin-bottom: 12px;
               `}
-            ></input>
+            >
+              <input
+                type="text"
+                name="nickname"
+                id="nickname"
+                css={css`
+                  width: 100%;
+                  height: 40px;
+                  background-color: #ffffff;
+                  border-radius: 5px;
+                  border: 1px solid #d1d1d1;
+                `}
+              ></input>
+              <button
+                css={css`
+                  min-width: fit-content;
+                  height: 40px;
+                  background-color: #0b6ff2;
+                  border-radius: 5px;
+                  font-size: 16px;
+                  border-width: 0px;
+                  font-weight: normal;
+                  color: #ffffff;
+                  margin-left: 8px;
+                `}
+                type="button"
+              >
+                중복확인
+              </button>
+            </div>
 
             <div
               css={css`
@@ -95,6 +134,7 @@ function SignUp() {
               </p>
             </div>
 
+            {/* 이메일 입력 input */}
             <label
               htmlFor="email"
               css={css`
@@ -116,21 +156,19 @@ function SignUp() {
                 margin-top: 12px;
               `}
             ></input>
-            <div
-              css={css`
-                margin-top: 12px;
-                margin-bottom: 12px;
-              `}
-            >
+            {/* 이메일 에러메세지 */}
+            {errorMessage.email && (
               <p
                 css={css`
                   font-size: 12px;
                   color: red;
+                  margin-top: 12px;
+                  margin-bottom: 12px;
                 `}
               >
-                이미 존재하는 이메일입니다.
+                {errorMessage.email}
               </p>
-            </div>
+            )}
 
             <label
               htmlFor="password"
@@ -178,7 +216,7 @@ function SignUp() {
               `}
             ></input>
 
-            {isPasswordConfirmError && (
+            {errorMessage.password && (
               <p
                 css={css`
                   margin-bottom: 12px;
@@ -186,7 +224,7 @@ function SignUp() {
                   color: red;
                 `}
               >
-                비밀번호가 일치하지 않습니다.
+                {errorMessage.password}
               </p>
             )}
 
