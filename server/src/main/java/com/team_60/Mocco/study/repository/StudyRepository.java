@@ -6,7 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface StudyRepository extends JpaRepository<Study, Long> {
@@ -14,4 +16,6 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
     Page<Study> findByStudyStatus(Study.StudyStatus status, Pageable pageable);
 
     Page<Study> findBySummaryContaining(String summary, Pageable pageable);
+    List<Study> findByStartDate(LocalDate startDate);
+    List<Study> findByEndDate(LocalDate startDate);
 }

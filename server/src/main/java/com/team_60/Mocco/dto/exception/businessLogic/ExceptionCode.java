@@ -33,6 +33,9 @@ public enum ExceptionCode {
     STARTDATE_PREVIOUS(400,"현재 날짜보다 이전 날짜를 시작일로 선택할 수 없습니다."),
     NOT_CORRECT_PERIOD(400,"선택할 수 있는 날짜 범위가 아닙니다."),
     TASK_CHECK_NOT_FOUND(404, "해당 인증글을 찾을 수 없습니다."),
+    NO_STUDY_OPEN(400, "오늘 열리는 스터디는 존재하지 않습니다."),
+    NO_STUDY_CLOSE(400, "오늘 끝나는 스터디는 존재하지 않습니다."),
+    NO_STUDY_EVALUATION(400,"오늘 평가 마감되는 스터디는 존재하지 않습니다."),
 
 
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),

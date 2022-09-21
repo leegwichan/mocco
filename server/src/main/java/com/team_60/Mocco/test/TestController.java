@@ -68,7 +68,6 @@ public class TestController {
     @GetMapping("/userTest")
     public ResponseEntity userTest(HttpServletRequest request){
         log.info("ROLE_USER TEST");
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
