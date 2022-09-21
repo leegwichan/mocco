@@ -10,6 +10,7 @@ import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
+import com.team_60.Mocco.study_member.entity.StudyMember;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -68,7 +69,6 @@ public class TestController {
     @GetMapping("/userTest")
     public ResponseEntity userTest(HttpServletRequest request){
         log.info("ROLE_USER TEST");
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -77,8 +77,8 @@ public class TestController {
         return "우리팀 화이팅!";
     }
 
-    @PatchMapping("/study-status/{study-id}")
-    public Study changeStudyStatus(@PathVariable("study-id") long studyId){
+    @PatchMapping("/study-status/study-progress/{study-id}")
+    public Study changeStudyStatusToStudyProgress(@PathVariable("study-id") long studyId){
         Study study = studyRepository.findById(studyId).orElseThrow(
                 () -> new BusinessLogicException(ExceptionCode.STUDY_NOT_FOUND)
         );
@@ -86,7 +86,20 @@ public class TestController {
         study.setStudyStatus(Study.StudyStatus.STUDY_PROGRESS);
         studyRepository.save(study);
 
-        System.out.println("변경 완료");
+        System.out.println("study-progress 변경 완료");
+        return null;
+    }
+
+    @PatchMapping("/study-status/study-complete/{study-id}")
+    public Study changeStudyStatusToStudyComplete(@PathVariable("study-id") long studyId){
+        Study study = studyRepository.findById(studyId).orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.STUDY_NOT_FOUND)
+        );
+
+        study.setStudyStatus(Study.StudyStatus.STUDY_COMPLETE);
+        studyRepository.save(study);
+
+        System.out.println("study-complete 변경 완료");
         return null;
     }
 

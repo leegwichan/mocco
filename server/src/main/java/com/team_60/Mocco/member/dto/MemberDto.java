@@ -1,7 +1,7 @@
 package com.team_60.Mocco.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.team_60.Mocco.study.dto.StudyDto;
+import com.team_60.Mocco.study_member.dto.StudyMemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,6 +45,15 @@ public class MemberDto {
     }
 
     @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class PostEvaluation{
+        private long memberId;
+        private int evaluation;
+    }
+
+    @AllArgsConstructor
     @Getter
     @Setter
     public static class Response{
@@ -57,8 +66,8 @@ public class MemberDto {
         private String introduction;
         private String location;
         private List<String> githubRepositoryList;
-        private List<StudyDto.SubResponse> progressStudy;
-        private List<StudyDto.SubResponse> doneStudy;
+        private List<StudyMemberDto.Response> progressStudy;
+        private List<StudyMemberDto.Response> doneStudy;
 
     }
 

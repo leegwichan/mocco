@@ -5,6 +5,7 @@ import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,8 +25,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer configure() {
-        System.out.println("ignore 작동");
-        return (web) -> web.ignoring().antMatchers("/api/register/**","/h2/**");
+        return (web) -> web.ignoring().antMatchers("/api/register/**","/api/study-info/**","/h2/**");
     }
 
     @Bean
@@ -36,16 +36,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .authorizeRequests()
-                .antMatchers("/api/register/**","/h2/**").permitAll()
-                .antMatchers("/userTest").authenticated()
-                .antMatchers("/adminTest").authenticated()
-                .and()
                 .addFilterBefore(new JwtAuthenticationFilter(redisTemplate,jwtTokenProvider),UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-}
+   }

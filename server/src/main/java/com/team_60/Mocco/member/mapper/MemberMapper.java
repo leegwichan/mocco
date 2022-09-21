@@ -6,7 +6,9 @@ import com.team_60.Mocco.member.entity.MyInfo;
 import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.mapper.StudyMapper;
+import com.team_60.Mocco.study_member.dto.StudyMemberDto;
 import com.team_60.Mocco.study_member.entity.StudyMember;
+import com.team_60.Mocco.study_member.mapper.StudyMemberMapper;
 import org.mapstruct.Mapper;
 
 import java.util.ArrayList;
@@ -35,24 +37,24 @@ public interface MemberMapper {
     MyInfo memberPatchDtoToMyInfo(MemberDto.Patch dto);
 
     default MemberDto.Response memberToMemberResponseDto(Member member){
-        int evaluation = member.getMyInfo().getEvaluationNumber() == 0 ?
-                0 : member.getMyInfo().getEvaluationTotal() / member.getMyInfo().getEvaluationNumber();
+        float evaluation = member.getMyInfo().getEvaluationNumber() == 0 ?
+                0 : (float) member.getMyInfo().getEvaluationTotal() / (float) member.getMyInfo().getEvaluationNumber();
 
         List<String> github_repository_list = new ArrayList<>();
         github_repository_list.add(member.getMyInfo().getGithubRepository1());
         github_repository_list.add(member.getMyInfo().getGithubRepository2());
         github_repository_list.add(member.getMyInfo().getGithubRepository3());
 
-        List<StudyDto.SubResponse> progressStudy = new ArrayList();
-        List<StudyDto.SubResponse> doneStudy = new ArrayList();
+        List<StudyMemberDto.Response> progressStudy = new ArrayList();
+        List<StudyMemberDto.Response> doneStudy = new ArrayList();
 
         for (StudyMember studyMember : member.getStudyMemberList()){
             if (studyMember.getStudy().getStudyStatus() == Study.StudyStatus.STUDY_PROGRESS ||
                     (studyMember.getStudy().getStudyStatus() == Study.StudyStatus.STUDY_COMPLETE &&
                     studyMember.getEvaluationStatus() == StudyMember.StudyMemberEvaluationStatus.BEFORE_EVALUATION)){
-                progressStudy.add(StudyMapper.studyToStudySubResponseDto(studyMember.getStudy()));
+                progressStudy.add(StudyMemberMapper.studyMemberToStudyMemberResponseDto(studyMember));
             } else if (studyMember.getEvaluationStatus() == StudyMember.StudyMemberEvaluationStatus.COMPLETE){
-                doneStudy.add(StudyMapper.studyToStudySubResponseDto(studyMember.getStudy()));
+                doneStudy.add(StudyMemberMapper.studyMemberToStudyMemberResponseDto(studyMember));
             }
         }
 
@@ -71,7 +73,7 @@ public interface MemberMapper {
         );
     }
 
-    default MemberDto.SubResponse memberToMemberSubResponseDto(Member member){
+    static MemberDto.SubResponse memberToMemberSubResponseDto(Member member){
         return new MemberDto.SubResponse(
                 member.getMemberId(),
                 member.getNickname(),

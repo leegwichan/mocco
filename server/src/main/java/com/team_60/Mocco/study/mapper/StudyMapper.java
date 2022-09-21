@@ -14,7 +14,9 @@ public interface StudyMapper {
     static StudyDto.SubResponse studyToStudySubResponseDto(Study study){
         return new StudyDto.SubResponse(
                 study.getImage(), study.getTeamName(),
-                study.getCapacity(), study.getSummary()
+                study.getCapacity(), study.getSummary(),
+                study.getStudyStatus()
+
         );
     }
 

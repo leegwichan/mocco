@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { css } from '@emotion/react';
+import { useSetRecoilState } from 'recoil';
+import { commentAtom } from '../atom/atom';
 import StudySection from '../components/PageComponent/StudyListDetail/StudySection';
 import TabSection from '../components/PageComponent/StudyListDetail/TabSection';
 import request from '../api/index';
@@ -10,6 +12,7 @@ function StudyListDetail() {
   const [studyInfo, setStudyInfo] = useState({});
   const [memberInfo, setMemberInfo] = useState({});
   const [taskInfo, setTaskInfo] = useState([]);
+  const setCommentAtom = useSetRecoilState(commentAtom);
 
   useEffect(() => {
     getStudyInfo();
@@ -24,6 +27,7 @@ function StudyListDetail() {
       setStudyInfo(res.data.data);
       setMemberInfo(res.data.data.member);
       setTaskInfo(res.data.data.taskList);
+      setCommentAtom(res.data.data.commentList);
     });
   };
   // console.log('task', taskInfo);
@@ -48,3 +52,10 @@ function StudyListDetail() {
 }
 
 export default StudyListDetail;
+
+/*teamname
+startdate
+enddate
+capacity
+member.nickname
+studying*/
