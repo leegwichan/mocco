@@ -16,6 +16,7 @@ public class StudyDto {
     @Getter
     @Setter
     public static class SubResponse{
+        private long studyId;
         private String image;
         private String teamName;
         private int capacity;

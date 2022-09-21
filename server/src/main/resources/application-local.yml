@@ -12,3 +12,10 @@ spring:
     properties:
       hibernate:
         format_sql: true  # (3) SQL pretty print
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Iv1.56f7d0178056b5a9
+            clientSecret: 16e6fe801b71d9ff97c981388b81ffce166da8d5
