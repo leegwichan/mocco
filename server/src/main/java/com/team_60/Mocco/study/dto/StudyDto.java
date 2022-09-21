@@ -3,6 +3,7 @@ package com.team_60.Mocco.study.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team_60.Mocco.comment.dto.CommentDto;
 import com.team_60.Mocco.member.dto.MemberDto;
+import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.dto.TaskDto;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class StudyDto {
         private String teamName;
         private int capacity;
         private String summary;
+        private Study.StudyStatus studyStatus;
     }
 
     @Getter
