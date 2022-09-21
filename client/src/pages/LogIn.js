@@ -1,10 +1,10 @@
 import { css } from '@emotion/react';
 import request from '../api';
-import { useRecoilState } from 'recoil';
-import { userInfoState } from 'States/LoginState';
+import { useSetRecoilState } from 'recoil';
+import { userInfoState } from '../atom/atom';
 
 function LogIn() {
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const setUserInfoState = useSetRecoilState(userInfoState);
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -16,7 +16,10 @@ function LogIn() {
         password: event.target.password.value,
       },
     })
-      .then(console.log)
+      .then((res) => {
+        console.log('r :', res.data);
+        setUserInfoState(res.data);
+      })
       .catch(console.error);
   };
 
