@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import ProposalTab from './ProposaTab';
-import QuestionTab from './QuestionTab';
+import ProposalTab from './ProposalTab/ProposaTab';
+import QuestionTab from './QuestionTab/QuestionTab';
 
 function TabSection() {
   const [currentTab, SetCurrentTab] = useState(0);
@@ -30,8 +30,12 @@ function TabSection() {
           .tab {
             padding: 17px;
             border: 1px solid #d1d1d1;
-            border-radius: 10px 10px 0 0;
             border-bottom: none;
+            border-radius: 10px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            cursor: pointer;
+            color: #5b5d61;
           }
 
           .tab:hover,
@@ -57,8 +61,11 @@ function TabSection() {
         css={css`
           display: flex;
           flex-direction: column;
+          align-items: center;
           border: 1px solid #d1d1d1;
           border-radius: 15px;
+          border-top-left-radius: 0px;
+          padding: 40px;
         `}
       >
         {tabList[currentTab].content}
