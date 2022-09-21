@@ -5,6 +5,7 @@ import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.service.MemberService;
+import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
 import com.team_60.Mocco.study_member.serive.StudyMemberService;
@@ -124,6 +125,12 @@ public class StudyServiceImpl implements StudyService{
     public Page<Study> searchStudies(String query, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("studyId").descending());
         return studyRepository.findBySummaryContaining(query, pageable);
+    }
+    @Override
+    public StudyDto.CountResponse countStudies(){
+        return new StudyDto.CountResponse(
+                studyRepository.countByStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS),
+                studyRepository.countByStudyStatus(Study.StudyStatus.STUDY_PROGRESS));
     }
 
         //studyId에 맞는 스터디 반환

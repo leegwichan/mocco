@@ -1,5 +1,6 @@
 package com.team_60.Mocco.study.service;
 
+import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
 import org.springframework.data.domain.Page;
 
@@ -14,5 +15,6 @@ public interface StudyService {
     Study findStudy(long studyId);
     Page<Study> findStudies(int page, int size);
     Page<Study> searchStudies(String query, int page, int size);
+    public StudyDto.CountResponse countStudies();
     Study findVerifiedStudy(long studyId);
 }

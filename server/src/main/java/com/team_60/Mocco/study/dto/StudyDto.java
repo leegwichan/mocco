@@ -61,4 +61,13 @@ public class StudyDto {
         private List<TaskDto> taskList;
         private List<CommentDto.Response> commentList;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CountResponse{
+        private long recruitStudy;
+        private long progressStudy;
+    }
 }

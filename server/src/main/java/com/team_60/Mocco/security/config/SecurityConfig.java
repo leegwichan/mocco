@@ -36,10 +36,6 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
-                .authorizeRequests()
-                .antMatchers("/api/register/**","/api/study-info/**","/h2/**").permitAll()
-                .antMatchers("/userTest").authenticated()
-                .and()
                 .addFilterBefore(new JwtAuthenticationFilter(redisTemplate,jwtTokenProvider),UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
