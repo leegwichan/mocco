@@ -3,7 +3,7 @@ import { singleStudyState, userInfoState } from '../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import request from '../../../api/index';
-import Task from './Task';
+import TaskItem from './TaskItem';
 import Button from '../../Common/Button';
 import { memo } from 'react';
 
@@ -69,7 +69,7 @@ const StudySection = memo(({ id, detail }) => {
         <div className="task_container">스터디 Task</div>
         {studyInfo.taskList &&
           studyInfo.taskList.map((task) => (
-            <Task task={task} key={task.taskId} />
+            <TaskItem task={task} key={task.taskId} />
           ))}
       </div>
     </div>

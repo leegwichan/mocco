@@ -4,34 +4,34 @@ import request from '../../../../api';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 
-function ProposalSection({ proposal }) {
+function ProposalSection({ proposal, getProposalInfof }) {
   const userInfo = useRecoilValue(userInfoState);
 
-  // 승인과 거절의 경우, 버튼 누름과 동시에 proposalList에서 사라짐
   const selectHandler = () => {
     return request
       .patch(`/api/proposals/approve/${proposal.proposalId}`)
       .then((res) => {
         console.log(res);
-
-        window.location.reload();
+        getProposalInfof();
       })
       .catch((err) => console.log(err));
   };
+
   const refuseHandler = () => {
     return request
       .patch(`/api/proposals/denied/${proposal.proposalId}`)
       .then((res) => {
         console.log(res);
-        window.location.reload();
+        getProposalInfof();
       })
       .catch((err) => console.log(err));
   };
+
   const deleteHander = () => {
     return request
       .delete(`/api/proposals/${proposal.proposalId}`)
       .then(() => {
-        window.location.reload();
+        getProposalInfof();
       })
       .catch((err) => console.log(err));
   };

@@ -1,13 +1,13 @@
 import ReplyItem from './ReplyItem';
 import { css } from '@emotion/react';
 
-function ReplySection({ replys }) {
+function ReplySection({ replys, getCommentInfof }) {
   return (
     <div>
       {replys.map((reply, idx) =>
         reply.replyStatus === 'REPLY_ACTIVE' ? (
           <div key={reply.replyId}>
-            <ReplyItem reply={reply} />
+            <ReplyItem reply={reply} getCommentInfof={getCommentInfof} />
           </div>
         ) : (
           <div

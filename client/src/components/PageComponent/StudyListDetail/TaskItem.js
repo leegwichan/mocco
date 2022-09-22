@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-function Task({ task }) {
+function TaskItem({ task }) {
   return (
     <div
       css={css`
@@ -40,4 +40,4 @@ function Task({ task }) {
   );
 }
 
-export default Task;
+export default TaskItem;

@@ -5,7 +5,7 @@ import request from '../../../../api';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 
-const CommentSection = ({ content, commentId }) => {
+const CommentSection = ({ content, commentId, getCommentInfof }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editContent, setEditContent] = useState(content);
   const [isReply, setIsReply] = useState(false);
@@ -13,9 +13,9 @@ const CommentSection = ({ content, commentId }) => {
   const userInfo = useRecoilValue(userInfoState);
 
   const deleteHandler = () => {
-    return request
-      .delete(`/api/comments/${commentId}`)
-      .then(() => window.location.reload());
+    return request.delete(`/api/comments/${commentId}`).then(() => {
+      getCommentInfof();
+    });
   };
 
   const editHandler = (e) => {
@@ -26,8 +26,8 @@ const CommentSection = ({ content, commentId }) => {
       })
       .then((res) => {
         console.log('나는수정', res.data.data);
-        window.location.reload();
-        // setIsEditOpen(false);
+        setIsEditOpen(false);
+        getCommentInfof();
       })
       .catch((err) => console.log(err));
   };
@@ -41,7 +41,7 @@ const CommentSection = ({ content, commentId }) => {
   const replyHandler = () => {
     return request.post(`/api/replies`, replyInfo).then(() => {
       setReply('');
-      window.location.reload();
+      getCommentInfof();
     });
   };
 

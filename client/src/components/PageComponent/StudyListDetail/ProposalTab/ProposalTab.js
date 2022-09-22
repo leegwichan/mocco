@@ -21,11 +21,14 @@ function ProposaTab() {
   console.log('프로포셜 state', proposals);
   return (
     <div>
-      <InputProposal />
+      <InputProposal getProposalInfof={getProposalInfo} />
       <ul>
         {proposals.map((proposal) => (
           <div key={proposal.proposalId}>
-            <ProposalSection proposal={proposal} />
+            <ProposalSection
+              proposal={proposal}
+              getProposalInfof={getProposalInfo}
+            />
           </div>
         ))}
       </ul>

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { userInfoState } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 
-function ReplyItem({ reply }) {
+function ReplyItem({ reply, getCommentInfof }) {
   const userInfo = useRecoilValue(userInfoState);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editContent, setEditContent] = useState(reply.content);
@@ -13,7 +13,7 @@ function ReplyItem({ reply }) {
   const deleteHandler = () => {
     return request
       .delete(`/api/replies/${reply.replyId}`)
-      .then(() => window.location.reload());
+      .then(() => getCommentInfof());
   };
 
   const editHandler = () => {
@@ -22,8 +22,8 @@ function ReplyItem({ reply }) {
         content: editContent,
       })
       .then(() => {
-        // setIsEditOpen(false);
-        window.location.reload();
+        setIsEditOpen(false);
+        getCommentInfof();
       });
   };
 

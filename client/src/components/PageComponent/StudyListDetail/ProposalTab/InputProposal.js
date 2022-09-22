@@ -6,7 +6,7 @@ import request from '../../../../api';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-function InputProposal() {
+function InputProposal({ getProposalInfof }) {
   const [proposalContent, setProposalContent] = useState('');
   const userInfo = useRecoilValue(userInfoState);
   const { id } = useParams();
@@ -23,7 +23,7 @@ function InputProposal() {
       .post('/api/proposals', proposalInfo)
       .then(() => {
         setProposalContent('');
-        window.location.reload();
+        getProposalInfof();
       })
       .catch((err) => console.log(err));
   };

@@ -1,14 +1,15 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import Button from '../../../Common/Button';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 import request from '../../../../api';
 import { useParams } from 'react-router-dom';
 
-function InputComment() {
+const InputComment = memo(({ getCommentInfof }) => {
   const { id } = useParams();
   const [commentContent, setCommentContent] = useState('');
+  // const [commentInfo, setCommentInfo] = useState({});
   const userInfo = useRecoilValue(userInfoState);
 
   const commentInfo = {
@@ -19,10 +20,13 @@ function InputComment() {
 
   const addCommentHandler = (e) => {
     e.preventDefault();
+    setCommentContent('');
+
     return request
       .post('/api/comments', commentInfo)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        // window.location.reload();
+        getCommentInfof();
       })
       .catch(() => console.log(userInfo));
   };
@@ -38,7 +42,9 @@ function InputComment() {
       <Button type={'big_blue'} text={'등록'} onClick={addCommentHandler} />
     </div>
   );
-}
+});
+
+InputComment.displayName = 'InputComment';
 
 export default InputComment;
 
