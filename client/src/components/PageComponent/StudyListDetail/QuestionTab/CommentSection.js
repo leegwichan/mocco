@@ -50,64 +50,58 @@ const CommentSection = ({ content, commentId }) => {
       {!isEditOpen ? (
         <div css={container}>
           <div>
-            <div>
-              <span>사진</span>
-              <span
-                css={css`
-                  margin: 0px 12px;
-                `}
-              >
-                {userInfo.nickname}
-              </span>
-            </div>
-            <div
+            <span>사진</span>
+            <span
               css={css`
-                margin-top: 16px;
+                margin: 0px 12px;
               `}
             >
-              {content}
-              {/* {isEdited ? <span>수정됨</span> : null} */}
-            </div>
-            <div
-              css={css`
-                margin-top: 16px;
-                display: flex;
-                justify-content: flex-end;
-              `}
-            >
-              {!isReply ? (
+              {userInfo.nickname}
+            </span>
+          </div>
+          <div
+            css={css`
+              margin-top: 16px;
+            `}
+          >
+            {content}
+            {/* {isEdited ? <span>수정됨</span> : null} */}
+          </div>
+          <div
+            css={css`
+              margin-top: 16px;
+              display: flex;
+              justify-content: flex-end;
+            `}
+          >
+            {!isReply ? (
+              <Button
+                type={'small_blue'}
+                text={'답글'}
+                onClick={() => setIsReply(true)}
+              />
+            ) : (
+              <div>
+                <textarea
+                  value={reply}
+                  onChange={(e) => setReply(e.target.value)}
+                />
                 <Button
                   type={'small_blue'}
-                  text={'답글'}
-                  onClick={() => setIsReply(true)}
+                  text={'완료'}
+                  onClick={() => {
+                    setIsReply(false);
+                    replyHandler();
+                  }}
                 />
-              ) : (
-                <div>
-                  <textarea
-                    value={reply}
-                    onChange={(e) => setReply(e.target.value)}
-                  />
-                  <Button
-                    type={'small_blue'}
-                    text={'완료'}
-                    onClick={() => {
-                      setIsReply(false);
-                      replyHandler();
-                    }}
-                  />
-                </div>
-              )}
-              <Button
-                type={'small_white'}
-                text={'수정'}
-                onClick={() => setIsEditOpen(true)}
-              />
-              <Button
-                type={'small_grey'}
-                text={'삭제'}
-                onClick={deleteHandler}
-              />
-            </div>
+              </div>
+            )}
+            <Button
+              type={'small_white'}
+              text={'수정'}
+              onClick={() => setIsEditOpen(true)}
+            />
+            <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
           </div>
         </div>
       ) : (

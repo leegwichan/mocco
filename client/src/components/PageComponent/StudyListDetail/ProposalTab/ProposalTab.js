@@ -14,11 +14,11 @@ function ProposaTab() {
 
   const getProposalInfo = () => {
     return request(`/api/proposals?study-id=${id}`).then((res) => {
-      console.log('프로포셜', res.data);
+      console.log('프로포셜', res.data.data);
       setProposals(res.data.data);
     });
   };
-
+  console.log('프로포셜 state', proposals);
   return (
     <div>
       <InputProposal />

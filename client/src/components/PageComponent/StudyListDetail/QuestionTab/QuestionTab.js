@@ -13,7 +13,7 @@ function QuestionTab() {
   const getCommentInfo = () => {
     return request(`/api/comments?study-id=${id}`)
       .then((res) => {
-        // console.log('나는 댓글만 데이터', res);
+        console.log('나는 댓글만 데이터', res.data.data);
         setComments(res.data.data);
       })
       .catch((err) => console.log(err));
