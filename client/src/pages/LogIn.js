@@ -36,11 +36,6 @@ function LogIn() {
       .then(() => navigate('/main'));
   };
 
-  // 깃헙로그인 임시
-  const onGithubPost = () => {
-    request({ method: 'post', url: '/oauth2/authorization/github' });
-  };
-
   const openForgotPasswordModal = () => setModalOn(true);
 
   const closeForgotPasswordModal = () => setModalOn(false);
@@ -98,16 +93,7 @@ function LogIn() {
             margin-top: 12px;
             margin-bottom: 12px;
           `}
-        >
-          <p
-            css={css`
-              font-size: 12px;
-              color: red;
-            `}
-          >
-            올바른 이메일을 입력 해 주세요.
-          </p>
-        </div>
+        ></div>
 
         <label
           htmlFor="password"
@@ -132,7 +118,12 @@ function LogIn() {
           `}
         ></input>
 
-        <div>
+        <div
+          css={css`
+            display: flex;
+            justify-content: flex-end;
+          `}
+        >
           <button
             css={css`
               font-size: 12px;
@@ -145,9 +136,6 @@ function LogIn() {
             type="button"
           >
             비밀번호 찾기
-          </button>
-          <button type="button" onClick={onGithubPost}>
-            깃헙 로그인
           </button>
         </div>
 

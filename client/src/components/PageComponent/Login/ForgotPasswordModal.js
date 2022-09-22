@@ -5,6 +5,7 @@ import Modal from '../../Common/Modal';
 
 function ForgotPasswordModal({ onClose }) {
   const [complete, setComplete] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -15,7 +16,9 @@ function ForgotPasswordModal({ onClose }) {
       params: { email: event.target.email.value },
     })
       .then(() => setComplete(true))
-      .catch(console.error);
+      .catch(function () {
+        setIsError(true);
+      });
   };
 
   return (
@@ -73,6 +76,16 @@ function ForgotPasswordModal({ onClose }) {
             `}
             type="email"
           />
+          {isError && (
+            <p
+              css={css`
+                font-size: 14px;
+                color: red;
+              `}
+            >
+              잘못된 이메일 입니다.
+            </p>
+          )}
 
           <button css={modalButton} type="submit">
             비밀번호 재설정
