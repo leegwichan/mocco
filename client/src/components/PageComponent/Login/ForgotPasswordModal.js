@@ -35,13 +35,23 @@ function ForgotPasswordModal({ onClose }) {
 
       {complete ? (
         <div css={modalContentWrapper}>
-          <p
+          <span
             css={css`
               font-size: 14px;
+              flex: 1;
+              display: flex;
+              align-items: center;
+              padding-bottom: 30px;
             `}
           >
-            가입하신 이메일을 입력 해 주세요.
-          </p>
+            <p
+              css={css`
+                font-size: 18px;
+              `}
+            >
+              재설정 이메일을 발송했습니다.
+            </p>
+          </span>
           <button css={modalButton} type="button" onClick={onClose}>
             닫기
           </button>
@@ -61,8 +71,8 @@ function ForgotPasswordModal({ onClose }) {
             css={css`
               width: 240px;
               height: 30px;
-              border-color: #d1d1d1;
               border-radius: 5px;
+              border: 1px solid #d1d1d1;
             `}
             type="email"
           />
@@ -81,7 +91,9 @@ const modalContentWrapper = css`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 160px;
+  height: 250px;
+  width: 300px;
+  padding-top: 30px;
 `;
 
 const modalButton = css`
@@ -92,6 +104,7 @@ const modalButton = css`
   margin-bottom: 24px;
   font-size: 18px;
   color: #ffffff;
+  border: none;
 `;
 
 export default ForgotPasswordModal;
