@@ -58,7 +58,6 @@ const TextDecorationNone = css`
 `;
 
 function StudyCard({ studyData, boxRef }) {
-  console.log(studyData);
   return (
     <Link
       to={`/studylist/detail/${studyData.studyId}`}

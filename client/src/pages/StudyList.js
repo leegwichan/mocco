@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useEffect, useMemo, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import SearchBar from '../components/PageComponent/StudyList/SearchBar';
 import StudyCard from '../components/PageComponent/StudyList/StudyCard';
 import MakeStudyButton from '../components/PageComponent/StudyList/MakeStudyButton';
 import StudyListTitle from '../components/PageComponent/StudyList/StudyListTitle';
 import request from '../api/index';
+import { useLocation } from 'react-router-dom';
 
 const Header = css`
   width: 100vw;
@@ -43,35 +44,57 @@ const StudyCardContainer = css`
   flex-wrap: wrap;
 `;
 
+function getSearchQuery() {
+  const { search } = useLocation();
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
+
 function StudyList() {
   const [studyLists, setStudyLists] = useState([]);
   const [apiPage, setApiPage] = useState(1);
-  const getStudyLists = () => {
-    request(`/api/study-info/board?page=${apiPage}&size=20`).then((res) => {
-      console.log(res.data.pageInfo.totalPages);
-      if (res.data.pageInfo.totalPages === apiPage) {
-        return;
-      } else {
-        setStudyLists([...studyLists, ...res.data.data]);
-        setApiPage(apiPage + 1);
-      }
-    });
-  };
-
-  const obeserverRef = useRef();
-  const boxRef = useRef(null);
+  const [searchContent, setSearchContent] = useState(
+    getSearchQuery().get('search')
+  );
 
   useEffect(() => {
+    console.log('useEffect!');
+    console.log(searchContent);
     getStudyLists();
-  }, []);
+  }, [searchContent]);
 
   useEffect(() => {
     obeserverRef.current = new IntersectionObserver(intersectionObserver);
     boxRef.current && obeserverRef.current.observe(boxRef.current);
   }, [studyLists]);
 
+  const getStudyLists = () => {
+    if (searchContent === null) {
+      request(`/api/study-info/board?page=${apiPage}&size=20`).then((res) => {
+        if (res.data.pageInfo.totalPages <= apiPage) {
+          return;
+        } else {
+          setStudyLists([...studyLists, ...res.data.data]);
+          setApiPage(apiPage + 1);
+        }
+      });
+    } else {
+      request(
+        `/api/study-info/search?page=${apiPage}&size=20&query=${searchContent}`
+      ).then((res) => {
+        if (res.data.pageInfo.totalPages <= apiPage) {
+          return;
+        } else {
+          setStudyLists([...studyLists, ...res.data.data]);
+          setApiPage(apiPage + 1);
+        }
+      });
+    }
+  };
+
+  const obeserverRef = useRef();
+  const boxRef = useRef(null);
+
   const intersectionObserver = (entries, io) => {
-    console.log(entries);
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         io.unobserve(entry.target);
@@ -90,12 +113,14 @@ function StudyList() {
               <MakeStudyButton />
             </section>
             <section css={SearchContainer}>
-              <SearchBar />
+              <SearchBar
+                setSearchContent={setSearchContent}
+                studyLists={studyLists}
+                setStudyLists={setStudyLists}
+                setApiPage={setApiPage}
+              />
             </section>
             <section css={StudyCardContainer}>
-              {/* {studyLists.map((studyData, i) => {
-                return <StudyCard key={i} studyData={studyData} />;
-              })} */}
               {studyLists.map((studyData, i) => {
                 if (studyLists.length - 4 === i) {
                   return (
