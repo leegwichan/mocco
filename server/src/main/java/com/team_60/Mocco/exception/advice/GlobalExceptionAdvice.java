@@ -3,7 +3,6 @@ package com.team_60.Mocco.exception.advice;
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.dto.ErrorResponse;
-import com.team_60.Mocco.exception.oauth.OAuthLogicException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,18 +33,4 @@ public class GlobalExceptionAdvice {
         return response;
     }
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.OK)
-    public SingleResponseDto handleOAuthLogicException(OAuthLogicException e){
-        
-        return new SingleResponseDto(
-                new OAuthDto(e.getOauthId()));
-    }
-
-    @AllArgsConstructor
-    @Getter
-    @Setter
-    public static class OAuthDto{
-        private long oauthId;
-    }
 }

@@ -1,8 +1,8 @@
 package com.team_60.Mocco.helper.httpclient;
 
 import com.google.gson.Gson;
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -84,7 +84,7 @@ public class GithubRestClient {
         String resultJson = EntityUtils.toString(httpResponse.getEntity());
         GithubRestClientDto.UserInfo response  = gson.fromJson(resultJson, GithubRestClientDto.UserInfo.class);
 
-        response.setProviderId(clientId);
+        response.setProvider(clientId);
         return response;
     }
 

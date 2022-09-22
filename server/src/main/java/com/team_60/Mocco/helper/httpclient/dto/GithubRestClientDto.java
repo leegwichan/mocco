@@ -27,13 +27,13 @@ public class GithubRestClientDto {
     @Getter
     public static class UserInfo{
 
-        @SerializedName("id")
+        @Setter
         private String provider;
 
         @SerializedName("login")
         private String githubNickname;
 
-        @Setter
+        @SerializedName("id")
         private String providerId;
     }
 }
