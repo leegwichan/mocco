@@ -28,14 +28,9 @@ function ReplyItem({ reply }) {
   };
 
   return (
-    <div
-      css={css`
-        display: flex;
-        justify-content: flex-end;
-      `}
-    >
+    <div css={container}>
       {!isEditOpen ? (
-        <div css={container}>
+        <div className="reply_box">
           <div>
             <span>사진</span>
             <span
@@ -53,13 +48,7 @@ function ReplyItem({ reply }) {
           >
             {reply.content}
           </div>
-          <div
-            css={css`
-              margin-top: 16px;
-              display: flex;
-              justify-content: flex-end;
-            `}
-          >
+          <div className="button_container">
             <Button
               type={'small_white'}
               text={'수정'}
@@ -96,12 +85,23 @@ function ReplyItem({ reply }) {
 export default ReplyItem;
 
 const container = css`
-  width: 990px;
-  margin-bottom: 25px;
-  border-radius: 15px;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
-  padding: 20px;
-  font-size: 20px;
+  display: flex;
+  justify-content: flex-end;
+
+  .reply_box {
+    width: 990px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    font-size: 20px;
+  }
+
+  .button_container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
 `;
 
 const edit_container = css`

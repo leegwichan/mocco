@@ -29,21 +29,7 @@ function InputProposal() {
   };
 
   return (
-    <div
-      css={css`
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 40px;
-
-        input {
-          width: 900px;
-          height: 40px;
-          border: 1px solid #d1d1d1;
-          border-radius: 5px;
-        }
-      `}
-    >
+    <div css={container}>
       <input
         type="text"
         placeholder="신청을 위한 한 마디를 적어주세요"
@@ -56,3 +42,16 @@ function InputProposal() {
 }
 
 export default InputProposal;
+
+const container = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    width: 900px;
+    height: 40px;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+  }
+`;

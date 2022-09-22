@@ -67,13 +67,7 @@ const CommentSection = ({ content, commentId }) => {
             {content}
             {/* {isEdited ? <span>수정됨</span> : null} */}
           </div>
-          <div
-            css={css`
-              margin-top: 16px;
-              display: flex;
-              justify-content: flex-end;
-            `}
-          >
+          <div className="button_container">
             {!isReply ? (
               <Button
                 type={'small_blue'}
@@ -136,6 +130,12 @@ const container = css`
   box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
   padding: 20px;
   font-size: 20px;
+
+  .button_container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
 `;
 
 const edit_container = css`

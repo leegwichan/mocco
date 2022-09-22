@@ -21,29 +21,15 @@ function InputComment() {
     e.preventDefault();
     return request
       .post('/api/comments', commentInfo)
-      .then(() => {
-        setCommentContent('');
-        window.location.reload();
+      .then((res) => {
+        console.log(res);
       })
       .catch(() => console.log(userInfo));
   };
 
   return (
-    <div
-      css={css`
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 45px;
-      `}
-    >
+    <div css={container}>
       <input
-        css={css`
-          width: 900px;
-          height: 40px;
-          border: 1px solid #d1d1d1;
-          border-radius: 5px;
-        `}
         type="text"
         placeholder="스터디에 대한 궁금한 점을 물어보세요"
         value={commentContent}
@@ -55,3 +41,17 @@ function InputComment() {
 }
 
 export default InputComment;
+
+const container = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 45px;
+
+  input {
+    width: 900px;
+    height: 40px;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+  }
+`;

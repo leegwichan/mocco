@@ -37,16 +37,7 @@ function ProposalSection({ proposal }) {
   };
 
   return (
-    <div
-      css={css`
-        width: 1080px;
-        margin-bottom: 25px;
-        border-radius: 15px;
-        box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
-        padding: 20px;
-        font-size: 20px;
-      `}
-    >
+    <div css={container}>
       <div>
         <span>사진</span>
         <span
@@ -64,13 +55,7 @@ function ProposalSection({ proposal }) {
       >
         {proposal.content}
       </div>
-      <div
-        css={css`
-          margin-top: 16px;
-          display: flex;
-          justify-content: flex-end;
-        `}
-      >
+      <div css={button_container}>
         {' '}
         <Button
           type={'small_blue'}
@@ -93,3 +78,21 @@ function ProposalSection({ proposal }) {
 }
 
 export default ProposalSection;
+
+const container = css`
+  width: 1080px;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  font-size: 20px;
+`;
+
+const button_container = css`
+  width: 1080px;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  font-size: 20px;
+`;
