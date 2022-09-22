@@ -31,6 +31,8 @@ public class ReplyServiceImpl implements ReplyService{
 
         Member findMember = memberService.findVerifiedMember(reply.getMember().getMemberId());
         Comment findComment = commentService.findVerifiedComment(reply.getComment().getCommentId());
+        commentService.checkStudyStatusIsRecruitProgress(findComment.getStudy());
+
         reply.setMember(findMember);
         reply.setComment(findComment);
 
@@ -42,6 +44,7 @@ public class ReplyServiceImpl implements ReplyService{
         Reply findReply = findVerifiedReply(reply.getReplyId());
         if (findReply.getReplyStatus() == Reply.ReplyStatus.REPLY_DELETE)
             throw new BusinessLogicException(ExceptionCode.REPLY_DELETED);
+        commentService.checkStudyStatusIsRecruitProgress(findReply.getComment().getStudy());
 
         Optional.ofNullable(reply.getContent())
                 .ifPresent(content -> findReply.setContent(content));

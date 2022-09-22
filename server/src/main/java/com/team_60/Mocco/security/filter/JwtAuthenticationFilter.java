@@ -1,7 +1,12 @@
 package com.team_60.Mocco.security.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.dto.exception.dto.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +19,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import static com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode.BAD_REQUEST_TOKEN;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 @Slf4j
