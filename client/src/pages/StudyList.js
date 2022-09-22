@@ -44,6 +44,14 @@ const StudyCardContainer = css`
   flex-wrap: wrap;
 `;
 
+const LastListAlert = css`
+  position: relative;
+  width: 100%;
+  height: 4rem;
+  text-align: center;
+  font-size: 1.5rem;
+`;
+
 function getSearchQuery() {
   const { search } = useLocation();
   return useMemo(() => new URLSearchParams(search), [search]);
@@ -52,6 +60,7 @@ function getSearchQuery() {
 function StudyList() {
   const [studyLists, setStudyLists] = useState([]);
   const [apiPage, setApiPage] = useState(1);
+  const [isLastList, setIsLastList] = useState(false);
   const [searchContent, setSearchContent] = useState(
     getSearchQuery().get('search')
   );
@@ -69,6 +78,7 @@ function StudyList() {
     if (searchContent === null) {
       request(`/api/study-info/board?page=${apiPage}&size=20`).then((res) => {
         if (res.data.pageInfo.totalPages < apiPage) {
+          setIsLastList(true);
           return;
         } else {
           setStudyLists([...studyLists, ...res.data.data]);
@@ -80,6 +90,7 @@ function StudyList() {
         `/api/study-info/search?page=${apiPage}&size=20&query=${searchContent}`
       ).then((res) => {
         if (res.data.pageInfo.totalPages < apiPage) {
+          setIsLastList(true);
           return;
         } else {
           setStudyLists([...studyLists, ...res.data.data]);
@@ -129,6 +140,9 @@ function StudyList() {
                 }
               })}
             </section>
+            {isLastList ? (
+              <div css={LastListAlert}>더 이상 불러올 내용이 없습니다.</div>
+            ) : null}
           </div>
         ) : (
           <div>Loading...</div>
