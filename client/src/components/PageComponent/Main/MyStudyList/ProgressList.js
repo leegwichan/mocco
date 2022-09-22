@@ -1,33 +1,80 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React, { useEffect } from 'react'; // eslint-disable-line no-unused-vars
 import { useRecoilValue } from 'recoil';
-import { mypageOwnerAtom } from '../../../../atom/atom';
-// import { css } from '@emotion/react';
+import { mypageOwnerAtom, userInfoState } from '../../../../atom/atom';
+import { css } from '@emotion/react';
 import Carousel from './Carousel';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import request from '../../../../api';
 
-// const Empty = css`
-//   height: 252px;
-//   border: 1px solid #d1d1d1;
-//   border-radius: 8px;
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   font-size: 15px;
-//   color: #2d2d2d;
-//   svg {
-//     width: 75px;
-//     margin-bottom: 5px;
-//     color: #0f6ad5;
-//   }
-// `;
+const Empty = css`
+  height: 252px;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: #2d2d2d;
+  svg {
+    width: 75px;
+    margin-bottom: 5px;
+    color: #0f6ad5;
+  }
+`;
 
 function ProgressList() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [evalueInfo, setIvalueInfo] = useState({});
   const owner = useRecoilValue(mypageOwnerAtom);
   const studyArr = owner.progressStudy;
+  const navigate = useNavigate();
+  const user = useRecoilValue(userInfoState);
+
+  useEffect(() => {
+    console.log(evalueInfo);
+  }, [evalueInfo]);
+  const getEvaluateInfo = (studyData) => {
+    return request
+      .get(
+        `/api/study-evaluation/${studyData.studyId}/member/${owner.memberId}`
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setIvalueInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  //     const evaluate = (studyData) => { API아직 안만들어짐
+  // //모달에서 쓸 평가 제출 요청 함수 만들어서
+  // // 모달로 내려보냄. 알럿 띄우고 제출 됐으면 모달 닫기.
+  // }
+
+  const clickHandler = (studyData) => {
+    console.log(studyData);
+    if (
+      studyData.studyStatus === 'STUDY_COMPLETE' &&
+      studyData.evaluationStatus === 'BEFORE_EVALUATION'
+    ) {
+      console.log('평가 창 오픈');
+      getEvaluateInfo(studyData);
+      setIsOpen(true);
+    } else if (
+      studyData.studyStatus === 'STUDY_PROGRESS' &&
+      owner.memberId === user.memberId
+    ) {
+      navigate(`/studylist/detail/${studyData.studyId}`);
+    }
+  };
+
   return (
     <div>
-      {/* {studyArr.length < 1 ? (
+      {studyArr.length < 1 ? (
         <div css={Empty}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,9 +91,16 @@ function ProgressList() {
           </svg>
           <span>진행중인 스터디가 없습니다</span>
         </div>
-      ) : ( */}
-      <Carousel studyArr={studyArr} />
-      {/* )} */}
+      ) : (
+        <Carousel
+          studyArr={studyArr}
+          status={'propgress'}
+          clickHandler={clickHandler}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          evalueInfo={evalueInfo}
+        />
+      )}
     </div>
   );
 }

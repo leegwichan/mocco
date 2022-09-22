@@ -1,19 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
 import React from 'react'; // eslint-disable-line no-unused-vars
-
-const Card = css`
-  flex-shrink: 0; //찌그러지지 않게
-  width: 250px;
-  height: 250px;
-  margin-bottom: 4rem;
-  border-radius: 10px;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
-  transition: all 0.1s linear;
-  &:hover {
-    transform: translateY(-1rem);
-  }
-`;
+import StudyCard from '../../../Common/StudyCard';
 
 const Container = css`
   display: flex;
@@ -50,11 +38,8 @@ const Slides = css`
     margin-right: 100px;
   }
 `;
-
-function Carousel({ studyArr }) {
-  //main > progressList > carousel로 배열 받아와야함
-  // 일단 두개 띄워둔 상태.
-
+//, 프롭스로 setIsOpen도 가져와서 모달 닫기
+function Carousel({ studyArr, status, clickHandler, isOpen, evalueInfo }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const slides = useRef(null);
   let length;
@@ -64,7 +49,9 @@ function Carousel({ studyArr }) {
   useEffect(() => {
     const slideWidth = 250;
     const slideMargin = 100;
-    console.log(studyArr);
+    console.log(studyArr[0]);
+    console.log(studyArr[2]);
+    console.log(studyArr.length);
     slides.current.style.width =
       (slideWidth + slideMargin) * length - slideMargin + 'px';
   }, []);
@@ -93,6 +80,7 @@ function Carousel({ studyArr }) {
 
   return (
     <div css={Container}>
+      {isOpen && <div>{evalueInfo.studyId}</div>}
       {studyArr && length < 4 ? null : (
         <svg
           onClick={goPrev}
@@ -113,8 +101,17 @@ function Carousel({ studyArr }) {
       <div css={Slides_Wraper}>
         <div css={Slides} ref={slides}>
           <ul>
-            <li css={Card}>1</li>
-            <li css={Card}>2</li>
+            {studyArr &&
+              status &&
+              studyArr.map((studyData, idx) => (
+                <li
+                  key={idx}
+                  role="presentation"
+                  onClick={() => clickHandler(studyData)}
+                >
+                  <StudyCard studyData={studyData} />
+                </li>
+              ))}
           </ul>
         </div>
       </div>
