@@ -1,7 +1,7 @@
 package com.team_60.Mocco.member.service;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.password.NewPasswordManager;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
@@ -76,6 +76,17 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public Member updateGithubInfo(Member member) {
+        Member findMember = findVerifiedMember(member.getMemberId());
+        findMemberByProviderIdExpectByNull(member.getProviderId());
+
+        findMember.setProviderId(member.getProviderId());
+        findMember.setProvider(member.getProvider());
+        findMember.setGithubNickname(member.getGithubNickname());
+        return memberRepository.save(findMember);
+    }
+
+    @Override
     public void deleteMember(long memberId) {
         Member findMember = findVerifiedMember(memberId);
         memberRepository.delete(findMember);
@@ -112,6 +123,13 @@ public class MemberServiceImpl implements MemberService{
             .ifPresent( m -> {
                 throw new BusinessLogicException(ExceptionCode.EMAIL_ALREADY_EXIST);
             });
+    }
+
+    private void findMemberByProviderIdExpectByNull(String providerId){
+        memberRepository.findByProviderId(providerId)
+                .ifPresent( m -> {
+                    throw new BusinessLogicException(ExceptionCode.GITHUB_CONNECTION_ALREADY_EXIST);
+                });
     }
 
     private Member findMemberByEmailExpectByPresent(String email){

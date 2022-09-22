@@ -1,6 +1,8 @@
 package com.team_60.Mocco.member.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.helper.httpclient.GithubRestClient;
+import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import com.team_60.Mocco.member.dto.MemberDto;
@@ -23,6 +25,8 @@ public class MemberSubController {
     private final S3ImageUpload imageUpload;
     private final MemberMapper mapper;
     private final MemberService memberService;
+
+    private final GithubRestClient githubRestClient;
 
     @PostMapping("/image")
     public ResponseEntity memberImageUpload(@RequestParam("image") MultipartFile multipartFile,
@@ -49,5 +53,18 @@ public class MemberSubController {
                 new SingleResponseDto(response), HttpStatus.OK);
     }
 
+    @PatchMapping("/github-user/{member-id}")
+    public ResponseEntity linkGithubAccount(@PathVariable("member-id") long memberId,
+                                            @RequestBody MemberDto.GithubInfo requestBody){
+        GithubRestClientDto.UserInfo githubUserInfo
+                = githubRestClient.getGithubUserInfo(requestBody.getAuthorizationCode());
+        Member member = mapper.githubRestClientUserInfoDtoToMember(githubUserInfo);
+        member.setMemberId(memberId);
+
+        Member updateMember = memberService.updateGithubInfo(member);
+        MemberDto.Response response = mapper.memberToMemberResponseDto(updateMember);
+        return new ResponseEntity(
+                new SingleResponseDto(response), HttpStatus.OK);
+    }
 
 }

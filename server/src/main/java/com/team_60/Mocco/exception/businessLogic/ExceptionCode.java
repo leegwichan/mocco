@@ -1,4 +1,4 @@
-package com.team_60.Mocco.dto.exception.businessLogic;
+package com.team_60.Mocco.exception.businessLogic;
 
 import lombok.Getter;
 
@@ -38,9 +38,7 @@ public enum ExceptionCode {
     STARTDATE_PREVIOUS(400,"현재 날짜보다 이전 날짜를 시작일로 선택할 수 없습니다."),
     NOT_CORRECT_PERIOD(400,"선택할 수 있는 날짜 범위가 아닙니다."),
     TASK_CHECK_NOT_FOUND(404, "해당 인증글을 찾을 수 없습니다."),
-    NO_STUDY_OPEN(400, "오늘 열리는 스터디는 존재하지 않습니다."),
-    NO_STUDY_CLOSE(400, "오늘 끝나는 스터디는 존재하지 않습니다."),
-    NO_STUDY_EVALUATION(400,"오늘 평가 마감되는 스터디는 존재하지 않습니다."),
+    PROVIDER_ID_NOT_FOUND(404,"해당 provider ID 정보를 찾을 수 없습니다."),
 
 
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),
@@ -50,7 +48,14 @@ public enum ExceptionCode {
     BAD_REFRESH_TOKEN(403,"Refresh Token 정보가 일치하지 않습니다."),
     BAD_REQUEST(403,"잘못된 요청입니다."),
     BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다."),
-    NOT_SAME_USER(400,"잘못된 유저 접근입니다.");
+    NOT_SAME_USER(400,"잘못된 유저 접근입니다."),
+
+    REST_CLIENT_ERROR(500, "서버에서 통신중에 에러가 발생했습니다."),
+    NOT_NORMAL_AUTHORIZATION_CODE(400, "정상작인 authorization code 가 아닙니다."),
+    GITHUB_CONNECTION_ALREADY_EXIST(400, "이 계정의 깃허브를 연동한 유저가 이미 존재합니다.");
+
+
+
 
     @Getter
     private int status;
