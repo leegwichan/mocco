@@ -9,7 +9,7 @@ public class Response {
     @Builder
     @Getter
     @AllArgsConstructor
-    public static class Member{
+    public static class LoginMember{
         private long memberId;
         private String nickname;
         private String roles;
