@@ -57,8 +57,6 @@ function StudyList() {
   );
 
   useEffect(() => {
-    console.log('useEffect!');
-    console.log(searchContent);
     getStudyLists();
   }, [searchContent]);
 
@@ -70,7 +68,7 @@ function StudyList() {
   const getStudyLists = () => {
     if (searchContent === null) {
       request(`/api/study-info/board?page=${apiPage}&size=20`).then((res) => {
-        if (res.data.pageInfo.totalPages <= apiPage) {
+        if (res.data.pageInfo.totalPages < apiPage) {
           return;
         } else {
           setStudyLists([...studyLists, ...res.data.data]);
@@ -81,7 +79,7 @@ function StudyList() {
       request(
         `/api/study-info/search?page=${apiPage}&size=20&query=${searchContent}`
       ).then((res) => {
-        if (res.data.pageInfo.totalPages <= apiPage) {
+        if (res.data.pageInfo.totalPages < apiPage) {
           return;
         } else {
           setStudyLists([...studyLists, ...res.data.data]);
