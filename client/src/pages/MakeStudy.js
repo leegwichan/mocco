@@ -20,13 +20,12 @@ const ContentContainer = css`
 
 const MakeStudyTitle = css`
   font-size: 2.5rem;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 `;
 
 const StudyDetailContainer = css`
   display: flex;
   width: 100%;
-  background-color: whitesmoke;
 `;
 
 const StudyDetailLeft = css`
@@ -76,7 +75,27 @@ const SummaryTextArea = css`
   resize: none;
 `;
 
-// const Photo = css``;
+const IntroduceAndRulesContainer = css`
+  width: 100%;
+  margin-top: 60px;
+`;
+
+const BigLabel = css`
+  border-bottom: 3px solid #0b6ff2;
+  font-size: 2rem;
+`;
+
+const BigTextArea = css`
+  display: block;
+  width: 100%;
+  height: 250px;
+  margin: 2rem 0;
+  padding: 1rem;
+  border: 1px solid #999999;
+  border-radius: 5px;
+  font-size: 1.3rem;
+  resize: none;
+`;
 
 function MakeStudy() {
   return (
@@ -151,13 +170,19 @@ function MakeStudy() {
                   </div>
                 </div>
               </div>
-              <div>
-                <label htmlFor="introduce">스터디 소개</label>
-                <input type="text" name="introduce" />
-              </div>
-              <div>
-                <label htmlFor="rules">스터디 규칙</label>
-                <input type="text" name="rules" />
+              <div css={IntroduceAndRulesContainer}>
+                <div>
+                  <label htmlFor="introduce" css={BigLabel}>
+                    스터디 소개
+                  </label>
+                  <textarea type="text" name="introduce" css={BigTextArea} />
+                </div>
+                <div>
+                  <label htmlFor="rules" css={BigLabel}>
+                    스터디 규칙
+                  </label>
+                  <textarea type="text" name="rules" css={BigTextArea} />
+                </div>
               </div>
             </form>
           </section>
