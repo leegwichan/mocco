@@ -15,7 +15,7 @@ function StudyListDetail() {
     request(`/api/study-info/board/${id}`)
       .then((res) => {
         console.log('나는 전체 데이터', res);
-        setStudyInfo([...res.data.data]);
+        setStudyInfo(res.data.data);
         console.log(studyInfo);
       })
       .catch((err) => console.log(err));
@@ -27,7 +27,7 @@ function StudyListDetail() {
 
   return (
     <div css={container}>
-      <StudySection id={id} detail={studyInfo.detail} />
+      <StudySection id={id} />
       <TabSection />
     </div>
   );

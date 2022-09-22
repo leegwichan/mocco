@@ -47,6 +47,7 @@ const container = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 40px;
 
   input {
     width: 900px;

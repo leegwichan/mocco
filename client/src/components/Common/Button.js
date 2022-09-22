@@ -9,6 +9,7 @@ const Button = ({ text, onClick, type }) => {
     'big_blue',
     'big_white',
     'small_blue',
+    'small_lightblue',
     'small_white',
     'small_grey',
   ].includes(type)
@@ -34,26 +35,31 @@ const btn = css`
   color: #ffffff;
   border: none;
   border-radius: 8px;
-  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25); */
+  transition: all 0.1s linear;
 
   &.big_blue {
-    padding: 8px 28px;
+    padding: 0px 28px;
+    height: 42px;
     font-size: 20px;
     background-color: #0b6ff2;
     color: #ffffff;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
+      border: 1px solid #d1d1d1;
     }
   }
 
   &.big_white {
-    padding: 8px 28px;
+    padding: 0px 28px;
+    height: 42px;
     font-size: 20px;
     background-color: #ffffff;
     color: #0b6ff2;
-
+    border: 1px solid #d1d1d1;
     &hover {
       color: #ffffff;
       background-color: #0b6ff2;
@@ -70,7 +76,16 @@ const btn = css`
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
+      border: 1px solid #d1d1d1;
     }
+  }
+
+  &.small_lightblue {
+    font-size: 15px;
+    height: 32px;
+    padding: 0 9px;
+    color: #0f6ad4;
+    background-color: #f0f8ff;
   }
 
   &.small_white {
@@ -79,6 +94,7 @@ const btn = css`
     height: 32px;
     background-color: #ffffff;
     color: #0b6ff2;
+    border: 1px solid #d1d1d1;
 
     &:hover {
       color: #ffffff;
@@ -96,6 +112,7 @@ const btn = css`
     &:hover {
       color: #646464;
       background-color: #ffffff;
+      border: 1px solid #d1d1d1;
     }
   }
 
@@ -109,6 +126,7 @@ const btn = css`
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
+      border: 1px solid #d1d1d1;
     }
   }
 
@@ -122,6 +140,7 @@ const btn = css`
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
+      border: 1px solid #d1d1d1;
     }
   }
 
@@ -135,6 +154,7 @@ const btn = css`
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
+      border: 1px solid #d1d1d1;
     }
   }
 
@@ -148,6 +168,7 @@ const btn = css`
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
+      border: 1px solid #d1d1d1;
     }
   }
 `;

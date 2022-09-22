@@ -3,14 +3,15 @@ import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
 import { useRecoilValue } from 'recoil';
-import { userInfoState } from '../../../../atom/atom';
+import { userInfoState, singleStudyState } from '../../../../atom/atom';
 
 const CommentSection = ({ content, commentId, getCommentInfof }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editContent, setEditContent] = useState(content);
-  const [isReply, setIsReply] = useState(false);
+  const [isReplyOpen, setIsReplyOpen] = useState(false);
   const [reply, setReply] = useState('');
   const userInfo = useRecoilValue(userInfoState);
+  const studyInfo = useRecoilValue(singleStudyState);
 
   const deleteHandler = () => {
     return request.delete(`/api/comments/${commentId}`).then(() => {
@@ -24,8 +25,7 @@ const CommentSection = ({ content, commentId, getCommentInfof }) => {
       .patch(`/api/comments/${commentId}`, {
         content: editContent,
       })
-      .then((res) => {
-        console.log('나는수정', res.data.data);
+      .then(() => {
         setIsEditOpen(false);
         getCommentInfof();
       })
@@ -47,70 +47,91 @@ const CommentSection = ({ content, commentId, getCommentInfof }) => {
 
   return (
     <div>
-      {!isEditOpen ? (
-        <div css={container}>
-          <div>
-            <span>사진</span>
-            <span
+      <div>
+        {!isEditOpen ? (
+          <div css={container}>
+            <div>
+              <span>사진</span>
+              <span
+                css={css`
+                  margin: 0px 12px;
+                `}
+              >
+                {userInfo.nickname}
+              </span>
+              {userInfo.memberId === studyInfo.member.memberId ? (
+                <span>
+                  <Button type="small_lightblue" text="스터디장" />
+                </span>
+              ) : null}
+            </div>
+            <div
               css={css`
-                margin: 0px 12px;
+                margin-top: 16px;
               `}
             >
-              {userInfo.nickname}
-            </span>
-          </div>
-          <div
-            css={css`
-              margin-top: 16px;
-            `}
-          >
-            {content}
-            {/* {isEdited ? <span>수정됨</span> : null} */}
-          </div>
-          <div className="button_container">
-            {!isReply ? (
+              {content}
+            </div>
+            <div className="button_container">
               <Button
                 type={'small_blue'}
                 text={'답글'}
-                onClick={() => setIsReply(true)}
+                onClick={() => setIsReplyOpen(true)}
               />
-            ) : (
-              <div>
-                <textarea
-                  value={reply}
-                  onChange={(e) => setReply(e.target.value)}
-                />
-                <Button
-                  type={'small_blue'}
-                  text={'완료'}
-                  onClick={() => {
-                    setIsReply(false);
-                    replyHandler();
-                  }}
-                />
-              </div>
-            )}
-            <Button
-              type={'small_white'}
-              text={'수정'}
-              onClick={() => setIsEditOpen(true)}
-            />
-            <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
+              <Button
+                type={'small_white'}
+                text={'수정'}
+                onClick={() => setIsEditOpen(true)}
+              />
+              <Button
+                type={'small_grey'}
+                text={'삭제'}
+                onClick={deleteHandler}
+              />
+            </div>
           </div>
-        </div>
-      ) : (
-        <div css={edit_container}>
+        ) : (
+          <div css={edit_container}>
+            <textarea
+              css={edit_input}
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+            />
+            <div css={btn_container}>
+              <Button
+                type={'small_white'}
+                text={'완료'}
+                onClick={editHandler}
+              />
+              <Button
+                type={'small_grey'}
+                text={'취소'}
+                onClick={() => setIsEditOpen(false)}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+      {isReplyOpen && (
+        <div css={reply_input}>
           <textarea
-            css={edit_input}
-            value={editContent}
-            onChange={(e) => setEditContent(e.target.value)}
+            value={reply}
+            onChange={(e) => setReply(e.target.value)}
+            placeholder="답글을 입력하세요"
           />
-          <div css={btn_container}>
-            <Button type={'small_white'} text={'완료'} onClick={editHandler} />
+          <div className="button_container">
+            <Button
+              type={'small_blue'}
+              text={'등록'}
+              onClick={() => {
+                setIsReplyOpen(false);
+                replyHandler();
+              }}
+            />
             <Button
               type={'small_grey'}
               text={'취소'}
-              onClick={() => setIsEditOpen(false)}
+              onClick={() => setIsReplyOpen(false)}
             />
           </div>
         </div>
@@ -135,6 +156,27 @@ const container = css`
     margin-top: 16px;
     display: flex;
     justify-content: flex-end;
+  }
+`;
+
+const reply_input = css`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 25px;
+
+  textarea {
+    width: 990px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #d1d1d1;
+    padding: 10px;
+  }
+  .button_container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+    margin-top: 10px;
   }
 `;
 

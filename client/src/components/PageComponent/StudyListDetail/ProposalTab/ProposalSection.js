@@ -89,10 +89,7 @@ const container = css`
 `;
 
 const button_container = css`
-  width: 1080px;
-  margin-bottom: 25px;
-  border-radius: 15px;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
-  padding: 20px;
-  font-size: 20px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
 `;

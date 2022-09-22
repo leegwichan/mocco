@@ -1,20 +1,18 @@
 import { css } from '@emotion/react';
-import { singleStudyState, userInfoState } from '../../../atom/atom';
+import { singleStudyState } from '../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import request from '../../../api/index';
 import TaskItem from './TaskItem';
 import Button from '../../Common/Button';
-import { memo } from 'react';
 
-const StudySection = memo(({ id, detail }) => {
+const StudySection = ({ id }) => {
   const studyInfo = useRecoilValue(singleStudyState);
-  const userInfo = useRecoilValue(userInfoState);
+
   const navigate = useNavigate();
 
   const deleteHandler = () => {
-    return request.delete(`/api/study-board/${id}`).then(() => {
-      console.log('삭제합니다');
+    request.delete(`/api/study-board/${id}`).then(() => {
       navigate('/studylist');
     });
   };
@@ -32,16 +30,12 @@ const StudySection = memo(({ id, detail }) => {
             onClick={() => navigate(`/studylist/modify/${id}`)}
           />
 
-          <Button
-            type={'small_grey'}
-            text={'삭제'}
-            onClick={() => deleteHandler}
-          />
+          <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
         </div>
         <div css={info}>
           <span className="info">{`${studyInfo.startDate} ~ ${studyInfo.endDate}`}</span>
           <span className="info">{`${studyInfo.capacity}명`}</span>
-          <span>{userInfo.nickname}</span>
+          <span>{studyInfo.member.nickname}</span>
         </div>
       </div>
       <div>
@@ -50,7 +44,7 @@ const StudySection = memo(({ id, detail }) => {
       </div>
       <div>
         <div className="detail_title">스터디 상세 설명</div>
-        <div className="study_content">{detail}</div>
+        <div className="study_content">{studyInfo.detail}</div>
       </div>
       <div>
         <div className="detail_title">스터디 규칙</div>
@@ -68,13 +62,13 @@ const StudySection = memo(({ id, detail }) => {
       >
         <div className="task_container">스터디 Task</div>
         {studyInfo.taskList &&
-          studyInfo.taskList.map((task) => (
-            <TaskItem task={task} key={task.taskId} />
+          studyInfo.taskList.map((task, idx) => (
+            <TaskItem task={task} key={task.taskId} idx={idx} />
           ))}
       </div>
     </div>
   );
-});
+};
 
 StudySection.displayName = 'StudySection';
 
