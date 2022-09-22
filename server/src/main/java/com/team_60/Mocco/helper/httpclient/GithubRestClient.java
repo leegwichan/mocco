@@ -5,7 +5,6 @@ import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;

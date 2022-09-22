@@ -2,6 +2,13 @@ spring:
   redis:
     host: localhost
     port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Iv1.56f7d0178056b5a9
+            clientSecret: 6aeef6b9194d7c728dae0a88fe3e7739ad9a0161
 
 cloud:
   aws:

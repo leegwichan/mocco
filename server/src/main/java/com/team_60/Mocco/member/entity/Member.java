@@ -43,6 +43,9 @@ public class Member extends Auditable {
     private String providerId;
 
     @Column
+    private String githubNickname;
+
+    @Column
     private String roles = "ROLE_USER";
 
     public List<String> getRoleList() {

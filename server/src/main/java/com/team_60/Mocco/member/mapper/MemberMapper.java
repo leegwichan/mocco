@@ -1,5 +1,6 @@
 package com.team_60.Mocco.member.mapper;
 
+import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.entity.MyInfo;
@@ -36,6 +37,8 @@ public interface MemberMapper {
 
     MyInfo memberPatchDtoToMyInfo(MemberDto.Patch dto);
 
+    Member githubRestClientUserInfoDtoToMember(GithubRestClientDto.UserInfo dto);
+
     default MemberDto.Response memberToMemberResponseDto(Member member){
         float evaluation = member.getMyInfo().getEvaluationNumber() == 0 ?
                 0 : (float) member.getMyInfo().getEvaluationTotal() / (float) member.getMyInfo().getEvaluationNumber();
@@ -64,7 +67,7 @@ public interface MemberMapper {
                 member.getNickname(),
                 member.getMyInfo().getProfileImage(),
                 evaluation,
-                null,
+                member.getGithubNickname(),
                 member.getMyInfo().getIntroduction(),
                 member.getMyInfo().getLocation(),
                 github_repository_list,
