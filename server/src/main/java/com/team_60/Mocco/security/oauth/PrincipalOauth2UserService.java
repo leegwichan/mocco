@@ -2,11 +2,8 @@ package com.team_60.Mocco.security.oauth;
 
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
-import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
-import com.team_60.Mocco.security.oauthEntity.OAuth;
-import com.team_60.Mocco.security.repository.OAuthRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -28,7 +25,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 //userRequest.getAccessToken().getTokenValue()
 //super.loadUser(userRequest).getAttributes()
     private final MemberRepository memberRepository;
-    private final OAuthRepository oauthRepository;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oauth2User = super.loadUser(userRequest);
