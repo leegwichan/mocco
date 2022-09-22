@@ -36,6 +36,11 @@ function LogIn() {
       .then(() => navigate('/main'));
   };
 
+  // 깃헙로그인 임시
+  const onGithubPost = () => {
+    request({ method: 'post', url: '/oauth2/authorization/github' });
+  };
+
   const openForgotPasswordModal = () => setModalOn(true);
 
   const closeForgotPasswordModal = () => setModalOn(false);
@@ -142,6 +147,9 @@ function LogIn() {
           {modalOn && (
             <ForgotPasswordModal onClose={closeForgotPasswordModal} />
           )}
+          <button type="button" onClick={onGithubPost}>
+            깃헙 로그인
+          </button>
         </div>
 
         <button
