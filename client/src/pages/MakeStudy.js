@@ -1,5 +1,6 @@
-import React, { useRef } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useCallback, useRef } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
+import request from '../api/index';
 
 const Header = css`
   width: 100vw;
@@ -65,6 +66,10 @@ const PhotoContainer = css`
   flex: 6 0;
 `;
 
+const FileInput = css`
+  display: none;
+`;
+
 const SummaryTextArea = css`
   width: 100%;
   height: calc(100% - 55px);
@@ -99,6 +104,33 @@ const BigTextArea = css`
 `;
 
 function MakeStudy() {
+  const fileInputRef = useRef();
+
+  const handleChange = useCallback((e) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+
+    request
+      .post('/api/study-board/image?file-size=251722', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleClick = useCallback((e) => {
+    e.preventDefault();
+    if (!fileInputRef.current) {
+      return;
+    }
+    fileInputRef.current.click();
+  }, []);
   return (
     <>
       <header css={Header}></header>
@@ -167,7 +199,45 @@ function MakeStudy() {
                       type="file"
                       name="studyPhoto"
                       accept="image/png,image/jpg"
+                      ref={fileInputRef}
+                      css={FileInput}
+                      onChange={handleChange}
                     />
+                    <div
+                      css={css`
+                        position: relative;
+                        width: 100%;
+                        height: 208px;
+                        overflow: hidden;
+                      `}
+                    >
+                      <img
+                        src="https://avatars.githubusercontent.com/u/71388830?v=4"
+                        alt="profile_image"
+                        css={css`
+                          width: 100%;
+                          height: 100%;
+                          border-radius: 5px 5px 0 0;
+                        `}
+                      />
+                      <button
+                        onClick={handleClick}
+                        css={css`
+                          position: absolute;
+                          width: 100%;
+                          height: 40px;
+                          bottom: 0;
+                          left: 0;
+                          font-size: 1.2rem;
+                          color: white;
+                          border: none;
+                          border-radius: 0 0 5px 5px;
+                          background-color: #0b6ff2;
+                        `}
+                      >
+                        이미지 업로드
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
