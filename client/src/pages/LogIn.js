@@ -144,9 +144,6 @@ function LogIn() {
           >
             비밀번호 찾기
           </button>
-          {modalOn && (
-            <ForgotPasswordModal onClose={closeForgotPasswordModal} />
-          )}
           <button type="button" onClick={onGithubPost}>
             깃헙 로그인
           </button>
@@ -212,6 +209,8 @@ function LogIn() {
           </p>
         </div>
       </form>
+
+      {modalOn && <ForgotPasswordModal onClose={closeForgotPasswordModal} />}
     </div>
   );
 }
