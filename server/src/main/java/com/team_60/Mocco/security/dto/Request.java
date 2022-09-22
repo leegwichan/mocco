@@ -24,4 +24,11 @@ public class Request {
          }
     }
 
+    @Getter
+    @Setter
+    public static class OAuth {
+        private long memberId;
+        private long oauthId;
+    }
+
 }

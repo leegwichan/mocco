@@ -42,7 +42,6 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .addFilterBefore(new JwtAuthenticationFilter(redisTemplate,jwtTokenProvider),UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
-                .loginPage("/oauth2-login")
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService);
         return http.build();

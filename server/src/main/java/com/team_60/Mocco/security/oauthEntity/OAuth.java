@@ -17,4 +17,6 @@ public class OAuth {
     private String provider;
     @Column
     private String providerId;
+    @Column
+    private String nickname;
 }

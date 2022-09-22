@@ -51,7 +51,7 @@ public class SecurityService {
         redisTemplate.opsForValue()
                 .set("RefreshToken:"+authentication.getName(),tokenInfo.get(REFRESH_TOKEN_HEADER), REFRESH_TOKEN_EXP, TimeUnit.MILLISECONDS);
 
-        Response.Member responseDto = Response.Member.builder()
+        Response.LoginMember responseDto = Response.LoginMember.builder()
                 .memberId(member.getMemberId())
                 .nickname(member.getNickname())
                 .roles(member.getRoles())

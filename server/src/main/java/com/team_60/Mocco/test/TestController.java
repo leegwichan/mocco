@@ -109,7 +109,7 @@ public class TestController {
     }
     @GetMapping("data/study")
     public ResponseEntity studyData(){
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 16; i++) {
             studyService.createStubStudy(studyMapper.studyRequestDtoToStudy(StubData.studyStub, new ArrayList<>()));
         }
         log.info("스터디 100개 추가 완료");

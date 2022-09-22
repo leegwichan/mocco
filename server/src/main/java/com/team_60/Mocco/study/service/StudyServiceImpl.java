@@ -49,7 +49,7 @@ public class StudyServiceImpl implements StudyService{
     @Override
     public Study createStubStudy(Study study) {
         study.setStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS);
-        study.setTeamLeader(StubData.member1);
+        study.setTeamLeader(memberService.findVerifiedMember(1));
         //스터디 생성
         return studyRepository.save(study);
 
