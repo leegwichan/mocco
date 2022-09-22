@@ -1,24 +1,24 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-// import request from '../../../api';
+import { useRecoilValue } from 'recoil';
+import request from '../../../api';
+import { userInfoState } from '../../../atom/atom';
 import Modal from '../../Common/Modal';
 
 function ForgotPasswordModal({ onClose }) {
   const [complete, setComplete] = useState(false);
+  const userInfo = useRecoilValue(userInfoState);
 
-  // const onSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   request({
-  //     method: 'get',
-  //     url: `/api/register/finding-password`,
-  //     params: { email: 'cnddkscndgus@naver.com' },
-  //   }).then(() => setComplete(true));
-  // };
+  console.log('u :', userInfo);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setComplete(true);
+
+    request({
+      method: 'get',
+      url: `/api/register/finding-password`,
+      params: { email: userInfo.email },
+    }).then(() => setComplete(true));
   };
 
   return (

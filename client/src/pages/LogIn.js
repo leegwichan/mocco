@@ -138,6 +138,8 @@ function LogIn() {
               font-size: 12px;
               color: #0b6ff2;
               text-align: right;
+              border: 0;
+              background-color: white;
             `}
             onClick={openForgotPasswordModal}
             type="button"
