@@ -8,15 +8,15 @@ import java.time.LocalDate;
 public class StubData {
 
     public static Member member1 = Member.builder()
-            .email("kimdoyeon@gmail.com")
+            .email("kimdoyeon104@gmail.com")
             .password("1234")
-            .nickname("ddd")
+            .nickname("kkl")
             .roles("ROLE_USER")
             .build();
     public static Member member2 = Member.builder()
-            .email("kimdoyeon100@gmail.com")
+            .email("kimdoyeon105@gmail.com")
             .password("1234")
-            .nickname("dddd")
+            .nickname("ytuyu")
             .roles("ROLE_USER")
             .build();
 

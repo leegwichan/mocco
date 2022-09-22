@@ -1,7 +1,7 @@
 package com.team_60.Mocco.study.service;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.entity.MyInfo;
 import com.team_60.Mocco.member.repository.MemberRepository;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

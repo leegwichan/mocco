@@ -1,6 +1,6 @@
 package com.team_60.Mocco.security.service;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.security.dto.Request;
@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static com.team_60.Mocco.dto.exception.businessLogic.ExceptionCode.*;
+import static com.team_60.Mocco.exception.businessLogic.ExceptionCode.*;
 import static com.team_60.Mocco.security.filter.JwtConstants.*;
 
 @Slf4j
@@ -51,7 +51,7 @@ public class SecurityService {
         redisTemplate.opsForValue()
                 .set("RefreshToken:"+authentication.getName(),tokenInfo.get(REFRESH_TOKEN_HEADER), REFRESH_TOKEN_EXP, TimeUnit.MILLISECONDS);
 
-        Response.Member responseDto = Response.Member.builder()
+        Response.LoginMember responseDto = Response.LoginMember.builder()
                 .memberId(member.getMemberId())
                 .nickname(member.getNickname())
                 .roles(member.getRoles())
