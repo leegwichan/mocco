@@ -76,27 +76,31 @@ function StudyList() {
 
   const getStudyLists = () => {
     if (searchContent === null) {
-      request(`/api/study-info/board?page=${apiPage}&size=20`).then((res) => {
-        if (res.data.pageInfo.totalPages < apiPage) {
-          setIsLastList(true);
-          return;
-        } else {
-          setStudyLists([...studyLists, ...res.data.data]);
-          setApiPage(apiPage + 1);
-        }
-      });
+      request(`/api/study-info/board?page=${apiPage}&size=20`)
+        .then((res) => {
+          if (res.data.pageInfo.totalPages < apiPage) {
+            setIsLastList(true);
+            return;
+          } else {
+            setStudyLists([...studyLists, ...res.data.data]);
+            setApiPage(apiPage + 1);
+          }
+        })
+        .catch((err) => console.log(err));
     } else {
       request(
         `/api/study-info/search?page=${apiPage}&size=20&query=${searchContent}`
-      ).then((res) => {
-        if (res.data.pageInfo.totalPages < apiPage) {
-          setIsLastList(true);
-          return;
-        } else {
-          setStudyLists([...studyLists, ...res.data.data]);
-          setApiPage(apiPage + 1);
-        }
-      });
+      )
+        .then((res) => {
+          if (res.data.pageInfo.totalPages < apiPage) {
+            setIsLastList(true);
+            return;
+          } else {
+            setStudyLists([...studyLists, ...res.data.data]);
+            setApiPage(apiPage + 1);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   };
 
@@ -123,22 +127,28 @@ function StudyList() {
             </section>
             <section css={SearchContainer}>
               <SearchBar
+                searchContent={searchContent}
                 setSearchContent={setSearchContent}
-                studyLists={studyLists}
                 setStudyLists={setStudyLists}
                 setApiPage={setApiPage}
               />
             </section>
-            <section css={StudyCardContainer}>
-              {studyLists.map((studyData, i) => {
-                if (studyLists.length - 4 === i) {
-                  return (
-                    <StudyCard key={i} studyData={studyData} boxRef={boxRef} />
-                  );
-                } else {
-                  return <StudyCard key={i} studyData={studyData} />;
-                }
-              })}
+            <section>
+              <ul css={StudyCardContainer}>
+                {studyLists.map((studyData, i) => {
+                  if (studyLists.length - 4 === i) {
+                    return (
+                      <StudyCard
+                        key={i}
+                        studyData={studyData}
+                        boxRef={boxRef}
+                      />
+                    );
+                  } else {
+                    return <StudyCard key={i} studyData={studyData} />;
+                  }
+                })}
+              </ul>
             </section>
             {isLastList ? (
               <div css={LastListAlert}>더 이상 불러올 내용이 없습니다.</div>

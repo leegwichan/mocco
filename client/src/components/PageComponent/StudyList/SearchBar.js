@@ -21,12 +21,12 @@ const MagnifyingIcon = css`
 `;
 
 function SearchBar({
+  searchContent,
   setSearchContent,
-  studyLists,
   setStudyLists,
   setApiPage,
 }) {
-  const [searchString, setSearchString] = useState('');
+  const [searchString, setSearchString] = useState(null);
   const navigate = useNavigate();
   const handleSearchChange = (e) => {
     setSearchString(e.target.value);
@@ -41,7 +41,9 @@ function SearchBar({
       setSearchContent(null);
       navigate(`/studylist`);
     }
-    if (studyLists !== searchString) setStudyLists([]);
+    if (searchContent !== searchString) {
+      setStudyLists([]);
+    }
   };
   return (
     <>

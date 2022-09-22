@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
 const Card = css`
+  display: inline-block;
   width: 250px;
   height: 250px;
   margin-bottom: 4rem;
@@ -63,7 +64,7 @@ function StudyCard({ studyData, boxRef }) {
       to={`/studylist/detail/${studyData.studyId}`}
       css={TextDecorationNone}
     >
-      <div css={Card} ref={boxRef ? boxRef : null}>
+      <li css={Card} ref={boxRef ? boxRef : null}>
         <div css={ImageContainer}>
           <img src={studyData.image} alt="스터디 대표 사진" />
         </div>
@@ -79,7 +80,7 @@ function StudyCard({ studyData, boxRef }) {
             <span>정원 {studyData.capacity}명</span>
           </div>
         </div>
-      </div>
+      </li>
     </Link>
   );
 }
