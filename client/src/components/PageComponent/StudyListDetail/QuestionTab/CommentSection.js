@@ -2,10 +2,15 @@ import { useState } from 'react';
 import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../../../atom/atom';
 
-function CommentSection({ nickname, content, commentId }) {
-  const [isEdit, setIsEdit] = useState(false);
+const CommentSection = ({ content, commentId }) => {
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [editContent, setEditContent] = useState(content);
+  const [isReply, setIsReply] = useState(false);
+  const [reply, setReply] = useState('');
+  const userInfo = useRecoilValue(userInfoState);
 
   const deleteHandler = () => {
     return request
@@ -13,21 +18,36 @@ function CommentSection({ nickname, content, commentId }) {
       .then(() => window.location.reload());
   };
 
-  const editHandler = () => {
+  const editHandler = (e) => {
+    e.preventDefault();
     return request
       .patch(`/api/comments/${commentId}`, {
         content: editContent,
       })
       .then((res) => {
-        console.log(res);
+        console.log('나는수정', res.data.data);
         window.location.reload();
+        // setIsEditOpen(false);
       })
       .catch((err) => console.log(err));
   };
 
+  const replyInfo = {
+    memberId: userInfo.memberId,
+    commentId: commentId,
+    content: reply,
+  };
+
+  const replyHandler = () => {
+    return request.post(`/api/replies`, replyInfo).then(() => {
+      setReply('');
+      window.location.reload();
+    });
+  };
+
   return (
     <div>
-      {!isEdit ? (
+      {!isEditOpen ? (
         <div css={container}>
           <div>
             <div>
@@ -37,7 +57,7 @@ function CommentSection({ nickname, content, commentId }) {
                   margin: 0px 12px;
                 `}
               >
-                {nickname}
+                {userInfo.nickname}
               </span>
             </div>
             <div
@@ -46,6 +66,7 @@ function CommentSection({ nickname, content, commentId }) {
               `}
             >
               {content}
+              {/* {isEdited ? <span>수정됨</span> : null} */}
             </div>
             <div
               css={css`
@@ -54,11 +75,32 @@ function CommentSection({ nickname, content, commentId }) {
                 justify-content: flex-end;
               `}
             >
-              <Button type={'small_blue'} text={'답글'} />
+              {!isReply ? (
+                <Button
+                  type={'small_blue'}
+                  text={'답글'}
+                  onClick={() => setIsReply(true)}
+                />
+              ) : (
+                <div>
+                  <textarea
+                    value={reply}
+                    onChange={(e) => setReply(e.target.value)}
+                  />
+                  <Button
+                    type={'small_blue'}
+                    text={'완료'}
+                    onClick={() => {
+                      setIsReply(false);
+                      replyHandler();
+                    }}
+                  />
+                </div>
+              )}
               <Button
                 type={'small_white'}
                 text={'수정'}
-                onClick={() => setIsEdit(true)}
+                onClick={() => setIsEditOpen(true)}
               />
               <Button
                 type={'small_grey'}
@@ -80,14 +122,16 @@ function CommentSection({ nickname, content, commentId }) {
             <Button
               type={'small_grey'}
               text={'취소'}
-              onClick={() => setIsEdit(false)}
+              onClick={() => setIsEditOpen(false)}
             />
           </div>
         </div>
       )}
     </div>
   );
-}
+};
+
+CommentSection.displayName = 'CommentSection';
 
 export default CommentSection;
 

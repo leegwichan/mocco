@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import ProposalTab from './ProposalTab/ProposaTab';
+import ProposalTab from './ProposalTab/InputProposal';
 import QuestionTab from './QuestionTab/QuestionTab';
 
 function TabSection() {

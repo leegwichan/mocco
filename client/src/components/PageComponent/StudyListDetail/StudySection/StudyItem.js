@@ -1,12 +1,15 @@
 import { css } from '@emotion/react';
+import { singleStudyState, userInfoState } from '../../../../atom/atom';
+import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import request from '../../../../api/index';
 import Task from '../Task';
 import Button from '../../../Common/Button';
 
-function StudyItem({ studyInfo, id, memberInfo, taskInfo }) {
+const StudyItem = ({ id }) => {
+  const studyInfo = useRecoilValue(singleStudyState);
+  const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
-
   const deleteHandler = () => {
     return request.delete(`/api/study-board/${id}`).then(() => {
       console.log('삭제합니다');
@@ -76,7 +79,7 @@ function StudyItem({ studyInfo, id, memberInfo, taskInfo }) {
         >
           <span className="info">{`${studyInfo.startDate} ~ ${studyInfo.endDate}`}</span>
           <span className="info">{`${studyInfo.capacity}명`}</span>
-          <span>{memberInfo.nickname}</span>
+          <span>{userInfo.nickname}</span>
         </div>
       </div>
       <div>
@@ -103,11 +106,15 @@ function StudyItem({ studyInfo, id, memberInfo, taskInfo }) {
         `}
       >
         <div className="task_container">스터디 Task</div>
-        {taskInfo &&
-          taskInfo.map((task) => <Task task={task} key={task.taskId} />)}
+        {studyInfo.taskList &&
+          studyInfo.taskList.map((task) => (
+            <Task task={task} key={task.taskId} />
+          ))}
       </div>
     </div>
   );
-}
+};
+
+StudyItem.displayName = 'StudyItem';
 
 export default StudyItem;

@@ -4,6 +4,7 @@ import request from '../../../../api';
 import CommentSection from './CommentSection';
 import DeletedComment from '../DeletedComment';
 import { useParams } from 'react-router-dom';
+import ReplySection from './ReplySection';
 
 function QuestionTab() {
   const { id } = useParams();
@@ -12,7 +13,7 @@ function QuestionTab() {
   const getCommentInfo = () => {
     return request(`/api/comments?study-id=${id}`)
       .then((res) => {
-        console.log('나는 댓글만 데이터', res);
+        // console.log('나는 댓글만 데이터', res);
         setComments(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -20,7 +21,7 @@ function QuestionTab() {
 
   useEffect(() => {
     getCommentInfo();
-  }, [comments.length]);
+  }, []);
 
   return (
     <div>
@@ -30,10 +31,10 @@ function QuestionTab() {
           comment.commentStatus === 'COMMENT_ACTIVE' ? (
             <div key={comment.commentId}>
               <CommentSection
-                nickname={comment.member.nickname}
                 content={comment.content}
                 commentId={comment.commentId}
               />
+              <ReplySection replys={comment.replyList} />
             </div>
           ) : (
             <DeletedComment key={idx} />
