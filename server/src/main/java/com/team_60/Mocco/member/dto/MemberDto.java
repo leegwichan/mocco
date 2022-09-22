@@ -54,6 +54,14 @@ public class MemberDto {
     }
 
     @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class GithubInfo{
+        private String authorizationCode;
+    }
+
+    @AllArgsConstructor
     @Getter
     @Setter
     public static class Response{
@@ -62,7 +70,7 @@ public class MemberDto {
         private String nickname;
         private String profileImage;
         private float evaluation;
-        private String githubId;
+        private String githubNickname;
         private String introduction;
         private String location;
         private List<String> githubRepositoryList;

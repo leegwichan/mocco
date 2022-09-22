@@ -1,4 +1,4 @@
-package com.team_60.Mocco.dto.exception.businessLogic;
+package com.team_60.Mocco.exception.businessLogic;
 
 import lombok.Getter;
 

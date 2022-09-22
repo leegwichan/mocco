@@ -1,7 +1,11 @@
-package com.team_60.Mocco.dto.exception.advice;
+package com.team_60.Mocco.exception.advice;
 
-import com.team_60.Mocco.dto.exception.businessLogic.BusinessLogicException;
-import com.team_60.Mocco.dto.exception.dto.ErrorResponse;
+import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.dto.ErrorResponse;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,4 +32,5 @@ public class GlobalExceptionAdvice {
                 400, new ArrayList<>());
         return response;
     }
+
 }
