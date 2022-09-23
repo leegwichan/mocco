@@ -105,7 +105,9 @@ const BigTextArea = css`
 
 function MakeStudy() {
   const fileInputRef = useRef();
+  const imageRef = useRef();
 
+  // input 파일 변경시 서버에 이미지 파일 전송
   const handleChange = useCallback((e) => {
     if (!e.target.files) {
       return;
@@ -120,10 +122,11 @@ function MakeStudy() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((res) => console.log(res))
+      .then((res) => (imageRef.current.src = res.data.data))
       .catch((err) => console.log(err));
   }, []);
 
+  // 이미지 업로드 버튼 클릭 시 input 대신 클릭되게 설정
   const handleClick = useCallback((e) => {
     e.preventDefault();
     if (!fileInputRef.current) {
@@ -214,6 +217,7 @@ function MakeStudy() {
                       <img
                         src="https://avatars.githubusercontent.com/u/71388830?v=4"
                         alt="profile_image"
+                        ref={imageRef}
                         css={css`
                           width: 100%;
                           height: 100%;
