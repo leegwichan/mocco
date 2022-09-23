@@ -67,12 +67,11 @@ public class StudyBoardController {
 
     @PatchMapping("/{study-id}")
     public ResponseEntity patchStudy(@PathVariable("study-id") long studyId,
-                                     @RequestBody StudyDto.Request requestDto,
-                                     HttpServletRequest request){
+                                     @RequestBody StudyDto.Request requestDto){
         //스터디 모집 글 수정
         requestDto.setStudyId(studyId);
         List<Task> taskList = taskMapper.taskRequestDtoListToTaskList(requestDto.getTaskList());
-        Study updatedStudy = studyService.updateStudy(studyMapper.studyRequestDtoToStudy(requestDto,taskList), request);
+        Study updatedStudy = studyService.updateStudy(studyMapper.studyRequestDtoToStudy(requestDto,taskList));
         return new ResponseEntity<>(
                 new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(updatedStudy)),
                 HttpStatus.OK);
