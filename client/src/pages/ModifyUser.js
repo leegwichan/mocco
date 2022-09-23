@@ -3,35 +3,45 @@ import ModifyUserInput from '../components/PageComponent/ModifyUser/ModifyUserIn
 import ModifyUserButton from '../components/PageComponent/ModifyUser/ModifyUserButton';
 import { useState } from 'react';
 import ChangePasswordModal from '../components/PageComponent/ModifyUser/ChangePasswordModal';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
+import request from '../api';
 
 function ModifyUser() {
-  const userInfo = useRecoilValue(userInfoState);
-
-  // const [modifyUserInfo, setModifyUserInfo] = useState({
-  //   nickname: userInfo.nickname,
-  //   location: userInfo.location,
-  //   introduction: userInfo.introduction,
-  //   githubRepositoryList1: userInfo.githubRepositoryList[0],
-  //   githubRepositoryList2: userInfo.githubRepositoryList[1],
-  //   githubRepositoryList3: userInfo.githubRepositoryList[2],
-  // });
-
-  console.log('userInfo :', userInfo);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  console.log('u :', userInfo);
   const [modalOn, setModalOn] = useState(false);
 
   const openModal = () => setModalOn(true);
 
   const closeModal = () => setModalOn(false);
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+    console.log('e');
+    request({
+      method: 'patch',
+      url: `/api/members/${userInfo.memberId}`,
+      data: {
+        nickname: event.target.nickname.value,
+        introduction: event.target.introduction.value,
+        location: event.target.location.value,
+        githubRepository1: event.target.githubRepository1.value || null,
+        githubRepository2: event.target.githubRepository2.value || null,
+        githubRepository3: event.target.githubRepository3.value || null,
+        profileImage: null,
+      },
+    }).then((res) => setUserInfo(res.data.data));
+  };
+
   return (
-    <div
+    <form
       css={css`
         max-width: 350px;
         margin: 0 auto;
         padding: 100px 0px;
       `}
+      onSubmit={onSubmit}
     >
       <div
         css={css`
@@ -47,11 +57,13 @@ function ModifyUser() {
         labelText="닉네임"
         type="text"
         defaultValue={userInfo.nickname}
+        name="nickname"
       />
       <ModifyUserInput
         labelText="위치"
         type="text"
         defaultValue={userInfo.location}
+        name="location"
       />
       <ModifyUserButton
         buttonText="비밀번호 변경하기"
@@ -64,26 +76,30 @@ function ModifyUser() {
         labelText="자기소개"
         type="textarea"
         defaultValue={userInfo.location}
+        name="introduction"
       />
       <ModifyUserInput
         labelText="Git Hub Repository 1"
         type="url"
         defaultValue={userInfo.githubRepositoryList[0]}
+        name="githubRepository1"
       />
       <ModifyUserInput
         labelText="Git Hub Repository 2"
         type="url"
         defaultValue={userInfo.githubRepositoryList[1]}
+        name="githubRepository2"
       />
       <ModifyUserInput
         labelText="Git Hub Repository 3"
         type="url"
         defaultValue={userInfo.githubRepositoryList[2]}
+        name="githubRepository3"
       />
-      <ModifyUserButton buttonText="프로필 설정 완료" />
-      <ModifyUserButton buttonText="회원 탈퇴" />
+      <ModifyUserButton buttonText="프로필 설정 완료" type="submit" />
+      <ModifyUserButton buttonText="회원 탈퇴" type="button" />
       {modalOn && <ChangePasswordModal onClick={closeModal} />}
-    </div>
+    </form>
   );
 }
 
