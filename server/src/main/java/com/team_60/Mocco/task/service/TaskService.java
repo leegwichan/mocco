@@ -8,5 +8,4 @@ public interface TaskService {
     public Task updateTask(Task task);
     public Task findVerifiedTask(long taskId);
     public void validateTask(Task task, Study study);
-    public void checkTaskUpload(Study study, long taskId, Member member);
 }

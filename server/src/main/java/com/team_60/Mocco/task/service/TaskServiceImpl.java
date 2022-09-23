@@ -45,19 +45,4 @@ public class TaskServiceImpl implements TaskService{
         }
     }
 
-    public void checkTaskUpload(Study study, long taskId, Member member){
-        List<Task> taskList = taskRepository.findByStudyOrderByDeadline(study);
-        if(taskList.size()==0) throw new BusinessLogicException(ExceptionCode.TASK_NOT_FOUND);
-        for(Task task : taskList){
-            List<Member> memberList = task.getTaskCheckList().stream()
-                    .map(n -> n.getMember()).collect(Collectors.toList());
-            if(task.getTaskId() != taskId){
-                if(memberList.contains(member)) continue;
-                throw new BusinessLogicException(ExceptionCode.NOT_DONE_TASK);
-            }
-            if(memberList.contains(member)) throw new BusinessLogicException(ExceptionCode.TASK_ALREADY_DONE);
-            break;
-        }
-    }
-
 }
