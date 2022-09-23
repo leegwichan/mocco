@@ -9,6 +9,7 @@ import Button from '../../Common/Button';
 const StudySection = ({ id }) => {
   const studyInfo = useRecoilValue(singleStudyState);
   const navigate = useNavigate();
+  console.log(studyInfo);
 
   const deleteHandler = () => {
     request.delete(`/api/study-board/${id}`).then(() => {
@@ -55,17 +56,8 @@ const StudySection = ({ id }) => {
         <div className="detail_title">스터디 규칙</div>
         <div className="study_content">{studyInfo.rule}</div>
       </div>
-      <div
-        css={css`
-          padding-bottom: 118px;
-          .task_container {
-            font-size: 25px;
-            padding-bottom: 23px;
-            border-bottom: 2px solid black;
-          }
-        `}
-      >
-        <div className="task_container">스터디 Task</div>
+      <div css={task_container}>
+        <div>스터디 Task</div>
         {studyInfo.taskList &&
           studyInfo.taskList.map((task, idx) => (
             <TaskItem task={task} key={task.taskId} idx={idx} />
@@ -85,7 +77,8 @@ const container = css`
   .detail_title {
     font-size: 25px;
     padding-bottom: 23px;
-    border-bottom: 2px solid black;
+    /* border-bottom: 2px solid black; */
+    box-shadow: 0px 8px 2px -2px rgba(0, 0, 0, 0.25);
   }
   .study_content {
     font-size: 20px;
@@ -127,4 +120,14 @@ const info = css`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+`;
+
+const task_container = css`
+  padding-bottom: 118px;
+  div {
+    font-size: 25px;
+    padding-bottom: 23px;
+    /* border-bottom: 2px solid black; */
+    box-shadow: 0px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  }
 `;
