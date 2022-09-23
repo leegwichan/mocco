@@ -28,6 +28,16 @@ public class StudyProgressController {
                 new SingleResponseDto(response), HttpStatus.OK);
     }
 
+    @GetMapping("/sub/{study-id}/member/{member-id}")
+    public ResponseEntity getStudyProgressSubResponse(@PathVariable("study-id") long studyId,
+                                                      @PathVariable("member-id") long memberId){
+        Study findStudy = studyProgressService.findStudyWhenMemberMatched(studyId, memberId);
+        StudyProgressDto.SubResponse response = studyProgressMapper.studyToStudyProgressSubResponseDto(findStudy, memberId);
+
+        return new ResponseEntity(
+                new SingleResponseDto(response), HttpStatus.OK);
+    }
+
     @GetMapping("/rule/{study-id}")
     public ResponseEntity getStudyRule(@PathVariable("study-id") long studyId){
         Study findStudy = studyProgressService.findStudy(studyId);
