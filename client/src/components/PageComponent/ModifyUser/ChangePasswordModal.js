@@ -6,20 +6,20 @@ import request from '../../../api';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../atom/atom';
 
-function ChangePasswordModal({ onClose, onClick }) {
+function ChangePasswordModal({ onClose }) {
   const userInfo = useRecoilValue(userInfoState);
 
   const onSubmit = (event) => {
     event.preventDefault();
-
+    console.log('et :', event.target.originalPassword.value);
     request({
       method: 'patch',
       url: `/api/members/password/${userInfo.memberId}`,
       data: {
-        originalPassword: event.taget.originalPassword.value,
-        newPassword: event.taget.newPassword.value,
+        originalPassword: event.target.originalPassword.value,
+        newPassword: event.target.newPassword.value,
       },
-    });
+    }).then(onClose);
   };
 
   return (
@@ -86,7 +86,7 @@ function ChangePasswordModal({ onClose, onClick }) {
           `}
         >
           <ModifyUserButton type="submit" buttonText="변경완료" />
-          <ModifyUserButton onClick={onClick} type="button" buttonText="취소" />
+          <ModifyUserButton onClose={onClose} type="button" buttonText="취소" />
         </div>
       </form>
     </Modal>

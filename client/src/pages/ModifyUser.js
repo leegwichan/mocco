@@ -6,15 +6,19 @@ import ChangePasswordModal from '../components/PageComponent/ModifyUser/ChangePa
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
 import request from '../api';
+import WithdrawalModal from '../components/PageComponent/ModifyUser/WithdrawalModal';
 
 function ModifyUser() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   console.log('u :', userInfo);
-  const [modalOn, setModalOn] = useState(false);
+  const [changPasswordmodalOn, setChangePasswordModalOn] = useState(false);
+  const [withdrawalModalOn, setWithdrawalModalOn] = useState(false);
 
-  const openModal = () => setModalOn(true);
+  const openChangePasswordModal = () => setChangePasswordModalOn(true);
+  const closeChangePasswordModal = () => setChangePasswordModalOn(false);
 
-  const closeModal = () => setModalOn(false);
+  const openWithdrawalModal = () => setWithdrawalModalOn(true);
+  const closeWithdrawalModal = () => setWithdrawalModalOn(false);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -68,7 +72,7 @@ function ModifyUser() {
       <ModifyUserButton
         buttonText="비밀번호 변경하기"
         type="button"
-        onClick={openModal}
+        onClick={openChangePasswordModal}
       />
       {/* TODO: 변경 필요 */}
       <ModifyUserInput labelText="이미지 추가 / 변경" type="textarea" />
@@ -97,8 +101,15 @@ function ModifyUser() {
         name="githubRepository3"
       />
       <ModifyUserButton buttonText="프로필 설정 완료" type="submit" />
-      <ModifyUserButton buttonText="회원 탈퇴" type="button" />
-      {modalOn && <ChangePasswordModal onClick={closeModal} />}
+      <ModifyUserButton
+        buttonText="회원 탈퇴"
+        type="button"
+        onClick={openWithdrawalModal}
+      />
+      {changPasswordmodalOn && (
+        <ChangePasswordModal onClose={closeChangePasswordModal} />
+      )}
+      {withdrawalModalOn && <WithdrawalModal onClose={closeWithdrawalModal} />}
     </form>
   );
 }

@@ -1,18 +1,16 @@
 import { css } from '@emotion/react';
 
-function ModifyUserButton({ buttonText, type, onClick }) {
+function ModifyUserButton({ buttonText, ...rest }) {
   return (
     <div>
-      {buttonText !== '회원 탈퇴' && (
-        <button type={type} css={positiveButtonStyle} onClick={onClick}>
-          {buttonText}
-        </button>
-      )}
-      {buttonText === '회원 탈퇴' && (
-        <button type={type} css={negativeButtonStyle} onClick={onClick}>
-          {buttonText}
-        </button>
-      )}
+      <button
+        css={
+          buttonText === '회원 탈퇴' ? negativeButtonStyle : positiveButtonStyle
+        }
+        {...rest}
+      >
+        {buttonText}
+      </button>
     </div>
   );
 }
@@ -28,6 +26,9 @@ const positiveButtonStyle = css`
   margin-bottom: 30px;
   font-size: 18px;
   font-weight: normal;
+  &:disabled {
+    background-color: #999999;
+  }
 `;
 
 const negativeButtonStyle = css`

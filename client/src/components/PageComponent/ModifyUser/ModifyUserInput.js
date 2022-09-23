@@ -1,37 +1,16 @@
 import { css } from '@emotion/react';
 
-function ModifyUserInput({
-  labelText,
-  name,
-  type,
-  value,
-  defaultValue,
-  onChange,
-}) {
+function ModifyUserInput({ labelText, name, type, ...rest }) {
   return (
     <div>
       <label htmlFor={name}>
         <h3 css={labelTextStyle}>{labelText}</h3>
       </label>
       {type === 'textarea' && (
-        <textarea
-          css={textareaStyle}
-          type={type}
-          name={name}
-          value={value}
-          defaultValue={defaultValue}
-          onChange={onChange}
-        />
+        <textarea css={textareaStyle} type={type} name={name} {...rest} />
       )}
       {type !== 'textarea' && (
-        <input
-          css={inputStyle}
-          type={type}
-          name={name}
-          value={value}
-          defaultValue={defaultValue}
-          onChange={onChange}
-        />
+        <input css={inputStyle} type={type} name={name} {...rest} />
       )}
     </div>
   );
