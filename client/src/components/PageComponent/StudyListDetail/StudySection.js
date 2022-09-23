@@ -11,10 +11,11 @@ const StudySection = ({ id }) => {
   const navigate = useNavigate();
 
   const deleteHandler = () => {
-    request.delete(`/api/study-board/${id}`).then(() => {});
+    request.delete(`/api/study-board/${id}`).then(() => {
+      console.log();
+      navigate('/studylist');
+    });
   };
-
-  console.log('렌더링');
 
   return (
     <div css={container}>
