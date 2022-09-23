@@ -2,6 +2,7 @@ package com.team_60.Mocco.study.mapper;
 
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
+import com.team_60.Mocco.member.mapper.MemberMapper;
 import com.team_60.Mocco.study.dto.StudyProgressDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study_member.entity.StudyMember;
@@ -24,33 +25,19 @@ public interface StudyProgressMapper {
     default StudyProgressDto.Response studyToStudyProgressResponseDto(Study study, long memberId){
         TaskDto.MemberProgressResponse progress = studyToTaskMemberProgressResponseDto(study);
 
-        List<MemberDto.SubResponse> memberList = study.getStudyMemberList().stream().map(studyMember ->
-                new MemberDto.SubResponse(
-                        studyMember.getMember().getMemberId(),
-                        studyMember.getMember().getNickname(),
-                        studyMember.getMember().getMyInfo().getProfileImage()))
+        List<MemberDto.SubResponse> memberList =
+                study.getStudyMemberList().stream().map(studyMember ->
+                        MemberMapper.memberToMemberSubResponseDto(studyMember.getMember()))
                 .collect(Collectors.toList());
 
-        List<TaskDto.CheckResponse> taskList = study.getTaskList().stream()
-                .map(task -> {
-                    TaskCheck taskCheck = null;
-                    for (TaskCheck t: task.getTaskCheckList()){
-                        if (t.getMember().getMemberId() == memberId){
-                            taskCheck = t; break;
-                        }
-                    }
-
-                    TaskCheckDto.SubResponse taskCheckResponse = new TaskCheckDto.SubResponse(
-                            taskCheck != null ? task.getTaskId() : null,
-                            taskCheck != null
-                    );
-
-                    return new TaskDto.CheckResponse(
-                            task.getTaskId(), task.getDeadline(),
-                            task.getContent(), taskCheckResponse);
-                }).collect(Collectors.toList());
+        List<TaskDto.CheckResponse> taskList = studyToTaskCheckResponseDto(study, memberId);
 
         return new StudyProgressDto.Response(progress, memberList, taskList);
+    }
+
+    default StudyProgressDto.SubResponse studyToStudyProgressSubResponseDto(Study study, long memberId){
+        List<TaskDto.CheckResponse> taskList = studyToTaskCheckResponseDto(study, memberId);
+        return new StudyProgressDto.SubResponse(taskList);
     }
 
     private TaskDto.MemberProgressResponse studyToTaskMemberProgressResponseDto(Study study){
@@ -69,6 +56,27 @@ public interface StudyProgressMapper {
         }
 
         return new TaskDto.MemberProgressResponse(study.getTaskList().size(), memberProgress);
+    }
+
+    private List<TaskDto.CheckResponse> studyToTaskCheckResponseDto(Study study, long memberId){
+        return study.getTaskList().stream()
+                .map(task -> {
+                    TaskCheck taskCheck = null;
+                    for (TaskCheck t: task.getTaskCheckList()){
+                        if (t.getMember().getMemberId() == memberId){
+                            taskCheck = t; break;
+                        }
+                    }
+
+                    TaskCheckDto.SubResponse taskCheckResponse = new TaskCheckDto.SubResponse(
+                            taskCheck != null ? task.getTaskId() : null,
+                            taskCheck != null
+                    );
+
+                    return new TaskDto.CheckResponse(
+                            task.getTaskId(), task.getDeadline(),
+                            task.getContent(), taskCheckResponse);
+                }).collect(Collectors.toList());
     }
 
     StudyProgressDto.Rule studyToStudyProgressResponseRuleDto(Study study);

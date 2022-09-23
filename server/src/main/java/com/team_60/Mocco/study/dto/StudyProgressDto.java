@@ -21,6 +21,13 @@ public class StudyProgressDto {
     }
 
     @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class SubResponse{
+        List<TaskDto.CheckResponse> taskList;
+    }
+
+    @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
