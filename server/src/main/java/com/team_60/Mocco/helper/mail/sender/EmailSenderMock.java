@@ -5,8 +5,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Component
-@Profile("!deploy")
 public class EmailSenderMock implements EmailSendable{
 
     @Override

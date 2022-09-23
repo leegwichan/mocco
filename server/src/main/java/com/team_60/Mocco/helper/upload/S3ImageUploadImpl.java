@@ -13,7 +13,6 @@ import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service
-@Profile("deploy")
 public class S3ImageUploadImpl implements S3ImageUpload{
 
     @Value("${cloud.aws.s3.bucket}")
