@@ -1,15 +1,15 @@
 import { css } from '@emotion/react';
 
-function ModifyUserButton({ buttonText, type }) {
+function ModifyUserButton({ buttonText, type, onClick }) {
   return (
     <div>
       {buttonText !== '회원 탈퇴' && (
-        <button type={type} css={positiveButtonStyle}>
+        <button type={type} css={positiveButtonStyle} onClick={onClick}>
           {buttonText}
         </button>
       )}
       {buttonText === '회원 탈퇴' && (
-        <button type={type} css={negativeButtonStyle}>
+        <button type={type} css={negativeButtonStyle} onClick={onClick}>
           {buttonText}
         </button>
       )}
