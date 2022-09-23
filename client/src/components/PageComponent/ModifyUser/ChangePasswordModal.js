@@ -8,21 +8,19 @@ import { userInfoState } from '../../../atom/atom';
 
 function ChangePasswordModal({ onClose }) {
   const userInfo = useRecoilValue(userInfoState);
-  console.log('userInfo :', userInfo);
-  console.log('github :', userInfo.githubRepositoryList[0]);
-  request({
-    method: 'fetch',
-    url: `/api/members/${userInfo.memberId}`,
-    data: {
-      nickname: userInfo.nickname,
-      introduction: userInfo.introduction,
-      location: userInfo.location,
-      githubRepository1: userInfo.githubRepositoryList[0],
-      githubRepository2: userInfo.githubRepositoryList[1],
-      githubRepository3: userInfo.githubRepositoryList[2],
-      profileImage: userInfo.profileImage,
-    },
-  });
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    request({
+      method: 'patch',
+      url: `/api/members/password/${userInfo.memberId}`,
+      data: {
+        originalPassword: event.taget.originalPassword.value,
+        newPassword: event.taget.newPassword.value,
+      },
+    });
+  };
 
   return (
     <Modal onClose={onClose}>
@@ -30,6 +28,7 @@ function ChangePasswordModal({ onClose }) {
         css={css`
           margin: 0 32px;
         `}
+        onSubmit={onSubmit}
       >
         <h3
           css={css`
@@ -64,9 +63,21 @@ function ChangePasswordModal({ onClose }) {
             작성되어야 합니다. (8~20자로 작성)
           </p>
         </div>
-        <ModifyUserInput labelText="현재 비밀번호" />
-        <ModifyUserInput labelText="새 비밀번호" />
-        <ModifyUserInput labelText="새 비밀번호 확인" />
+        <ModifyUserInput
+          type="password"
+          labelText="현재 비밀번호"
+          name="originalPassword"
+        />
+        <ModifyUserInput
+          type="password"
+          labelText="새 비밀번호"
+          name="newPassword"
+        />
+        <ModifyUserInput
+          type="password"
+          labelText="새 비밀번호 확인"
+          name="newPasswordCheck"
+        />
         <div
           css={css`
             display: grid;
@@ -74,8 +85,8 @@ function ChangePasswordModal({ onClose }) {
             gap: 20px;
           `}
         >
-          <ModifyUserButton buttonText="변경완료" />
-          <ModifyUserButton buttonText="취소" />
+          <ModifyUserButton type="submit" buttonText="변경완료" />
+          <ModifyUserButton type="button" buttonText="취소" />
         </div>
       </form>
     </Modal>

@@ -3,8 +3,12 @@ import ModifyUserInput from '../components/PageComponent/ModifyUser/ModifyUserIn
 import ModifyUserButton from '../components/PageComponent/ModifyUser/ModifyUserButton';
 import { useState } from 'react';
 import ChangePasswordModal from '../components/PageComponent/ModifyUser/ChangePasswordModal';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../atom/atom';
 
 function ModifyUser() {
+  const userInfo = useRecoilValue(userInfoState);
+  console.log('userInfo :', userInfo);
   const [modalOn, setModalOn] = useState(false);
 
   const openModal = () => setModalOn(true);
