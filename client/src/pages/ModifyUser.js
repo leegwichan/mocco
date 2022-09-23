@@ -9,7 +9,6 @@ import { userInfoState } from '../atom/atom';
 function ModifyUser() {
   const userInfo = useRecoilValue(userInfoState);
 
-  useInput();
   // const [modifyUserInfo, setModifyUserInfo] = useState({
   //   nickname: userInfo.nickname,
   //   location: userInfo.location,

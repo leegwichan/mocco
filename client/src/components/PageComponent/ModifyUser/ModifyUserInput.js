@@ -1,6 +1,13 @@
 import { css } from '@emotion/react';
 
-function ModifyUserInput({ labelText, name, type, value, defaultValue }) {
+function ModifyUserInput({
+  labelText,
+  name,
+  type,
+  value,
+  defaultValue,
+  onChange,
+}) {
   return (
     <div>
       <label htmlFor={name}>
@@ -13,6 +20,7 @@ function ModifyUserInput({ labelText, name, type, value, defaultValue }) {
           name={name}
           value={value}
           defaultValue={defaultValue}
+          onChange={onChange}
         />
       )}
       {type !== 'textarea' && (
@@ -22,6 +30,7 @@ function ModifyUserInput({ labelText, name, type, value, defaultValue }) {
           name={name}
           value={value}
           defaultValue={defaultValue}
+          onChange={onChange}
         />
       )}
     </div>
