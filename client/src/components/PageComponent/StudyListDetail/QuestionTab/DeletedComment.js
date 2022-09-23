@@ -2,21 +2,7 @@ import { css } from '@emotion/react';
 
 function DeletedComment() {
   return (
-    <div
-      css={css`
-        width: 1080px;
-        height: 170px;
-        margin-bottom: 25px;
-        border-radius: 15px;
-        box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
-        padding: 20px;
-        font-size: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      `}
-    >
+    <div css={container}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -45,3 +31,17 @@ function DeletedComment() {
 }
 
 export default DeletedComment;
+
+const container = css`
+  width: 1080px;
+  height: 170px;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-function Task({ task }) {
+function TaskItem({ task, idx }) {
   return (
     <div
       css={css`
@@ -16,6 +16,7 @@ function Task({ task }) {
           font-size: 18px;
           font-weight: 500;
           color: #0b6ff2;
+          margin-right: -22px;
         }
 
         .task_info {
@@ -24,20 +25,26 @@ function Task({ task }) {
           background-color: #ffffff;
           display: flex;
           align-items: center;
+          justify-content: space-between;
 
           span {
             font-size: 15px;
             margin-left: 35px;
           }
+
+          .deadline {
+            margin-right: 35px;
+          }
         }
       `}
     >
-      <span className="study_rule">{`Task ${task.taskId}`}</span>
+      <span className="study_rule">{`Task ${idx + 1}`}</span>
       <div className="task_info">
-        <span>{`${task.content}  [~ ${task.deadline}]`}</span>
+        <span>{task.content}</span>
+        <span className="deadline">[ {task.deadline} ]</span>
       </div>
     </div>
   );
 }
 
-export default Task;
+export default TaskItem;

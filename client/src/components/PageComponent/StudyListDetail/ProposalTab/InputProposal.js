@@ -1,43 +1,51 @@
-import { css } from '@emotion/react';
-import { useState, memo } from 'react';
 import Button from '../../../Common/Button';
+import { css } from '@emotion/react';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 import request from '../../../../api';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const InputComment = memo(({ getCommentInfof }) => {
-  const { id } = useParams();
-  const [commentContent, setCommentContent] = useState('');
+function InputProposal({ getProposalInfof }) {
+  const [proposalContent, setProposalContent] = useState('');
   const [errMessage, setErrMessage] = useState('');
   const [isValid, setIsValid] = useState(false);
   const userInfo = useRecoilValue(userInfoState);
+  const { id } = useParams();
 
-  const commentInfo = {
-    content: commentContent,
+  const onChangeContent = (e) => {
+    setProposalContent(e.target.value);
+  };
+
+  const proposalInfo = {
+    content: proposalContent,
     memberId: userInfo.memberId,
     studyId: id,
   };
 
-  const addCommentHandler = (e) => {
+  const addProposalHandler = (e) => {
     e.preventDefault();
     setErrMessage('');
 
-    if (commentContent === '') {
+    if (proposalContent === '') {
       setErrMessage('내용을 입력해주세요');
       setIsValid(false);
-    } else if (commentContent.length >= 300) {
+    } else if (proposalContent.length >= 300) {
       setErrMessage('300자 미만으로 입력해주세요');
       setIsValid(false);
     } else {
       return request
-        .post('/api/comments', commentInfo)
+        .post('/api/proposals', proposalInfo)
         .then(() => {
           setIsValid(true);
-          setCommentContent('');
-          getCommentInfof();
+          setProposalContent('');
+          getProposalInfof();
         })
-        .catch(() => console.log(userInfo));
+        .catch((err) => {
+          console.log(err.response.data.message);
+          setProposalContent('');
+          setErrMessage(err.response.data.message);
+        });
     }
   };
 
@@ -46,25 +54,23 @@ const InputComment = memo(({ getCommentInfof }) => {
       <div css={container}>
         <input
           type="text"
-          placeholder="스터디에 대한 궁금한 점을 물어보세요"
-          value={commentContent}
-          onChange={(e) => setCommentContent(e.target.value)}
+          placeholder="신청을 위한 한 마디를 적어주세요"
+          value={proposalContent}
+          onChange={onChangeContent}
         />
         <Button
           type={'big_blue'}
           text={'등록'}
-          onClick={addCommentHandler}
+          onClick={addProposalHandler}
           disabled={!isValid}
         />
       </div>
       {errMessage && <div css={err}>{errMessage}</div>}
     </div>
   );
-});
+}
 
-InputComment.displayName = 'InputComment';
-
-export default InputComment;
+export default InputProposal;
 
 const container = css`
   display: flex;
