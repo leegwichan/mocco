@@ -1,14 +1,16 @@
 import { css } from '@emotion/react';
 
-function ModifyUserInput({ labelText, name, type }) {
+function ModifyUserInput({ labelText, name, type, value }) {
   return (
     <div>
       <label htmlFor={name}>
         <h3 css={labelTextStyle}>{labelText}</h3>
       </label>
-      {type === 'textarea' && <textarea css={textareaStyle} type={type} />}
+      {type === 'textarea' && (
+        <textarea css={textareaStyle} type={type} value={value} />
+      )}
       {type !== 'textarea' && (
-        <input css={inputStyle} type={type} name={name} />
+        <input css={inputStyle} type={type} name={name} value={value} />
       )}
     </div>
   );

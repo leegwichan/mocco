@@ -33,21 +33,41 @@ function ModifyUser() {
       >
         <h3>회원정보 수정</h3>
       </div>
-      <ModifyUserInput labelText="닉네임" type="text" />
-      <ModifyUserInput labelText="위치" type="text" />
+      <ModifyUserInput
+        labelText="닉네임"
+        type="text"
+        value={userInfo.nickname}
+      />
+      <ModifyUserInput labelText="위치" type="text" value={userInfo.location} />
       <ModifyUserButton
         buttonText="비밀번호 변경하기"
         type="button"
         onClick={openModal}
       />
       <ModifyUserInput labelText="이미지 추가 / 변경" type="textarea" />
-      <ModifyUserInput labelText="자기소개" type="textarea" />
-      <ModifyUserInput labelText="Git Hub Repository 1" type="url" />
-      <ModifyUserInput labelText="Git Hub Repository 2" type="url" />
-      <ModifyUserInput labelText="Git Hub Repository 3" type="url" />
+      <ModifyUserInput
+        labelText="자기소개"
+        type="textarea"
+        value={userInfo.introduction}
+      />
+      <ModifyUserInput
+        labelText="Git Hub Repository 1"
+        type="url"
+        value={userInfo.githubRepositoryList[0]}
+      />
+      <ModifyUserInput
+        labelText="Git Hub Repository 2"
+        type="url"
+        value={userInfo.githubRepositoryList[1]}
+      />
+      <ModifyUserInput
+        labelText="Git Hub Repository 3"
+        type="url"
+        value={userInfo.githubRepositoryList[2]}
+      />
       <ModifyUserButton buttonText="프로필 설정 완료" />
       <ModifyUserButton buttonText="회원 탈퇴" />
-      {modalOn && <ChangePasswordModal onClose={closeModal} />}
+      {modalOn && <ChangePasswordModal onClick={closeModal} />}
     </div>
   );
 }

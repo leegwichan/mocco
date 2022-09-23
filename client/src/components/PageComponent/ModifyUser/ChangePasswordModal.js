@@ -6,7 +6,7 @@ import request from '../../../api';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../atom/atom';
 
-function ChangePasswordModal({ onClose }) {
+function ChangePasswordModal({ onClose, onClick }) {
   const userInfo = useRecoilValue(userInfoState);
 
   const onSubmit = (event) => {
@@ -86,7 +86,7 @@ function ChangePasswordModal({ onClose }) {
           `}
         >
           <ModifyUserButton type="submit" buttonText="변경완료" />
-          <ModifyUserButton type="button" buttonText="취소" />
+          <ModifyUserButton onClick={onClick} type="button" buttonText="취소" />
         </div>
       </form>
     </Modal>
