@@ -7,6 +7,7 @@ const Button = ({ text, onClick, type }) => {
     'modal_blue',
     'modal_grey',
     'big_blue',
+    'big_grey',
     'big_white',
     'small_blue',
     'small_lightblue',
@@ -50,6 +51,19 @@ const btn = css`
       color: #0b6ff2;
       background-color: #ffffff;
       border: 1px solid #d1d1d1;
+    }
+  }
+
+  &.big_grey {
+    padding: 0px 28px;
+    height: 42px;
+    font-size: 20px;
+    background-color: #999999;
+    color: #ffffff;
+    border: 1px solid #999999;
+    &hover {
+      color: #999999;
+      background-color: #ffffff;
     }
   }
 
@@ -106,13 +120,13 @@ const btn = css`
     font-size: 15px;
     width: 64px;
     height: 32px;
-    background-color: #646464;
+    background-color: #999999;
     color: #ffffff;
 
     &:hover {
       color: #646464;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
+      border: 1px solid #999999;
     }
   }
 
@@ -134,13 +148,13 @@ const btn = css`
     font-size: 18px;
     width: 340px;
     height: 40px;
-    background-color: #a4a4a4;
+    background-color: #999999;
     color: #ffffff;
 
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
+      border: 1px solid #999999;
     }
   }
 
@@ -162,13 +176,13 @@ const btn = css`
     font-size: 15px;
     width: 240px;
     height: 40px;
-    background-color: #a4a4a4;
+    background-color: #999999;
     color: #ffffff;
 
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
+      border: 1px solid #999999;
     }
   }
 `;
