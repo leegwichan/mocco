@@ -20,3 +20,9 @@ export const mypageOwnerAtom = atom({
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
+
+export const infoToEvalue = atom({
+  key: 'infoToEvalue',
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+});

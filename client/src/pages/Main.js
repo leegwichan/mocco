@@ -6,7 +6,6 @@ import MyIntro from '../components/PageComponent/Main/MyIntro';
 import GitHubRepo from '../components/PageComponent/Main/GitHubRepo';
 import ProgressList from '../components/PageComponent/Main/MyStudyList/ProgressList';
 import DoneList from '../components/PageComponent/Main/MyStudyList/DoneList';
-import EvalueModal from '../components/PageComponent/Main/Evaluation/EvalueModal';
 import GitHubGrass from '../components/PageComponent/Main/GitHubGrass';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { userInfoState, mypageOwnerAtom } from '../atom/atom';
@@ -43,7 +42,6 @@ function Main() {
   const [isConnectedGit, setIsConnectedGit] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
   const [ownerI, setOwnerI] = useRecoilState(mypageOwnerAtom);
-
   const loginUser = useRecoilValue(userInfoState);
 
   useEffect(() => {
@@ -93,13 +91,6 @@ function Main() {
         <div css={sectionTitle}>완료된 스터디</div>
         <DoneList studyList={ownerI.doneStudy} />
       </section>
-      <EvalueModal
-        text={'스터디 후기를 작성해주세요'}
-        firstBtnType={'small_blue'}
-        secondBtnType={'small_grey'}
-        firstBtnText={'제출'}
-        secondBtnText={'닫기'}
-      />
     </section>
   );
 }

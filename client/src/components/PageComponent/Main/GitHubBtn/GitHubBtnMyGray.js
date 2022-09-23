@@ -17,7 +17,7 @@ const gray = css`
   border: none;
   :hover {
     background-color: white;
-    color: #999999;
+    color: #0b6ff2;
   }
 `;
 const iconn = css`

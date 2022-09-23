@@ -1,11 +1,16 @@
-import React, { useEffect } from 'react'; // eslint-disable-line no-unused-vars
-import { useRecoilValue } from 'recoil';
-import { mypageOwnerAtom, userInfoState } from '../../../../atom/atom';
+import React, { useEffect, useState } from 'react'; // eslint-disable-line no-unused-vars
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  mypageOwnerAtom,
+  userInfoState,
+  infoToEvalue,
+} from '../../../../atom/atom';
 import { css } from '@emotion/react';
 import Carousel from './Carousel';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import request from '../../../../api';
+import Modal from '../../../Common/Modal';
+import EvalueModal from '../Evaluation/EvalueModal';
 
 const Empty = css`
   height: 252px;
@@ -32,10 +37,17 @@ function ProgressList() {
   const studyArr = owner.progressStudy;
   const navigate = useNavigate();
   const user = useRecoilValue(userInfoState);
+  const setInfo = useSetRecoilState(infoToEvalue);
 
   useEffect(() => {
     console.log(evalueInfo);
+    setInfo({
+      endDate: evalueInfo.endDate,
+      studyId: evalueInfo.studyId,
+      memberList: evalueInfo.memberList,
+    });
   }, [evalueInfo]);
+
   const getEvaluateInfo = (studyData) => {
     return request
       .get(
@@ -49,11 +61,6 @@ function ProgressList() {
         console.log(err);
       });
   };
-
-  //     const evaluate = (studyData) => { API아직 안만들어짐
-  // //모달에서 쓸 평가 제출 요청 함수 만들어서
-  // // 모달로 내려보냄. 알럿 띄우고 제출 됐으면 모달 닫기.
-  // }
 
   const clickHandler = (studyData) => {
     console.log(studyData);
@@ -71,9 +78,33 @@ function ProgressList() {
       navigate(`/studylist/detail/${studyData.studyId}`);
     }
   };
+  const onClose = () => {
+    setIsOpen(false);
+  };
+
+  let arr = [];
 
   return (
     <div>
+      {isOpen && user.memberId === owner.memberId && (
+        <Modal
+          onClose={onClose}
+          style={{
+            content: { width: 'auto', height: 'auto', borderRadius: '20px' },
+          }}
+        >
+          <EvalueModal
+            arr={arr}
+            // reset={reset}
+            text={'스터디 후기를 작성해주세요'}
+            firstBtnType={'small_blue'}
+            secondBtnType={'small_grey'}
+            firstBtnText={'제출'}
+            secondBtnText={'닫기'}
+            setIsOpen={setIsOpen}
+          />
+        </Modal>
+      )}
       {studyArr.length < 1 ? (
         <div css={Empty}>
           <svg
@@ -96,9 +127,6 @@ function ProgressList() {
           studyArr={studyArr}
           status={'propgress'}
           clickHandler={clickHandler}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          evalueInfo={evalueInfo}
         />
       )}
     </div>

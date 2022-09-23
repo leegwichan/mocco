@@ -38,8 +38,8 @@ const Slides = css`
     margin-right: 100px;
   }
 `;
-//, 프롭스로 setIsOpen도 가져와서 모달 닫기
-function Carousel({ studyArr, status, clickHandler, isOpen, evalueInfo }) {
+
+function Carousel({ studyArr, status, clickHandler }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const slides = useRef(null);
   let length;
@@ -80,7 +80,6 @@ function Carousel({ studyArr, status, clickHandler, isOpen, evalueInfo }) {
 
   return (
     <div css={Container}>
-      {isOpen && <div>{evalueInfo.studyId}</div>}
       {studyArr && length < 4 ? null : (
         <svg
           onClick={goPrev}

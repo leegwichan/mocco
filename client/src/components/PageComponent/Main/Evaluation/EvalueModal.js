@@ -43,21 +43,33 @@ const ButtonContainer = css`
 `;
 
 function EvalueModal({
+  arr,
   text,
   firstBtnType,
   secondBtnType,
   firstBtnText,
   secondBtnText,
+  setIsOpen,
+  // reset,
 }) {
+  const onClose = () => {
+    setIsOpen(false);
+    // reset();
+  };
+
   return (
     <div css={Container}>
       <section className="title">{text}</section>
       <section css={InnerContainer}>
-        <Evaluation /> 내용
+        <Evaluation arr={arr} />
       </section>
       <section css={ButtonContainer}>
         <Button type={`${firstBtnType}`} text={`${firstBtnText}`} />
-        <Button type={`${secondBtnType}`} text={`${secondBtnText}`} />
+        <Button
+          type={`${secondBtnType}`}
+          text={`${secondBtnText}`}
+          onClick={onClose}
+        />
       </section>
     </div>
   );
