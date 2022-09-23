@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import request from '../api/index';
-import Task from '../components/PageComponent/StudyBoard/Task';
+import TaskContainer from '../components/PageComponent/StudyBoard/TaskContainer';
 
 const Header = css`
   width: 100vw;
@@ -114,7 +114,7 @@ function MakeStudy() {
     summary: null,
     detail: null,
     rule: null,
-    taskList: [{}],
+    taskList: null,
     startDate: null,
     endDate: null,
   });
@@ -141,25 +141,31 @@ function MakeStudy() {
   };
 
   const handleChangeStartDate = (e) => {
-    console.log(e.target.value);
     setStudyBoardForm({ ...studyBoardForm, startDate: e.target.value });
   };
 
   const handleChangeEndDate = (e) => {
-    console.log(e.target.value);
     setStudyBoardForm({ ...studyBoardForm, endDate: e.target.value });
   };
 
   // button click handler
   const handleMakeStudyButton = (e) => {
     e.preventDefault();
+    // if (
+    //   studyBoardForm.teamName &&
+    //   studyBoardForm.capacity &&
+    //   studyBoardForm.summary &&
+    //   studyBoardForm.detail &&
+    //   studyBoardForm.rule &&
+    //   studyBoardForm.taskList &&
+    //   studyBoardForm.startDate &&
+    //   studyBoardForm.endDate
+    // ) {
+    //   console.log(studyBoardForm);
+    // } else {
+    //   console.log('필수 입력 항목을 채워주세요');
+    // }
     console.log(studyBoardForm);
-  };
-
-  const handleMakeTaskButton = (e) => {
-    e.preventDefault();
-    console.log('task 생성');
-    setTasks([...tasks, tasks[tasks.length - 1] + 1]);
   };
 
   const handleCancelButton = (e) => {
@@ -204,8 +210,6 @@ function MakeStudy() {
     fileInputRef.current.click();
   }, []);
 
-  // Task 추가를 위한 index state
-  const [tasks, setTasks] = useState([1]);
   return (
     <>
       <header css={Header}></header>
@@ -228,6 +232,7 @@ function MakeStudy() {
                       name="studyName"
                       placeholder="ex) 모코모코"
                       onChange={handleChangeName}
+                      required
                       css={InputLeft}
                     />
                   </div>
@@ -239,6 +244,7 @@ function MakeStudy() {
                       type="text"
                       name="studyCapacity"
                       placeholder="ex) 5명"
+                      required
                       onChange={handleChangeCapacity}
                       css={InputLeft}
                     />
@@ -250,6 +256,7 @@ function MakeStudy() {
                     <input
                       type="date"
                       name="studyStart"
+                      required
                       onChange={handleChangeStartDate}
                       css={InputLeft}
                     />
@@ -261,6 +268,7 @@ function MakeStudy() {
                     <input
                       type="date"
                       name="studyEnd"
+                      required
                       onChange={handleChangeEndDate}
                       css={InputLeft}
                     />
@@ -275,9 +283,10 @@ function MakeStudy() {
                       type="text"
                       name="summary"
                       placeholder="ex) React 기초를 다지는 스터디입니다."
+                      spellCheck="false"
+                      required
                       onChange={handleChangeSummary}
                       css={SummaryTextArea}
-                      spellCheck="false"
                     />
                   </div>
                   <div css={PhotoContainer}>
@@ -339,9 +348,10 @@ function MakeStudy() {
                   <textarea
                     type="text"
                     name="introduce"
+                    spellCheck="false"
+                    required
                     onChange={handleChangeDetail}
                     css={BigTextArea}
-                    spellCheck="false"
                   />
                 </div>
                 <div>
@@ -351,55 +361,17 @@ function MakeStudy() {
                   <textarea
                     type="text"
                     name="rules"
+                    spellCheck="false"
+                    required
                     onChange={handleChangeRule}
                     css={BigTextArea}
-                    spellCheck="false"
                   />
                 </div>
               </div>
-              <div
-                css={css`
-                  margin-top: 30px;
-                  margin-bottom: 120px;
-                `}
-              >
-                <div
-                  css={css`
-                    display: flex;
-                    margin-bottom: 2rem;
-                    justify-content: space-between;
-                    align-items: center;
-                  `}
-                >
-                  <div css={BigLabel}>스터디 TASK</div>
-                  <button
-                    onClick={handleMakeTaskButton}
-                    css={css`
-                      height: 40px;
-                      padding: 0 1rem;
-                      color: white;
-                      font-size: 1.1rem;
-                      border: none;
-                      border-radius: 8px;
-                      background-color: #0b6ff2;
-                      transition: all 0.1s linear;
-                      &:hover {
-                        color: #0b6ff2;
-                        background-color: white;
-                        border: 1px solid #0b6ff2;
-                      }
-                    `}
-                  >
-                    TASK 추가하기
-                  </button>
-                </div>
-                {/* Task 목록 */}
-                <ul>
-                  {tasks.map((number, idx) => {
-                    return <Task key={idx} taskNumber={number} />;
-                  })}
-                </ul>
-              </div>
+              <TaskContainer
+                studyBoardForm={studyBoardForm}
+                setStudyBoardForm={setStudyBoardForm}
+              />
               <div
                 css={css`
                   text-align: right;

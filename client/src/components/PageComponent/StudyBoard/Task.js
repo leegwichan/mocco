@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
-
 const TaskList = css`
   display: flex;
+  margin-bottom: 2rem;
 `;
 
 const TaskContainer = css`
@@ -49,14 +49,44 @@ const DueDate = css`
   border-radius: 5px;
 `;
 
-function Task({ taskNumber }) {
+function Task({
+  idx,
+  taskValues,
+  setTaskValues,
+  studyBoardForm,
+  setStudyBoardForm,
+}) {
+  // handle input change
+  const handleTaskContentChange = (e) => {
+    const newTaskValues = [...taskValues];
+    newTaskValues[idx].content = e.target.value;
+    setTaskValues([...newTaskValues]);
+    setStudyBoardForm({ ...studyBoardForm, taskList: [...taskValues] });
+  };
+
+  const handleTaskDeadlineChange = (e) => {
+    const newTaskValues = [...taskValues];
+    newTaskValues[idx].deadline = e.target.value;
+    setTaskValues([...newTaskValues]);
+  };
+
+  // handle delete button click
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+    const newTaskValues = [...taskValues];
+    newTaskValues.splice(idx, 1);
+    setTaskValues([...newTaskValues]);
+    console.log(taskValues);
+  };
   return (
     <li css={TaskList}>
       <div css={TaskContainer}>
-        <button css={DeleteButton}>❌</button>
+        <button onClick={handleDeleteClick} css={DeleteButton}>
+          ❌
+        </button>
       </div>
       <div css={LeftContainer}>
-        <span css={TaskNumber}>Task {taskNumber}</span>
+        <span css={TaskNumber}>Task {idx + 1}</span>
       </div>
       <div
         css={css`
@@ -64,8 +94,8 @@ function Task({ taskNumber }) {
           flex: 1 0;
         `}
       >
-        <input type="text" css={TaskInput} />
-        <input type="date" css={DueDate} />
+        <input type="text" onChange={handleTaskContentChange} css={TaskInput} />
+        <input type="date" onChange={handleTaskDeadlineChange} css={DueDate} />
       </div>
     </li>
   );
