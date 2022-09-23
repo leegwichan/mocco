@@ -1,14 +1,21 @@
 package com.team_60.Mocco.study.mapper;
 
 import com.team_60.Mocco.member.dto.MemberDto;
+import com.team_60.Mocco.member.entity.Member;
+import com.team_60.Mocco.member.mapper.MemberMapper;
 import com.team_60.Mocco.study.dto.StudyProgressDto;
 import com.team_60.Mocco.study.entity.Study;
+import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.task.dto.TaskDto;
+import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task_check.dto.TaskCheckDto;
 import com.team_60.Mocco.task_check.entity.TaskCheck;
 import org.mapstruct.Mapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -16,15 +23,43 @@ public interface StudyProgressMapper {
 
 
     default StudyProgressDto.Response studyToStudyProgressResponseDto(Study study, long memberId){
+        TaskDto.MemberProgressResponse progress = studyToTaskMemberProgressResponseDto(study);
 
-        List<MemberDto.SubResponse> memberList = study.getStudyMemberList().stream().map(studyMember ->
-                new MemberDto.SubResponse(
-                        studyMember.getMember().getMemberId(),
-                        studyMember.getMember().getNickname(),
-                        studyMember.getMember().getMyInfo().getProfileImage()))
+        List<MemberDto.SubResponse> memberList =
+                study.getStudyMemberList().stream().map(studyMember ->
+                        MemberMapper.memberToMemberSubResponseDto(studyMember.getMember()))
                 .collect(Collectors.toList());
 
-        List<TaskDto.CheckResponse> taskList = study.getTaskList().stream()
+        List<TaskDto.CheckResponse> taskList = studyToTaskCheckResponseDto(study, memberId);
+
+        return new StudyProgressDto.Response(progress, memberList, taskList);
+    }
+
+    default StudyProgressDto.SubResponse studyToStudyProgressSubResponseDto(Study study, long memberId){
+        List<TaskDto.CheckResponse> taskList = studyToTaskCheckResponseDto(study, memberId);
+        return new StudyProgressDto.SubResponse(taskList);
+    }
+
+    private TaskDto.MemberProgressResponse studyToTaskMemberProgressResponseDto(Study study){
+        Map<Member, Integer> taskCompleteCount = new HashMap<>();
+        for (StudyMember studyMember : study.getStudyMemberList()){
+            taskCompleteCount.put(studyMember.getMember(), 0);
+        }
+
+        study.getTaskList().stream().forEach(task -> task.getTaskCheckList().stream().forEach(
+                taskCheck -> taskCompleteCount.put(taskCheck.getMember(), taskCompleteCount.get(taskCheck.getMember()) +1)
+        ));
+
+        List<TaskDto.MemberProgress> memberProgress = new ArrayList<>();
+        for (Member member : taskCompleteCount.keySet()){
+            memberProgress.add(new TaskDto.MemberProgress(member.getMemberId(), taskCompleteCount.get(member)));
+        }
+
+        return new TaskDto.MemberProgressResponse(study.getTaskList().size(), memberProgress);
+    }
+
+    private List<TaskDto.CheckResponse> studyToTaskCheckResponseDto(Study study, long memberId){
+        return study.getTaskList().stream()
                 .map(task -> {
                     TaskCheck taskCheck = null;
                     for (TaskCheck t: task.getTaskCheckList()){
@@ -42,8 +77,6 @@ public interface StudyProgressMapper {
                             task.getTaskId(), task.getDeadline(),
                             task.getContent(), taskCheckResponse);
                 }).collect(Collectors.toList());
-
-        return new StudyProgressDto.Response(memberList, taskList);
     }
 
     StudyProgressDto.Rule studyToStudyProgressResponseRuleDto(Study study);

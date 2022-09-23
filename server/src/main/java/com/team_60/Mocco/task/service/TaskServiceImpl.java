@@ -2,6 +2,7 @@ package com.team_60.Mocco.task.service;
 
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task.repository.TaskRepository;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

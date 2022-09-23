@@ -5,6 +5,7 @@ import com.team_60.Mocco.task_check.dto.TaskCheckDto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +25,22 @@ public class TaskDto {
         private LocalDate deadline;
         private String content;
         private TaskCheckDto.SubResponse taskCheck;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class MemberProgressResponse{
+        private int totalTask;
+        private List<MemberProgress> memberProgress;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class MemberProgress{
+        private long memberId;
+        private int endTask;
     }
 }
 

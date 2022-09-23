@@ -1,5 +1,6 @@
 package com.team_60.Mocco.task.service;
 
+import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.entity.Task;
 
