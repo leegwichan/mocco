@@ -8,6 +8,17 @@ import { userInfoState } from '../atom/atom';
 
 function ModifyUser() {
   const userInfo = useRecoilValue(userInfoState);
+
+  useInput();
+  // const [modifyUserInfo, setModifyUserInfo] = useState({
+  //   nickname: userInfo.nickname,
+  //   location: userInfo.location,
+  //   introduction: userInfo.introduction,
+  //   githubRepositoryList1: userInfo.githubRepositoryList[0],
+  //   githubRepositoryList2: userInfo.githubRepositoryList[1],
+  //   githubRepositoryList3: userInfo.githubRepositoryList[2],
+  // });
+
   console.log('userInfo :', userInfo);
   const [modalOn, setModalOn] = useState(false);
 
@@ -36,34 +47,39 @@ function ModifyUser() {
       <ModifyUserInput
         labelText="닉네임"
         type="text"
-        value={userInfo.nickname}
+        defaultValue={userInfo.nickname}
       />
-      <ModifyUserInput labelText="위치" type="text" value={userInfo.location} />
+      <ModifyUserInput
+        labelText="위치"
+        type="text"
+        defaultValue={userInfo.location}
+      />
       <ModifyUserButton
         buttonText="비밀번호 변경하기"
         type="button"
         onClick={openModal}
       />
+      {/* TODO: 변경 필요 */}
       <ModifyUserInput labelText="이미지 추가 / 변경" type="textarea" />
       <ModifyUserInput
         labelText="자기소개"
         type="textarea"
-        value={userInfo.introduction}
+        defaultValue={userInfo.location}
       />
       <ModifyUserInput
         labelText="Git Hub Repository 1"
         type="url"
-        value={userInfo.githubRepositoryList[0]}
+        defaultValue={userInfo.githubRepositoryList[0]}
       />
       <ModifyUserInput
         labelText="Git Hub Repository 2"
         type="url"
-        value={userInfo.githubRepositoryList[1]}
+        defaultValue={userInfo.githubRepositoryList[1]}
       />
       <ModifyUserInput
         labelText="Git Hub Repository 3"
         type="url"
-        value={userInfo.githubRepositoryList[2]}
+        defaultValue={userInfo.githubRepositoryList[2]}
       />
       <ModifyUserButton buttonText="프로필 설정 완료" />
       <ModifyUserButton buttonText="회원 탈퇴" />
