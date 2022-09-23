@@ -2,29 +2,45 @@ import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api/index';
 import { useState } from 'react';
-import { userInfoState } from '../../../../atom/atom';
+import { userInfoState, singleStudyState } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
+import { Link } from 'react-router-dom';
 
-function ReplyItem({ reply, getCommentInfof }) {
+function ReplyItem({ reply, getCommentInfof, nickname }) {
   const userInfo = useRecoilValue(userInfoState);
+  const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editContent, setEditContent] = useState(reply.content);
+  const [errMessage, setErrMessage] = useState('');
+  const [isValid, setIsValid] = useState(false);
 
-  const deleteHandler = () => {
+  const deleteHandler = (e) => {
+    e.preventDefault();
     return request
       .delete(`/api/replies/${reply.replyId}`)
       .then(() => getCommentInfof());
   };
 
-  const editHandler = () => {
-    return request
-      .patch(`/api/replies/${reply.replyId}`, {
-        content: editContent,
-      })
-      .then(() => {
-        setIsEditOpen(false);
-        getCommentInfof();
-      });
+  const editHandler = (e) => {
+    e.preventDefault();
+    if (editContent === '') {
+      setErrMessage('내용을 입력해주세요');
+      setIsValid(false);
+    } else if (editContent.length >= 300) {
+      setErrMessage('300자 미만으로 입력해주세요');
+      setIsValid(false);
+    } else {
+      setErrMessage('');
+      return request
+        .patch(`/api/replies/${reply.replyId}`, {
+          content: editContent,
+        })
+        .then(() => {
+          setIsEditOpen(false);
+          setIsValid(true);
+          getCommentInfof();
+        });
+    }
   };
 
   return (
@@ -32,14 +48,34 @@ function ReplyItem({ reply, getCommentInfof }) {
       {!isEditOpen ? (
         <div className="reply_box">
           <div>
-            <span>사진</span>
-            <span
+            <Link
+              to={`/main/${nickname}`}
               css={css`
-                margin: 0px 12px;
+                text-decoration: none;
               `}
             >
-              {userInfo.nickname}
-            </span>
+              <span className="main_link">사진</span>
+            </Link>
+            <Link
+              to={`/main/${nickname}`}
+              css={css`
+                text-decoration: none;
+              `}
+            >
+              <span
+                className="main_link"
+                css={css`
+                  margin: 0px 12px;
+                `}
+              >
+                {nickname}
+              </span>
+            </Link>
+            {userInfo.memberId === studyInfo.member.memberId ? (
+              <span>
+                <Button type="small_lightblue" text="스터디장" />
+              </span>
+            ) : null}
           </div>
           <div
             css={css`
@@ -67,9 +103,25 @@ function ReplyItem({ reply, getCommentInfof }) {
             css={edit_input}
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
-          />{' '}
+          />
+          {errMessage && (
+            <div
+              css={css`
+                color: red;
+                margin-top: 10px;
+                margin-right: 850px;
+              `}
+            >
+              {errMessage}
+            </div>
+          )}
           <div css={btn_container}>
-            <Button type={'small_white'} text={'완료'} onClick={editHandler} />
+            <Button
+              type={'small_white'}
+              text={'완료'}
+              onClick={editHandler}
+              disabled={!isValid}
+            />
             <Button
               type={'small_grey'}
               text={'취소'}
@@ -87,7 +139,7 @@ export default ReplyItem;
 const container = css`
   display: flex;
   justify-content: flex-end;
-
+  word-break: break-all;
   .reply_box {
     width: 990px;
     margin-bottom: 25px;
@@ -95,6 +147,14 @@ const container = css`
     box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
     padding: 20px;
     font-size: 20px;
+
+    .main_link {
+      color: black;
+      &:hover {
+        cursor: pointer;
+        color: #066ff2;
+      }
+    }
   }
 
   .button_container {

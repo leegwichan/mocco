@@ -1,20 +1,17 @@
 import { css } from '@emotion/react';
 import { singleStudyState } from '../../../atom/atom';
 import { useRecoilValue } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import request from '../../../api/index';
 import TaskItem from './TaskItem';
 import Button from '../../Common/Button';
 
 const StudySection = ({ id }) => {
   const studyInfo = useRecoilValue(singleStudyState);
-
   const navigate = useNavigate();
 
   const deleteHandler = () => {
-    request.delete(`/api/study-board/${id}`).then(() => {
-      navigate('/studylist');
-    });
+    request.delete(`/api/study-board/${id}`).then(() => {});
   };
 
   console.log('렌더링');
@@ -35,7 +32,14 @@ const StudySection = ({ id }) => {
         <div css={info}>
           <span className="info">{`${studyInfo.startDate} ~ ${studyInfo.endDate}`}</span>
           <span className="info">{`${studyInfo.capacity}명`}</span>
-          <span>{studyInfo.member.nickname}</span>
+          <Link
+            to={`/main/${studyInfo.member.nickname}`}
+            css={css`
+              text-decoration: none;
+            `}
+          >
+            <span className="main_link">{studyInfo.member.nickname}</span>
+          </Link>
         </div>
       </div>
       <div>
@@ -87,6 +91,14 @@ const container = css`
     padding-top: 36px;
     margin-bottom: 118px;
   }
+
+  .main_link {
+    color: black;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+  }
 `;
 
 const top_container = css`
@@ -103,6 +115,7 @@ const top_container = css`
     color: #066ff2;
     margin-bottom: 16px;
   }
+
   span:last-child {
     font-size: 20px;
     color: #000000;

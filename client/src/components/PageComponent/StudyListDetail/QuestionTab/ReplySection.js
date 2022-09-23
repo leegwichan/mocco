@@ -7,7 +7,11 @@ function ReplySection({ replys, getCommentInfof }) {
       {replys.map((reply, idx) =>
         reply.replyStatus === 'REPLY_ACTIVE' ? (
           <div key={reply.replyId}>
-            <ReplyItem reply={reply} getCommentInfof={getCommentInfof} />
+            <ReplyItem
+              reply={reply}
+              getCommentInfof={getCommentInfof}
+              nickname={reply.member.nickname}
+            />
           </div>
         ) : (
           <div

@@ -44,6 +44,7 @@ const tab_title = css`
   display: flex;
   font-size: 17px;
   font-weight: 500;
+
   .tab {
     padding: 17px;
     border: 1px solid #d1d1d1;
@@ -53,6 +54,7 @@ const tab_title = css`
     border-bottom-right-radius: 0px;
     cursor: pointer;
     color: #5b5d61;
+    transition: all 0.1s linear;
   }
   .tab:hover,
   .focused {

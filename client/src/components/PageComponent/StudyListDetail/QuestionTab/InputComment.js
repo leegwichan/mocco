@@ -9,7 +9,8 @@ import { useParams } from 'react-router-dom';
 const InputComment = memo(({ getCommentInfof }) => {
   const { id } = useParams();
   const [commentContent, setCommentContent] = useState('');
-  // const [commentInfo, setCommentInfo] = useState({});
+  const [errMessage, setErrMessage] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const userInfo = useRecoilValue(userInfoState);
 
   const commentInfo = {
@@ -20,26 +21,43 @@ const InputComment = memo(({ getCommentInfof }) => {
 
   const addCommentHandler = (e) => {
     e.preventDefault();
-    setCommentContent('');
+    setErrMessage('');
 
-    return request
-      .post('/api/comments', commentInfo)
-      .then(() => {
-        // window.location.reload();
-        getCommentInfof();
-      })
-      .catch(() => console.log(userInfo));
+    if (commentContent === '') {
+      setErrMessage('내용을 입력해주세요');
+      setIsValid(false);
+    } else if (commentContent.length >= 300) {
+      setErrMessage('300자 미만으로 입력해주세요');
+      setIsValid(false);
+    } else {
+      return request
+        .post('/api/comments', commentInfo)
+        .then(() => {
+          setIsValid(true);
+          setCommentContent('');
+          getCommentInfof();
+        })
+        .catch(() => console.log(userInfo));
+    }
   };
 
   return (
-    <div css={container}>
-      <input
-        type="text"
-        placeholder="스터디에 대한 궁금한 점을 물어보세요"
-        value={commentContent}
-        onChange={(e) => setCommentContent(e.target.value)}
-      />
-      <Button type={'big_blue'} text={'등록'} onClick={addCommentHandler} />
+    <div>
+      <div css={container}>
+        <input
+          type="text"
+          placeholder="스터디에 대한 궁금한 점을 물어보세요"
+          value={commentContent}
+          onChange={(e) => setCommentContent(e.target.value)}
+        />
+        <Button
+          type={'big_blue'}
+          text={'등록'}
+          onClick={addCommentHandler}
+          disabled={!isValid}
+        />
+      </div>
+      {errMessage && <div css={err}>{errMessage}</div>}
     </div>
   );
 });
@@ -52,12 +70,16 @@ const container = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 
   input {
-    width: 900px;
+    width: 975px;
     height: 40px;
     border: 1px solid #d1d1d1;
     border-radius: 5px;
   }
+`;
+
+const err = css`
+  color: red;
 `;
