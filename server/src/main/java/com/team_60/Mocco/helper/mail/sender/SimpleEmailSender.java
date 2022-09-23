@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-@Profile("deploy")
 public class SimpleEmailSender implements EmailSendable{
 
     private final JavaMailSender javaMailSender;

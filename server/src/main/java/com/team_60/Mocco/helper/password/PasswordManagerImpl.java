@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-@Profile("deploy")
 @Component
 @RequiredArgsConstructor
 public class PasswordManagerImpl implements NewPasswordManager {
