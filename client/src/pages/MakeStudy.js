@@ -1,6 +1,7 @@
-import React, { useCallback, useRef } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useCallback, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import request from '../api/index';
+import Task from '../components/PageComponent/StudyBoard/Task';
 
 const Header = css`
   width: 100vw;
@@ -104,14 +105,78 @@ const BigTextArea = css`
 `;
 
 function MakeStudy() {
+  // studyboard post를 위한 state
+  const [studyBoardForm, setStudyBoardForm] = useState({
+    memberId: 1,
+    teamName: null,
+    capacity: null,
+    image: null,
+    summary: null,
+    detail: null,
+    rule: null,
+    taskList: [{}],
+    startDate: null,
+    endDate: null,
+  });
+
+  // input change handler
+  const handleChangeName = (e) => {
+    setStudyBoardForm({ ...studyBoardForm, teamName: e.target.value });
+  };
+
+  const handleChangeCapacity = (e) => {
+    setStudyBoardForm({ ...studyBoardForm, capacity: e.target.value });
+  };
+
+  const handleChangeSummary = (e) => {
+    setStudyBoardForm({ ...studyBoardForm, summary: e.target.value });
+  };
+
+  const handleChangeDetail = (e) => {
+    setStudyBoardForm({ ...studyBoardForm, detail: e.target.value });
+  };
+
+  const handleChangeRule = (e) => {
+    setStudyBoardForm({ ...studyBoardForm, rule: e.target.value });
+  };
+
+  const handleChangeStartDate = (e) => {
+    console.log(e.target.value);
+    setStudyBoardForm({ ...studyBoardForm, startDate: e.target.value });
+  };
+
+  const handleChangeEndDate = (e) => {
+    console.log(e.target.value);
+    setStudyBoardForm({ ...studyBoardForm, endDate: e.target.value });
+  };
+
+  // button click handler
+  const handleMakeStudyButton = (e) => {
+    e.preventDefault();
+    console.log(studyBoardForm);
+  };
+
+  const handleMakeTaskButton = (e) => {
+    e.preventDefault();
+    console.log('task 생성');
+    setTasks([...tasks, tasks[tasks.length - 1] + 1]);
+  };
+
+  const handleCancelButton = (e) => {
+    e.preventDefault();
+    console.log('취소');
+  };
+
+  // image 프리뷰 및 버튼 숨기기 위한 ref
   const fileInputRef = useRef();
   const imageRef = useRef();
 
   // input 파일 변경시 서버에 이미지 파일 전송
-  const handleChange = useCallback((e) => {
+  const handleChangeImage = useCallback((e) => {
     if (!e.target.files) {
       return;
     }
+    console.log(e.target.files[0]);
 
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
@@ -122,18 +187,25 @@ function MakeStudy() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((res) => (imageRef.current.src = res.data.data))
+      .then((res) => {
+        imageRef.current.src = res.data.data;
+        setStudyBoardForm({ ...studyBoardForm, image: res.data.data });
+      })
+      .then(() => console.log(studyBoardForm))
       .catch((err) => console.log(err));
   }, []);
 
   // 이미지 업로드 버튼 클릭 시 input 대신 클릭되게 설정
-  const handleClick = useCallback((e) => {
+  const handleUploadClick = useCallback((e) => {
     e.preventDefault();
     if (!fileInputRef.current) {
       return;
     }
     fileInputRef.current.click();
   }, []);
+
+  // Task 추가를 위한 index state
+  const [tasks, setTasks] = useState([1]);
   return (
     <>
       <header css={Header}></header>
@@ -155,6 +227,7 @@ function MakeStudy() {
                       type="text"
                       name="studyName"
                       placeholder="ex) 모코모코"
+                      onChange={handleChangeName}
                       css={InputLeft}
                     />
                   </div>
@@ -166,6 +239,7 @@ function MakeStudy() {
                       type="text"
                       name="studyCapacity"
                       placeholder="ex) 5명"
+                      onChange={handleChangeCapacity}
                       css={InputLeft}
                     />
                   </div>
@@ -173,13 +247,23 @@ function MakeStudy() {
                     <label htmlFor="studyStart" css={Label}>
                       스터디 시작일
                     </label>
-                    <input type="date" name="studyStart" css={InputLeft} />
+                    <input
+                      type="date"
+                      name="studyStart"
+                      onChange={handleChangeStartDate}
+                      css={InputLeft}
+                    />
                   </div>
                   <div>
                     <label htmlFor="studyEnd" css={Label}>
                       스터디 만료일
                     </label>
-                    <input type="date" name="studyEnd" css={InputLeft} />
+                    <input
+                      type="date"
+                      name="studyEnd"
+                      onChange={handleChangeEndDate}
+                      css={InputLeft}
+                    />
                   </div>
                 </div>
                 <div css={StudyDetailRight}>
@@ -191,7 +275,9 @@ function MakeStudy() {
                       type="text"
                       name="summary"
                       placeholder="ex) React 기초를 다지는 스터디입니다."
+                      onChange={handleChangeSummary}
                       css={SummaryTextArea}
+                      spellCheck="false"
                     />
                   </div>
                   <div css={PhotoContainer}>
@@ -204,7 +290,7 @@ function MakeStudy() {
                       accept="image/png,image/jpg"
                       ref={fileInputRef}
                       css={FileInput}
-                      onChange={handleChange}
+                      onChange={handleChangeImage}
                     />
                     <div
                       css={css`
@@ -225,7 +311,7 @@ function MakeStudy() {
                         `}
                       />
                       <button
-                        onClick={handleClick}
+                        onClick={handleUploadClick}
                         css={css`
                           position: absolute;
                           width: 100%;
@@ -250,13 +336,25 @@ function MakeStudy() {
                   <label htmlFor="introduce" css={BigLabel}>
                     스터디 소개
                   </label>
-                  <textarea type="text" name="introduce" css={BigTextArea} />
+                  <textarea
+                    type="text"
+                    name="introduce"
+                    onChange={handleChangeDetail}
+                    css={BigTextArea}
+                    spellCheck="false"
+                  />
                 </div>
                 <div>
                   <label htmlFor="rules" css={BigLabel}>
                     스터디 규칙
                   </label>
-                  <textarea type="text" name="rules" css={BigTextArea} />
+                  <textarea
+                    type="text"
+                    name="rules"
+                    onChange={handleChangeRule}
+                    css={BigTextArea}
+                    spellCheck="false"
+                  />
                 </div>
               </div>
               <div
@@ -275,6 +373,7 @@ function MakeStudy() {
                 >
                   <div css={BigLabel}>스터디 TASK</div>
                   <button
+                    onClick={handleMakeTaskButton}
                     css={css`
                       height: 40px;
                       padding: 0 1rem;
@@ -296,78 +395,9 @@ function MakeStudy() {
                 </div>
                 {/* Task 목록 */}
                 <ul>
-                  <li
-                    css={css`
-                      display: flex;
-                    `}
-                  >
-                    <div
-                      css={css`
-                        display: flex;
-                        margin-right: 0.5rem;
-                        align-items: flex-start;
-                      `}
-                    >
-                      <button
-                        css={css`
-                          font-size: 20px;
-                          line-height: 40px;
-                          border: none;
-                          background-color: white;
-                        `}
-                      >
-                        ❌
-                      </button>
-                    </div>
-                    <div
-                      css={css`
-                        display: inline-block;
-                        height: 100%;
-                        margin-right: 1rem;
-                      `}
-                    >
-                      <span
-                        css={css`
-                          color: #0b7ff2;
-                          font-size: 40px;
-                        `}
-                      >
-                        Task 1
-                      </span>
-                    </div>
-                    <div
-                      css={css`
-                        display: inline-block;
-                        flex: 1 0;
-                      `}
-                    >
-                      <input
-                        type="text"
-                        css={css`
-                          display: block;
-                          width: 100%;
-                          height: 45px;
-                          margin-bottom: 10px;
-                          padding: 0 1rem;
-                          font-size: 1.2rem;
-                          border: 1px solid #999999;
-                          border-radius: 5px;
-                        `}
-                      />
-                      <input
-                        type="date"
-                        css={css`
-                          display: block;
-                          height: 44px;
-                          margin-top: 10px;
-                          padding: 0 1rem;
-                          font-size: 1.2rem;
-                          border: 1px solid #999999;
-                          border-radius: 5px;
-                        `}
-                      />
-                    </div>
-                  </li>
+                  {tasks.map((number, idx) => {
+                    return <Task key={idx} taskNumber={number} />;
+                  })}
                 </ul>
               </div>
               <div
@@ -376,6 +406,7 @@ function MakeStudy() {
                 `}
               >
                 <button
+                  onClick={handleCancelButton}
                   css={css`
                     height: 40px;
                     margin-right: 1rem;
@@ -396,6 +427,7 @@ function MakeStudy() {
                   취소
                 </button>
                 <button
+                  onClick={handleMakeStudyButton}
                   css={css`
                     height: 40px;
                     padding: 0 1rem;
