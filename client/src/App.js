@@ -10,6 +10,7 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
+import Callback from './pages/Callback';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard" element={<StudyBoard />} />
+        <Route path="/oauthcallback" element={<Callback />} />
       </Routes>
     </div>
   );

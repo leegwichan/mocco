@@ -82,7 +82,7 @@ function MyProfile({ githubId, isConnectedGit, isOwner }) {
       {isConnectedGit ? (
         <GitHubBtnBlue githubId={githubId} />
       ) : isOwner ? (
-        <GitHubBtnMyGray />
+        <GitHubBtnMyGray memberId={owner.memberId} />
       ) : (
         <GitHubBtnGray />
       )}

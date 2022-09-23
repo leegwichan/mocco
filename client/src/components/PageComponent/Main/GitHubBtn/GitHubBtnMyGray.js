@@ -2,7 +2,6 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { useNavigate } from 'react-router-dom';
 
 const gray = css`
   background-color: #999999;
@@ -23,13 +22,15 @@ const gray = css`
 const iconn = css`
   margin-right: 10px;
 `;
-function GitHubBtnMyGray() {
-  const navigate = useNavigate();
+function GitHubBtnMyGray({ memberId }) {
+  const connectURI = `https://github.com/login/oauth/authorize?client_id=${memberId}&redirect_uri=http://localhost:8080/oauthcallback`;
   return (
-    <button css={gray} onClick={() => navigate('/login')}>
-      <FontAwesomeIcon css={iconn} icon={faGithub} />
-      Git Hub 연동하기
-    </button>
+    <a href={connectURI}>
+      <button css={gray} type="button">
+        <FontAwesomeIcon css={iconn} icon={faGithub} />
+        Git Hub 연동하기
+      </button>
+    </a>
   );
 }
 

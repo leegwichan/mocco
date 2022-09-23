@@ -49,7 +49,9 @@ function Carousel({ studyArr, status, clickHandler }) {
   useEffect(() => {
     const slideWidth = 250;
     const slideMargin = 100;
-    // console.log(studyArr.length);
+    console.log(studyArr[0]);
+    console.log(studyArr[2]);
+    console.log(studyArr.length);
     slides.current.style.width =
       (slideWidth + slideMargin) * length - slideMargin + 'px';
   }, []);
