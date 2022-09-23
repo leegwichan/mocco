@@ -3,6 +3,7 @@ package com.team_60.Mocco.security.config;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.security.filter.JwtAuthenticationFilter;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
+import com.team_60.Mocco.security.filter.OAuth2SuccessHandler;
 import com.team_60.Mocco.security.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +32,7 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
     private final PrincipalOauth2UserService principalOauth2UserService;
+    private final OAuth2SuccessHandler successHandler;
 
     @Bean
     public WebSecurityCustomizer configure() {
@@ -48,7 +50,9 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthenticationFilter(redisTemplate,jwtTokenProvider),UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
                 .userInfoEndpoint()
-                .userService(principalOauth2UserService);
+                .userService(principalOauth2UserService)
+                .and()
+                .successHandler(successHandler);
         return http.build();
     }
 

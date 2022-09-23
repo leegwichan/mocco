@@ -34,6 +34,7 @@ public class TaskCheckServiceImpl implements TaskCheckService{
         Task findTask = taskService.findVerifiedTask(taskCheck.getTask().getTaskId());
         findTaskCheckExpectNull(findMember, findTask);
         checkTaskCheckCondition(findMember, findTask);
+        taskService.checkTaskUpload(findTask.getStudy(),findTask.getTaskId(),findMember);
 
         taskCheck.setMember(findMember);
         taskCheck.setTask(findTask);

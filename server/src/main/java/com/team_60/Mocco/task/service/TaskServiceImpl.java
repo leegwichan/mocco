@@ -2,6 +2,7 @@ package com.team_60.Mocco.task.service;
 
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task.repository.TaskRepository;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -39,6 +42,21 @@ public class TaskServiceImpl implements TaskService{
         if(task.getDeadline().compareTo(study.getStartDate())<0 ||
         task.getDeadline().compareTo(study.getEndDate())>0){
             throw new BusinessLogicException(ExceptionCode.IMPOSSIBLE_TASK_DATE);
+        }
+    }
+
+    public void checkTaskUpload(Study study, long taskId, Member member){
+        List<Task> taskList = taskRepository.findByStudyOrderByDeadline(study);
+        if(taskList.size()==0) throw new BusinessLogicException(ExceptionCode.TASK_NOT_FOUND);
+        for(Task task : taskList){
+            List<Member> memberList = task.getTaskCheckList().stream()
+                    .map(n -> n.getMember()).collect(Collectors.toList());
+            if(task.getTaskId() != taskId){
+                if(memberList.contains(member)) continue;
+                throw new BusinessLogicException(ExceptionCode.NOT_DONE_TASK);
+            }
+            if(memberList.contains(member)) throw new BusinessLogicException(ExceptionCode.TASK_ALREADY_DONE);
+            break;
         }
     }
 

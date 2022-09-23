@@ -39,6 +39,8 @@ public enum ExceptionCode {
     NOT_CORRECT_PERIOD(400,"선택할 수 있는 날짜 범위가 아닙니다."),
     TASK_CHECK_NOT_FOUND(404, "해당 인증글을 찾을 수 없습니다."),
     PROVIDER_ID_NOT_FOUND(404,"해당 provider ID 정보를 찾을 수 없습니다."),
+    NOT_DONE_TASK(400,"이전 Task를 완료하지 않았습니다."),
+    TASK_ALREADY_DONE(400,"이미 해당 task 인증을 했습니다."),
 
 
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),
