@@ -61,6 +61,6 @@ public class S3ImageUploadImpl implements S3ImageUpload{
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-SSS");
         String timeIdentifier = LocalDateTime.now().format(format);
 
-        return timeIdentifier + "-" + originalFileName;
+        return timeIdentifier + "-" + shortName;
     }
 }
