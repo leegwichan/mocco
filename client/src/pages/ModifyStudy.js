@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { css } from '@emotion/react';
 import Button from '../components/Common/Button';
 import { singleStudyState } from '../atom/atom';
-import { useRecoilState } from 'recoil';
-// import { useNavigate } from 'react-router-dom';
-// import request from '../api/index';
+import { useRecoilValue } from 'recoil';
+import { useNavigate, useParams } from 'react-router-dom';
+import request from '../api/index';
 
 function ModifyStudy() {
-  const [studyInfo, setStudyInfo] = useRecoilState(singleStudyState);
+  const studyInfo = useRecoilValue(singleStudyState);
   const [editContent, setEditContent] = useState({
     teamName: studyInfo.teamName,
     startDate: studyInfo.startDate,
@@ -17,8 +17,28 @@ function ModifyStudy() {
     detail: studyInfo.detail,
     rule: studyInfo.rule,
   });
-  const [editTask, setEditTask] = useState(singleStudyState.taskList);
-  // const navigate = useNavigate();
+  const [editTask, setEditTask] = useState(studyInfo.taskList);
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { teamName, startDate, endDate, capacity, summary, detail, rule } =
+    editContent;
+
+  const onEditChange = (e) => {
+    const { value, name } = e.target;
+    setEditContent({
+      ...editContent,
+      [name]: value,
+    });
+  };
+
+  const editHandler = (e) => {
+    e.preventDefault();
+    request.patch(`/api/study-board/${id}`, editContent).then((res) => {
+      console.log(res);
+      // window.location.replace(`/studylist/detail/${id}`);
+    });
+  };
 
   return (
     <main css={main_container}>
@@ -35,7 +55,8 @@ function ModifyStudy() {
                   <input
                     type="text"
                     name="studyName"
-                    value={editContent.teamName}
+                    value={teamName}
+                    onChange={onEditChange}
                   />
                 </div>
                 <div>
@@ -43,7 +64,8 @@ function ModifyStudy() {
                   <input
                     type="date"
                     name="studyStart"
-                    value={editContent.startDate}
+                    value={startDate}
+                    onChange={onEditChange}
                   />
                 </div>
                 <div>
@@ -51,7 +73,8 @@ function ModifyStudy() {
                   <input
                     type="date"
                     name="studyEnd"
-                    value={editContent.endDate}
+                    value={endDate}
+                    onChange={onEditChange}
                   />
                 </div>
               </div>
@@ -61,7 +84,8 @@ function ModifyStudy() {
                   <input
                     type="text"
                     name="studyCapacity"
-                    value={editContent.capacity}
+                    value={capacity}
+                    onChange={onEditChange}
                   />
                 </div>
                 <div>
@@ -69,7 +93,8 @@ function ModifyStudy() {
                   <textarea
                     type="text"
                     name="summary"
-                    value={editContent.summary}
+                    value={summary}
+                    onChange={onEditChange}
                   />
                 </div>
               </div>
@@ -80,12 +105,18 @@ function ModifyStudy() {
                 <textarea
                   type="text"
                   name="introduce"
-                  value={editContent.detail}
+                  value={detail}
+                  onChange={onEditChange}
                 />
               </div>
               <div>
                 <label htmlFor="rules">스터디 규칙</label>
-                <textarea type="text" name="rules" value={editContent.rule} />
+                <textarea
+                  type="text"
+                  name="rules"
+                  value={rule}
+                  onChange={onEditChange}
+                />
               </div>
             </div>
             <div css={task_container}>
@@ -93,13 +124,13 @@ function ModifyStudy() {
                 <div>스터디 TASK</div>
                 <Button type={'big_blue'} text={'Task 추가하기'} />
               </div>
-              {/* Task 목록 */}
               <ul>
-                {Array.isArray(singleStudyState.taskList) &&
-                  singleStudyState.taskList.map((task, idx) => (
+                {editTask &&
+                  editTask.map((task, idx) => (
                     <div
                       css={css`
                         display: flex;
+                        margin-bottom: 40px;
                       `}
                       key={task.taskId}
                     >
@@ -107,7 +138,7 @@ function ModifyStudy() {
                         <button>❌</button>
                       </div>
                       <div css={task_title}>
-                        <span>{idx}</span>
+                        <span>Task {idx + 1}</span>
                       </div>
                       <div css={task_input}>
                         <input type="text" value={task.contnet} />
@@ -125,10 +156,14 @@ function ModifyStudy() {
               <Button
                 type={'big_grey'}
                 text={'취소'}
-                // onClick={() => navigate(`studylist/detail/`)}
+                onClick={() => navigate(`/studylist/detail/${id}`)}
               />
 
-              <Button type={'big_blue'} text={'스터디 만들기'} />
+              <Button
+                type={'big_blue'}
+                text={'스터디 수정하기'}
+                onClick={editHandler}
+              />
             </div>
           </form>
         </section>

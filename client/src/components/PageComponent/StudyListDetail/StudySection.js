@@ -57,7 +57,7 @@ const StudySection = ({ id }) => {
         <div className="study_content">{studyInfo.rule}</div>
       </div>
       <div css={task_container}>
-        <div>스터디 Task</div>
+        <div className="task_title">스터디 Task</div>
         {studyInfo.taskList &&
           studyInfo.taskList.map((task, idx) => (
             <TaskItem task={task} key={task.taskId} idx={idx} />
@@ -124,10 +124,9 @@ const info = css`
 
 const task_container = css`
   padding-bottom: 118px;
-  div {
+  .task_title {
     font-size: 25px;
     padding-bottom: 23px;
-    /* border-bottom: 2px solid black; */
     box-shadow: 0px 8px 2px -2px rgba(0, 0, 0, 0.25);
   }
 `;
