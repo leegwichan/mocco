@@ -5,14 +5,19 @@ import { useState } from 'react';
 import { userInfoState, singleStudyState } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { Link } from 'react-router-dom';
+import { useInputValid } from '../hooks/useInputValid';
 
 function ReplyItem({ reply, getCommentInfof, nickname }) {
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [editContent, setEditContent] = useState(reply.content);
-  const [errMessage, setErrMessage] = useState('');
-  const [isValid, setIsValid] = useState(false);
+  const { value, errMessage, isValid, setIsValid, handleChange, handleClick } =
+    useInputValid({
+      initialvalues: 'reply.content',
+      onClick: () => {
+        editHandler();
+      },
+    });
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -21,89 +26,71 @@ function ReplyItem({ reply, getCommentInfof, nickname }) {
       .then(() => getCommentInfof());
   };
 
-  const editHandler = (e) => {
-    e.preventDefault();
-    if (editContent === '') {
-      setErrMessage('내용을 입력해주세요');
-      setIsValid(false);
-    } else if (editContent.length >= 300) {
-      setErrMessage('300자 미만으로 입력해주세요');
-      setIsValid(false);
-    } else {
-      setErrMessage('');
-      return request
-        .patch(`/api/replies/${reply.replyId}`, {
-          content: editContent,
-        })
-        .then(() => {
-          setIsEditOpen(false);
-          setIsValid(true);
-          getCommentInfof();
-        });
-    }
+  const editHandler = () => {
+    return request
+      .patch(`/api/replies/${reply.replyId}`, {
+        content: value,
+      })
+      .then(() => {
+        setIsEditOpen(false);
+        setIsValid(true);
+        getCommentInfof();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div css={container}>
-      {!isEditOpen ? (
-        <div className="reply_box">
-          <div>
-            <Link
-              to={`/main/${nickname}`}
-              css={css`
-                text-decoration: none;
-              `}
-            >
-              <span className="main_link">사진</span>
-            </Link>
-            <Link
-              to={`/main/${nickname}`}
-              css={css`
-                text-decoration: none;
-              `}
-            >
-              <span
-                className="main_link"
-                css={css`
-                  margin: 0px 12px;
-                `}
-              >
-                {nickname}
-              </span>
-            </Link>
-            {userInfo.memberId === studyInfo.member.memberId ? (
-              <span>
-                <Button type="small_lightblue" text="스터디장" />
-              </span>
-            ) : null}
-          </div>
-          <div
+      <div className="reply_box">
+        <div>
+          <Link
+            to={`/main/${nickname}`}
             css={css`
-              margin-top: 16px;
+              text-decoration: none;
             `}
           >
-            {reply.content}
-          </div>
-          <div className="button_container">
-            <Button
-              type={'small_white'}
-              text={'수정'}
-              onClick={() => setIsEditOpen(true)}
-            />
-            <Button
-              type={'small_grey'}
-              text={'삭제'}
-              onClick={() => deleteHandler()}
-            />
-          </div>
+            <span className="main_link">사진</span>
+          </Link>
+          <Link
+            to={`/main/${nickname}`}
+            css={css`
+              text-decoration: none;
+            `}
+          >
+            <span
+              className="main_link"
+              css={css`
+                margin: 0px 12px;
+              `}
+            >
+              {nickname}
+            </span>
+          </Link>
+          {userInfo.memberId === studyInfo.member.memberId ? (
+            <span>
+              <Button type="small_lightblue" text="스터디장" />
+            </span>
+          ) : null}
         </div>
-      ) : (
-        <div css={edit_container}>
-          <textarea
-            css={edit_input}
-            value={editContent}
-            onChange={(e) => setEditContent(e.target.value)}
+        <div
+          css={css`
+            margin-top: 16px;
+          `}
+        >
+          {reply.content}
+        </div>
+        <div className="button_container">
+          <Button
+            type={'small_white'}
+            text={'수정'}
+            onClick={() => setIsEditOpen(true)}
           />
+          <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
+        </div>
+      </div>
+      {isEditOpen && (
+        <div css={edit_container}>
+          <textarea css={edit_input} value={value} onChange={handleChange} />
           {errMessage && (
             <div
               css={css`
@@ -119,7 +106,7 @@ function ReplyItem({ reply, getCommentInfof, nickname }) {
             <Button
               type={'small_white'}
               text={'완료'}
-              onClick={editHandler}
+              onClick={handleClick}
               disabled={!isValid}
             />
             <Button
@@ -138,7 +125,8 @@ export default ReplyItem;
 
 const container = css`
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
   word-break: break-all;
   .reply_box {
     width: 990px;

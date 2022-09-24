@@ -12,10 +12,13 @@ const StudySection = ({ id }) => {
   // console.log(studyInfo);
 
   const deleteHandler = () => {
-    request.delete(`/api/study-board/${id}`).then(() => {
-      console.log();
+    return request.delete(`/api/study-board/${id}`).then(() => {
       navigate('/studylist');
     });
+  };
+
+  const editHandler = () => {
+    navigate(`/studylist/modify/${id}`);
   };
 
   return (
@@ -23,11 +26,7 @@ const StudySection = ({ id }) => {
       <div css={top_container}>
         <div>
           <span className="title">{studyInfo.teamName}</span>
-          <Button
-            type={'small_white'}
-            text={'수정'}
-            onClick={() => navigate(`/studylist/modify/${id}`)}
-          />
+          <Button type={'small_white'} text={'수정'} onClick={editHandler} />
 
           <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
         </div>

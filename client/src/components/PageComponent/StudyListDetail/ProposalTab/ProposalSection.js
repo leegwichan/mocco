@@ -15,8 +15,6 @@ function ProposalSection({ proposal, getProposalInfof }) {
         getProposalInfof();
       })
       .catch((err) => {
-        console.log(err.response.data.message);
-        console.log(errMessage);
         setErrMessage(err.response.data.message);
       });
   };
@@ -24,12 +22,10 @@ function ProposalSection({ proposal, getProposalInfof }) {
   const refuseHandler = () => {
     return request
       .patch(`/api/proposals/denied/${proposal.proposalId}`)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         getProposalInfof();
       })
       .catch((err) => {
-        console.log(err.response.data.message);
         setErrMessage(err.response.data.message);
       });
   };

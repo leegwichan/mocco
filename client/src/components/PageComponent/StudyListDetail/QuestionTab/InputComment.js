@@ -1,44 +1,36 @@
 import { css } from '@emotion/react';
-import { useState, memo } from 'react';
 import Button from '../../../Common/Button';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 import request from '../../../../api';
 import { useParams } from 'react-router-dom';
+import { useInputValid } from '../hooks/useInputValid';
 
-const InputComment = memo(({ getCommentInfof }) => {
+const InputComment = ({ getCommentInfof }) => {
   const { id } = useParams();
-  const [commentContent, setCommentContent] = useState('');
-  const [errMessage, setErrMessage] = useState('');
-  const [isValid, setIsValid] = useState(false);
+  const { value, errMessage, isValid, setIsValid, handleChange, handleClick } =
+    useInputValid({
+      initialvalues: '',
+      onClick: () => {
+        addCommentHandler();
+      },
+    });
   const userInfo = useRecoilValue(userInfoState);
 
   const commentInfo = {
-    content: commentContent,
+    content: value,
     memberId: userInfo.memberId,
     studyId: id,
   };
 
-  const addCommentHandler = (e) => {
-    e.preventDefault();
-    setErrMessage('');
-
-    if (commentContent === '') {
-      setErrMessage('내용을 입력해주세요');
-      setIsValid(false);
-    } else if (commentContent.length >= 300) {
-      setErrMessage('300자 미만으로 입력해주세요');
-      setIsValid(false);
-    } else {
-      return request
-        .post('/api/comments', commentInfo)
-        .then(() => {
-          setIsValid(true);
-          setCommentContent('');
-          getCommentInfof();
-        })
-        .catch(() => console.log(userInfo));
-    }
+  const addCommentHandler = () => {
+    return request
+      .post('/api/comments', commentInfo)
+      .then(() => {
+        setIsValid(true);
+        getCommentInfof();
+      })
+      .catch(() => console.log(userInfo));
   };
 
   return (
@@ -47,22 +39,20 @@ const InputComment = memo(({ getCommentInfof }) => {
         <input
           type="text"
           placeholder="스터디에 대한 궁금한 점을 물어보세요"
-          value={commentContent}
-          onChange={(e) => setCommentContent(e.target.value)}
+          value={value}
+          onChange={handleChange}
         />
         <Button
           type={'big_blue'}
           text={'등록'}
-          onClick={addCommentHandler}
+          onClick={handleClick}
           disabled={!isValid}
         />
       </div>
       {errMessage && <div css={err}>{errMessage}</div>}
     </div>
   );
-});
-
-InputComment.displayName = 'InputComment';
+};
 
 export default InputComment;
 
