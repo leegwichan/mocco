@@ -89,7 +89,7 @@ function Main() {
       </section>
       <section css={sectionItem}>
         <div css={sectionTitle}>완료된 스터디</div>
-        <DoneList studyList={ownerI.doneStudy} />
+        <DoneList />
       </section>
     </section>
   );

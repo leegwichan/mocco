@@ -102,6 +102,7 @@ function ProgressList() {
             firstBtnText={'제출'}
             secondBtnText={'닫기'}
             setIsOpen={setIsOpen}
+            memberId={owner.memberId}
           />
         </Modal>
       )}

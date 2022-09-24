@@ -1,3 +1,5 @@
+// 찢어서 쓰던 컴포넌트
+
 import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -26,8 +28,6 @@ const Container = css`
 
 function Evaluation({ arr }) {
   const studyInfo = useRecoilValue(infoToEvalue);
-  // const [lastArr, setLastArr] = useState([]);
-  // const user = useRecoilValue(userInfoState);
   console.log(studyInfo);
 
   let obj;
@@ -71,10 +71,12 @@ function Evaluation({ arr }) {
         }
         console.log(resultArr);
         lastArr = resultArr.filter((el) => el.evaluation !== 0); //이전에 눌렸던 스터디 정보가 0점으로 같이 읽혀서 0인 경우 뺌
+        console.log(resultArr);
         console.log(lastArr);
       }
       getLastArr();
     }, [obj]);
+    console.log(lastArr);
   };
 
   return (

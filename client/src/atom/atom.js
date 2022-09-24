@@ -26,3 +26,9 @@ export const infoToEvalue = atom({
   default: {},
   effects_UNSTABLE: [persistAtom],
 });
+
+export const evalueDataArr = atom({
+  key: 'evalueDataArr',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});

@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
-import React from 'react'; // eslint-disable-line no-unused-vars
 import StudyCard from '../../../Common/StudyCard';
 
 const Container = css`
@@ -49,9 +48,6 @@ function Carousel({ studyArr, status, clickHandler }) {
   useEffect(() => {
     const slideWidth = 250;
     const slideMargin = 100;
-    console.log(studyArr[0]);
-    console.log(studyArr[2]);
-    console.log(studyArr.length);
     slides.current.style.width =
       (slideWidth + slideMargin) * length - slideMargin + 'px';
   }, []);
@@ -100,17 +96,21 @@ function Carousel({ studyArr, status, clickHandler }) {
       <div css={Slides_Wraper}>
         <div css={Slides} ref={slides}>
           <ul>
-            {studyArr &&
-              status &&
-              studyArr.map((studyData, idx) => (
-                <li
-                  key={idx}
-                  role="presentation"
-                  onClick={() => clickHandler(studyData)}
-                >
-                  <StudyCard studyData={studyData} />
-                </li>
-              ))}
+            {studyArr && status
+              ? studyArr.map((studyData, idx) => (
+                  <li
+                    key={idx}
+                    role="presentation"
+                    onClick={() => clickHandler(studyData)}
+                  >
+                    <StudyCard studyData={studyData} />
+                  </li>
+                ))
+              : studyArr.map((studyData, idx) => (
+                  <li key={idx} role="presentation">
+                    <StudyCard studyData={studyData} />
+                  </li>
+                ))}
           </ul>
         </div>
       </div>

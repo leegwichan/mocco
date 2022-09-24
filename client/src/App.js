@@ -27,7 +27,7 @@ function App() {
         <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard" element={<StudyBoard />} />
-        <Route path="/oauthcallback" element={<Callback />} />
+        <Route path="/oauthcallback" exact={true} element={<Callback />} />
       </Routes>
     </div>
   );
