@@ -52,10 +52,10 @@ public class S3ImageUploadImpl implements S3ImageUpload{
     private String newFileName(String originalFileName){
 
         String shortName;
-        if (originalFileName.length() <= 60){
+        if (originalFileName.length() <= 6){
             shortName = originalFileName;
         } else {
-            shortName = originalFileName.substring(originalFileName.length() - 60);
+            shortName = originalFileName.substring(originalFileName.length() - 6);
         }
 
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-SSS");
