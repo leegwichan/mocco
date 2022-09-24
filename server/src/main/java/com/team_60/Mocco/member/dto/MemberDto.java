@@ -41,7 +41,9 @@ public class MemberDto {
     @Getter
     @Setter
     public static class PatchPassword{
-        private String password;
+        private long memberId;
+        private String originalPassword;
+        private String newPassword;
     }
 
     @AllArgsConstructor

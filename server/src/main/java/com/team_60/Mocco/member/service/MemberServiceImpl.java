@@ -3,6 +3,7 @@ package com.team_60.Mocco.member.service;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.password.NewPasswordManager;
+import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
     private final NewPasswordManager newPasswordManager;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public Member findMember(long memberId) {
@@ -28,7 +29,7 @@ public class MemberServiceImpl implements MemberService{
     public Member createMember(Member member) {
         findMemberByEmailExpectByNull(member.getEmail());
         findMemberByNicknameExpectNull(member.getNickname());
-        member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+        member.setPassword(encoder.encode(member.getPassword()));
         return memberRepository.save(member);
     }
 
@@ -65,12 +66,15 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Member updatePassword(Member member){
-        Member findMember = findVerifiedMember(member.getMemberId());
+    public Member updatePassword(MemberDto.PatchPassword dto){
+        Member findMember = findVerifiedMember(dto.getMemberId());
+        if (!encoder.matches(dto.getOriginalPassword(), findMember.getPassword())){
+            throw new BusinessLogicException(ExceptionCode.NOT_PASSWORD_MATCHED);
+        }
 
-        Optional.ofNullable(member.getPassword())
+        Optional.ofNullable(dto.getNewPassword())
                 .ifPresent(password ->
-                        findMember.setPassword(bCryptPasswordEncoder.encode(member.getPassword())));
+                        findMember.setPassword(encoder.encode(password)));
 
         return memberRepository.save(findMember);
     }
@@ -112,7 +116,7 @@ public class MemberServiceImpl implements MemberService{
     public void resetMemberPasswordByEmail(String email) {
         Member findMember = findMemberByEmailExpectByPresent(email);
         String newPassword  = newPasswordManager.makeNewPasswordAndSendTextEmail(email);
-        String encodePassword = bCryptPasswordEncoder.encode(newPassword);
+        String encodePassword = encoder.encode(newPassword);
 
         findMember.setPassword(encodePassword);
         memberRepository.save(findMember);
