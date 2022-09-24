@@ -151,21 +151,25 @@ function MakeStudy() {
   // button click handler
   const handleMakeStudyButton = (e) => {
     e.preventDefault();
-    // if (
-    //   studyBoardForm.teamName &&
-    //   studyBoardForm.capacity &&
-    //   studyBoardForm.summary &&
-    //   studyBoardForm.detail &&
-    //   studyBoardForm.rule &&
-    //   studyBoardForm.taskList &&
-    //   studyBoardForm.startDate &&
-    //   studyBoardForm.endDate
-    // ) {
-    //   console.log(studyBoardForm);
-    // } else {
-    //   console.log('필수 입력 항목을 채워주세요');
-    // }
-    console.log(studyBoardForm);
+    if (
+      studyBoardForm.teamName &&
+      studyBoardForm.capacity &&
+      studyBoardForm.summary &&
+      studyBoardForm.detail &&
+      studyBoardForm.rule &&
+      studyBoardForm.taskList &&
+      studyBoardForm.startDate &&
+      studyBoardForm.endDate
+    ) {
+      console.log(studyBoardForm);
+      request
+        .post('/api/study-board', studyBoardForm)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    } else {
+      console.log('필수 입력 항목을 채워주세요');
+    }
+    // console.log(studyBoardForm);
   };
 
   const handleCancelButton = (e) => {
@@ -243,7 +247,7 @@ function MakeStudy() {
                     <input
                       type="text"
                       name="studyCapacity"
-                      placeholder="ex) 5명"
+                      placeholder="ex) 5"
                       required
                       onChange={handleChangeCapacity}
                       css={InputLeft}
