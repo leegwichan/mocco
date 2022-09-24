@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { singleStudyState } from '../../../atom/atom';
+import { singleStudyState, userInfoState } from '../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import request from '../../../api/index';
@@ -8,17 +8,25 @@ import Button from '../../Common/Button';
 
 const StudySection = ({ id }) => {
   const studyInfo = useRecoilValue(singleStudyState);
+  const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
-  // console.log(studyInfo);
 
   const deleteHandler = () => {
-    return request.delete(`/api/study-board/${id}`).then(() => {
-      navigate('/studylist');
-    });
+    if (studyInfo.member.memberId !== userInfo.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request.delete(`/api/study-board/${id}`).then(() => {
+        navigate('/studylist');
+      });
+    }
   };
 
   const editHandler = () => {
-    navigate(`/studylist/modify/${id}`);
+    if (studyInfo.member.memberId !== userInfo.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      navigate(`/studylist/modify/${id}`);
+    }
   };
 
   return (
@@ -33,6 +41,14 @@ const StudySection = ({ id }) => {
         <div css={info}>
           <span className="info">{`${studyInfo.startDate} ~ ${studyInfo.endDate}`}</span>
           <span className="info">{`${studyInfo.capacity}명`}</span>
+          <Link
+            to={`/main/${studyInfo.member.nickname}`}
+            css={css`
+              text-decoration: none;
+            `}
+          >
+            <span className="main_link">{studyInfo.member.profileImage}</span>
+          </Link>
           <Link
             to={`/main/${studyInfo.member.nickname}`}
             css={css`

@@ -8,7 +8,7 @@ import { useInputValid } from '../hooks/useInputValid';
 
 const InputComment = ({ getCommentInfof }) => {
   const { id } = useParams();
-  const { value, errMessage, isValid, setIsValid, handleChange, handleClick } =
+  const { value, isValid, setIsValid, setValue, handleChange, handleClick } =
     useInputValid({
       initialvalues: '',
       onClick: () => {
@@ -28,28 +28,26 @@ const InputComment = ({ getCommentInfof }) => {
       .post('/api/comments', commentInfo)
       .then(() => {
         setIsValid(true);
+        setValue('');
         getCommentInfof();
       })
       .catch(() => console.log(userInfo));
   };
 
   return (
-    <div>
-      <div css={container}>
-        <input
-          type="text"
-          placeholder="스터디에 대한 궁금한 점을 물어보세요"
-          value={value}
-          onChange={handleChange}
-        />
-        <Button
-          type={'big_blue'}
-          text={'등록'}
-          onClick={handleClick}
-          disabled={!isValid}
-        />
-      </div>
-      {errMessage && <div css={err}>{errMessage}</div>}
+    <div css={container}>
+      <input
+        type="text"
+        placeholder="스터디에 대한 궁금한 점을 물어보세요"
+        value={value}
+        onChange={handleChange}
+      />
+      <Button
+        type={'big_blue'}
+        text={'등록'}
+        onClick={handleClick}
+        disabled={!isValid}
+      />
     </div>
   );
 };
@@ -68,8 +66,4 @@ const container = css`
     border: 1px solid #d1d1d1;
     border-radius: 5px;
   }
-`;
-
-const err = css`
-  color: red;
 `;

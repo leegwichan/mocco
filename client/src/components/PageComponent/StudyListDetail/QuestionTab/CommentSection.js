@@ -8,12 +8,19 @@ import { Link } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 import InputReply from './InputReply';
 
-const CommentSection = ({ content, commentId, getCommentInfof, nickname }) => {
+const CommentSection = ({
+  content,
+  commentId,
+  getCommentInfof,
+  member,
+  createdAt,
+  modifiedAt,
+}) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
-  const { value, errMessage, isValid, setIsValid, handleChange, handleClick } =
+  const { value, isValid, setIsValid, handleChange, handleClick } =
     useInputValid({
       initialvalues: content,
       onClick: () => {
@@ -23,9 +30,21 @@ const CommentSection = ({ content, commentId, getCommentInfof, nickname }) => {
 
   const deleteHandler = (e) => {
     e.preventDefault();
-    return request.delete(`/api/comments/${commentId}`).then(() => {
-      getCommentInfof();
-    });
+    if (userInfo.memberId !== member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request.delete(`/api/comments/${commentId}`).then(() => {
+        getCommentInfof();
+      });
+    }
+  };
+
+  const editOpenHandler = () => {
+    if (userInfo.memberId !== member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      setIsEditOpen(true);
+    }
   };
 
   const editHandler = () => {
@@ -47,16 +66,16 @@ const CommentSection = ({ content, commentId, getCommentInfof, nickname }) => {
         <div css={container}>
           <div>
             <Link
-              to={`/main/${nickname}`}
+              to={`/main/${member.nickname}`}
               css={css`
                 text-decoration: none;
               `}
             >
-              <span className="main_link">사진</span>
+              <span className="main_link">{member.profileImage}</span>
             </Link>
 
             <Link
-              to={`/main/${nickname}`}
+              to={`/main/${member.nickname}`}
               css={css`
                 text-decoration: none;
               `}
@@ -67,7 +86,7 @@ const CommentSection = ({ content, commentId, getCommentInfof, nickname }) => {
                   margin: 12px;
                 `}
               >
-                {nickname}
+                {member.nickname}
               </span>
             </Link>
             {userInfo.memberId === studyInfo.member.memberId ? (
@@ -82,6 +101,7 @@ const CommentSection = ({ content, commentId, getCommentInfof, nickname }) => {
             `}
           >
             {content}
+            {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
           </div>
           <div className="button_container">
             <Button
@@ -92,7 +112,7 @@ const CommentSection = ({ content, commentId, getCommentInfof, nickname }) => {
             <Button
               type={'small_white'}
               text={'수정'}
-              onClick={() => setIsEditOpen(true)}
+              onClick={editOpenHandler}
             />
             <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
           </div>
@@ -100,16 +120,6 @@ const CommentSection = ({ content, commentId, getCommentInfof, nickname }) => {
         {isEditOpen && (
           <div css={edit_container}>
             <input css={edit_input} value={value} onChange={handleChange} />
-            {errMessage && (
-              <div
-                css={css`
-                  color: red;
-                  margin-top: 10px;
-                `}
-              >
-                {errMessage}
-              </div>
-            )}
             <div css={btn_container}>
               <Button
                 type={'small_white'}
@@ -164,6 +174,12 @@ const container = css`
       color: #066ff2;
     }
   }
+`;
+
+const edited = css`
+  margin-left: 20px;
+  font-size: 15px;
+  color: #999999;
 `;
 
 const edit_container = css`

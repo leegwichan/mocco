@@ -4,7 +4,7 @@ import request from '../../../../api';
 import { useInputValid } from '../hooks/useInputValid';
 
 function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
-  const { value, errMessage, isValid, setIsValid, handleChange, handleClick } =
+  const { value, isValid, setIsValid, handleChange, handleClick } =
     useInputValid({
       initialvalues: '',
       onClick: () => {
@@ -37,17 +37,6 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
           onChange={handleChange}
           placeholder="답글을 입력하세요"
         />
-        {errMessage && (
-          <div
-            css={css`
-              color: red;
-              margin-top: 10px;
-              margin-right: 850px;
-            `}
-          >
-            {errMessage}
-          </div>
-        )}
         <div className="button_container">
           <Button
             type={'small_blue'}

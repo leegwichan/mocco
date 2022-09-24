@@ -7,21 +7,13 @@ import { useParams } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
 function InputProposal({ getProposalInfof }) {
-  const {
-    value,
-    errMessage,
-    isValid,
-    setIsValid,
-    setValue,
-    setErrMessage,
-    handleChange,
-    handleClick,
-  } = useInputValid({
-    initialvalues: '',
-    onClick: () => {
-      addProposalHandler();
-    },
-  });
+  const { value, isValid, setIsValid, setValue, handleChange, handleClick } =
+    useInputValid({
+      initialvalues: '',
+      onClick: () => {
+        addProposalHandler();
+      },
+    });
   const userInfo = useRecoilValue(userInfoState);
   const { id } = useParams();
 
@@ -41,7 +33,7 @@ function InputProposal({ getProposalInfof }) {
       })
       .catch((err) => {
         console.log(err.response.data.message);
-        setErrMessage(err.response.data.message);
+        alert(err.response.data.message);
       });
   };
 
@@ -61,7 +53,6 @@ function InputProposal({ getProposalInfof }) {
           disabled={!isValid}
         />
       </div>
-      {errMessage && <div css={err}>{errMessage}</div>}
     </div>
   );
 }
@@ -80,8 +71,4 @@ const container = css`
     border: 1px solid #d1d1d1;
     border-radius: 5px;
   }
-`;
-
-const err = css`
-  color: red;
 `;

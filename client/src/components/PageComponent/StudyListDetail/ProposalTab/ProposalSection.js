@@ -1,106 +1,105 @@
-import { useState } from 'react';
 import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
 import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { singleStudyState, userInfoState } from '../../../../atom/atom';
 
 function ProposalSection({ proposal, getProposalInfof }) {
-  const [errMessage, setErrMessage] = useState('');
+  const studyInfo = useRecoilValue(singleStudyState);
+  const userInfo = useRecoilValue(userInfoState);
 
   const selectHandler = () => {
-    return request
-      .patch(`/api/proposals/approve/${proposal.proposalId}`)
-      .then((res) => {
-        console.log(res);
-        getProposalInfof();
-      })
-      .catch((err) => {
-        setErrMessage(err.response.data.message);
-      });
+    if (studyInfo.member.memberId !== proposal.member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request
+        .patch(`/api/proposals/approve/${proposal.proposalId}`)
+        .then((res) => {
+          console.log(res);
+          getProposalInfof();
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    }
   };
 
   const refuseHandler = () => {
-    return request
-      .patch(`/api/proposals/denied/${proposal.proposalId}`)
-      .then(() => {
-        getProposalInfof();
-      })
-      .catch((err) => {
-        setErrMessage(err.response.data.message);
-      });
+    if (studyInfo.member.memberId !== proposal.member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request
+        .patch(`/api/proposals/denied/${proposal.proposalId}`)
+        .then(() => {
+          getProposalInfof();
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    }
   };
 
   const deleteHander = () => {
-    return request
-      .delete(`/api/proposals/${proposal.proposalId}`)
-      .then(() => {
-        getProposalInfof();
-      })
-      .catch((err) => console.log(err));
+    if (userInfo.memberId !== proposal.member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request
+        .delete(`/api/proposals/${proposal.proposalId}`)
+        .then(() => {
+          getProposalInfof();
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
-    <div>
-      {errMessage && (
-        <div
+    <div css={container}>
+      <div>
+        <Link
+          to={`/main/${proposal.member.nickname}`}
           css={css`
-            color: red;
+            text-decoration: none;
           `}
         >
-          {errMessage}
-        </div>
-      )}
-      <div css={container}>
-        <div>
-          <Link
-            to={`/main/${proposal.member.nickname}`}
-            css={css`
-              text-decoration: none;
-            `}
-          >
-            <span className="main_link">사진</span>
-          </Link>
-          <Link
-            to={`/main/${proposal.member.nickname}`}
-            css={css`
-              text-decoration: none;
-            `}
-          >
-            <span
-              className="main_link"
-              css={css`
-                margin: 0px 12px;
-              `}
-            >
-              {proposal.member.nickname}
-            </span>
-          </Link>
-        </div>
-        <div
+          <span className="main_link">{proposal.member.profileImage}</span>
+        </Link>
+        <Link
+          to={`/main/${proposal.member.nickname}`}
           css={css`
-            margin-top: 16px;
+            text-decoration: none;
           `}
         >
-          {proposal.content}
-        </div>
-        <div css={button_container}>
-          {' '}
-          <Button
-            type={'small_blue'}
-            text={'수락'}
-            onClick={() => selectHandler()}
-          />
-          <Button
-            type={'small_white'}
-            text={'거절'}
-            onClick={() => refuseHandler()}
-          />
-          <Button
-            type={'small_grey'}
-            text={'취소'}
-            onClick={() => deleteHander()}
-          />
-        </div>
+          <span
+            className="main_link"
+            css={css`
+              margin: 0px 12px;
+            `}
+          >
+            {proposal.member.nickname}
+          </span>
+        </Link>
+      </div>
+      <div
+        css={css`
+          margin-top: 16px;
+        `}
+      >
+        {proposal.content}
+      </div>
+      <div css={button_container}>
+        {' '}
+        <Button
+          type={'small_blue'}
+          text={'수락'}
+          onClick={() => selectHandler()}
+        />
+        <Button
+          type={'small_white'}
+          text={'거절'}
+          onClick={() => refuseHandler()}
+        />
+        <Button type={'small_grey'} text={'취소'} onClick={deleteHander} />
       </div>
     </div>
   );

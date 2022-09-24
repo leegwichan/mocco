@@ -7,11 +7,11 @@ import { useRecoilValue } from 'recoil';
 import { Link } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
-function ReplyItem({ reply, getCommentInfof, nickname }) {
+function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const { value, errMessage, isValid, setIsValid, handleChange, handleClick } =
+  const { value, isValid, setIsValid, handleChange, handleClick } =
     useInputValid({
       initialvalues: 'reply.content',
       onClick: () => {
@@ -21,9 +21,21 @@ function ReplyItem({ reply, getCommentInfof, nickname }) {
 
   const deleteHandler = (e) => {
     e.preventDefault();
-    return request
-      .delete(`/api/replies/${reply.replyId}`)
-      .then(() => getCommentInfof());
+    if (userInfo.memberId !== member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request
+        .delete(`/api/replies/${reply.replyId}`)
+        .then(() => getCommentInfof());
+    }
+  };
+
+  const editOpenHandler = () => {
+    if (userInfo.memberId !== member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      setIsEditOpen(true);
+    }
   };
 
   const editHandler = () => {
@@ -44,27 +56,20 @@ function ReplyItem({ reply, getCommentInfof, nickname }) {
       <div className="reply_box">
         <div>
           <Link
-            to={`/main/${nickname}`}
+            to={`/main/${member.nickname}`}
             css={css`
               text-decoration: none;
             `}
           >
-            <span className="main_link">사진</span>
+            <span className="main_link">{member.profileImage}</span>
           </Link>
           <Link
-            to={`/main/${nickname}`}
+            to={`/main/${member.nickname}`}
             css={css`
               text-decoration: none;
             `}
           >
-            <span
-              className="main_link"
-              css={css`
-                margin: 0px 12px;
-              `}
-            >
-              {nickname}
-            </span>
+            <span className="main_link">{member.nickname}</span>
           </Link>
           {userInfo.memberId === studyInfo.member.memberId ? (
             <span>
@@ -78,12 +83,13 @@ function ReplyItem({ reply, getCommentInfof, nickname }) {
           `}
         >
           {reply.content}
+          {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
         </div>
         <div className="button_container">
           <Button
             type={'small_white'}
             text={'수정'}
-            onClick={() => setIsEditOpen(true)}
+            onClick={editOpenHandler}
           />
           <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
         </div>
@@ -91,17 +97,6 @@ function ReplyItem({ reply, getCommentInfof, nickname }) {
       {isEditOpen && (
         <div css={edit_container}>
           <textarea css={edit_input} value={value} onChange={handleChange} />
-          {errMessage && (
-            <div
-              css={css`
-                color: red;
-                margin-top: 10px;
-                margin-right: 850px;
-              `}
-            >
-              {errMessage}
-            </div>
-          )}
           <div css={btn_container}>
             <Button
               type={'small_white'}
@@ -150,6 +145,12 @@ const container = css`
     display: flex;
     justify-content: flex-end;
   }
+`;
+
+const edited = css`
+  margin-left: 20px;
+  font-size: 15px;
+  color: #999999;
 `;
 
 const edit_container = css`
