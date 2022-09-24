@@ -33,7 +33,7 @@ function Callback() {
         );
         console.log(response);
         console.log(response.data);
-        //   navigate(-1); //전페이지 (마이페이지)로 감
+        //   navigate(-1); //전 페이지 (마이페이지)로 감
       } catch (err) {
         console.log(err);
         alert(err.message);

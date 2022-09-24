@@ -76,7 +76,11 @@ function Main() {
           isOwner={isOwner}
           githubId={ownerI.githubId}
         />
-        <MyIntro introduction={ownerI.introduction} />
+        <MyIntro
+          introduction={ownerI.introduction}
+          isOwner={isOwner}
+          memberId={ownerI.memberId}
+        />
         <GitHubRepo githubRepositoryList={ownerI.githubRepositoryList} />
       </section>
       <section css={sectionItem}>

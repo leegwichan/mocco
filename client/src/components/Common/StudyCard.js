@@ -43,6 +43,16 @@ const NameAndCapacity = css`
   font-size: 0.8rem;
 `;
 
+const Sign = css`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  span {
+    font-size: 13px;
+    color: #0b6ff2;
+  }
+`;
+
 function StudyCard({ studyData, boxRef }) {
   return (
     <div css={Card} ref={boxRef ? boxRef : null}>
@@ -56,6 +66,14 @@ function StudyCard({ studyData, boxRef }) {
             : studyData.summary}
         </div>
         <hr css={DivideLine} />
+
+        {studyData.studyStatus === 'STUDY_COMPLETE' &&
+          studyData.evaluationStatus === 'BEFORE_EVALUATION' && (
+            <div css={Sign}>
+              <span>후기 작성 전</span>
+            </div>
+          )}
+
         <div css={NameAndCapacity}>
           <span>{studyData.teamName}</span>
           <span>정원 {studyData.capacity}명</span>
