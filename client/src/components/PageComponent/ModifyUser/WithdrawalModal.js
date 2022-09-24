@@ -50,12 +50,6 @@ function WithdrawalModal({ onClose }) {
 
   const [disabled, setDisabled] = useState(true);
 
-  // if (event.target.checkEmail.value === userInfo.email)
-  // request({
-  //   method: 'delete',
-  //   url: `/api/members/${userInfo.memberId}`,
-  // });
-
   const onChange = (event) => {
     setDisabled(event.currentTarget.value !== userInfo.email);
   };
@@ -66,7 +60,9 @@ function WithdrawalModal({ onClose }) {
     request({
       method: 'delete',
       url: `/api/members/${userInfo.memberId}`,
-    }).then(() => alert('회원 탈퇴 성공'));
+    })
+      .then(onclose)
+      .then(() => alert('회원 탈퇴 성공'));
   };
 
   return (
@@ -99,7 +95,8 @@ function WithdrawalModal({ onClose }) {
               margin-bottom: 15px;
             `}
           >
-            {userInfo.nickname}님<br /> 정말 탈퇴하시겠어요?
+            {userInfo.nickname}님,
+            <br /> 정말 탈퇴하시겠어요?
           </h4>
           <WarningDescription />
           <WarningDescription />
