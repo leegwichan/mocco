@@ -55,16 +55,13 @@ public class StudyServiceImpl implements StudyService{
 
     }
     @Override
-    public Study updateStudy(Study study, HttpServletRequest request) {
-        //아이디로 스터디 찾기
-        //작성자와 패치 날린사람 동일인이지 확인
-        //작성자가 스터디 가지고 있는지 확인..? 필요한가?
+    public Study updateStudy(Study study) {
         Study findStudy = findVerifiedStudy(study.getStudyId());
 //        String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
 //        if(findStudy.getTeamLeader().getEmail() != jwtTokenProvider.getEmail(accessToken)){
 //            throw new BusinessLogicException(NOT_SAME_USER);
 //        }
-        if (study.getStudyStatus() != Study.StudyStatus.STUDY_PROGRESS){
+        if (findStudy.getStudyStatus() != Study.StudyStatus.RECRUIT_PROGRESS){
             throw new BusinessLogicException(ExceptionCode.STUDY_NOT_RECRUIT);
         }
 
