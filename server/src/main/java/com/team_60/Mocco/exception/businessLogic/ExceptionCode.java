@@ -53,6 +53,8 @@ public enum ExceptionCode {
     NOT_SAME_USER(400,"잘못된 유저 접근입니다."),
     NOT_PASSWORD_MATCHED(400, "기존 비밀번호가 틀렸습니다."),
 
+    URI_MAKING_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. URIBuilder Error"),
+    STRING_ENTITY_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. StringEntity Error, Response Error"),
     REST_CLIENT_ERROR(500, "서버에서 통신중에 에러가 발생했습니다."),
     NOT_NORMAL_AUTHORIZATION_CODE(400, "정상작인 authorization code 가 아닙니다."),
     GITHUB_CONNECTION_ALREADY_EXIST(400, "이 계정의 깃허브를 연동한 유저가 이미 존재합니다.");
