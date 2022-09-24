@@ -120,7 +120,7 @@ function ModifyStudy() {
                 />
               </div>
             </div>
-            {/* <div css={task_container}>
+            <div css={task_container}>
               <div css={task_top}>
                 <div>스터디 TASK</div>
                 <Button type={'big_blue'} text={'Task 추가하기'} />
@@ -148,7 +148,7 @@ function ModifyStudy() {
                     </div>
                   ))}
               </ul>
-            </div> */}
+            </div>
             <div
               css={css`
                 text-align: right;
