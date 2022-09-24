@@ -36,7 +36,8 @@ function ModifyStudy() {
     e.preventDefault();
     request.patch(`/api/study-board/${id}`, editContent).then((res) => {
       console.log(res);
-      // window.location.replace(`/studylist/detail/${id}`);
+      console.log(editContent);
+      window.location.replace(`/studylist/detail/${id}`);
     });
   };
 
@@ -51,40 +52,40 @@ function ModifyStudy() {
             <div css={edit_container}>
               <div css={edit_left}>
                 <div>
-                  <label htmlFor="studyName">스터디 이름</label>
+                  <label htmlFor="teamName">스터디 이름</label>
                   <input
                     type="text"
-                    name="studyName"
-                    value={teamName}
+                    name="teamName"
+                    defaultValue={teamName}
                     onChange={onEditChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor="studyStart">스터디 시작일</label>
+                  <label htmlFor="startDate">스터디 시작일</label>
                   <input
                     type="date"
-                    name="studyStart"
-                    value={startDate}
+                    name="startDate"
+                    defaultValue={startDate}
                     onChange={onEditChange}
                   />
                 </div>
                 <div>
-                  <label htmlFor="studyEnd">스터디 만료일</label>
+                  <label htmlFor="endDate">스터디 만료일</label>
                   <input
                     type="date"
-                    name="studyEnd"
-                    value={endDate}
+                    name="endDate"
+                    defaultValue={endDate}
                     onChange={onEditChange}
                   />
                 </div>
               </div>
               <div css={edit_right}>
                 <div>
-                  <label htmlFor="studyCapacity">스터디 정원</label>
+                  <label htmlFor="capacity">스터디 정원</label>
                   <input
                     type="text"
-                    name="studyCapacity"
-                    value={capacity}
+                    name="capacity"
+                    defaultValue={capacity}
                     onChange={onEditChange}
                   />
                 </div>
@@ -93,7 +94,7 @@ function ModifyStudy() {
                   <textarea
                     type="text"
                     name="summary"
-                    value={summary}
+                    defaultValue={summary}
                     onChange={onEditChange}
                   />
                 </div>
@@ -101,25 +102,25 @@ function ModifyStudy() {
             </div>
             <div css={introduce_rule_container}>
               <div>
-                <label htmlFor="introduce">스터디 소개</label>
+                <label htmlFor="detail">스터디 소개</label>
                 <textarea
                   type="text"
-                  name="introduce"
-                  value={detail}
+                  name="detail"
+                  defaultValue={detail}
                   onChange={onEditChange}
                 />
               </div>
               <div>
-                <label htmlFor="rules">스터디 규칙</label>
+                <label htmlFor="rule">스터디 규칙</label>
                 <textarea
                   type="text"
-                  name="rules"
-                  value={rule}
+                  name="rule"
+                  defaultValue={rule}
                   onChange={onEditChange}
                 />
               </div>
             </div>
-            <div css={task_container}>
+            {/* <div css={task_container}>
               <div css={task_top}>
                 <div>스터디 TASK</div>
                 <Button type={'big_blue'} text={'Task 추가하기'} />
@@ -147,7 +148,7 @@ function ModifyStudy() {
                     </div>
                   ))}
               </ul>
-            </div>
+            </div> */}
             <div
               css={css`
                 text-align: right;

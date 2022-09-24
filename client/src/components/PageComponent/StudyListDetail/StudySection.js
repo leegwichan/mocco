@@ -9,7 +9,7 @@ import Button from '../../Common/Button';
 const StudySection = ({ id }) => {
   const studyInfo = useRecoilValue(singleStudyState);
   const navigate = useNavigate();
-  console.log(studyInfo);
+  // console.log(studyInfo);
 
   const deleteHandler = () => {
     request.delete(`/api/study-board/${id}`).then(() => {
