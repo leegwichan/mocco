@@ -9,6 +9,7 @@ import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
 import com.team_60.Mocco.study_member.serive.StudyMemberService;
+import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task.service.TaskService;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +20,10 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -82,11 +86,14 @@ public class StudyServiceImpl implements StudyService{
                 .ifPresent(startDate -> findStudy.setStartDate(startDate));
         Optional.ofNullable(study.getEndDate())
                 .ifPresent(endDate -> findStudy.setEndDate(endDate));
+        // TODO Transactional 설정 필요
+        // TODO 기존 정보와 일치할 떄, 업데이트 안하게 해야 한다?
         Optional.ofNullable(study.getTaskList())
-                .ifPresent(taskList -> {
-                        taskList.stream().forEach(n -> taskService.updateTask(n));
-                        findStudy.getTaskList().clear();
-                        findStudy.getTaskList().addAll(taskList);});
+                .ifPresent(taskList ->{
+                    taskList.stream().forEach(task -> task.setStudy(findStudy));
+                    updateTask(findStudy.getTaskList(), taskList);
+                        });
+
         validateStudy(findStudy);
         return studyRepository.save(findStudy);
     }
@@ -151,5 +158,13 @@ public class StudyServiceImpl implements StudyService{
             throw new BusinessLogicException(ExceptionCode.NOT_CORRECT_PERIOD);
         }
 
+    }
+
+    private List<Task> updateTask(List<Task> originalTaskList, List<Task> newTaskList){
+        originalTaskList.stream().forEach( originalTask ->
+                taskService.deleteTask(originalTask.getTaskId()));
+        originalTaskList.clear();
+        originalTaskList.addAll(newTaskList);
+        return originalTaskList;
     }
 }

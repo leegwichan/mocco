@@ -17,19 +17,29 @@ import java.util.stream.Collectors;
 @Service
 public class TaskServiceImpl implements TaskService{
     private final TaskRepository taskRepository;
-    @Override
-    public Task updateTask(Task task) {
-        Task findTask = findVerifiedTask(task.getTaskId());
-        if(findTask.getStudy().getStudyId() != task.getStudy().getStudyId()){
-            throw new BusinessLogicException(ExceptionCode.NOT_CORRECT_TASK);
-        }
-        Optional.ofNullable(task.getContent())
-                .ifPresent(content -> findTask.setContent(content));
-        Optional.ofNullable(task.getDeadline())
-                .ifPresent(deadline -> findTask.setDeadline(deadline));
 
-        return taskRepository.save(findTask);
+
+//    @Override
+//    public Task updateTask(Task task) {
+//        Task findTask = findVerifiedTask(task.getTaskId());
+//        if(findTask.getStudy().getStudyId() != task.getStudy().getStudyId()){
+//            throw new BusinessLogicException(ExceptionCode.NOT_CORRECT_TASK);
+//        }
+//        Optional.ofNullable(task.getContent())
+//                .ifPresent(content -> findTask.setContent(content));
+//        Optional.ofNullable(task.getDeadline())
+//                .ifPresent(deadline -> findTask.setDeadline(deadline));
+//
+//        return taskRepository.save(findTask);
+//    }
+
+    @Override
+    public void deleteTask(long taskId){
+        Task findTask = findVerifiedTask(taskId);
+        taskRepository.delete(findTask);
     }
+
+    @Override
     public Task findVerifiedTask(long taskId){
         Optional<Task> optionalTask = taskRepository.findById(taskId);
         Task findTask = optionalTask.orElseThrow(() ->

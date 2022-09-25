@@ -5,7 +5,7 @@ import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.entity.Task;
 
 public interface TaskService {
-    public Task updateTask(Task task);
+    public void deleteTask(long taskId);
     public Task findVerifiedTask(long taskId);
     public void validateTask(Task task, Study study);
 }
