@@ -38,6 +38,24 @@ function ModifyUser() {
     }).then((res) => setUserInfo(res.data.data));
   };
 
+  // const onUploadImage = useCallback((e) => {
+  //   if (!e.target.files) {
+  //     return;
+  //   }
+  //   const inputRef = useRef();
+  //   const formData = new FormData();
+  //   formData.append('image', e.target.files[0]);
+  // });
+
+  request({
+    method: 'post',
+    url: '/api/members/image',
+    body: new FormData(),
+    params: { 'file-size': 251722 },
+  }).then((res) => {
+    console.log(res.data.data);
+  });
+
   return (
     <form
       css={css`
@@ -75,7 +93,13 @@ function ModifyUser() {
         onClick={openChangePasswordModal}
       />
       {/* TODO: 변경 필요 */}
-      <ModifyUserInput labelText="이미지 추가 / 변경" type="textarea" />
+      <ModifyUserInput
+        labelText="이미지 추가 / 변경"
+        type="file"
+        accept="image/*"
+        // onChange={onUploadImage}
+      />
+      <ModifyUserButton buttonText="이미지 업로드 하기" type="button" />
       <ModifyUserInput
         labelText="자기소개"
         type="textarea"
