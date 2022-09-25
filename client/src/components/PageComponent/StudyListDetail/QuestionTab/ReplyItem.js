@@ -12,7 +12,7 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { value, setIsValid, handleChange, handleClick } = useInputValid({
-    initialvalues: 'reply.content',
+    initialvalues: reply.content,
     onClick: () => {
       editHandler();
     },
