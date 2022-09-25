@@ -36,7 +36,6 @@ const btn = css`
   color: #ffffff;
   border: none;
   border-radius: 8px;
-  /* box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25); */
   transition: all 0.1s linear;
 
   &.big_blue {
@@ -50,7 +49,6 @@ const btn = css`
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -73,7 +71,7 @@ const btn = css`
     font-size: 20px;
     background-color: #ffffff;
     color: #0b6ff2;
-    border: 1px solid #d1d1d1;
+    border: 1px solid #0b6ff2;
     &hover {
       color: #ffffff;
       background-color: #0b6ff2;
@@ -86,11 +84,11 @@ const btn = css`
     height: 32px;
     background-color: #0b6ff2;
     color: #ffffff;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -108,7 +106,7 @@ const btn = css`
     height: 32px;
     background-color: #ffffff;
     color: #0b6ff2;
-    border: 1px solid #d1d1d1;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #ffffff;
@@ -122,11 +120,11 @@ const btn = css`
     height: 32px;
     background-color: #999999;
     color: #ffffff;
+    border: 1px solid #999999;
 
     &:hover {
       color: #646464;
       background-color: #ffffff;
-      border: 1px solid #999999;
     }
   }
 
@@ -136,11 +134,11 @@ const btn = css`
     height: 40px;
     background-color: #0b6ff2;
     color: #ffffff;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -150,11 +148,11 @@ const btn = css`
     height: 40px;
     background-color: #999999;
     color: #ffffff;
+    border: 1px solid #999999;
 
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
-      border: 1px solid #999999;
     }
   }
 
@@ -164,11 +162,11 @@ const btn = css`
     height: 40px;
     background-color: #0b6ff2;
     color: #ffffff;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -178,11 +176,11 @@ const btn = css`
     height: 40px;
     background-color: #999999;
     color: #ffffff;
+    border: 1px solid #999999;
 
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
-      border: 1px solid #999999;
     }
   }
 `;

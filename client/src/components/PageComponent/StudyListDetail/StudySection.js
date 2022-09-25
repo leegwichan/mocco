@@ -22,11 +22,11 @@ const StudySection = ({ id }) => {
   };
 
   const editHandler = () => {
-    // if (studyInfo.member.memberId !== userInfo.memberId) {
-    //   alert('권한이 없습니다');
-    // } else {
-    navigate(`/studylist/modify/${id}`);
-    // }
+    if (studyInfo.member.memberId !== userInfo.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      navigate(`/studylist/modify/${id}`);
+    }
   };
 
   return (
