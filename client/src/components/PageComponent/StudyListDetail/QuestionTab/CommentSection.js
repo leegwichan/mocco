@@ -20,13 +20,12 @@ const CommentSection = ({
   const [isReplyOpen, setIsReplyOpen] = useState(false);
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
-  const { value, isValid, setIsValid, handleChange, handleClick } =
-    useInputValid({
-      initialvalues: content,
-      onClick: () => {
-        editHandler();
-      },
-    });
+  const { value, setIsValid, handleChange, handleClick } = useInputValid({
+    initialvalues: content,
+    onClick: () => {
+      editHandler();
+    },
+  });
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -125,7 +124,6 @@ const CommentSection = ({
                 type={'small_white'}
                 text={'완료'}
                 onClick={handleClick}
-                disabled={!isValid}
               />
               <Button
                 type={'small_grey'}

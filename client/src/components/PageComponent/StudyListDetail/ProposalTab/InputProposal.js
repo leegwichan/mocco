@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
 function InputProposal({ getProposalInfof }) {
-  const { value, isValid, setIsValid, setValue, handleChange, handleClick } =
+  const { value, setIsValid, setValue, handleChange, handleClick } =
     useInputValid({
       initialvalues: '',
       onClick: () => {
@@ -46,12 +46,7 @@ function InputProposal({ getProposalInfof }) {
           value={value}
           onChange={handleChange}
         />
-        <Button
-          type={'big_blue'}
-          text={'등록'}
-          onClick={handleClick}
-          disabled={!isValid}
-        />
+        <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
       </div>
     </div>
   );

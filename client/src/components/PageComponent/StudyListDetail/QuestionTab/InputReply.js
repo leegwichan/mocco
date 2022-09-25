@@ -4,13 +4,12 @@ import request from '../../../../api';
 import { useInputValid } from '../hooks/useInputValid';
 
 function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
-  const { value, isValid, setIsValid, handleChange, handleClick } =
-    useInputValid({
-      initialvalues: '',
-      onClick: () => {
-        replyHandler();
-      },
-    });
+  const { value, setIsValid, handleChange, handleClick } = useInputValid({
+    initialvalues: '',
+    onClick: () => {
+      replyHandler();
+    },
+  });
 
   const replyInfo = {
     memberId: userInfo.memberId,
@@ -38,12 +37,7 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
           placeholder="답글을 입력하세요"
         />
         <div className="button_container">
-          <Button
-            type={'small_blue'}
-            text={'등록'}
-            disabled={!isValid}
-            onClick={handleClick}
-          />
+          <Button type={'small_blue'} text={'등록'} onClick={handleClick} />
           <Button
             type={'small_grey'}
             text={'취소'}

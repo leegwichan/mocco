@@ -8,7 +8,7 @@ import { useInputValid } from '../hooks/useInputValid';
 
 const InputComment = ({ getCommentInfof }) => {
   const { id } = useParams();
-  const { value, isValid, setIsValid, setValue, handleChange, handleClick } =
+  const { value, setIsValid, setValue, handleChange, handleClick } =
     useInputValid({
       initialvalues: '',
       onClick: () => {
@@ -31,7 +31,7 @@ const InputComment = ({ getCommentInfof }) => {
         setValue('');
         getCommentInfof();
       })
-      .catch(() => console.log(userInfo));
+      .catch((res) => alert(res.response.data.message));
   };
 
   return (
@@ -42,12 +42,7 @@ const InputComment = ({ getCommentInfof }) => {
         value={value}
         onChange={handleChange}
       />
-      <Button
-        type={'big_blue'}
-        text={'등록'}
-        onClick={handleClick}
-        disabled={!isValid}
-      />
+      <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
     </div>
   );
 };

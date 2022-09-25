@@ -11,13 +11,12 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const { value, isValid, setIsValid, handleChange, handleClick } =
-    useInputValid({
-      initialvalues: 'reply.content',
-      onClick: () => {
-        editHandler();
-      },
-    });
+  const { value, setIsValid, handleChange, handleClick } = useInputValid({
+    initialvalues: 'reply.content',
+    onClick: () => {
+      editHandler();
+    },
+  });
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -98,12 +97,7 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         <div css={edit_container}>
           <textarea css={edit_input} value={value} onChange={handleChange} />
           <div css={btn_container}>
-            <Button
-              type={'small_white'}
-              text={'완료'}
-              onClick={handleClick}
-              disabled={!isValid}
-            />
+            <Button type={'small_white'} text={'완료'} onClick={handleClick} />
             <Button
               type={'small_grey'}
               text={'취소'}

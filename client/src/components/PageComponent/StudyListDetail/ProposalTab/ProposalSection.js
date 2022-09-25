@@ -49,7 +49,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
         .then(() => {
           getProposalInfof();
         })
-        .catch((err) => console.log(err));
+        .catch((err) => alert(err.response.data.message));
     }
   };
 
