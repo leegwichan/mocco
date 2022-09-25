@@ -17,3 +17,4 @@ root.render(
     </RecoilRoot>
   </React.StrictMode>
 );
+// 깃헙 연동에서 요청이 두번 가서 에러가 뜸. React.StrictMode 지워줬더니 성공

@@ -6,6 +6,7 @@ import GitHubBtnGray from './GitHubBtn/GitHubBtnGray';
 import Avatar from '../../Common/Avatar';
 import { useRecoilValue } from 'recoil';
 import { mypageOwnerAtom } from '../../../atom/atom';
+import ProfileStar from './ProfileStar';
 const container = css`
   width: 15%;
   display: flex;
@@ -44,6 +45,11 @@ const nameLocation = css`
     width: 100%;
   }
 `;
+const Evaluation = css`
+  display: flex;
+  align-items: center;
+  font-size: smaller;
+`;
 
 function MyProfile({ githubId, isConnectedGit, isOwner }) {
   const owner = useRecoilValue(mypageOwnerAtom);
@@ -78,7 +84,10 @@ function MyProfile({ githubId, isConnectedGit, isOwner }) {
         <div css={name}>{owner.nickname}</div>
       </section>
 
-      <div>평점{owner.evaluation}</div>
+      <div css={Evaluation}>
+        <ProfileStar evaluation={owner.evaluation} />
+        평점 {owner.evaluation}
+      </div>
       {isConnectedGit ? (
         <GitHubBtnBlue githubId={githubId} />
       ) : isOwner ? (

@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import request from '../api';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../atom/atom';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Avatar from '../components/Common/Avatar';
 
 const Loading = css`
@@ -17,7 +17,7 @@ const Loading = css`
 function Callback() {
   const member = useRecoilValue(userInfoState);
   const memberId = member.memberId;
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -33,10 +33,17 @@ function Callback() {
         );
         console.log(response);
         console.log(response.data);
-        //   navigate(-1); //전 페이지 (마이페이지)로 감
+        navigate(-1);
       } catch (err) {
         console.log(err);
-        alert(err.message);
+        if (err.status === 400) {
+          alert('이미 연동된 유저입니다');
+          navigate(-1);
+        }
+        if (err.status === 500) {
+          alert(err.message);
+          navigate(-1);
+        }
       }
     }
     getData();

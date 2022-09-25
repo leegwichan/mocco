@@ -9,6 +9,8 @@ import DoneList from '../components/PageComponent/Main/MyStudyList/DoneList';
 import GitHubGrass from '../components/PageComponent/Main/GitHubGrass';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { userInfoState, mypageOwnerAtom } from '../atom/atom';
+import { useParams } from 'react-router-dom';
+
 const totalContainer = css`
   max-width: 1200px;
   margin: auto;
@@ -43,29 +45,30 @@ function Main() {
   const [isOwner, setIsOwner] = useState(false);
   const [ownerI, setOwnerI] = useRecoilState(mypageOwnerAtom);
   const loginUser = useRecoilValue(userInfoState);
+  const { id } = useParams();
 
-  useEffect(() => {
-    getUserInfo();
-    // 깃헙 연동 여부
-    if (ownerI.githubId) {
+  async function getUserInfo(id) {
+    try {
+      const response = await request.get(`/api/members/${id}`);
+      setOwnerI(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const set = () => {
+    if (ownerI.githubNickname !== null) {
       setIsConnectedGit(true);
     }
-    //마이페이지 owner 여부
     if (ownerI.memberId === loginUser.memberId) {
       setIsOwner(true);
     }
-  }, []);
-
-  const getUserInfo = () => {
-    return request
-      .get('/api/members/3')
-      .then((res) => {
-        setOwnerI(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
+
+  useEffect(() => {
+    getUserInfo(id);
+    set();
+  }, []);
 
   return (
     <section css={totalContainer}>
@@ -74,7 +77,7 @@ function Main() {
         <MyProfile
           isConnectedGit={isConnectedGit}
           isOwner={isOwner}
-          githubId={ownerI.githubId}
+          githubId={ownerI.githubNickname}
         />
         <MyIntro
           introduction={ownerI.introduction}
@@ -85,7 +88,7 @@ function Main() {
       </section>
       <section css={sectionItem}>
         <div css={sectionTitle}>GitHub 활동</div>
-        <GitHubGrass githubId={ownerI.githubId} />
+        <GitHubGrass githubId={ownerI.githubNickname} />
       </section>
       <section css={sectionItem}>
         <div css={sectionTitle}>진행중인 스터디</div>

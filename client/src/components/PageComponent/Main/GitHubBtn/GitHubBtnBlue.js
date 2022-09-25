@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 
-const blue = css`
+const Blue = css`
   background-color: #0b6ff2;
   border-radius: 8px;
   color: white;
@@ -18,10 +18,13 @@ const blue = css`
   :hover {
     background-color: white;
     color: #0b6ff2;
+    .hover {
+      fill: #0b6ff2;
+    }
   }
 `;
 
-const icon = css`
+const Icon = css`
   margin: 0px 6px 0px 14px;
   fill: white;
 `;
@@ -31,9 +34,10 @@ const None = css`
 function GitHubBtnBlue({ githubId }) {
   return (
     <a href={'https://github.com/' + githubId} css={None}>
-      <button css={blue}>
+      <button css={Blue}>
         <svg
-          css={icon}
+          css={Icon}
+          className="hover"
           xmlns="http://www.w3.org/2000/svg"
           width="22"
           height="22"

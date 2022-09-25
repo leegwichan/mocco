@@ -40,7 +40,6 @@ function ProgressList() {
   const setInfo = useSetRecoilState(infoToEvalue);
 
   useEffect(() => {
-    console.log(evalueInfo);
     setInfo({
       endDate: evalueInfo.endDate,
       studyId: evalueInfo.studyId,
@@ -68,13 +67,9 @@ function ProgressList() {
       studyData.studyStatus === 'STUDY_COMPLETE' &&
       studyData.evaluationStatus === 'BEFORE_EVALUATION'
     ) {
-      console.log('평가 창 오픈');
       getEvaluateInfo(studyData);
       setIsOpen(true);
-    } else if (
-      studyData.studyStatus === 'STUDY_PROGRESS' &&
-      owner.memberId === user.memberId
-    ) {
+    } else if (studyData.studyStatus === 'STUDY_PROGRESS') {
       navigate(`/studylist/detail/${studyData.studyId}`);
     }
   };
