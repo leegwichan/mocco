@@ -34,7 +34,9 @@ function QuestionTab() {
                 content={comment.content}
                 commentId={comment.commentId}
                 getCommentInfof={getCommentInfo}
-                nickname={comment.member.nickname}
+                member={comment.member}
+                createdAt={comment.createdAt}
+                modifiedAt={comment.modifiedAt}
               />
               <ReplySection
                 replys={comment.replyList}

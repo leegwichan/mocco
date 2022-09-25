@@ -32,8 +32,10 @@ function LogIn() {
           url: `/api/members/${res.data.memberId}`,
         })
       )
-      .then((res) => setUserInfoState(res.data.data))
-      .then(() => navigate('/main'));
+      .then((res) => {
+        setUserInfoState(res.data.data);
+        navigate(`/main/${res.data.data.nickname}`);
+      });
   };
 
   const openForgotPasswordModal = () => setModalOn(true);

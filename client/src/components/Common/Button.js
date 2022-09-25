@@ -7,6 +7,7 @@ const Button = ({ text, onClick, type }) => {
     'modal_blue',
     'modal_grey',
     'big_blue',
+    'big_grey',
     'big_white',
     'small_blue',
     'small_lightblue',
@@ -35,7 +36,6 @@ const btn = css`
   color: #ffffff;
   border: none;
   border-radius: 8px;
-  /* box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25); */
   transition: all 0.1s linear;
 
   &.big_blue {
@@ -49,7 +49,19 @@ const btn = css`
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
+    }
+  }
+
+  &.big_grey {
+    padding: 0px 28px;
+    height: 42px;
+    font-size: 20px;
+    background-color: #999999;
+    color: #ffffff;
+    border: 1px solid #999999;
+    &hover {
+      color: #999999;
+      background-color: #ffffff;
     }
   }
 
@@ -59,7 +71,7 @@ const btn = css`
     font-size: 20px;
     background-color: #ffffff;
     color: #0b6ff2;
-    border: 1px solid #d1d1d1;
+    border: 1px solid #0b6ff2;
     &hover {
       color: #ffffff;
       background-color: #0b6ff2;
@@ -72,11 +84,11 @@ const btn = css`
     height: 32px;
     background-color: #0b6ff2;
     color: #ffffff;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -94,7 +106,7 @@ const btn = css`
     height: 32px;
     background-color: #ffffff;
     color: #0b6ff2;
-    border: 1px solid #d1d1d1;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #ffffff;
@@ -106,13 +118,13 @@ const btn = css`
     font-size: 15px;
     width: 64px;
     height: 32px;
-    background-color: #646464;
+    background-color: #999999;
     color: #ffffff;
+    border: 1px solid #999999;
 
     &:hover {
       color: #646464;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -122,11 +134,11 @@ const btn = css`
     height: 40px;
     background-color: #0b6ff2;
     color: #ffffff;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -134,13 +146,13 @@ const btn = css`
     font-size: 18px;
     width: 340px;
     height: 40px;
-    background-color: #a4a4a4;
+    background-color: #999999;
     color: #ffffff;
+    border: 1px solid #999999;
 
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -150,11 +162,11 @@ const btn = css`
     height: 40px;
     background-color: #0b6ff2;
     color: #ffffff;
+    border: 1px solid #0b6ff2;
 
     &:hover {
       color: #0b6ff2;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 
@@ -162,13 +174,13 @@ const btn = css`
     font-size: 15px;
     width: 240px;
     height: 40px;
-    background-color: #a4a4a4;
+    background-color: #999999;
     color: #ffffff;
+    border: 1px solid #999999;
 
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
-      border: 1px solid #d1d1d1;
     }
   }
 `;

@@ -10,7 +10,9 @@ function ReplySection({ replys, getCommentInfof }) {
             <ReplyItem
               reply={reply}
               getCommentInfof={getCommentInfof}
-              nickname={reply.member.nickname}
+              member={reply.member}
+              createdAt={reply.createdAt}
+              modifiedAt={reply.modifiedAt}
             />
           </div>
         ) : (

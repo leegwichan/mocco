@@ -41,7 +41,7 @@ function TaskItem({ task, idx }) {
       <span className="study_rule">{`Task ${idx + 1}`}</span>
       <div className="task_info">
         <span>{task.content}</span>
-        <span className="deadline">[ {task.deadline} ]</span>
+        <span className="deadline">{task.deadline}</span>
       </div>
     </div>
   );
