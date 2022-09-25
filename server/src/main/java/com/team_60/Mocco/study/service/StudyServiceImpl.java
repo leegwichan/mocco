@@ -2,7 +2,6 @@ package com.team_60.Mocco.study.service;
 
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
-import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.study.dto.StudyDto;
@@ -16,14 +15,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -58,6 +55,8 @@ public class StudyServiceImpl implements StudyService{
         return studyRepository.save(study);
 
     }
+
+    @Transactional
     @Override
     public Study updateStudy(Study study) {
         Study findStudy = findVerifiedStudy(study.getStudyId());
@@ -86,7 +85,6 @@ public class StudyServiceImpl implements StudyService{
                 .ifPresent(startDate -> findStudy.setStartDate(startDate));
         Optional.ofNullable(study.getEndDate())
                 .ifPresent(endDate -> findStudy.setEndDate(endDate));
-        // TODO Transactional 설정 필요
         // TODO 기존 정보와 일치할 떄, 업데이트 안하게 해야 한다?
         Optional.ofNullable(study.getTaskList())
                 .ifPresent(taskList ->{
