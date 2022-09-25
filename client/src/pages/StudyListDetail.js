@@ -17,6 +17,7 @@ function StudyListDetail() {
         console.log('나는 전체 데이터', res);
         setStudyInfo(res.data.data);
         console.log(studyInfo);
+        console.log(res.data.data.member.nickname);
       })
       .catch((err) => console.log(err));
   };

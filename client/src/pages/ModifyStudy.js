@@ -5,8 +5,11 @@ import { singleStudyState } from '../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import request from '../api/index';
+import ModifyTaskItem from '../components/PageComponent/ModifyStudy/ModifyTaskItem';
 
 function ModifyStudy() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const studyInfo = useRecoilValue(singleStudyState);
   const [editContent, setEditContent] = useState({
     teamName: studyInfo.teamName,
@@ -16,10 +19,14 @@ function ModifyStudy() {
     summary: studyInfo.summary,
     detail: studyInfo.detail,
     rule: studyInfo.rule,
+    taskList: studyInfo.taskList,
   });
-  const [editTask, setEditTask] = useState(studyInfo.taskList);
-  const navigate = useNavigate();
-  const { id } = useParams();
+
+  const arr = [];
+  for (var task of studyInfo.taskList) {
+    arr.push({ content: task.content, deadline: task.deadline, studyId: id });
+  }
+  const [taskArr, setTaskArr] = useState([...arr]);
 
   const { teamName, startDate, endDate, capacity, summary, detail, rule } =
     editContent;
@@ -34,11 +41,34 @@ function ModifyStudy() {
 
   const editHandler = (e) => {
     e.preventDefault();
-    request.patch(`/api/study-board/${id}`, editContent).then((res) => {
-      console.log(res);
-      console.log(editContent);
-      window.location.replace(`/studylist/detail/${id}`);
-    });
+    for (var task of editContent.taskList) {
+      if (task.content === null || task.deadline === null) {
+        alert('task를 입력해주세요');
+      }
+    }
+    request
+      .patch(`/api/study-board/${id}`, editContent)
+      .then(() => {
+        window.location.replace(`/studylist/detail/${id}`);
+      })
+      .catch((err) => {
+        if (err.response.data.message !== undefined) {
+          alert(err.response.data.message);
+        }
+      });
+  };
+
+  // 기존 input은 기존 값들 defaultValue로, 추가한 input은 null로
+  const newTaskInfo = {
+    content: null,
+    deadline: null,
+    studyId: id,
+  };
+
+  const addTaskHandler = (e) => {
+    e.preventDefault();
+    setTaskArr([...taskArr, { ...newTaskInfo }]);
+    console.log(taskArr);
   };
 
   return (
@@ -123,30 +153,26 @@ function ModifyStudy() {
             <div css={task_container}>
               <div css={task_top}>
                 <div>스터디 TASK</div>
-                <Button type={'big_blue'} text={'Task 추가하기'} />
+                <Button
+                  type={'big_blue'}
+                  text={'Task 추가하기'}
+                  onClick={addTaskHandler}
+                />
               </div>
               <ul>
-                {editTask &&
-                  editTask.map((task, idx) => (
-                    <div
-                      css={css`
-                        display: flex;
-                        margin-bottom: 40px;
-                      `}
-                      key={task.taskId}
-                    >
-                      <div css={delete_btn}>
-                        <button>❌</button>
-                      </div>
-                      <div css={task_title}>
-                        <span>Task {idx + 1}</span>
-                      </div>
-                      <div css={task_input}>
-                        <input type="text" value={task.contnet} />
-                        <input type="date" value={task.endline} />
-                      </div>
-                    </div>
-                  ))}
+                {taskArr.map((task, idx) => {
+                  return (
+                    <ModifyTaskItem
+                      key={idx}
+                      setEditContent={setEditContent}
+                      editContent={editContent}
+                      taskArr={taskArr}
+                      setTaskArr={setTaskArr}
+                      task={task}
+                      idx={idx}
+                    />
+                  );
+                })}
               </ul>
             </div>
             <div
@@ -289,56 +315,5 @@ const task_top = css`
     display: inline-block;
     border-bottom: 3px solid #0b6ff2;
     font-size: 2rem;
-  }
-`;
-
-const delete_btn = css`
-  display: flex;
-  margin-right: 0.5rem;
-  align-items: flex-start;
-
-  button {
-    font-size: 20px;
-    line-height: 40px;
-    border: none;
-    background-color: white;
-  }
-`;
-
-const task_title = css`
-  display: inline-block;
-  height: 100%;
-  margin-right: 1rem;
-  margin-top: -10px;
-
-  span {
-    color: #0b7ff2;
-    font-size: 40px;
-  }
-`;
-
-const task_input = css`
-  display: inline-block;
-  flex: 1 0;
-
-  input:nth-of-type(1) {
-    display: block;
-    width: 100%;
-    height: 45px;
-    margin-bottom: 10px;
-    padding: 0 1rem;
-    font-size: 1.2rem;
-    border: 1px solid #999999;
-    border-radius: 5px;
-  }
-
-  input:nth-of-type(2) {
-    display: block;
-    height: 44px;
-    margin-top: 10px;
-    padding: 0 1rem;
-    font-size: 1.2rem;
-    border: 1px solid #999999;
-    border-radius: 5px;
   }
 `;
