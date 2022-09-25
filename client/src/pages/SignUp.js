@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import request from '../api';
 
 function SignUp() {
@@ -152,6 +152,8 @@ function SignUp() {
                 {nicknameChecked ? '✔' : '중복확인'}
               </button>
             </div>
+
+            {/* 닉네임 중복 체크 유효성 검사 */}
             {errorMessage.nickname && (
               <span
                 css={css`
@@ -174,6 +176,7 @@ function SignUp() {
                 사용가능한 닉네임 입니다.
               </p>
             ) : null}
+
             {/* 이메일 입력 input */}
             <label
               htmlFor="email"
@@ -196,6 +199,7 @@ function SignUp() {
                 margin-top: 12px;
               `}
             ></input>
+
             {/* 이메일 에러메세지 */}
             {errorMessage.email && (
               <p
@@ -334,13 +338,15 @@ function SignUp() {
               `}
             >
               <p>이미 계정이 있으신가요?</p>
-              <p
+              <Link
+                to="/login"
                 css={css`
                   color: #0b6ff2;
+                  text-decoration: none;
                 `}
               >
                 로그인
-              </p>
+              </Link>
             </div>
           </form>
         </div>
