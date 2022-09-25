@@ -71,6 +71,32 @@ const FileInput = css`
   display: none;
 `;
 
+const ImageContainer = css`
+  position: relative;
+  width: 100%;
+  height: 208px;
+  overflow: hidden;
+`;
+
+const StudyImage = css`
+  width: 100%;
+  height: 100%;
+  border-radius: 5px 5px 0 0;
+`;
+
+const UploadButton = css`
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  bottom: 0;
+  left: 0;
+  font-size: 1.2rem;
+  color: white;
+  border: none;
+  border-radius: 0 0 5px 5px;
+  background-color: #0b6ff2;
+`;
+
 const SummaryTextArea = css`
   width: 100%;
   height: calc(100% - 55px);
@@ -102,6 +128,45 @@ const BigTextArea = css`
   border-radius: 5px;
   font-size: 1.3rem;
   resize: none;
+`;
+
+const Submit = css`
+  height: 40px;
+  padding: 0 1rem;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #0b6ff2;
+  box-sizing: border-box;
+  transition: all 0.1s linear;
+  &:hover {
+    background-color: #4391f9;
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+`;
+
+const Cancel = css`
+  height: 40px;
+  margin-right: 1rem;
+  padding: 0 1rem;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #999999;
+  box-sizing: border-box;
+  transition: all 0.1s linear;
+  &:hover {
+    color: #999999;
+    background-color: white;
+    border: 1px solid #999999;
+  }
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 
 function MakeStudy() {
@@ -186,7 +251,6 @@ function MakeStudy() {
     if (!e.target.files) {
       return;
     }
-    console.log(e.target.files[0]);
 
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
@@ -213,6 +277,16 @@ function MakeStudy() {
     }
     fileInputRef.current.click();
   }, []);
+
+  // 내일 날짜
+  const tomorrow = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    date: new Date().getDate() + 1,
+  };
+  const startDate = `${tomorrow.year}-${('0' + String(tomorrow.month)).slice(
+    -2
+  )}-${tomorrow.date}`;
 
   return (
     <>
@@ -260,6 +334,8 @@ function MakeStudy() {
                     <input
                       type="date"
                       name="studyStart"
+                      min={startDate}
+                      value={startDate}
                       required
                       onChange={handleChangeStartDate}
                       css={InputLeft}
@@ -305,39 +381,14 @@ function MakeStudy() {
                       css={FileInput}
                       onChange={handleChangeImage}
                     />
-                    <div
-                      css={css`
-                        position: relative;
-                        width: 100%;
-                        height: 208px;
-                        overflow: hidden;
-                      `}
-                    >
+                    <div css={ImageContainer}>
                       <img
                         src="https://avatars.githubusercontent.com/u/71388830?v=4"
                         alt="profile_image"
                         ref={imageRef}
-                        css={css`
-                          width: 100%;
-                          height: 100%;
-                          border-radius: 5px 5px 0 0;
-                        `}
+                        css={StudyImage}
                       />
-                      <button
-                        onClick={handleUploadClick}
-                        css={css`
-                          position: absolute;
-                          width: 100%;
-                          height: 40px;
-                          bottom: 0;
-                          left: 0;
-                          font-size: 1.2rem;
-                          color: white;
-                          border: none;
-                          border-radius: 0 0 5px 5px;
-                          background-color: #0b6ff2;
-                        `}
-                      >
+                      <button onClick={handleUploadClick} css={UploadButton}>
                         이미지 업로드
                       </button>
                     </div>
@@ -381,45 +432,10 @@ function MakeStudy() {
                   text-align: right;
                 `}
               >
-                <button
-                  onClick={handleCancelButton}
-                  css={css`
-                    height: 40px;
-                    margin-right: 1rem;
-                    padding: 0 1rem;
-                    color: white;
-                    font-size: 1.1rem;
-                    border: none;
-                    border-radius: 8px;
-                    background-color: #999999;
-                    transition: all 0.1s linear;
-                    &:hover {
-                      color: #999999;
-                      background-color: white;
-                      border: 1px solid #999999;
-                    }
-                  `}
-                >
+                <button onClick={handleCancelButton} css={Cancel}>
                   취소
                 </button>
-                <button
-                  onClick={handleMakeStudyButton}
-                  css={css`
-                    height: 40px;
-                    padding: 0 1rem;
-                    color: white;
-                    font-size: 1.1rem;
-                    border: none;
-                    border-radius: 8px;
-                    background-color: #0b6ff2;
-                    transition: all 0.1s linear;
-                    &:hover {
-                      color: #0b6ff2;
-                      background-color: white;
-                      border: 1px solid #0b6ff2;
-                    }
-                  `}
-                >
+                <button onClick={handleMakeStudyButton} css={Submit}>
                   스터디 만들기
                 </button>
               </div>
