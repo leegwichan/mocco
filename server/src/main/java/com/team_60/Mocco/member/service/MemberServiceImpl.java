@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService{
 
         Optional.ofNullable(member.getNickname())
                 .ifPresent(nickName -> {
-                    if (!nickName.equals(nickName)){
+                    if (!nickName.equals(findMember.getNickname())){
                         findMemberByNicknameExpectNull(nickName);
                         findMember.setNickname(nickName);
                     }
@@ -148,7 +148,7 @@ public class MemberServiceImpl implements MemberService{
     private void checkGithubRepositories(String[] repositories){
         for (int i=0; i< repositories.length-1; i++){
             for (int j=i+1; j<repositories.length; j++){
-                if (repositories[i].equals(repositories[j]))
+                if (repositories[i] != null && repositories[i].equals(repositories[j]))
                     throw new BusinessLogicException(ExceptionCode.GITHUB_REPOSITORY_DUPLICATION);
             }
         }
