@@ -163,6 +163,17 @@ function SignUp() {
                 {errorMessage.nickname}
               </span>
             )}
+            {nicknameChecked ? (
+              <p
+                css={css`
+                  margin-bottom: 12px;
+                  font-size: 12px;
+                  color: green;
+                `}
+              >
+                사용가능한 닉네임 입니다.
+              </p>
+            ) : null}
             {/* 이메일 입력 input */}
             <label
               htmlFor="email"
