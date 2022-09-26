@@ -1,20 +1,33 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import request from '../api';
 
 function SignUp() {
   const navigate = useNavigate();
 
+  const [loadingCheckNickname, setLoadingCheckNickname] = useState(false);
+  const [nicknameValue, setNicknameValue] = useState('');
+  const [nicknameChecked, setNicknameChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState({
-    email: null,
     nickname: null,
+    email: null,
     password: null,
   });
+
+  const onChangeNickname = (event) => {
+    setNicknameValue(event.currentTarget.value);
+    setNicknameChecked(false);
+    setErrorMessage((prev) => ({ ...prev, nickname: null }));
+  };
 
   const onSubmit = (event) => {
     event.preventDefault();
     console.log('pw :', event.target.password.value);
+
+    // TODO: 인풋 요소들과 체크가 되었을때만 이벤트 실행.
+    // if (event.target.email.value === '' || ) return;
+
     if (event.target.password.value === event.target.passwordConfirm.value) {
       request({
         method: 'post',
@@ -41,6 +54,25 @@ function SignUp() {
         password: '비밀번호가 일치하지 않습니다.',
       }));
     }
+  };
+
+  const onClick = () => {
+    setLoadingCheckNickname(true);
+    request({
+      method: 'get',
+      url: '/api/register/nickname-check',
+      params: { nickname: nicknameValue },
+    })
+      .then(() => setNicknameChecked(true))
+      .catch((error) =>
+        setErrorMessage((prev) => ({
+          ...prev,
+          nickname: error.response.data.message,
+        }))
+      )
+      .finally(() => {
+        setLoadingCheckNickname(false);
+      });
   };
 
   return (
@@ -72,8 +104,6 @@ function SignUp() {
             `}
             onSubmit={onSubmit}
           >
-            {/* 닉네임 입력 input */}
-
             <label
               htmlFor="nickname"
               css={css`
@@ -94,16 +124,18 @@ function SignUp() {
                 name="nickname"
                 id="nickname"
                 css={css`
-                  width: 100%;
+                  flex: 1;
                   height: 40px;
                   background-color: #ffffff;
                   border-radius: 5px;
                   border: 1px solid #d1d1d1;
                 `}
-              ></input>
+                value={nicknameValue}
+                onChange={onChangeNickname}
+              />
               <button
                 css={css`
-                  min-width: fit-content;
+                  min-width: 40px;
                   height: 40px;
                   background-color: #0b6ff2;
                   border-radius: 5px;
@@ -114,25 +146,36 @@ function SignUp() {
                   margin-left: 8px;
                 `}
                 type="button"
+                onClick={onClick}
+                disabled={nicknameChecked || loadingCheckNickname}
               >
-                중복확인
+                {nicknameChecked ? '✔' : '중복확인'}
               </button>
             </div>
 
-            <div
-              css={css`
-                margin-bottom: 12px;
-              `}
-            >
-              <p
+            {/* 닉네임 중복 체크 유효성 검사 */}
+            {errorMessage.nickname && (
+              <span
                 css={css`
+                  margin-bottom: 12px;
                   font-size: 12px;
                   color: red;
                 `}
               >
-                이미 존재하는 닉네임입니다.
+                {errorMessage.nickname}
+              </span>
+            )}
+            {nicknameChecked ? (
+              <p
+                css={css`
+                  margin-bottom: 12px;
+                  font-size: 12px;
+                  color: green;
+                `}
+              >
+                사용가능한 닉네임 입니다.
               </p>
-            </div>
+            ) : null}
 
             {/* 이메일 입력 input */}
             <label
@@ -156,6 +199,7 @@ function SignUp() {
                 margin-top: 12px;
               `}
             ></input>
+
             {/* 이메일 에러메세지 */}
             {errorMessage.email && (
               <p
@@ -169,7 +213,6 @@ function SignUp() {
                 {errorMessage.email}
               </p>
             )}
-
             <label
               htmlFor="password"
               css={css`
@@ -192,7 +235,6 @@ function SignUp() {
                 margin-bottom: 12px;
               `}
             ></input>
-
             <label
               htmlFor="passwordConfirm"
               css={css`
@@ -215,7 +257,6 @@ function SignUp() {
                 margin-bottom: 12px;
               `}
             ></input>
-
             {errorMessage.password && (
               <p
                 css={css`
@@ -227,7 +268,6 @@ function SignUp() {
                 {errorMessage.password}
               </p>
             )}
-
             <div
               css={css`
                 display: flex;
@@ -271,7 +311,6 @@ function SignUp() {
                 에 동의합니다.
               </p>
             </div>
-
             <button
               type="submit"
               css={css`
@@ -289,7 +328,6 @@ function SignUp() {
             >
               회원가입
             </button>
-
             <div
               css={css`
                 display: flex;
@@ -300,13 +338,15 @@ function SignUp() {
               `}
             >
               <p>이미 계정이 있으신가요?</p>
-              <p
+              <Link
+                to="/login"
                 css={css`
                   color: #0b6ff2;
+                  text-decoration: none;
                 `}
               >
                 로그인
-              </p>
+              </Link>
             </div>
           </form>
         </div>
