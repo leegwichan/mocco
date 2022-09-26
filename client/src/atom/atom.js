@@ -14,3 +14,15 @@ export const singleStudyState = atom({
   default: {},
   effects_UNSTABLE: [persistAtom],
 });
+
+export const mypageOwnerAtom = atom({
+  key: 'mypageOwnerAtom',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const infoToEvalue = atom({
+  key: 'infoToEvalue',
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+});
