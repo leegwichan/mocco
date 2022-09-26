@@ -90,7 +90,6 @@ function ProgressList() {
         >
           <EvalueModal
             arr={arr}
-            // reset={reset}
             text={'스터디 후기를 작성해주세요'}
             firstBtnType={'small_blue'}
             secondBtnType={'small_grey'}
@@ -121,7 +120,7 @@ function ProgressList() {
       ) : (
         <Carousel
           studyArr={studyArr}
-          status={'propgress'}
+          progress={'propgress'}
           clickHandler={clickHandler}
         />
       )}

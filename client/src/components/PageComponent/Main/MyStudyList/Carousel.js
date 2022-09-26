@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
-import StudyCard from '../../StudyList/StudyCard';
+import StudyCard from './StudyCard';
 
 const Container = css`
   display: flex;
@@ -38,7 +38,7 @@ const Slides = css`
   }
 `;
 
-function Carousel({ studyArr, status, clickHandler }) {
+function Carousel({ studyArr, progress, done, clickHandler }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const slides = useRef(null);
   let length;
@@ -96,21 +96,24 @@ function Carousel({ studyArr, status, clickHandler }) {
       <div css={Slides_Wraper}>
         <div css={Slides} ref={slides}>
           <ul>
-            {studyArr && status
-              ? studyArr.map((studyData, idx) => (
-                  <div
-                    key={idx}
-                    role="presentation"
-                    onClick={() => clickHandler(studyData)}
-                  >
-                    <StudyCard studyData={studyData} />
-                  </div>
-                ))
-              : studyArr.map((studyData, idx) => (
-                  <div key={idx} role="presentation">
-                    <StudyCard studyData={studyData} />
-                  </div>
-                ))}
+            {studyArr &&
+              progress &&
+              studyArr.map((studyData, idx) => (
+                <li
+                  key={idx}
+                  role="presentation"
+                  onClick={() => clickHandler(studyData)}
+                >
+                  <StudyCard studyData={studyData} />
+                </li>
+              ))}
+            {studyArr &&
+              done &&
+              studyArr.map((studyData, idx) => (
+                <li key={idx} role="presentation">
+                  <StudyCard studyData={studyData} />
+                </li>
+              ))}
           </ul>
         </div>
       </div>
