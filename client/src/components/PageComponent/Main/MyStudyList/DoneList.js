@@ -43,7 +43,7 @@ function DoneList() {
           <span>완료된 스터디가 없습니다</span>
         </div>
       ) : (
-        <Carousel studyArr={studyArr} />
+        <Carousel studyArr={studyArr} done={'done'} />
       )}
     </div>
   );

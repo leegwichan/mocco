@@ -36,12 +36,16 @@ function Callback() {
         navigate(-1);
       } catch (err) {
         console.log(err);
-        if (err.status === 400) {
-          alert('이미 연동된 유저입니다');
+        if (
+          err.response.data.status === 400 &&
+          err.response.data.message ===
+            '이 계정의 깃허브를 연동한 유저가 이미 존재합니다.'
+        ) {
+          alert(err.response.data.message);
           navigate(-1);
         }
-        if (err.status === 500) {
-          alert(err.message);
+        if (err.response.data.status === 500) {
+          alert(err.response.data.message);
           navigate(-1);
         }
       }
