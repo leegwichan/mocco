@@ -21,9 +21,9 @@ function LogIn() {
         password: event.target.password.value,
       },
     })
-      .catch(console.error)
       .then((res) => {
-        console.log(res.data);
+        localStorage.setItem('accessToken', res.headers.accesstoken);
+        localStorage.setItem('refreshToken', res.headers.refreshtoken);
         return res;
       })
       .then((res) =>
@@ -35,7 +35,8 @@ function LogIn() {
       .then((res) => {
         setUserInfoState(res.data.data);
         navigate(`/main/${res.data.data.nickname}`);
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   const openForgotPasswordModal = () => setModalOn(true);

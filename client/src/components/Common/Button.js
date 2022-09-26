@@ -14,6 +14,7 @@ const Button = ({ text, onClick, type }) => {
     'small_white',
     'small_grey',
     'header_skyblue',
+    'header_log',
   ].includes(type)
     ? type
     : 'default';
@@ -200,6 +201,19 @@ const btn = css`
       color: #0b6ff2;
       background-color: #f0f8ff;
       box-shadow: 0px 5px 2px -2px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  &.header_log {
+    font-size: 15px;
+    height: 32px;
+    background-color: #0b6ff2;
+    color: #ffffff;
+    border: 1px solid #0b6ff2;
+
+    &:hover {
+      color: #0b6ff2;
+      background-color: #ffffff;
     }
   }
 `;

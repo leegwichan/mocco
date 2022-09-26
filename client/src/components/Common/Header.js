@@ -1,4 +1,8 @@
+import { useRecoilState } from 'recoil';
+import { userInfoState } from '../../atom/atom';
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
+import request from '../../api/index'; // eslint-disable-line no-unused-vars
 import Button from './Button';
 
 const Container = css`
@@ -11,6 +15,29 @@ const Container = css`
 `;
 
 function Header() {
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState); //eslint-disable-line no-unused-vars
+  console.log(userInfo);
+
+  const navigate = useNavigate();
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+  const handleLogoutClick = () => {
+    request
+      .post(
+        '/api/register/logout',
+        {},
+        {
+          headers: {
+            AccessToken: localStorage.getItem('accessToken'),
+          },
+        }
+      )
+      .then(() => {
+        setUserInfo(null);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <header css={Container}>
       <div
@@ -53,7 +80,19 @@ function Header() {
             align-items: center;
           `}
         >
-          <Button text={'로그인'} type={'small_blue'} />
+          {userInfo ? (
+            <Button
+              text={'로그아웃'}
+              type={'header_log'}
+              onClick={handleLogoutClick}
+            />
+          ) : (
+            <Button
+              text={'로그인'}
+              type={'header_log'}
+              onClick={handleLoginClick}
+            />
+          )}
         </div>
       </div>
     </header>
