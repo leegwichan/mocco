@@ -1,8 +1,9 @@
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../atom/atom';
 import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
-import request from '../../api/index'; // eslint-disable-line no-unused-vars
+import request from '../../api/index';
 import Button from './Button';
 
 const Container = css`
@@ -16,12 +17,13 @@ const Container = css`
 
 function Header() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState); //eslint-disable-line no-unused-vars
-  console.log(userInfo);
-
   const navigate = useNavigate();
+
+  // 버튼 클릭 핸들러
   const handleLoginClick = () => {
     navigate('/login');
   };
+
   const handleLogoutClick = () => {
     request
       .post(
@@ -37,6 +39,14 @@ function Header() {
         setUserInfo(null);
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleFindStudyClick = () => {
+    navigate('/studylist');
+  };
+
+  const handleMyPageClick = () => {
+    navigate(`/main/${userInfo.nickname}`);
   };
   return (
     <header css={Container}>
@@ -70,8 +80,16 @@ function Header() {
               `}
             />
           </div>
-          <Button text={'스터디 찾기'} type={'header_skyblue'} />
-          <Button text={'마이 페이지'} type={'header_skyblue'} />
+          <Button
+            text={'스터디 찾기'}
+            type={'header_skyblue'}
+            onClick={handleFindStudyClick}
+          />
+          <Button
+            text={'마이 페이지'}
+            type={'header_skyblue'}
+            onClick={handleMyPageClick}
+          />
         </div>
         {/* 오른쪽 컨테이너 */}
         <div
@@ -81,11 +99,31 @@ function Header() {
           `}
         >
           {userInfo ? (
-            <Button
-              text={'로그아웃'}
-              type={'header_log'}
-              onClick={handleLogoutClick}
-            />
+            <>
+              <button
+                css={css`
+                  display: flex;
+                  height: 100%;
+                  align-items: center;
+                  border: none;
+                  background-color: #ffffff;
+                `}
+              >
+                <img
+                  src="/logo192.png"
+                  alt="프로필사진"
+                  css={css`
+                    height: 60%;
+                    border-radius: 50%;
+                  `}
+                />
+              </button>
+              <Button
+                text={'로그아웃'}
+                type={'header_log'}
+                onClick={handleLogoutClick}
+              />
+            </>
           ) : (
             <Button
               text={'로그인'}
