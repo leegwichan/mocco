@@ -43,11 +43,8 @@ public class MemberSubController {
     public ResponseEntity patchPassword(@PathVariable("member-id") long memberId,
                                       @RequestBody MemberDto.PatchPassword requestBody){
 
-        Member member = new Member();
-        member.setMemberId(memberId);
-        member.setPassword(requestBody.getPassword());
-
-        Member updateMember = memberService.updatePassword(member);
+        requestBody.setMemberId(memberId);
+        Member updateMember = memberService.updatePassword(requestBody);
         MemberDto.Response response = mapper.memberToMemberResponseDto(updateMember);
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.OK);

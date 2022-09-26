@@ -2,23 +2,24 @@ package com.team_60.Mocco.study.service;
 
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
-import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
 import com.team_60.Mocco.study_member.serive.StudyMemberService;
+import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task.service.TaskService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,17 +55,16 @@ public class StudyServiceImpl implements StudyService{
         return studyRepository.save(study);
 
     }
+
+    @Transactional
     @Override
-    public Study updateStudy(Study study, HttpServletRequest request) {
-        //아이디로 스터디 찾기
-        //작성자와 패치 날린사람 동일인이지 확인
-        //작성자가 스터디 가지고 있는지 확인..? 필요한가?
+    public Study updateStudy(Study study) {
         Study findStudy = findVerifiedStudy(study.getStudyId());
 //        String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
 //        if(findStudy.getTeamLeader().getEmail() != jwtTokenProvider.getEmail(accessToken)){
 //            throw new BusinessLogicException(NOT_SAME_USER);
 //        }
-        if (study.getStudyStatus() != Study.StudyStatus.STUDY_PROGRESS){
+        if (findStudy.getStudyStatus() != Study.StudyStatus.RECRUIT_PROGRESS){
             throw new BusinessLogicException(ExceptionCode.STUDY_NOT_RECRUIT);
         }
 
@@ -85,11 +85,13 @@ public class StudyServiceImpl implements StudyService{
                 .ifPresent(startDate -> findStudy.setStartDate(startDate));
         Optional.ofNullable(study.getEndDate())
                 .ifPresent(endDate -> findStudy.setEndDate(endDate));
+        // TODO 기존 정보와 일치할 떄, 업데이트 안하게 해야 한다?
         Optional.ofNullable(study.getTaskList())
-                .ifPresent(taskList -> {
-                        taskList.stream().forEach(n -> taskService.updateTask(n));
-                        findStudy.getTaskList().clear();
-                        findStudy.getTaskList().addAll(taskList);});
+                .ifPresent(taskList ->{
+                    taskList.stream().forEach(task -> task.setStudy(findStudy));
+                    updateTask(findStudy.getTaskList(), taskList);
+                        });
+
         validateStudy(findStudy);
         return studyRepository.save(findStudy);
     }
@@ -154,5 +156,13 @@ public class StudyServiceImpl implements StudyService{
             throw new BusinessLogicException(ExceptionCode.NOT_CORRECT_PERIOD);
         }
 
+    }
+
+    private List<Task> updateTask(List<Task> originalTaskList, List<Task> newTaskList){
+        originalTaskList.stream().forEach( originalTask ->
+                taskService.deleteTask(originalTask.getTaskId()));
+        originalTaskList.clear();
+        originalTaskList.addAll(newTaskList);
+        return originalTaskList;
     }
 }

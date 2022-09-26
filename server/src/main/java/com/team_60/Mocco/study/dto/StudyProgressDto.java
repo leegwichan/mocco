@@ -15,7 +15,15 @@ public class StudyProgressDto {
     @Getter
     @Setter
     public static class Response{
+        TaskDto.MemberProgressResponse progress;
         List<MemberDto.SubResponse> memberList;
+        List<TaskDto.CheckResponse> taskList;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class SubResponse{
         List<TaskDto.CheckResponse> taskList;
     }
 

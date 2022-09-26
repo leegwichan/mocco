@@ -18,7 +18,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 
 @Component
@@ -38,13 +40,20 @@ public class GithubRestClient {
             String accessToken = takeAccessToken(authorizationCode);
             return getGithubInfo(accessToken);
 
+        } catch(URISyntaxException e){
+            throw new BusinessLogicException(ExceptionCode.URI_MAKING_ERROR);
+        } catch (UnsupportedEncodingException e) {
+            throw new BusinessLogicException(ExceptionCode.REST_CLIENT_ERROR);
+        } catch(IOException e){
+            throw new BusinessLogicException(ExceptionCode.STRING_ENTITY_ERROR);
         } catch (Exception e){
             throw new BusinessLogicException(ExceptionCode.REST_CLIENT_ERROR);
         }
 
     }
 
-    private String takeAccessToken(String authorizationCode) throws Exception{
+    private String takeAccessToken(String authorizationCode)
+            throws URISyntaxException, IOException {
 
         HttpPost httpPost = new HttpPost();
 

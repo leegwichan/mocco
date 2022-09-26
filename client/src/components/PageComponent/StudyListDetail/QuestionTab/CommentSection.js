@@ -1,55 +1,201 @@
+import { useState } from 'react';
 import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
+import { useRecoilValue } from 'recoil';
+import { userInfoState, singleStudyState } from '../../../../atom/atom';
+import { Link } from 'react-router-dom';
+import { useInputValid } from '../hooks/useInputValid';
+import InputReply from './InputReply';
 
-function CommentSection({ nickname, content, id }) {
-  const deleteHandler = () => {
+const CommentSection = ({
+  content,
+  commentId,
+  getCommentInfof,
+  member,
+  createdAt,
+  modifiedAt,
+}) => {
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const userInfo = useRecoilValue(userInfoState);
+  const studyInfo = useRecoilValue(singleStudyState);
+  const { value, setIsValid, handleChange, handleClick } = useInputValid({
+    initialvalues: content,
+    onClick: () => {
+      editHandler();
+    },
+  });
+
+  const deleteHandler = (e) => {
+    e.preventDefault();
+    if (userInfo.memberId !== member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request.delete(`/api/comments/${commentId}`).then(() => {
+        getCommentInfof();
+      });
+    }
+  };
+
+  const editOpenHandler = () => {
+    if (userInfo.memberId !== member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      setIsEditOpen(true);
+    }
+  };
+
+  const editHandler = () => {
     return request
-      .delete(`/api/comments/${id}`)
-      .then(() => window.location.reload());
+      .patch(`/api/comments/${commentId}`, {
+        content: value,
+      })
+      .then(() => {
+        setIsEditOpen(false);
+        setIsValid(true);
+        getCommentInfof();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <div
-      css={css`
-        width: 1080px;
-        margin-bottom: 25px;
-        border-radius: 15px;
-        box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
-        padding: 20px;
-        font-size: 20px;
-      `}
-    >
+    <div>
       <div>
-        <span>사진</span>
-        <span
-          css={css`
-            margin: 0px 12px;
-          `}
-        >
-          {nickname}
-        </span>
+        <div css={container}>
+          <div>
+            <Link
+              to={`/main/${member.nickname}`}
+              css={css`
+                text-decoration: none;
+              `}
+            >
+              <span className="main_link">{member.profileImage}</span>
+            </Link>
+
+            <Link
+              to={`/main/${member.nickname}`}
+              css={css`
+                text-decoration: none;
+              `}
+            >
+              <span
+                className="main_link"
+                css={css`
+                  margin: 12px;
+                `}
+              >
+                {member.nickname}
+              </span>
+            </Link>
+            {userInfo.memberId === studyInfo.member.memberId ? (
+              <span>
+                <Button type="small_lightblue" text="스터디장" />
+              </span>
+            ) : null}
+          </div>
+          <div
+            css={css`
+              margin-top: 16px;
+            `}
+          >
+            {content}
+            {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
+          </div>
+          <div className="button_container">
+            <Button
+              type={'small_blue'}
+              text={'답글'}
+              onClick={() => setIsReplyOpen(true)}
+            />
+            <Button
+              type={'small_white'}
+              text={'수정'}
+              onClick={editOpenHandler}
+            />
+            <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
+          </div>
+        </div>
+        {isEditOpen && (
+          <div css={edit_container}>
+            <input css={edit_input} value={value} onChange={handleChange} />
+            <div css={btn_container}>
+              <Button
+                type={'small_white'}
+                text={'완료'}
+                onClick={handleClick}
+              />
+              <Button
+                type={'small_grey'}
+                text={'취소'}
+                onClick={() => setIsEditOpen(false)}
+              />
+            </div>
+          </div>
+        )}
       </div>
-      <div
-        css={css`
-          margin-top: 16px;
-        `}
-      >
-        {content}
-      </div>
-      <div
-        css={css`
-          margin-top: 16px;
-          display: flex;
-          justify-content: flex-end;
-        `}
-      >
-        <Button type={'small_blue'} text={'답글'} />
-        <Button type={'small_white'} text={'수정'} />
-        <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
-      </div>
+      {isReplyOpen && (
+        <InputReply
+          setIsReplyOpen={setIsReplyOpen}
+          commentId={commentId}
+          userInfo={userInfo}
+          getCommentInfof={getCommentInfof}
+        />
+      )}
     </div>
   );
-}
+};
 
+CommentSection.displayName = 'CommentSection';
 export default CommentSection;
+
+const container = css`
+  width: 1080px;
+  margin-bottom: 25px;
+  margin-top: 30px;
+  border-radius: 15px;
+  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  font-size: 20px;
+  word-break: break-all;
+
+  .button_container {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .main_link {
+    color: black;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+  }
+`;
+
+const edited = css`
+  margin-left: 20px;
+  font-size: 15px;
+  color: #999999;
+`;
+
+const edit_container = css`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+`;
+
+const edit_input = css`
+  width: 1080px;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #d1d1d1;
+`;
+
+const btn_container = css`
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+  margin-top: 10px;
+`;

@@ -32,8 +32,10 @@ function LogIn() {
           url: `/api/members/${res.data.memberId}`,
         })
       )
-      .then((res) => setUserInfoState(res.data.data))
-      .then(() => navigate('/main'));
+      .then((res) => {
+        setUserInfoState(res.data.data);
+        navigate(`/main/${res.data.data.nickname}`);
+      });
   };
 
   const openForgotPasswordModal = () => setModalOn(true);
@@ -93,16 +95,7 @@ function LogIn() {
             margin-top: 12px;
             margin-bottom: 12px;
           `}
-        >
-          <p
-            css={css`
-              font-size: 12px;
-              color: red;
-            `}
-          >
-            올바른 이메일을 입력 해 주세요.
-          </p>
-        </div>
+        ></div>
 
         <label
           htmlFor="password"
@@ -127,21 +120,25 @@ function LogIn() {
           `}
         ></input>
 
-        <div>
+        <div
+          css={css`
+            display: flex;
+            justify-content: flex-end;
+          `}
+        >
           <button
             css={css`
               font-size: 12px;
               color: #0b6ff2;
               text-align: right;
+              border: 0;
+              background-color: white;
             `}
             onClick={openForgotPasswordModal}
             type="button"
           >
             비밀번호 찾기
           </button>
-          {modalOn && (
-            <ForgotPasswordModal onClose={closeForgotPasswordModal} />
-          )}
         </div>
 
         <button
@@ -204,6 +201,8 @@ function LogIn() {
           </p>
         </div>
       </form>
+
+      {modalOn && <ForgotPasswordModal onClose={closeForgotPasswordModal} />}
     </div>
   );
 }

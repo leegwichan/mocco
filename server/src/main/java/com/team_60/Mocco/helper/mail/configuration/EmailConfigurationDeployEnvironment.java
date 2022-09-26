@@ -9,7 +9,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-@Profile("deploy")
 @Configuration
 public class EmailConfigurationDeployEnvironment {
 

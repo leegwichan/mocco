@@ -39,6 +39,8 @@ public enum ExceptionCode {
     NOT_CORRECT_PERIOD(400,"선택할 수 있는 날짜 범위가 아닙니다."),
     TASK_CHECK_NOT_FOUND(404, "해당 인증글을 찾을 수 없습니다."),
     PROVIDER_ID_NOT_FOUND(404,"해당 provider ID 정보를 찾을 수 없습니다."),
+    NOT_DONE_TASK(400,"이전 Task를 완료하지 않았습니다."),
+    TASK_ALREADY_DONE(400,"이미 해당 task 인증을 했습니다."),
 
 
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),
@@ -49,7 +51,10 @@ public enum ExceptionCode {
     BAD_REQUEST(403,"잘못된 요청입니다."),
     BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다."),
     NOT_SAME_USER(400,"잘못된 유저 접근입니다."),
+    NOT_PASSWORD_MATCHED(400, "기존 비밀번호가 틀렸습니다."),
 
+    URI_MAKING_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. URIBuilder Error"),
+    STRING_ENTITY_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. StringEntity Error, Response Error"),
     REST_CLIENT_ERROR(500, "서버에서 통신중에 에러가 발생했습니다."),
     NOT_NORMAL_AUTHORIZATION_CODE(400, "정상작인 authorization code 가 아닙니다."),
     GITHUB_CONNECTION_ALREADY_EXIST(400, "이 계정의 깃허브를 연동한 유저가 이미 존재합니다.");

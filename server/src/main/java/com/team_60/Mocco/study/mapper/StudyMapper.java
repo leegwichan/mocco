@@ -38,8 +38,8 @@ public interface StudyMapper {
                 .endDate(request.getEndDate())
                 .taskList(taskList)
                 .build();
-
-        taskList.stream().forEach(task -> task.setStudy(study));
+        if(taskList != null){
+        taskList.stream().forEach(task -> task.setStudy(study));}
         return study;
 
     }

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 
-@Component
-@Profile("!deploy")
 public class S3ImageUploadMock implements S3ImageUpload{
     @Override
     public String upload(InputStream inputStream, String originFileName, String fileSize, ImageUploadType imageUploadType) {

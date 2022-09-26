@@ -5,13 +5,13 @@ const { persistAtom } = recoilPersist();
 
 export const userInfoState = atom({
   key: 'userInfoState',
-  default: [],
+  default: null,
   effects_UNSTABLE: [persistAtom],
 });
 
-export const commentAtom = atom({
-  key: 'commentAtom',
-  default: [],
+export const singleStudyState = atom({
+  key: 'singleStudyState',
+  default: {},
   effects_UNSTABLE: [persistAtom],
 });
 

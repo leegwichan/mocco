@@ -37,7 +37,7 @@ public class Comment extends Auditable {
     @JoinColumn(name = "STUDY_ID")
     private Study study;
 
-    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Reply> replyList = new ArrayList<>();
 
     public enum CommentStatus{

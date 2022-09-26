@@ -1,51 +1,34 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { css } from '@emotion/react';
-import { useSetRecoilState } from 'recoil';
-import { commentAtom } from '../atom/atom';
 import StudySection from '../components/PageComponent/StudyListDetail/StudySection';
 import TabSection from '../components/PageComponent/StudyListDetail/TabSection';
-import request from '../api/index';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import request from '../api';
+import { singleStudyState } from '../atom/atom';
+import { useRecoilState } from 'recoil';
 
 function StudyListDetail() {
   const { id } = useParams();
-  const [studyInfo, setStudyInfo] = useState({});
-  const [memberInfo, setMemberInfo] = useState({});
-  const [taskInfo, setTaskInfo] = useState([]);
-  const setCommentAtom = useSetRecoilState(commentAtom);
+  const [studyInfo, setStudyInfo] = useRecoilState(singleStudyState);
+
+  const getStudyInfo = () => {
+    request(`/api/study-info/board/${id}`)
+      .then((res) => {
+        console.log('나는 전체 데이터', res);
+        setStudyInfo(res.data.data);
+        console.log(studyInfo);
+        console.log(res.data.data.member.nickname);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     getStudyInfo();
-  }, []);
-
-  const getStudyInfo = () => {
-    return request(
-      `/api/study-info/board/${id}
-    `
-    ).then((res) => {
-      console.log(res);
-      setStudyInfo(res.data.data);
-      setMemberInfo(res.data.data.member);
-      setTaskInfo(res.data.data.taskList);
-      setCommentAtom(res.data.data.commentList);
-    });
-  };
-  // console.log('task', taskInfo);
+  }, [id]);
 
   return (
-    <div
-      css={css`
-        max-width: 1200px;
-        margin: auto;
-        margin-top: 170px;
-      `}
-    >
-      <StudySection
-        studyInfo={studyInfo}
-        id={id}
-        memberInfo={memberInfo}
-        taskInfo={taskInfo}
-      />
+    <div css={container}>
+      <StudySection id={id} />
       <TabSection />
     </div>
   );
@@ -53,9 +36,8 @@ function StudyListDetail() {
 
 export default StudyListDetail;
 
-/*teamname
-startdate
-enddate
-capacity
-member.nickname
-studying*/
+const container = css`
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 170px;
+`;

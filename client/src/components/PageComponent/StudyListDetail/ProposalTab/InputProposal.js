@@ -1,53 +1,58 @@
-import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
+import { css } from '@emotion/react';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 import request from '../../../../api';
 import { useParams } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
-const InputComment = ({ getCommentInfof }) => {
-  const { id } = useParams();
+function InputProposal({ getProposalInfof }) {
   const { value, setIsValid, setValue, handleChange, handleClick } =
     useInputValid({
       initialvalues: '',
       onClick: () => {
-        addCommentHandler();
+        addProposalHandler();
       },
     });
   const userInfo = useRecoilValue(userInfoState);
+  const { id } = useParams();
 
-  const commentInfo = {
+  const proposalInfo = {
     content: value,
     memberId: userInfo.memberId,
     studyId: id,
   };
 
-  const addCommentHandler = () => {
-    return request
-      .post('/api/comments', commentInfo)
+  const addProposalHandler = () => {
+    request
+      .post('/api/proposals', proposalInfo)
       .then(() => {
         setIsValid(true);
         setValue('');
-        getCommentInfof();
+        getProposalInfof();
       })
-      .catch((res) => alert(res.response.data.message));
+      .catch((err) => {
+        console.log(err.response.data.message);
+        alert(err.response.data.message);
+      });
   };
 
   return (
-    <div css={container}>
-      <input
-        type="text"
-        placeholder="스터디에 대한 궁금한 점을 물어보세요"
-        value={value}
-        onChange={handleChange}
-      />
-      <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
+    <div>
+      <div css={container}>
+        <input
+          type="text"
+          placeholder="신청을 위한 한 마디를 적어주세요"
+          value={value}
+          onChange={handleChange}
+        />
+        <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
+      </div>
     </div>
   );
-};
+}
 
-export default InputComment;
+export default InputProposal;
 
 const container = css`
   display: flex;

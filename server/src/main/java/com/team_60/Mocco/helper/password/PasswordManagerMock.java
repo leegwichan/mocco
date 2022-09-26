@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile("!deploy")
-@Component
 @RequiredArgsConstructor
 public class PasswordManagerMock implements NewPasswordManager{
 
