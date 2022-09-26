@@ -13,6 +13,7 @@ const Button = ({ text, onClick, type }) => {
     'small_lightblue',
     'small_white',
     'small_grey',
+    'header_skyblue',
   ].includes(type)
     ? type
     : 'default';
@@ -37,6 +38,11 @@ const btn = css`
   border: none;
   border-radius: 8px;
   transition: all 0.1s linear;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.95);
+  }
 
   &.big_blue {
     padding: 0px 28px;
@@ -181,6 +187,19 @@ const btn = css`
     &:hover {
       color: #a4a4a4;
       background-color: #ffffff;
+    }
+  }
+
+  &.header_skyblue {
+    font-size: 15px;
+    height: 32px;
+    color: black;
+    background-color: #ffffff;
+
+    &:hover {
+      color: #0b6ff2;
+      background-color: #f0f8ff;
+      box-shadow: 0px 5px 2px -2px rgba(0, 0, 0, 0.25);
     }
   }
 `;
