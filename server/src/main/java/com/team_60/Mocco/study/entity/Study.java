@@ -55,7 +55,7 @@ public class Study extends Auditable {
     @JoinColumn(name = "MEMBER_ID")
     private Member teamLeader;
 
-    @OneToOne(mappedBy = "study", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "study", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private ChattingRoom chattingRoom;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -67,7 +67,7 @@ public class Study extends Auditable {
     @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Proposal> proposalList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE,orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "study", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)

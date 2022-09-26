@@ -10,6 +10,7 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
+import Callback from './pages/Callback';
 
 function App() {
   return (
@@ -19,13 +20,14 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/findpassword" element={<FindPassword />} />
-        <Route path="/main/:nickname" element={<Main />} />
+        <Route path="/main/:id" element={<Main />} />
         <Route path="/studylist" element={<StudyList />} />
         <Route path="/makestudy" element={<MakeStudy />} />
         <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
-        <Route path="/studylist/modify/:d" element={<ModifyStudy />} />
+        <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard" element={<StudyBoard />} />
+        <Route path="/oauthcallback" exact={true} element={<Callback />} />
       </Routes>
     </div>
   );

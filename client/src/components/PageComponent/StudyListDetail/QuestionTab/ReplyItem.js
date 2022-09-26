@@ -5,123 +5,99 @@ import { useState } from 'react';
 import { userInfoState, singleStudyState } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { Link } from 'react-router-dom';
+import { useInputValid } from '../hooks/useInputValid';
 
-function ReplyItem({ reply, getCommentInfof, nickname }) {
+function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [editContent, setEditContent] = useState(reply.content);
-  const [errMessage, setErrMessage] = useState('');
-  const [isValid, setIsValid] = useState(false);
+  const { value, setIsValid, handleChange, handleClick } = useInputValid({
+    initialvalues: reply.content,
+    onClick: () => {
+      editHandler();
+    },
+  });
 
   const deleteHandler = (e) => {
     e.preventDefault();
-    return request
-      .delete(`/api/replies/${reply.replyId}`)
-      .then(() => getCommentInfof());
+    if (userInfo.memberId !== member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request
+        .delete(`/api/replies/${reply.replyId}`)
+        .then(() => getCommentInfof());
+    }
   };
 
-  const editHandler = (e) => {
-    e.preventDefault();
-    if (editContent === '') {
-      setErrMessage('내용을 입력해주세요');
-      setIsValid(false);
-    } else if (editContent.length >= 300) {
-      setErrMessage('300자 미만으로 입력해주세요');
-      setIsValid(false);
+  const editOpenHandler = () => {
+    if (userInfo.memberId !== member.memberId) {
+      alert('권한이 없습니다');
     } else {
-      setErrMessage('');
-      return request
-        .patch(`/api/replies/${reply.replyId}`, {
-          content: editContent,
-        })
-        .then(() => {
-          setIsEditOpen(false);
-          setIsValid(true);
-          getCommentInfof();
-        });
+      setIsEditOpen(true);
     }
+  };
+
+  const editHandler = () => {
+    return request
+      .patch(`/api/replies/${reply.replyId}`, {
+        content: value,
+      })
+      .then(() => {
+        setIsEditOpen(false);
+        setIsValid(true);
+        getCommentInfof();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <div css={container}>
-      {!isEditOpen ? (
-        <div className="reply_box">
-          <div>
-            <Link
-              to={`/main/${nickname}`}
-              css={css`
-                text-decoration: none;
-              `}
-            >
-              <span className="main_link">사진</span>
-            </Link>
-            <Link
-              to={`/main/${nickname}`}
-              css={css`
-                text-decoration: none;
-              `}
-            >
-              <span
-                className="main_link"
-                css={css`
-                  margin: 0px 12px;
-                `}
-              >
-                {nickname}
-              </span>
-            </Link>
-            {userInfo.memberId === studyInfo.member.memberId ? (
-              <span>
-                <Button type="small_lightblue" text="스터디장" />
-              </span>
-            ) : null}
-          </div>
-          <div
+      <div className="reply_box">
+        <div>
+          <Link
+            to={`/main/${member.nickname}`}
             css={css`
-              margin-top: 16px;
+              text-decoration: none;
             `}
           >
-            {reply.content}
-          </div>
-          <div className="button_container">
-            <Button
-              type={'small_white'}
-              text={'수정'}
-              onClick={() => setIsEditOpen(true)}
-            />
-            <Button
-              type={'small_grey'}
-              text={'삭제'}
-              onClick={() => deleteHandler()}
-            />
-          </div>
+            <span className="main_link">{member.profileImage}</span>
+          </Link>
+          <Link
+            to={`/main/${member.nickname}`}
+            css={css`
+              text-decoration: none;
+            `}
+          >
+            <span className="main_link">{member.nickname}</span>
+          </Link>
+          {userInfo.memberId === studyInfo.member.memberId ? (
+            <span>
+              <Button type="small_lightblue" text="스터디장" />
+            </span>
+          ) : null}
         </div>
-      ) : (
-        <div css={edit_container}>
-          <textarea
-            css={edit_input}
-            value={editContent}
-            onChange={(e) => setEditContent(e.target.value)}
+        <div
+          css={css`
+            margin-top: 16px;
+          `}
+        >
+          {reply.content}
+          {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
+        </div>
+        <div className="button_container">
+          <Button
+            type={'small_white'}
+            text={'수정'}
+            onClick={editOpenHandler}
           />
-          {errMessage && (
-            <div
-              css={css`
-                color: red;
-                margin-top: 10px;
-                margin-right: 850px;
-              `}
-            >
-              {errMessage}
-            </div>
-          )}
+          <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
+        </div>
+      </div>
+      {isEditOpen && (
+        <div css={edit_container}>
+          <textarea css={edit_input} value={value} onChange={handleChange} />
           <div css={btn_container}>
-            <Button
-              type={'small_white'}
-              text={'완료'}
-              onClick={editHandler}
-              disabled={!isValid}
-            />
+            <Button type={'small_white'} text={'완료'} onClick={handleClick} />
             <Button
               type={'small_grey'}
               text={'취소'}
@@ -138,7 +114,8 @@ export default ReplyItem;
 
 const container = css`
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
   word-break: break-all;
   .reply_box {
     width: 990px;
@@ -162,6 +139,12 @@ const container = css`
     display: flex;
     justify-content: flex-end;
   }
+`;
+
+const edited = css`
+  margin-left: 20px;
+  font-size: 15px;
+  color: #999999;
 `;
 
 const edit_container = css`

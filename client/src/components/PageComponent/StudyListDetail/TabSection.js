@@ -55,6 +55,7 @@ const tab_title = css`
     cursor: pointer;
     color: #5b5d61;
     transition: all 0.1s linear;
+    margin-bottom: -2px;
   }
   .tab:hover,
   .focused {
@@ -62,6 +63,7 @@ const tab_title = css`
     /* border-bottom: 3px solid #0b6ff2; */
     border-top: 10px solid #0b6ff2;
     padding-top: 8px;
+    border-bottom: 2px solid #fff;
   }
 `;
 
