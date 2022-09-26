@@ -34,7 +34,7 @@ function LogIn() {
       )
       .then((res) => {
         setUserInfoState(res.data.data);
-        navigate(`/main/${res.data.data.nickname}`);
+        navigate(`/main/${res.data.data.memberId}`);
       });
   };
 

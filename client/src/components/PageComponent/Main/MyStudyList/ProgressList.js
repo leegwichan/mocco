@@ -90,7 +90,6 @@ function ProgressList() {
         >
           <EvalueModal
             arr={arr}
-            // reset={reset}
             text={'스터디 후기를 작성해주세요'}
             firstBtnType={'small_blue'}
             secondBtnType={'small_grey'}
@@ -101,7 +100,7 @@ function ProgressList() {
           />
         </Modal>
       )}
-      {studyArr.length < 1 ? (
+      {studyArr && studyArr.length < 1 ? (
         <div css={Empty}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +120,7 @@ function ProgressList() {
       ) : (
         <Carousel
           studyArr={studyArr}
-          status={'propgress'}
+          progress={'propgress'}
           clickHandler={clickHandler}
         />
       )}

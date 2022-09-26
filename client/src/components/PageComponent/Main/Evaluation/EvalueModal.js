@@ -78,11 +78,9 @@ function EvalueModal({
   memberId,
 }) {
   const studyInfo = useRecoilValue(infoToEvalue);
-  // const [isAll, setIsAll] = useState(false);
 
   const onClose = () => {
     setIsOpen(false);
-    // reset();
   };
 
   let obj;
@@ -102,7 +100,6 @@ function EvalueModal({
     useEffect(() => {
       console.log(obj);
       arr.push(obj);
-      console.log(arr);
 
       function isSame(arr, obj) {
         //같은 아이디 체크하는 함수 따로 만듦
@@ -124,10 +121,7 @@ function EvalueModal({
             resultArr.push(arr[i]);
           }
         }
-        console.log(resultArr);
         lastArr = resultArr.filter((el) => el.evaluation !== 0); //이전에 눌렸던 스터디 정보가 0점으로 같이 읽혀서 0인 경우 뺌
-        console.log(resultArr);
-        console.log(lastArr);
       }
       getLastArr();
     }, [obj]);
