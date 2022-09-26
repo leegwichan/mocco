@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import request from '../api/index';
-import TaskContainer from '../components/PageComponent/StudyBoard/TaskContainer';
+import TaskContainer from '../components/PageComponent/MakeStudy/TaskContainer';
 
 const Header = css`
   width: 100vw;
