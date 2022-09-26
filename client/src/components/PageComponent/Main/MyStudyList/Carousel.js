@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef, useState } from 'react';
-import StudyCard from '../../../Common/StudyCard';
+import StudyCard from '../../StudyList/StudyCard';
 
 const Container = css`
   display: flex;
@@ -98,18 +98,18 @@ function Carousel({ studyArr, status, clickHandler }) {
           <ul>
             {studyArr && status
               ? studyArr.map((studyData, idx) => (
-                  <li
+                  <div
                     key={idx}
                     role="presentation"
                     onClick={() => clickHandler(studyData)}
                   >
                     <StudyCard studyData={studyData} />
-                  </li>
+                  </div>
                 ))
               : studyArr.map((studyData, idx) => (
-                  <li key={idx} role="presentation">
+                  <div key={idx} role="presentation">
                     <StudyCard studyData={studyData} />
-                  </li>
+                  </div>
                 ))}
           </ul>
         </div>
