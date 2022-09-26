@@ -22,8 +22,9 @@ public class StudyMemberServiceImpl implements StudyMemberService{
         StudyMember studyMember = new StudyMember();
         studyMember.setStudy(study);
         studyMember.setMember(member);
-
-        return studyMemberRepository.save(studyMember);
+        StudyMember createdStudyMember = studyMemberRepository.save(studyMember);
+        study.getStudyMemberList().add(createdStudyMember);
+        return createdStudyMember;
     }
 
     private void checkStudyMemberCondition(Study study, Member member){
