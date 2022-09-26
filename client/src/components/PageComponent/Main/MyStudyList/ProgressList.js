@@ -100,7 +100,7 @@ function ProgressList() {
           />
         </Modal>
       )}
-      {studyArr.length < 1 ? (
+      {studyArr && studyArr.length < 1 ? (
         <div css={Empty}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -33,7 +33,7 @@ function Callback() {
         );
         console.log(response);
         console.log(response.data);
-        navigate(-1);
+        navigate(`/main/${memberId}`);
       } catch (err) {
         console.log(err);
         if (
