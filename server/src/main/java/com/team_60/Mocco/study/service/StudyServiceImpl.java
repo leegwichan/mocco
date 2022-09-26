@@ -13,6 +13,7 @@ import com.team_60.Mocco.task.service.TaskService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,17 +32,26 @@ public class StudyServiceImpl implements StudyService{
     private final MemberService memberService;
     private final StudyMemberService studyMemberService;
     private final TaskService taskService;
+    @Value("${image.default.study}")
+    private List<String> studyImageList;
 
 
     @Override
     public Study createStudy(Study study) {
         if(study.getTaskList() == null) throw new BusinessLogicException(ExceptionCode.TASK_NOT_EXIST);
         Member member = memberService.findVerifiedMember(study.getTeamLeader().getMemberId());
+
         study.setStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS);
         study.setTeamLeader(member);
+        if (study.getImage() == null){
+            String defaultImage = studyImageList.get((int) Math.floor(Math.random() * studyImageList.size()));
+            study.setImage(defaultImage);
+        }
         validateStudy(study);
+
         //스터디 생성
         Study createdStudy = studyRepository.save(study);
+
         //멤버에 스터디 아이디 추가
         member.getStudyLeaderList().add(createdStudy);
         studyMemberService.createStudyMember(createdStudy, member);
