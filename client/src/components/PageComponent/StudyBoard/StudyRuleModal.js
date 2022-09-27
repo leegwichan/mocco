@@ -1,8 +1,8 @@
-import Button from '../../../Common/Button';
-import Modal from '../../../Common/Modal';
-import ModalContent from '../../../Common/ModalContent';
+import Button from '../../Common/Button';
+import Modal from '../../Common/Modal';
+import ModalContent from '../../Common/ModalContent';
 import { useState } from 'react';
-import request from '../../../../api';
+import request from '../../../api';
 import { css } from '@emotion/react';
 
 function StudyRuleModal() {

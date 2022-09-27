@@ -26,9 +26,3 @@ export const infoToEvalue = atom({
   default: {},
   effects_UNSTABLE: [persistAtom],
 });
-
-// export const studyTaskState = atom({
-//   key: 'studyTaskState',
-//   default: [],
-//   effects_UNSTABLE: [persistAtom],
-// });

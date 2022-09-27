@@ -1,21 +1,24 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import { useSetRecoilState } from 'recoil';
-// import { studyTaskState } from '../atom/atom';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../atom/atom';
 import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
-import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRule/StudyRuleModal';
+import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRuleModal';
 
 function StudyBoard() {
   const { studyId, memberId } = useParams();
   const [studyInfo, setStudyInfo] = useState({});
-  // const setStudyTask = useSetRecoilState(studyTaskState);
+  const userInfo = useRecoilValue(userInfoState);
+  const nowStudy = {
+    ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
+  }[0];
+  console.log(nowStudy);
 
   const getStudyInfo = () => {
     request(`/api/study-progress/${studyId}/member/${memberId}`).then((res) => {
       setStudyInfo(res.data.data);
-      // setStudyTask(res.data.data.taskList);
     });
   };
 
@@ -27,14 +30,16 @@ function StudyBoard() {
 
   return (
     <main css={totalContainer}>
-      <section css={titleSection}>
-        <h1>모꼬스터디</h1>
-        <StudyRuleModal />
-      </section>
-      <section css={animation}></section>
-      <section css={taskSection}>
-        <TaskBox studyInfo={studyInfo} studyId={studyId} />
-      </section>
+      <div css={contentContainer}>
+        <section css={titleSection}>
+          <h1>{nowStudy.teamName}</h1>
+          <StudyRuleModal />
+        </section>
+        <section css={animation}></section>
+        <section css={taskSection}>
+          <TaskBox studyInfo={studyInfo} studyId={studyId} />
+        </section>
+      </div>
     </main>
   );
 }
@@ -42,12 +47,14 @@ function StudyBoard() {
 export default StudyBoard;
 
 const totalContainer = css`
-  width: 1200px;
+  width: 100vw;
   height: calc(100vh - 64px);
+  padding-top: 100px;
+`;
+
+const contentContainer = css`
+  max-width: 1200px;
   margin: 0 auto;
-  margin-top: 47px;
-  margin-bottom: 85px;
-  border: 1px solid red;
 `;
 
 const titleSection = css`

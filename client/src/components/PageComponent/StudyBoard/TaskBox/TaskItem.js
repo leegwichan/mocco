@@ -1,29 +1,43 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
+import AuthTaskModal from '../AuthTask/AuthTaskModal';
 
 function TaskItem({ task }) {
-  // console.log(task);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // const onChange = () => {
+  //   setIsOpen(true);
+  // };
+
   return (
-    <div css={taskContainer}>
-      <div css={deadline}>
-        <div>~{task.deadline}</div>
-      </div>
-      <div css={content}>{task.content}</div>
-      <div css={mark}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          width="73px"
-          height="73px"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="#0b6ff2"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
+    <div>
+      <div css={taskContainer}>
+        <div css={deadline}>
+          <div>~{task.deadline}</div>
+        </div>
+        <div css={content}>{task.content}</div>
+        <div css={mark}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            width="73px"
+            height="73px"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="#0b6ff2"
+            onClick={() => setIsOpen(true)}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          {isOpen && (
+            <AuthTaskModal task={task} setIsOpen={setIsOpen} isOpen={isOpen} />
+          )}
+          <span>인증</span>
+        </div>
       </div>
     </div>
   );
@@ -60,7 +74,7 @@ const deadline = css`
 
 const content = css`
   font-size: 30px;
-  margin-left: -25rem;
+  /* margin-left: -25rem; */
 `;
 
 const mark = css`

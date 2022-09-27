@@ -13,7 +13,6 @@ import StudyBoard from './pages/StudyBoard';
 import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
 
-
 function App() {
   return (
     <div>
