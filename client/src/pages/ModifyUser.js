@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import ModifyUserInput from '../components/PageComponent/ModifyUser/ModifyUserInput';
 import ModifyUserButton from '../components/PageComponent/ModifyUser/ModifyUserButton';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import ChangePasswordModal from '../components/PageComponent/ModifyUser/ChangePasswordModal';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
@@ -19,10 +19,11 @@ function ModifyUser() {
 
   const openWithdrawalModal = () => setWithdrawalModalOn(true);
   const closeWithdrawalModal = () => setWithdrawalModalOn(false);
+  const inputRef = useRef(null);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log('e');
+    console.log('e :', console.log(event.target));
     request({
       method: 'patch',
       url: `/api/members/${userInfo.memberId}`,
@@ -33,28 +34,39 @@ function ModifyUser() {
         githubRepository1: event.target.githubRepository1.value || null,
         githubRepository2: event.target.githubRepository2.value || null,
         githubRepository3: event.target.githubRepository3.value || null,
-        profileImage: null,
+        profileImage: event.target.imageUpload,
       },
     }).then((res) => setUserInfo(res.data.data));
+    console.log('img :', event.target.imageUpload);
   };
 
-  // const onUploadImage = useCallback((e) => {
-  //   if (!e.target.files) {
-  //     return;
-  //   }
-  //   const inputRef = useRef();
-  //   const formData = new FormData();
-  //   formData.append('image', e.target.files[0]);
-  // });
+  // 이미지 업로드 기능
+  const onUploadImage = useCallback((e) => {
+    if (!e.target.files) {
+      return;
+    }
+    console.log('a');
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+    console.log('e :', e.target.files[0].size);
 
-  request({
-    method: 'post',
-    url: '/api/members/image',
-    body: new FormData(),
-    params: { 'file-size': 251722 },
-  }).then((res) => {
-    console.log(res.data.data);
+    request({
+      method: 'post',
+      url: '/api/members/image',
+      params: { 'file-size': e.target.files[0].size },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      data: formData,
+    });
   });
+
+  const onUploadImageButtonClick = useCallback(() => {
+    if (!inputRef.current) {
+      return;
+    }
+    inputRef.current.click();
+  }, []);
 
   return (
     <form
@@ -92,14 +104,22 @@ function ModifyUser() {
         type="button"
         onClick={openChangePasswordModal}
       />
-      {/* TODO: 변경 필요 */}
+      {/* 이미지 업로드 */}
       <ModifyUserInput
         labelText="이미지 추가 / 변경"
         type="file"
         accept="image/*"
-        // onChange={onUploadImage}
+        onChange={onUploadImage}
+        name="imageUpload"
+        // style={{ display: 'none' }}
+        ref={inputRef}
       />
-      <ModifyUserButton buttonText="이미지 업로드 하기" type="button" />
+      <ModifyUserButton
+        buttonText="이미지 업로드 하기"
+        type="button"
+        onClick={onUploadImageButtonClick}
+      />
+      {/* 자기소개 */}
       <ModifyUserInput
         labelText="자기소개"
         type="textarea"

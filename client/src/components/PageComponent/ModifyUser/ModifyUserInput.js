@@ -1,20 +1,38 @@
 import { css } from '@emotion/react';
+import { forwardRef } from 'react';
 
-function ModifyUserInput({ labelText, name, type, ...rest }) {
+const ModifyUserInput = forwardRef((props, ref) => {
   return (
     <div>
-      <label htmlFor={name}>
-        <h3 css={labelTextStyle}>{labelText}</h3>
+      <label htmlFor={props.name}>
+        <h3 css={labelTextStyle}>{props.labelText}</h3>
       </label>
-      {type === 'textarea' && (
-        <textarea css={textareaStyle} type={type} name={name} {...rest} />
+      {props.type === 'textarea' && (
+        <textarea
+          css={textareaStyle}
+          type={props.type}
+          name={props.name}
+          {...props.rest}
+          ref={ref}
+          onSubmit={props.onSubmit}
+        />
       )}
-      {type !== 'textarea' && (
-        <input css={inputStyle} type={type} name={name} {...rest} />
+      {props.type !== 'textarea' && (
+        <input
+          css={inputStyle}
+          type={props.type}
+          name={props.name}
+          {...props.rest}
+          ref={ref}
+          onChange={props.onChange}
+          onSubmit={props.onSubmit}
+        />
       )}
     </div>
   );
-}
+});
+
+ModifyUserInput.displayName = 'ModifyUser';
 
 const inputStyle = css`
   width: 100%;
