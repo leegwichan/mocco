@@ -26,6 +26,7 @@ const ModifyUserInput = forwardRef((props, ref) => {
           ref={ref}
           onChange={props.onChange}
           onSubmit={props.onSubmit}
+          style={props.style}
         />
       )}
     </div>

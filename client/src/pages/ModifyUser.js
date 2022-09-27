@@ -19,6 +19,9 @@ function ModifyUser() {
 
   const openWithdrawalModal = () => setWithdrawalModalOn(true);
   const closeWithdrawalModal = () => setWithdrawalModalOn(false);
+
+  const [image, setImage] = useState('');
+  const [previewUrl, setPreviewUrl] = useState('');
   const inputRef = useRef(null);
 
   const onSubmit = (event) => {
@@ -58,6 +61,10 @@ function ModifyUser() {
         'Content-Type': 'multipart/form-data',
       },
       data: formData,
+    }).then((res) => {
+      setImage(image);
+      setPreviewUrl(res.data.data);
+      console.log('imaPreview :', res.data.data);
     });
   });
 
@@ -104,6 +111,7 @@ function ModifyUser() {
         type="button"
         onClick={openChangePasswordModal}
       />
+
       {/* 이미지 업로드 */}
       <ModifyUserInput
         labelText="이미지 추가 / 변경"
@@ -111,9 +119,10 @@ function ModifyUser() {
         accept="image/*"
         onChange={onUploadImage}
         name="imageUpload"
-        // style={{ display: 'none' }}
+        style={{ display: 'none' }}
         ref={inputRef}
       />
+      <div>{previewUrl && <img src={previewUrl} alt="previewImage" />}</div>
       <ModifyUserButton
         buttonText="이미지 업로드 하기"
         type="button"
