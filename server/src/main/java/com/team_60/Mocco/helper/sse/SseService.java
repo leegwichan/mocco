@@ -19,6 +19,7 @@ public class SseService {
     private static final Map<String, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
 
     public SseEmitter subscribeAlarm(Member member){
+        //SseEmitter emitter = new SseEmitter(15 * 1000L);
         SseEmitter emitter = new SseEmitter(15 * 60 * 1000L);
         String emitterId = member.getMemberId() + "_" + System.currentTimeMillis();
         sseEmitters.put(emitterId, emitter);
@@ -44,7 +45,7 @@ public class SseService {
 
     public void publishAlarm(SseEmitter emitter, Member member){
         try {
-            emitter.send(new SingleResponseDto("ARRIVE_ALARM"), MediaType.APPLICATION_JSON);
+            emitter.send("ARRIVE_ALARM", MediaType.APPLICATION_JSON);
             log.info("Success Send SSE id : {}", member.getMemberId());
         } catch (Exception e){
             log.info("Fail Send SSE id : {}", member.getMemberId());

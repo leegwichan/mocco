@@ -11,6 +11,7 @@ import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study_member.entity.StudyMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
@@ -49,10 +50,11 @@ public class AlarmServiceImpl implements AlarmService{
         alarmRepository.delete(findAlarm);
     }
 
+    @Transactional
     @Override
     public void deleteAlarmsByMemberId(long memberId) {
-        memberService.findVerifiedMember(memberId);
-        alarmRepository.deleteAlarmByMemberId(memberId);
+        Member findMember = memberService.findVerifiedMember(memberId);
+        alarmRepository.deleteAllByMember(findMember);
     }
 
     @Override
