@@ -15,6 +15,8 @@ const Button = ({ text, onClick, type }) => {
     'small_grey',
     'header_skyblue',
     'header_log',
+    'profile_modal_blue',
+    'profile_modal_grey',
   ].includes(type)
     ? type
     : 'default';
@@ -213,6 +215,38 @@ const btn = css`
 
     &:hover {
       color: #0b6ff2;
+      background-color: #ffffff;
+    }
+  }
+
+  &.profile_modal_blue {
+    margin: 0;
+    font-size: 18px;
+    width: 100%;
+    height: 40px;
+    background-color: #0b6ff2;
+    color: #ffffff;
+    border: 1px solid #0b6ff2;
+    border-radius: 0;
+
+    &:hover {
+      color: #0b6ff2;
+      background-color: #ffffff;
+    }
+  }
+
+  &.profile_modal_grey {
+    margin: 0;
+    font-size: 18px;
+    width: 100%;
+    height: 40px;
+    background-color: #999999;
+    color: #ffffff;
+    border: 1px solid #999999;
+    border-radius: 0;
+
+    &:hover {
+      color: #a4a4a4;
       background-color: #ffffff;
     }
   }
