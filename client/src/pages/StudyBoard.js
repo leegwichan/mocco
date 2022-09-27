@@ -1,14 +1,16 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRule/StudyRuleModal';
 
 function StudyBoard() {
+  const { studyId, memberId } = useParams();
   const [studyInfo, setStudyInfo] = useState({});
 
   const getStudyInfo = () => {
-    request('/api/study-progress/357/member/1').then((res) => {
+    request(`/api/study-progress/${studyId}/member/${memberId}`).then((res) => {
       setStudyInfo(res.data.data);
     });
   };

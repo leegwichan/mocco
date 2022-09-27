@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 
 function TaskItem({ task }) {
-  console.log(task);
+  // console.log(task);
   return (
     <div css={taskContainer}>
       <div css={deadline}>
