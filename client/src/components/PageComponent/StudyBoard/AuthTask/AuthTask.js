@@ -29,7 +29,7 @@ function AuthTask({ authData, setAuthData }) {
       })
       .catch((err) => console.log(err));
   };
-  console.log(image);
+  // console.log(image);
 
   const uploadHandler = (e) => {
     e.preventDefault();
@@ -44,7 +44,7 @@ function AuthTask({ authData, setAuthData }) {
     setAuthData({ ...authData, content: content });
   };
 
-  console.log(authData);
+  // console.log(authData);
 
   return (
     <form encType="multipart/form-data">

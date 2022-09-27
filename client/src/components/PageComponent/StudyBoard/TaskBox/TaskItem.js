@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { useState } from 'react';
 import AuthTaskModal from '../AuthTask/AuthTaskModal';
 
-function TaskItem({ task }) {
+function TaskItem({ task, select }) {
   const [isOpen, setIsOpen] = useState(false);
 
   // const onChange = () => {
@@ -34,7 +34,12 @@ function TaskItem({ task }) {
             />
           </svg>
           {isOpen && (
-            <AuthTaskModal task={task} setIsOpen={setIsOpen} isOpen={isOpen} />
+            <AuthTaskModal
+              task={task}
+              setIsOpen={setIsOpen}
+              isOpen={isOpen}
+              select={select}
+            />
           )}
           <span>인증</span>
         </div>

@@ -43,7 +43,7 @@ function TaskBox({ studyInfo, studyId }) {
         {taskList &&
           taskList.map((task) => (
             <div key={task.taskId}>
-              <TaskItem task={task} />
+              <TaskItem task={task} select={select} />
             </div>
           ))}
       </div>
