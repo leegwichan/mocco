@@ -8,6 +8,7 @@ import com.team_60.Mocco.helper.sse.SseService;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.study.entity.Study;
+import com.team_60.Mocco.study_member.entity.StudyMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -55,20 +56,23 @@ public class AlarmServiceImpl implements AlarmService{
     }
 
     @Override
-    public Alarm createAlarmWhenStudyOpen(Study study, Member member) {
-        Alarm alarm = createNewAlarm(study, member, Alarm.AlarmType.STUDY_OPEN);
-        alarm.setContent(study.getTeamName() + "가 오늘부터 시작되었습니다.");
-        Alarm createAlarm = alarmRepository.save(alarm);
-        sseService.publishAlarm(member);
-        return createAlarm;
+    public void createAlarmWhenStudyOpen(Study study) {
+
+        for (StudyMember studyMember : study.getStudyMemberList()){
+            Member member = studyMember.getMember();
+            Alarm alarm = createNewAlarm(study, member, Alarm.AlarmType.STUDY_OPEN);
+            alarm.setContent(study.getTeamName() + "가 오늘부터 시작되었습니다.");
+            Alarm createAlarm = alarmRepository.save(alarm);
+            sseService.publishAlarm(member);
+        }
     }
 
     @Override
-    public Alarm createAlarmWhenStudyNotOpen(Study study, Member member) {
-        Alarm alarm = createNewAlarm(null, member, Alarm.AlarmType.STUDY_NOT_OPEN);
+    public Alarm createAlarmWhenStudyNotOpen(Study study) {
+        Alarm alarm = createNewAlarm(null, study.getTeamLeader(), Alarm.AlarmType.STUDY_NOT_OPEN);
         alarm.setContent(study.getTeamName() + "가 최소 인원이 충족되지 않아 개설되지 않았습니다.");
         Alarm createAlarm = alarmRepository.save(alarm);
-        sseService.publishAlarm(member);
+        sseService.publishAlarm(study.getTeamLeader());
         return createAlarm;
     }
 

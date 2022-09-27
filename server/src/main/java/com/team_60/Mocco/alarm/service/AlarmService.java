@@ -12,7 +12,7 @@ public interface AlarmService {
     List<Alarm> findAlarmsByMemberId(long memberId);
     void deleteAlarm(long alarmId);
     void deleteAlarmsByMemberId(long memberId);
-    Alarm createAlarmWhenStudyOpen(Study study, Member member);
-    Alarm createAlarmWhenStudyNotOpen(Study study, Member member);
+    void createAlarmWhenStudyOpen(Study study);
+    Alarm createAlarmWhenStudyNotOpen(Study study);
     Alarm createAlarmWhenProposalApprove(Study study, Member member);
 }
