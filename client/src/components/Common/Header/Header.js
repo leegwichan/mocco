@@ -9,6 +9,7 @@ import ProfileModal from './ProfileModal';
 
 const Container = css`
   position: fixed;
+  top: 0;
   width: 100vw;
   height: 64px;
   background-color: #ffffff;
