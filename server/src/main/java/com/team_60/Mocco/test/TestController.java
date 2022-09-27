@@ -3,10 +3,12 @@ package com.team_60.Mocco.test;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.mail.sender.EmailSendable;
+import com.team_60.Mocco.helper.sse.SseService;
 import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 
+import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,14 +37,13 @@ import java.util.ArrayList;
 public class TestController {
 
     private final StudyRepository studyRepository;
-
     private final EmailSendable emailSender;
     private final S3ImageUpload imageUpload;
     private MemberService memberService;
 
     private StudyService studyService;
     private StudyMapper studyMapper;
-    private TaskMapper taskMapper;
+    private SseService sseService;
 
     @GetMapping("/mail")
     public String checkSendMail(@RequestParam String email) {
@@ -98,6 +101,14 @@ public class TestController {
 
         System.out.println("study-complete 변경 완료");
         return null;
+    }
+
+    @GetMapping("/sse/publish")
+    public ResponseEntity sendSseMessage(@RequestParam("member-id") long memberId){
+        Member member = new Member();
+        member.setMemberId(memberId);
+        sseService.publishAlarm(member);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/data/user")

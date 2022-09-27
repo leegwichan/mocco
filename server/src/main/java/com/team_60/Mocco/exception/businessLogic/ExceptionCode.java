@@ -44,7 +44,9 @@ public enum ExceptionCode {
     PARAMETER_NOT_FOUND(400,"해당 파라미터를 찾을 수 없습니다. 인증 오류"),
     DIFFERENT_USER_FROM_TOKEN(400, "토큰 정보의 유저와 다른 유저의 요청입니다."),
 
-
+    ALARM_NOT_FOUND(404, "해당 알람을 찾을 수 없습니다."),
+    FAIL_SSE_CONNECT(500 ,"서버에서 구독이 정상적으로 작동하지 않았습니다."),
+    
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),
     CLAIM_NOT_EXIST(403,"권한 정보가 없는 토큰입니다."),
     TOKEN_EXPIRED_EXCEPTION(403,"이미 만료된 토큰입니다."),

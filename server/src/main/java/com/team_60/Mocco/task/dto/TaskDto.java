@@ -31,7 +31,8 @@ public class TaskDto {
     @Getter
     @Setter
     public static class MemberProgressResponse{
-        private int totalTask;
+        private int totalTaskCount;
+        private int expiredTaskCount;
         private List<MemberProgress> memberProgress;
     }
 
@@ -40,7 +41,7 @@ public class TaskDto {
     @Setter
     public static class MemberProgress{
         private long memberId;
-        private int endTask;
+        private int endTaskCount;
     }
 }
 

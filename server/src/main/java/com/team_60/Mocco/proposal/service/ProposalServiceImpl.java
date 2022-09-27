@@ -1,5 +1,6 @@
 package com.team_60.Mocco.proposal.service;
 
+import com.team_60.Mocco.alarm.service.AlarmService;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.member.entity.Member;
@@ -25,6 +26,7 @@ public class ProposalServiceImpl implements ProposalService{
     private final MemberService memberService;
     private final StudyService studyService;
     private final StudyMemberService studyMemberService;
+    private final AlarmService alarmService;
 
     @Override
     public List<Proposal> findProposalsByStudyId(long studyId) {
@@ -60,6 +62,7 @@ public class ProposalServiceImpl implements ProposalService{
 
         findProposal.setProposalStatus(Proposal.ProposalStatus.PROPOSAL_ACCEPT);
         studyMemberService.createStudyMember(findProposal.getStudy(), findProposal.getMember());
+        alarmService.createAlarmWhenProposalApprove(findProposal.getStudy(), findProposal.getMember());
 
         // TODO 이거 왜 저장됨??
         return findProposal;

@@ -10,11 +10,14 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
+import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
+
 
 function App() {
   return (
     <div>
+      <Header />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<SignUp />} />
@@ -24,7 +27,7 @@ function App() {
         <Route path="/studylist" element={<StudyList />} />
         <Route path="/makestudy" element={<MakeStudy />} />
         <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
-        <Route path="/studylist/modify/:d" element={<ModifyStudy />} />
+        <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard" element={<StudyBoard />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />

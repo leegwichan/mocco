@@ -12,6 +12,8 @@ import com.team_60.Mocco.task_check.dto.TaskCheckDto;
 import com.team_60.Mocco.task_check.entity.TaskCheck;
 import org.mapstruct.Mapper;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,12 +52,15 @@ public interface StudyProgressMapper {
                 taskCheck -> taskCompleteCount.put(taskCheck.getMember(), taskCompleteCount.get(taskCheck.getMember()) +1)
         ));
 
+        int expiredTaskCount = (int) study.getTaskList().stream().filter(task ->
+                task.getDeadline().isBefore(LocalDate.now(ZoneId.of("Asia/Seoul")))).count();
+
         List<TaskDto.MemberProgress> memberProgress = new ArrayList<>();
         for (Member member : taskCompleteCount.keySet()){
             memberProgress.add(new TaskDto.MemberProgress(member.getMemberId(), taskCompleteCount.get(member)));
         }
 
-        return new TaskDto.MemberProgressResponse(study.getTaskList().size(), memberProgress);
+        return new TaskDto.MemberProgressResponse(study.getTaskList().size(), expiredTaskCount, memberProgress);
     }
 
     private List<TaskDto.CheckResponse> studyToTaskCheckResponseDto(Study study, long memberId){
