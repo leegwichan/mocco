@@ -1,17 +1,22 @@
 import { css } from '@emotion/react';
 import SelectUser from './SelectUser';
-import TaskList from './TaskList';
+import TaskItem from './TaskItem';
 
-function TaskBox() {
+function TaskBox({ studyInfo }) {
   return (
     <div css={taskBox}>
       <div css={taskTop}>
         <div>Task</div>
         <div>ProgressBar</div>
-        <SelectUser />
+        <SelectUser memberInfo={studyInfo.memberList} />
       </div>
       <div css={taskList}>
-        <TaskList />
+        {studyInfo.taskList &&
+          studyInfo.taskList.map((task) => (
+            <div key={task.taskId}>
+              <TaskItem task={task} />
+            </div>
+          ))}
       </div>
     </div>
   );

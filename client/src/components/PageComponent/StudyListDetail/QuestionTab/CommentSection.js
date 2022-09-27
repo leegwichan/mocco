@@ -65,16 +65,26 @@ const CommentSection = ({
         <div css={container}>
           <div>
             <Link
-              to={`/main/${member.nickname}`}
+              to={`/main/${member.memberId}`}
               css={css`
                 text-decoration: none;
               `}
             >
-              <span className="main_link">{member.profileImage}</span>
+              <span className="main_link">
+                {/* <img
+                  src={member.profileImage}
+                  alt="프로필 이미지"
+                  css={css`
+                    width: 50px;
+                    height: 50px;
+                  `}
+                /> */}
+                {member.profileImage}
+              </span>
             </Link>
 
             <Link
-              to={`/main/${member.nickname}`}
+              to={`/main/${member.memberId}`}
               css={css`
                 text-decoration: none;
               `}

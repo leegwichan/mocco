@@ -1,21 +1,31 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
+import { userInfoState } from '../../../../atom/atom';
+import { useRecoilValue } from 'recoil';
 
-function UserSelect() {
-  const userList = ['팀원1', '팀원2', '팀원3', '팀원4', '팀원5'];
-  const [select, setSelect] = useState('팀원1');
+function UserSelect({ memberInfo }) {
+  const userInfo = useRecoilValue(userInfoState);
+  const [select, setSelect] = useState(userInfo.nickname);
+
+  console.log(memberInfo);
 
   const handleSelectChage = (e) => {
     const { value } = e.target;
-    setSelect(userList.filter((user) => user === value));
+    setSelect(memberInfo.filter((user) => user === value));
   };
   return (
     <div>
-      <select onChange={handleSelectChage} value={select} css={user}>
-        {userList.map((user) => {
-          return <option key={user}>{user}</option>;
-        })}
-      </select>
+      {memberInfo && (
+        <select onChange={handleSelectChage} value={select} css={user}>
+          {memberInfo.map((user) => {
+            return (
+              <option key={user.memberId}>
+                {user.memberId} {user.nickname}
+              </option>
+            );
+          })}
+        </select>
+      )}
     </div>
   );
 }

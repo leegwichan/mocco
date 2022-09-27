@@ -1,10 +1,24 @@
 import { css } from '@emotion/react';
-// import { useState } from 'react';
-// import Button from '../components/Common/Button';
+import { useEffect, useState } from 'react';
+import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRule/StudyRuleModal';
 
 function StudyBoard() {
+  const [studyInfo, setStudyInfo] = useState({});
+
+  const getStudyInfo = () => {
+    request('/api/study-progress/357/member/1').then((res) => {
+      setStudyInfo(res.data.data);
+    });
+  };
+
+  useEffect(() => {
+    getStudyInfo();
+  }, []);
+
+  console.log(studyInfo);
+
   return (
     <main css={totalContainer}>
       <section css={titleSection}>
@@ -13,7 +27,7 @@ function StudyBoard() {
       </section>
       <section css={animation}></section>
       <section css={taskSection}>
-        <TaskBox />
+        <TaskBox studyInfo={studyInfo} />
       </section>
     </main>
   );
@@ -23,6 +37,7 @@ export default StudyBoard;
 
 const totalContainer = css`
   width: 1200px;
+  height: calc(100vh - 64px);
   margin: 0 auto;
   margin-top: 47px;
   margin-bottom: 85px;
