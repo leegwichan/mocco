@@ -31,8 +31,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Component
 public class JwtTokenProvider {
 
-    private final MemberRepository memberRepository;
-
     //유저 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
     public Map<String, Object> generateToken(Authentication authentication, HttpServletResponse response) throws IOException {
         //권한 가져오기
@@ -75,15 +73,11 @@ public class JwtTokenProvider {
 
             if (claim == null) throw new BusinessLogicException(ExceptionCode.CLAIM_NOT_EXIST);
 
-            Member member = memberRepository.findByEmail(email).orElse(null);
-
             //클레임에서 권한 정보 가져오기
             Collection<? extends GrantedAuthority> authorities = Arrays.stream(claim.toString().split(","))
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
-            PrincipalDetails principalDetails = new PrincipalDetails(member);
-            return new UsernamePasswordAuthenticationToken(principalDetails, "", authorities);
-
+            return new UsernamePasswordAuthenticationToken(email, "", authorities);
         }
 
 

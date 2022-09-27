@@ -8,5 +8,6 @@ public interface ReplyService {
     Reply createReply(Reply reply);
     Reply updateReply(Reply reply);
     Reply deleteReply(long replyId);
+    public Reply findVerifiedReply(long replyId);
 
 }

@@ -1,6 +1,8 @@
 package com.team_60.Mocco.member.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.helper.aop.AuthenticationService;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.mapper.MemberMapper;
@@ -19,6 +21,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberMapper mapper;
+    private final AuthenticationService authenticationService;
 
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") long memberId){
@@ -33,7 +36,7 @@ public class MemberController {
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(@PathVariable("member-id") long memberId,
                                       @RequestBody MemberDto.Patch requestBody){
-
+        authenticationService.AuthenticationCheckWithId("memberId",memberId);
         Member member = mapper.memberPatchDtoToMember(requestBody);
         member.setMemberId(memberId);
 
@@ -46,6 +49,7 @@ public class MemberController {
 
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(@PathVariable("member-id") long memberId){
+        authenticationService.AuthenticationCheckWithId("memberId",memberId);
         memberService.deleteMember(memberId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

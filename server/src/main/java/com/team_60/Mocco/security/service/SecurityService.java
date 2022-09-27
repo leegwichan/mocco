@@ -1,10 +1,11 @@
 package com.team_60.Mocco.security.service;
 
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
+import com.team_60.Mocco.member.mapper.MemberMapper;
 import com.team_60.Mocco.member.repository.MemberRepository;
-import com.team_60.Mocco.security.dto.Request;
-import com.team_60.Mocco.security.dto.Response;
+import com.team_60.Mocco.security.dto.SecurityDto;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +37,10 @@ public class SecurityService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final MemberMapper mapper;
     private final RedisTemplate redisTemplate;
 
-    public ResponseEntity login(Request.Login login, HttpServletResponse response) throws IOException {
+    public ResponseEntity login(SecurityDto.Login login, HttpServletResponse response) throws IOException {
 
         Member member = memberRepository.findByEmail(login.getEmail()).orElse(null);
         if(member == null){
@@ -51,11 +53,7 @@ public class SecurityService {
         redisTemplate.opsForValue()
                 .set("RefreshToken:"+authentication.getName(),tokenInfo.get(REFRESH_TOKEN_HEADER), REFRESH_TOKEN_EXP, TimeUnit.MILLISECONDS);
 
-        Response.LoginMember responseDto = Response.LoginMember.builder()
-                .memberId(member.getMemberId())
-                .nickname(member.getNickname())
-                .roles(member.getRoles())
-                .build();
+        MemberDto.Response responseDto = mapper.memberToMemberResponseDto(member);
 
         return new ResponseEntity(responseDto, HttpStatus.OK);
     }

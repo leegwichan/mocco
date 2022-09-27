@@ -5,15 +5,13 @@ import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.mapper.MemberMapper;
 import com.team_60.Mocco.member.service.MemberService;
-import com.team_60.Mocco.security.dto.Request;
-import com.team_60.Mocco.security.dto.Response;
+import com.team_60.Mocco.security.dto.SecurityDto;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.security.service.SecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +29,7 @@ public class SecurityController {
     private final MemberMapper mapper;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody Request.Login login, HttpServletResponse response) throws IOException {
+    public ResponseEntity login(@RequestBody SecurityDto.Login login, HttpServletResponse response) throws IOException {
         return securityService.login(login,response);
     }
     @PostMapping("/logout")
@@ -45,7 +43,7 @@ public class SecurityController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity postMapping(@RequestBody MemberDto.Post requestBody){
+    public ResponseEntity signupMember(@RequestBody MemberDto.Post requestBody){
 
         Member member = mapper.memberPostDtoToMember(requestBody);
 
