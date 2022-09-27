@@ -1,13 +1,15 @@
 import { css } from '@emotion/react';
-import Button from '../components/Common/Button';
+// import { useState } from 'react';
+// import Button from '../components/Common/Button';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
+import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRule/StudyRuleModal';
 
 function StudyBoard() {
   return (
     <main css={totalContainer}>
       <section css={titleSection}>
         <h1>모꼬스터디</h1>
-        <Button type={'big_blue'} text={'규칙'} />
+        <StudyRuleModal />
       </section>
       <section css={animation}></section>
       <section css={taskSection}>
