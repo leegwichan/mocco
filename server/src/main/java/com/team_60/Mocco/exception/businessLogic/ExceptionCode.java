@@ -41,7 +41,7 @@ public enum ExceptionCode {
     PROVIDER_ID_NOT_FOUND(404,"해당 provider ID 정보를 찾을 수 없습니다."),
     NOT_DONE_TASK(400,"이전 Task를 완료하지 않았습니다."),
     TASK_ALREADY_DONE(400,"이미 해당 task 인증을 했습니다."),
-
+    ALARM_NOT_FOUND(404, "해당 알람을 찾을 수 없습니다."),
 
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),
     CLAIM_NOT_EXIST(403,"권한 정보가 없는 토큰입니다."),

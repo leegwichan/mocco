@@ -16,9 +16,9 @@ public class SseService {
 
     private static final Map<String, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
 
-    public SseEmitter subscribe(Member member){
+    public SseEmitter subscribe(long memberId){
         SseEmitter emitter = new SseEmitter(15 * 60 * 1000L);
-        String emitterId = member.getMemberId() + "_" + System.currentTimeMillis();
+        String emitterId = memberId + "_" + System.currentTimeMillis();
         sseEmitters.put(emitterId, emitter);
 
         emitter.onTimeout(() -> sseEmitters.remove(emitterId));
