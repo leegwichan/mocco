@@ -1,5 +1,6 @@
 package com.team_60.Mocco.reply.dto;
 
+import com.team_60.Mocco.dto.PostDto;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.reply.entity.Reply;
 import lombok.AllArgsConstructor;
@@ -13,8 +14,7 @@ public class ReplyDto {
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class Post{
-        private long memberId;
+    public static class Post extends PostDto {
         private long commentId;
         private String content;
     }

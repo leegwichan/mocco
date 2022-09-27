@@ -74,7 +74,7 @@ public class ProposalServiceImpl implements ProposalService{
         return proposalRepository.save(findProposal);
     }
 
-    private Proposal findVerifiedProposal(long proposalId){
+    public Proposal findVerifiedProposal(long proposalId){
 
         Optional<Proposal> optionalProposal = proposalRepository.findById(proposalId);
         Proposal findProposal = optionalProposal.orElseThrow(() ->

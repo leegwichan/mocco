@@ -41,6 +41,8 @@ public enum ExceptionCode {
     PROVIDER_ID_NOT_FOUND(404,"해당 provider ID 정보를 찾을 수 없습니다."),
     NOT_DONE_TASK(400,"이전 Task를 완료하지 않았습니다."),
     TASK_ALREADY_DONE(400,"이미 해당 task 인증을 했습니다."),
+    PARAMETER_NOT_FOUND(400,"해당 파라미터를 찾을 수 없습니다. 인증 오류"),
+    DIFFERENT_USER_FROM_TOKEN(400, "토큰 정보의 유저와 다른 유저의 요청입니다."),
 
 
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),

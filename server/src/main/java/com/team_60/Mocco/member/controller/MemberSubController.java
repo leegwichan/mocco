@@ -1,6 +1,8 @@
 package com.team_60.Mocco.member.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.helper.aop.AuthenticationService;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
 import com.team_60.Mocco.helper.httpclient.GithubRestClient;
 import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
@@ -25,7 +27,7 @@ public class MemberSubController {
     private final S3ImageUpload imageUpload;
     private final MemberMapper mapper;
     private final MemberService memberService;
-
+    private final AuthenticationService authenticationService;
     private final GithubRestClient githubRestClient;
 
     @PostMapping("/image")
@@ -42,7 +44,7 @@ public class MemberSubController {
     @PatchMapping("/password/{member-id}")
     public ResponseEntity patchPassword(@PathVariable("member-id") long memberId,
                                       @RequestBody MemberDto.PatchPassword requestBody){
-
+        authenticationService.AuthenticationCheckWithId("memberId",memberId);
         requestBody.setMemberId(memberId);
         Member updateMember = memberService.updatePassword(requestBody);
         MemberDto.Response response = mapper.memberToMemberResponseDto(updateMember);
@@ -51,8 +53,9 @@ public class MemberSubController {
     }
 
     @PatchMapping("/github-user/{member-id}")
-    public ResponseEntity linkGithubAccount(@PathVariable("member-id") long memberId,
+    public ResponseEntity patchGithubAccount(@PathVariable("member-id") long memberId,
                                             @RequestBody MemberDto.GithubInfo requestBody){
+        authenticationService.AuthenticationCheckWithId("memberId",memberId);
         GithubRestClientDto.UserInfo githubUserInfo
                 = githubRestClient.getGithubUserInfo(requestBody.getAuthorizationCode());
         Member member = mapper.githubRestClientUserInfoDtoToMember(githubUserInfo);

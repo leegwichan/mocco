@@ -1,5 +1,6 @@
 package com.team_60.Mocco.study.dto;
 
+import com.team_60.Mocco.dto.PostDto;
 import com.team_60.Mocco.member.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,9 +17,8 @@ public class StudyEvaluationDto {
     @AllArgsConstructor
     @Getter
     @Setter
-    public static class Post{
+    public static class Post extends PostDto {
         private long studyId;
-        private long memberId;
         private List<MemberDto.PostEvaluation> evaluations;
     }
 
