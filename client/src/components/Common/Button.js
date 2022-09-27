@@ -227,7 +227,7 @@ const btn = css`
     background-color: #0b6ff2;
     color: #ffffff;
     border: 1px solid #0b6ff2;
-    border-radius: 0;
+    border-radius: 5px;
 
     &:hover {
       color: #0b6ff2;
@@ -243,7 +243,7 @@ const btn = css`
     background-color: #999999;
     color: #ffffff;
     border: 1px solid #999999;
-    border-radius: 0;
+    border-radius: 5px;
 
     &:hover {
       color: #a4a4a4;

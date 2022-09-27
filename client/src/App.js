@@ -10,7 +10,7 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
-import Header from './components/Common/Header';
+import Header from './components/Common/Header/Header';
 
 function App() {
   return (
