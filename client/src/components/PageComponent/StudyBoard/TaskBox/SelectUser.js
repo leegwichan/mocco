@@ -1,12 +1,12 @@
 import { css } from '@emotion/react';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
-import { userInfoState } from '../../../../atom/atom';
-import { useRecoilValue } from 'recoil';
 
-function UserSelect({ memberInfo }) {
-  const userInfo = useRecoilValue(userInfoState);
+function UserSelect({ memberInfo, select, setSelect }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [select, setSelect] = useState({});
+
+  const onChange = () => {
+    setIsOpen(!isOpen);
+  };
 
   const selectHandler = (e) => {
     const { innerText } = e.target;
@@ -16,20 +16,12 @@ function UserSelect({ memberInfo }) {
     setSelect({ ...clickedMember }[0]);
     setIsOpen(false);
   };
-
-  const onChange = () => {
-    setIsOpen(!isOpen);
-  };
+  console.log('내가 셀렉트야', select);
 
   return (
     <section css={container}>
       <label onClick={onChange} role="presentation" css={selected}>
-        {select && Object.keys(select).length === 0 ? (
-          <>
-            <img src={userInfo.memberId} alt="p" />
-            sfsdfsf
-          </>
-        ) : (
+        {select && (
           <>
             <img src={select.profileImage} alt="p" />
             <span> {select.nickname}</span>

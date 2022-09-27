@@ -1,6 +1,8 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+// import { useSetRecoilState } from 'recoil';
+// import { studyTaskState } from '../atom/atom';
 import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRule/StudyRuleModal';
@@ -8,10 +10,12 @@ import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRule/Stu
 function StudyBoard() {
   const { studyId, memberId } = useParams();
   const [studyInfo, setStudyInfo] = useState({});
+  // const setStudyTask = useSetRecoilState(studyTaskState);
 
   const getStudyInfo = () => {
     request(`/api/study-progress/${studyId}/member/${memberId}`).then((res) => {
       setStudyInfo(res.data.data);
+      // setStudyTask(res.data.data.taskList);
     });
   };
 
@@ -29,7 +33,7 @@ function StudyBoard() {
       </section>
       <section css={animation}></section>
       <section css={taskSection}>
-        <TaskBox studyInfo={studyInfo} />
+        <TaskBox studyInfo={studyInfo} studyId={studyId} />
       </section>
     </main>
   );

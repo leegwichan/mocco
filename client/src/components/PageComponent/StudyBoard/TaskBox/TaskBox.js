@@ -1,18 +1,47 @@
 import { css } from '@emotion/react';
+import { useState, useEffect } from 'react';
 import SelectUser from './SelectUser';
 import TaskItem from './TaskItem';
+import request from '../../../../api';
+import { userInfoState } from '../../../../atom/atom';
+import { useRecoilValue } from 'recoil';
 
-function TaskBox({ studyInfo }) {
+function TaskBox({ studyInfo, studyId }) {
+  const userInfo = useRecoilValue(userInfoState);
+  const [select, setSelect] = useState({
+    memberId: userInfo.memberId,
+    nickname: userInfo.nickname,
+    profileImage: userInfo.profileImage,
+  });
+  const [taskList, setTaskList] = useState([]);
+
+  const taskHandler = () => {
+    request(
+      `/api/study-progress/sub/${studyId}/member/${select.memberId}`
+    ).then((res) => {
+      setTaskList(res.data.data.taskList);
+      console.log(res.data.data.taskList);
+    });
+  };
+
+  useEffect(() => {
+    taskHandler();
+  }, [select]);
+
   return (
     <div css={taskBox}>
       <div css={taskTop}>
         <div>Task</div>
         <div>ProgressBar</div>
-        <SelectUser memberInfo={studyInfo.memberList} />
+        <SelectUser
+          memberInfo={studyInfo.memberList}
+          select={select}
+          setSelect={setSelect}
+        />
       </div>
-      <div css={taskList}>
-        {studyInfo.taskList &&
-          studyInfo.taskList.map((task) => (
+      <div css={tasks}>
+        {taskList &&
+          taskList.map((task) => (
             <div key={task.taskId}>
               <TaskItem task={task} />
             </div>
@@ -41,7 +70,7 @@ const taskTop = css`
   }
 `;
 
-const taskList = css`
+const tasks = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
