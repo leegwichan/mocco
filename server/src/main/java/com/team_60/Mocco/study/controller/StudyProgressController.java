@@ -1,6 +1,8 @@
 package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.helper.aop.AuthenticationService;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
 import com.team_60.Mocco.study.dto.StudyProgressDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.mapper.StudyProgressMapper;
@@ -17,10 +19,12 @@ public class StudyProgressController {
 
     private final StudyProgressService studyProgressService;
     private final StudyProgressMapper studyProgressMapper;
+    private final AuthenticationService authenticationService;
 
     @GetMapping("/{study-id}/member/{member-id}")
     public ResponseEntity getStudyProgress(@PathVariable("study-id") long studyId,
                                            @PathVariable("member-id") long memberId){
+        authenticationService.AuthenticationCheckStudyMember(studyId);
         Study findStudy = studyProgressService.findStudyWhenMemberMatched(studyId, memberId);
         StudyProgressDto.Response response = studyProgressMapper.studyToStudyProgressResponseDto(findStudy, memberId);
 
@@ -31,6 +35,7 @@ public class StudyProgressController {
     @GetMapping("/sub/{study-id}/member/{member-id}")
     public ResponseEntity getStudyProgressSubResponse(@PathVariable("study-id") long studyId,
                                                       @PathVariable("member-id") long memberId){
+        authenticationService.AuthenticationCheckStudyMember(studyId);
         Study findStudy = studyProgressService.findStudyWhenMemberMatched(studyId, memberId);
         StudyProgressDto.SubResponse response = studyProgressMapper.studyToStudyProgressSubResponseDto(findStudy, memberId);
 
@@ -40,6 +45,7 @@ public class StudyProgressController {
 
     @GetMapping("/rule/{study-id}")
     public ResponseEntity getStudyRule(@PathVariable("study-id") long studyId){
+        authenticationService.AuthenticationCheckStudyMember(studyId);
         Study findStudy = studyProgressService.findStudy(studyId);
         StudyProgressDto.Rule response = studyProgressMapper.studyToStudyProgressResponseRuleDto(findStudy);
 
@@ -50,7 +56,7 @@ public class StudyProgressController {
     @PatchMapping("/rule/{study-id}")
     public ResponseEntity patchStudyRule(@PathVariable("study-id") long studyId,
                                          @RequestBody StudyProgressDto.Rule requestBody){
-
+        authenticationService.AuthenticationCheckStudyMember(studyId);
         Study study = studyProgressMapper.studyProgressResponseRuleDtoToStudy(requestBody);
         study.setStudyId(studyId);
         Study findStudy = studyProgressService.patchStudyRule(study);

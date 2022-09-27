@@ -1,5 +1,6 @@
 package com.team_60.Mocco.task_check.dto;
 
+import com.team_60.Mocco.dto.PostDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +14,10 @@ public class TaskCheckDto {
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class Post{
+    public static class Post extends PostDto {
         private String image;
         private String content;
         private long taskId;
-        private long memberId;
     }
 
     @AllArgsConstructor

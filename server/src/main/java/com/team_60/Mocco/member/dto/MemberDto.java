@@ -1,6 +1,7 @@
 package com.team_60.Mocco.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.team_60.Mocco.dto.PostDto;
 import com.team_60.Mocco.study_member.dto.StudyMemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,8 +51,7 @@ public class MemberDto {
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class PostEvaluation{
-        private long memberId;
+    public static class PostEvaluation extends PostDto {
         private int evaluation;
     }
 

@@ -60,7 +60,7 @@ public class ReplyServiceImpl implements ReplyService{
         return replyRepository.save(findReply);
     }
 
-    private Reply findVerifiedReply(long replyId){
+    public Reply findVerifiedReply(long replyId){
         Optional<Reply> optionalReply = replyRepository.findById(replyId);
         Reply findReply = optionalReply.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.REPLY_NOT_FOUND));

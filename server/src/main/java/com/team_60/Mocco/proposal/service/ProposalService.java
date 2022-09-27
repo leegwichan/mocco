@@ -11,4 +11,5 @@ public interface ProposalService {
     void deleteProposal(long proposalId);
     Proposal approveProposal(long proposalId);
     Proposal refuseProposal(long proposalId);
+    public Proposal findVerifiedProposal(long proposalId);
 }
