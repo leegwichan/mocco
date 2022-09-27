@@ -11,6 +11,7 @@ import ModifyUser from './pages/ModifyUser';
 import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
 import Callback from './pages/Callback';
+import ProgressSection from './components/PageComponent/StudyBoard/Progress/ProgressSection';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/studylist/modify/:d" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard" element={<StudyBoard />} />
+        <Route path="/progress" element={<ProgressSection />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />
       </Routes>
     </div>
