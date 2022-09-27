@@ -1,5 +1,6 @@
 package com.team_60.Mocco.helper.scheduler;
 
+import com.team_60.Mocco.alarm.service.AlarmService;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.repository.StudyRepository;
 import com.team_60.Mocco.study_member.entity.StudyMember;
@@ -21,24 +22,28 @@ import static com.team_60.Mocco.study_member.entity.StudyMember.StudyMemberEvalu
 public class Scheduler {
     private final StudyRepository studyRepository;
     private final StudyMemberRepository studyMemberRepository;
+    private final AlarmService alarmService;
 
     @Scheduled(cron = "0 0 1 * * *")
     public void changeStudyStatusStart(){
         List<Study> studyList = studyRepository.findByStudyStatusAndStartDateBefore(RECRUIT_PROGRESS,LocalDate.now());
-        studyList.addAll(studyRepository.findByStudyStatusAndStartDateBefore(RECRUIT_PROGRESS,LocalDate.now()));
-        if(studyList.size() > 0) {
-            for (Study study : studyList) {
-                List<StudyMember> studyMemberList = studyMemberRepository.findByStudy(study);
-                if (studyMemberList.size() > 1) {
-                    study.setStudyStatus(STUDY_PROGRESS);
-                    studyRepository.save(study);
-                    log.info(study.getStudyId() + "모집중인 스터디 진행중으로 상태 변경");
-                } else {
-                    studyRepository.delete(study);
-                    log.info(study.getStudyId() + "모집 인원이 모이지 않아서 스터디 삭제");
-                }
+        studyList.addAll(studyRepository.findByStudyStatusAndStartDateBefore(RECRUIT_COMPLETE,LocalDate.now()));
+        for (Study study : studyList) {
+            List<StudyMember> studyMemberList = studyMemberRepository.findByStudy(study);
+            if (studyMemberList.size() > 1) {
+                study.setStudyStatus(STUDY_PROGRESS);
+                Study saveStudy = studyRepository.save(study);
+                alarmService.createAlarmWhenStudyOpen(saveStudy);
+
+                log.info(study.getStudyId() + "모집중인 스터디 진행중으로 상태 변경");
+            } else {
+                alarmService.createAlarmWhenStudyNotOpen(study);
+                studyRepository.delete(study);
+
+                log.info(study.getStudyId() + "모집 인원이 모이지 않아서 스터디 삭제");
             }
         }
+
     }
     @Scheduled(cron = "0 0 1 * * *")
     public void changeStudyStatusEnd() throws InterruptedException {

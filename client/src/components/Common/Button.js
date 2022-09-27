@@ -13,6 +13,10 @@ const Button = ({ text, onClick, type }) => {
     'small_lightblue',
     'small_white',
     'small_grey',
+    'header_skyblue',
+    'header_log',
+    'profile_modal_blue',
+    'profile_modal_grey',
   ].includes(type)
     ? type
     : 'default';
@@ -37,6 +41,11 @@ const btn = css`
   border: none;
   border-radius: 8px;
   transition: all 0.1s linear;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.95);
+  }
 
   &.big_blue {
     padding: 0px 28px;
@@ -177,6 +186,64 @@ const btn = css`
     background-color: #999999;
     color: #ffffff;
     border: 1px solid #999999;
+
+    &:hover {
+      color: #a4a4a4;
+      background-color: #ffffff;
+    }
+  }
+
+  &.header_skyblue {
+    font-size: 15px;
+    height: 32px;
+    color: black;
+    background-color: #ffffff;
+
+    &:hover {
+      color: #0b6ff2;
+      background-color: #f0f8ff;
+      box-shadow: 0px 5px 2px -2px rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  &.header_log {
+    font-size: 15px;
+    height: 32px;
+    background-color: #0b6ff2;
+    color: #ffffff;
+    border: 1px solid #0b6ff2;
+
+    &:hover {
+      color: #0b6ff2;
+      background-color: #ffffff;
+    }
+  }
+
+  &.profile_modal_blue {
+    margin: 0;
+    font-size: 18px;
+    width: 100%;
+    height: 40px;
+    background-color: #0b6ff2;
+    color: #ffffff;
+    border: 1px solid #0b6ff2;
+    border-radius: 5px;
+
+    &:hover {
+      color: #0b6ff2;
+      background-color: #ffffff;
+    }
+  }
+
+  &.profile_modal_grey {
+    margin: 0;
+    font-size: 18px;
+    width: 100%;
+    height: 40px;
+    background-color: #999999;
+    color: #ffffff;
+    border: 1px solid #999999;
+    border-radius: 5px;
 
     &:hover {
       color: #a4a4a4;

@@ -28,12 +28,12 @@ public class TaskCheckServiceImpl implements TaskCheckService{
     private final TaskCheckRepository taskCheckRepository;
 
     @Override
-    public TaskCheck getTaskCheck(long taskCheckId) {
+    public TaskCheck findTaskCheck(long taskCheckId) {
         return findVerifiedTaskCheck(taskCheckId);
     }
 
     @Override
-    public TaskCheck postTaskCheck(TaskCheck taskCheck) {
+    public TaskCheck createTaskCheck(TaskCheck taskCheck) {
         Member findMember = memberService.findVerifiedMember(taskCheck.getMember().getMemberId());
         Task findTask = taskService.findVerifiedTask(taskCheck.getTask().getTaskId());
         findTaskCheckExpectNull(findMember, findTask);
@@ -45,7 +45,7 @@ public class TaskCheckServiceImpl implements TaskCheckService{
         return taskCheckRepository.save(taskCheck);
     }
 
-    private TaskCheck findVerifiedTaskCheck(long taskCheckId){
+    public TaskCheck findVerifiedTaskCheck(long taskCheckId){
         Optional<TaskCheck> optionalTaskCheck = taskCheckRepository.findById(taskCheckId);
         TaskCheck findTaskCheck = optionalTaskCheck.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.TASK_CHECK_NOT_FOUND));

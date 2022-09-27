@@ -1,6 +1,8 @@
 package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.helper.aop.AuthenticationService;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import com.team_60.Mocco.study.dto.StudyDto;
@@ -30,22 +32,16 @@ public class StudyBoardController {
     private final StudyMapper studyMapper;
     private final TaskMapper taskMapper;
     private final S3ImageUpload imageUpload;
-
-    @GetMapping
-    public ResponseEntity getStudyBoard(){
-        //스터디 모집 글 작성 페이지
-        log.info("모집글 작성 페이지");
-        return new ResponseEntity<>(HttpStatus.OK);
-
-    }
+    private final AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity postStudy(@RequestBody StudyDto.Request requestDto){
+    public ResponseEntity postStudy(@RequestBody StudyDto.Request requestBody, HttpServletRequest request){
         //스터디 모집 글 작성, 등록
+        authenticationService.AuthenticationCheckWithDto(requestBody, request);
         //taskDto -> task
-        List<Task> taskList = taskMapper.taskRequestDtoListToTaskList(requestDto.getTaskList());
+        List<Task> taskList = taskMapper.taskRequestDtoListToTaskList(requestBody.getTaskList());
         //studyRequestDto -> study
-        Study study = studyMapper.studyRequestDtoToStudy(requestDto, taskList);
+        Study study = studyMapper.studyRequestDtoToStudy(requestBody, taskList);
         //study 생성
         Study createdStudy = studyService.createStudy(study);
 
@@ -67,11 +63,12 @@ public class StudyBoardController {
 
     @PatchMapping("/{study-id}")
     public ResponseEntity patchStudy(@PathVariable("study-id") long studyId,
-                                     @RequestBody StudyDto.Request requestDto){
+                                     @RequestBody StudyDto.Request requestBody){
         //스터디 모집 글 수정
-        requestDto.setStudyId(studyId);
-        List<Task> taskList = taskMapper.taskRequestDtoListToTaskList(requestDto.getTaskList());
-        Study updatedStudy = studyService.updateStudy(studyMapper.studyRequestDtoToStudy(requestDto,taskList));
+        authenticationService.AuthenticationCheckWithId("studyId",studyId);
+        requestBody.setStudyId(studyId);
+        List<Task> taskList = taskMapper.taskRequestDtoListToTaskList(requestBody.getTaskList());
+        Study updatedStudy = studyService.updateStudy(studyMapper.studyRequestDtoToStudy(requestBody,taskList));
         return new ResponseEntity<>(
                 new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(updatedStudy)),
                 HttpStatus.OK);
@@ -79,14 +76,15 @@ public class StudyBoardController {
 
     @PatchMapping("/finish-recruit/{study-id}")
     public ResponseEntity closeStudyRecruit(@PathVariable("study-id") long studyId){
+        authenticationService.AuthenticationCheckWithId("studyId",studyId);
         Study study = studyService.finishRecruitStudy(studyId);
         return new ResponseEntity(
                 new SingleResponseDto<>(studyMapper.studyToStudyResponseDto(study)), HttpStatus.OK);
     }
     
     @DeleteMapping("/{study-id}")
-    public ResponseEntity deleteStudy(@PathVariable("study-id") long studyId,
-                                      HttpServletRequest request){
+    public ResponseEntity deleteStudy(@PathVariable("study-id") long studyId){
+        authenticationService.AuthenticationCheckWithId("studyId",studyId);
         //스터디 모집 글 삭제 (가능 : recruit_prograss, recruit_complete 인 경우)
         Study study = studyService.findVerifiedStudy(studyId);
         if(study.getStudyStatus()== Study.StudyStatus.STUDY_PROGRESS ||study.getStudyStatus()== Study.StudyStatus.STUDY_COMPLETE){
