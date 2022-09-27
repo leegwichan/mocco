@@ -10,11 +10,14 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
+import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
+
 
 function App() {
   return (
     <div>
+      <Header />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<SignUp />} />
