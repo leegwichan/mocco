@@ -33,7 +33,7 @@ const ModifyUserInput = forwardRef((props, ref) => {
   );
 });
 
-ModifyUserInput.displayName = 'ModifyUser';
+ModifyUserInput.displayName = 'ModifyUserInput';
 
 const inputStyle = css`
   width: 100%;

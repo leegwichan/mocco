@@ -50,7 +50,6 @@ function ModifyUser() {
     console.log('a');
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
-    // console.log('e :', e.target.files[0].size);
 
     request({
       method: 'post',
