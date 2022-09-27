@@ -11,10 +11,22 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { userInfoState, mypageOwnerAtom } from '../atom/atom';
 import { useParams } from 'react-router-dom';
 
+const Header = css`
+  width: 100vw;
+  height: 64px;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
 const totalContainer = css`
   max-width: 1200px;
+  height: 2000px;
   margin: auto;
   margin-top: 50px;
+  margin-bottom: 100px;
+  .githubmargin {
+    height: 300px;
+    margin-bottom: 10%;
+  }
 `;
 
 const title = css`
@@ -32,7 +44,7 @@ const infoSection = css`
 
 const sectionItem = css`
   height: 300px;
-  margin-bottom: 10%; // 원래 3%. 캐러셀 구현하려고 늘려놓음. 버튼 양옆으로 배치한 후 다시 돌려놓기
+  margin-bottom: 15%; // 원래 3%. 캐러셀 구현하려고 늘려놓음. 버튼 양옆으로 배치한 후 다시 돌려놓기
 `;
 
 const sectionTitle = css`
@@ -43,62 +55,66 @@ const sectionTitle = css`
 function Main() {
   const [isConnectedGit, setIsConnectedGit] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
-  const [ownerI, setOwnerI] = useRecoilState(mypageOwnerAtom);
+  const [owner, setOwner] = useRecoilState(mypageOwnerAtom);
   const loginUser = useRecoilValue(userInfoState);
   const { id } = useParams();
 
-  async function getUserInfo(id) {
-    try {
-      const response = await request.get(`/api/members/${id}`);
-      setOwnerI(response.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  const set = () => {
-    if (ownerI.githubNickname !== null) {
-      setIsConnectedGit(true);
-    }
-    if (ownerI.memberId === loginUser.memberId) {
-      setIsOwner(true);
-    }
-  };
-
   useEffect(() => {
     getUserInfo(id);
-    set();
-  }, []);
+  }, [id]);
+
+  const getUserInfo = (id) => {
+    return request
+      .get(`/api/members/${id}`)
+      .then((res) => {
+        console.log(res.data.data);
+        setOwner(res.data.data);
+        return res;
+      })
+      .then((res) => {
+        if (res.data.data.githubNickname !== null) {
+          setIsConnectedGit(true);
+        }
+        return res;
+      })
+      .then((res) => {
+        if (res.data.data.memberId === loginUser.memberId) {
+          setIsOwner(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <section css={totalContainer}>
-      <h1 css={title}>{ownerI.nickname}의 페이지</h1>
-      <section css={infoSection}>
-        <MyProfile
-          isConnectedGit={isConnectedGit}
-          isOwner={isOwner}
-          githubId={ownerI.githubNickname}
-        />
-        <MyIntro
-          introduction={ownerI.introduction}
-          isOwner={isOwner}
-          memberId={ownerI.memberId}
-        />
-        <GitHubRepo githubRepositoryList={ownerI.githubRepositoryList} />
+    <>
+      <header css={Header}></header>
+      <section css={totalContainer}>
+        <h1 css={title}>{owner.nickname}의 페이지</h1>
+        <section css={infoSection}>
+          <MyProfile
+            isConnectedGit={isConnectedGit}
+            isOwner={isOwner}
+            githubId={owner.githubNickname}
+          />
+          <MyIntro introduction={owner.introduction} />
+          <GitHubRepo githubRepositoryList={owner.githubRepositoryList} />
+        </section>
+        <section className="githubmargin">
+          <div css={sectionTitle}>GitHub 활동</div>
+          <GitHubGrass githubId={owner.githubNickname} />
+        </section>
+        <section css={sectionItem}>
+          <div css={sectionTitle}>진행중인 스터디</div>
+          <ProgressList />
+        </section>
+        <section css={sectionItem}>
+          <div css={sectionTitle}>완료된 스터디</div>
+          <DoneList />
+        </section>
       </section>
-      <section css={sectionItem}>
-        <div css={sectionTitle}>GitHub 활동</div>
-        <GitHubGrass githubId={ownerI.githubNickname} />
-      </section>
-      <section css={sectionItem}>
-        <div css={sectionTitle}>진행중인 스터디</div>
-        <ProgressList />
-      </section>
-      <section css={sectionItem}>
-        <div css={sectionTitle}>완료된 스터디</div>
-        <DoneList />
-      </section>
-    </section>
+    </>
   );
 }
 

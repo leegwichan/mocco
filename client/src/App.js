@@ -13,7 +13,6 @@ import StudyBoard from './pages/StudyBoard';
 import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
 
-
 function App() {
   return (
     <div>
@@ -29,7 +28,8 @@ function App() {
         <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
         <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
-        <Route path="/studyboard" element={<StudyBoard />} />
+        {/* <Route path="/studyboard" element={<StudyBoard />} /> */}
+        <Route path="/studyboard/:studyid/:memberid" element={<StudyBoard />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />
       </Routes>
     </div>
