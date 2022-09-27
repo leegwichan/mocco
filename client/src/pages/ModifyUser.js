@@ -122,7 +122,19 @@ function ModifyUser() {
         style={{ display: 'none' }}
         ref={inputRef}
       />
-      <div>{previewUrl && <img src={previewUrl} alt="previewImage" />}</div>
+      <div>
+        {previewUrl && (
+          <img
+            css={css`
+              border-radius: 50%;
+              height: 350px;
+              filter: drop-shadow(8px 10px 5px #999999);
+            `}
+            src={previewUrl}
+            alt="previewImage"
+          />
+        )}
+      </div>
       <ModifyUserButton
         buttonText="이미지 업로드 하기"
         type="button"
