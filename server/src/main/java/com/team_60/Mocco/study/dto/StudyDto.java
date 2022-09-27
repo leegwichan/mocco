@@ -48,7 +48,8 @@ public class StudyDto {
 
     @Getter
     @Setter
-    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class Response{
         private long studyId;
         private String teamName;
@@ -59,6 +60,7 @@ public class StudyDto {
         private LocalDate startDate;
         private LocalDate endDate;
         private MemberDto.SubResponse member;
+        private List<MemberDto.SubResponse> studyMemberList;
         private List<TaskDto> taskList;
         private List<CommentDto.Response> commentList;
     }

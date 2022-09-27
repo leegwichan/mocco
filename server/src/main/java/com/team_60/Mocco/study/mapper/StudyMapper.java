@@ -1,12 +1,19 @@
 package com.team_60.Mocco.study.mapper;
 
+import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
+import com.team_60.Mocco.member.mapper.MemberMapper;
 import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
+import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.task.entity.Task;
+import com.team_60.Mocco.task.mapper.TaskMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface StudyMapper {
@@ -37,6 +44,7 @@ public interface StudyMapper {
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .taskList(taskList)
+                .studyMemberList(new ArrayList<>())
                 .build();
         if(taskList != null){
         taskList.stream().forEach(task -> task.setStudy(study));}
@@ -44,7 +52,15 @@ public interface StudyMapper {
 
     }
     @Mapping(source = "teamLeader", target = "member")
+    @Mapping(target = "studyMemberList", expression = "java(studyMembersToMemberSubResponseDtos(study.getStudyMemberList()))")
     StudyDto.Response studyToStudyResponseDto (Study study);
 
+
+
     List<StudyDto.SubResponse> studiesToStudySubResponseDtos (List<Study> studyList);
+
+    default List<MemberDto.SubResponse> studyMembersToMemberSubResponseDtos(List<StudyMember> studyMembers){
+        return studyMembers.stream().map(m -> MemberMapper.memberToMemberSubResponseDto(m.getMember()))
+                .collect(Collectors.toList());
+    }
 }

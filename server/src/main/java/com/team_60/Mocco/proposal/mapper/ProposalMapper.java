@@ -1,5 +1,6 @@
 package com.team_60.Mocco.proposal.mapper;
 
+import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.mapper.MemberMapper;
 import com.team_60.Mocco.proposal.dto.ProposalDto;
@@ -14,9 +15,10 @@ import java.util.stream.Collectors;
 public interface ProposalMapper {
 
     ProposalDto.Response proposalToProposalResponseDto(Proposal proposal);
+
     List<ProposalDto.Response> proposalsToProposalResponseDtos(List<Proposal> proposals);
 
-    default Proposal proposalPostDtoToProposal(ProposalDto.Post dto){
+    default Proposal proposalPostDtoToProposal(ProposalDto.Post dto) {
         Member member = new Member();
         member.setMemberId(dto.getMemberId());
         Study study = new Study();
@@ -29,5 +31,5 @@ public interface ProposalMapper {
         return proposal;
     }
 
-
 }
+
