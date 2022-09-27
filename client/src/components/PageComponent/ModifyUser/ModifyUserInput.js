@@ -12,9 +12,9 @@ const ModifyUserInput = forwardRef((props, ref) => {
           css={textareaStyle}
           type={props.type}
           name={props.name}
-          {...props.rest}
           ref={ref}
           onSubmit={props.onSubmit}
+          defaultValue={props.defaultValue}
         />
       )}
       {props.type !== 'textarea' && (
@@ -22,11 +22,11 @@ const ModifyUserInput = forwardRef((props, ref) => {
           css={inputStyle}
           type={props.type}
           name={props.name}
-          {...props.rest}
           ref={ref}
           onChange={props.onChange}
           onSubmit={props.onSubmit}
           style={props.style}
+          defaultValue={props.defaultValue}
         />
       )}
     </div>

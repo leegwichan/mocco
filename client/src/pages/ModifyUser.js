@@ -10,23 +10,21 @@ import WithdrawalModal from '../components/PageComponent/ModifyUser/WithdrawalMo
 
 function ModifyUser() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  console.log('u :', userInfo);
   const [changPasswordmodalOn, setChangePasswordModalOn] = useState(false);
   const [withdrawalModalOn, setWithdrawalModalOn] = useState(false);
-
+  console.log('u :', userInfo);
   const openChangePasswordModal = () => setChangePasswordModalOn(true);
   const closeChangePasswordModal = () => setChangePasswordModalOn(false);
 
   const openWithdrawalModal = () => setWithdrawalModalOn(true);
   const closeWithdrawalModal = () => setWithdrawalModalOn(false);
 
-  const [image, setImage] = useState('');
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [previewUrl, setPreviewUrl] = useState(userInfo.profileImage);
   const inputRef = useRef(null);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log('e :', console.log(event.target));
+    console.log('e :', event.target);
     request({
       method: 'patch',
       url: `/api/members/${userInfo.memberId}`,
@@ -37,12 +35,13 @@ function ModifyUser() {
         githubRepository1: event.target.githubRepository1.value || null,
         githubRepository2: event.target.githubRepository2.value || null,
         githubRepository3: event.target.githubRepository3.value || null,
-        profileImage: event.target.imageUpload,
+        profileImage: previewUrl,
       },
     }).then((res) => setUserInfo(res.data.data));
-    console.log('img :', event.target.imageUpload);
   };
 
+  console.log('prev :', previewUrl);
+  console.log('userProfile :', userInfo.profileImage);
   // 이미지 업로드 기능
   const onUploadImage = useCallback((e) => {
     if (!e.target.files) {
@@ -51,7 +50,7 @@ function ModifyUser() {
     console.log('a');
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
-    console.log('e :', e.target.files[0].size);
+    // console.log('e :', e.target.files[0].size);
 
     request({
       method: 'post',
@@ -62,9 +61,7 @@ function ModifyUser() {
       },
       data: formData,
     }).then((res) => {
-      setImage(image);
       setPreviewUrl(res.data.data);
-      console.log('imaPreview :', res.data.data);
     });
   });
 
