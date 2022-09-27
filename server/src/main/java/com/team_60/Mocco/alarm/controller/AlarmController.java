@@ -20,12 +20,11 @@ import java.util.List;
 public class AlarmController {
 
     private final AlarmService alarmService;
-    private final SseService sseService;
     private final AlarmMapper alarmMapper;
 
     @GetMapping("/subscribe")
     public SseEmitter alarmSubscribe(@RequestParam("member-id") long memberId){
-        return sseService.subscribe(memberId);
+        return alarmService.publishAlarm(memberId);
     }
 
     @GetMapping

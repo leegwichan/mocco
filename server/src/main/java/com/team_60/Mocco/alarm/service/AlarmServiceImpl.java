@@ -4,10 +4,13 @@ import com.team_60.Mocco.alarm.entity.Alarm;
 import com.team_60.Mocco.alarm.repository.AlarmRepository;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.helper.sse.SseService;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.service.MemberService;
+import com.team_60.Mocco.study.entity.Study;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +21,19 @@ public class AlarmServiceImpl implements AlarmService{
 
     private final AlarmRepository alarmRepository;
     private final MemberService memberService;
+    private final SseService sseService;
+
+    @Override
+    public SseEmitter publishAlarm(long memberId) {
+        Member findMember = memberService.findVerifiedMember(memberId);
+        SseEmitter sseEmitter = sseService.subscribeAlarm(findMember);
+
+        List<Alarm> findAlarms = alarmRepository.findByMember(findMember);
+        if (findAlarms.size() != 0){
+            sseService.publishAlarm(sseEmitter, findMember);
+        }
+        return sseEmitter;
+    }
 
     @Override
     public List<Alarm> findAlarmsByMemberId(long memberId) {
@@ -38,10 +54,46 @@ public class AlarmServiceImpl implements AlarmService{
         alarmRepository.deleteAlarmByMemberId(memberId);
     }
 
+    @Override
+    public Alarm createAlarmWhenStudyOpen(Study study, Member member) {
+        Alarm alarm = createNewAlarm(study, member, Alarm.AlarmType.STUDY_OPEN);
+        alarm.setContent(study.getTeamName() + "가 오늘부터 시작되었습니다.");
+        Alarm createAlarm = alarmRepository.save(alarm);
+        sseService.publishAlarm(member);
+        return createAlarm;
+    }
+
+    @Override
+    public Alarm createAlarmWhenStudyNotOpen(Study study, Member member) {
+        Alarm alarm = createNewAlarm(null, member, Alarm.AlarmType.STUDY_NOT_OPEN);
+        alarm.setContent(study.getTeamName() + "가 최소 인원이 충족되지 않아 개설되지 않았습니다.");
+        Alarm createAlarm = alarmRepository.save(alarm);
+        sseService.publishAlarm(member);
+        return createAlarm;
+    }
+
+    @Override
+    public Alarm createAlarmWhenProposalApprove(Study study, Member member) {
+        Alarm alarm = createNewAlarm(study, member, Alarm.AlarmType.STUDY_ENTER);
+        alarm.setContent(study.getTeamName() + "에 초대되셨습니다.");
+        Alarm createAlarm = alarmRepository.save(alarm);
+        sseService.publishAlarm(member);
+        return createAlarm;
+    }
+
     private Alarm findVerifiedAlarm(long alarmId){
         Optional<Alarm> optionalAlarm = alarmRepository.findById(alarmId);
         Alarm findAlarm = optionalAlarm.orElseThrow( () ->
                 new BusinessLogicException(ExceptionCode.ALARM_NOT_FOUND));
         return findAlarm;
+    }
+
+    private Alarm createNewAlarm(Study study, Member member, Alarm.AlarmType alarmType) {
+        Alarm alarm = new Alarm();
+        alarm.setAlarmType(alarmType);
+        alarm.setStudy(study);
+        alarm.setMember(member);
+
+        return alarm;
     }
 }

@@ -1,6 +1,8 @@
 package com.team_60.Mocco.helper.sse;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -16,10 +18,16 @@ public class SseService {
 
     private static final Map<String, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
 
-    public SseEmitter subscribe(long memberId){
+    public SseEmitter subscribeAlarm(Member member){
         SseEmitter emitter = new SseEmitter(15 * 60 * 1000L);
-        String emitterId = memberId + "_" + System.currentTimeMillis();
+        String emitterId = member.getMemberId() + "_" + System.currentTimeMillis();
         sseEmitters.put(emitterId, emitter);
+
+        try{
+            emitter.send("CONNECT", MediaType.APPLICATION_JSON);
+        } catch (Exception e){
+            throw new BusinessLogicException(ExceptionCode.FAIL_SSE_CONNECT);
+        }
 
         emitter.onTimeout(() -> sseEmitters.remove(emitterId));
         emitter.onCompletion(() -> sseEmitters.remove(emitterId));
@@ -28,14 +36,19 @@ public class SseService {
 
     public void publishAlarm(Member member){
         sseEmitters.forEach((id, emitter) -> {
-            try {
-                if (id.startsWith(member.getMemberId() + "_")){
-                    emitter.send(new SingleResponseDto("알람이 도착했습니다."), MediaType.APPLICATION_JSON);
-                    log.info("send SSE id : {}", member.getMemberId());
-                }
-            } catch (Exception e){
-                log.info("Fail Send SSE id : {}", member.getMemberId());
+            if (id.startsWith(member.getMemberId() + "_")){
+                publishAlarm(emitter, member);
             }
         });
+    }
+
+    public void publishAlarm(SseEmitter emitter, Member member){
+        try {
+            emitter.send(new SingleResponseDto("ARRIVE_ALARM"), MediaType.APPLICATION_JSON);
+            log.info("Success Send SSE id : {}", member.getMemberId());
+        } catch (Exception e){
+            log.info("Fail Send SSE id : {}", member.getMemberId());
+        }
+
     }
 }
