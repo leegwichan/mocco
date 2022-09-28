@@ -7,7 +7,6 @@ import com.team_60.Mocco.study.dto.StudyProgressDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.task.dto.TaskDto;
-import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task_check.dto.TaskCheckDto;
 import com.team_60.Mocco.task_check.entity.TaskCheck;
 import org.mapstruct.Mapper;
