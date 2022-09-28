@@ -23,7 +23,7 @@ function GitHubGrass({ githubId }) {
     <div css={Grass}>
       {githubId ? (
         <img
-          src={'https://ghchart.rshah.org/' + githubId}
+          src={'https://ghchart.rshah.org/0B6FF2/' + githubId}
           alt="깃허브 활동 기록"
         />
       ) : (

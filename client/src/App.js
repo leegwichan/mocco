@@ -12,7 +12,6 @@ import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
 import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
-import ProgressSection from './components/PageComponent/StudyBoard/Progress/ProgressSection';
 
 function App() {
   return (
@@ -29,7 +28,6 @@ function App() {
         <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
         <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
-        <Route path="/progress" element={<ProgressSection />} />
         <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />
       </Routes>
