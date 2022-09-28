@@ -5,6 +5,7 @@ import TaskItem from './TaskItem';
 import request from '../../../../api';
 import { userInfoState } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
+import UserProgressBar from './UserProgressBar';
 
 function TaskBox({ studyInfo, studyId }) {
   const userInfo = useRecoilValue(userInfoState);
@@ -21,9 +22,9 @@ function TaskBox({ studyInfo, studyId }) {
     ).then((res) => {
       setTaskList(res.data.data.taskList);
       // console.log(res.data.data.taskList);
+      console.log(res);
     });
   };
-
   useEffect(() => {
     taskHandler();
   }, [select]);
@@ -32,7 +33,9 @@ function TaskBox({ studyInfo, studyId }) {
     <div css={taskBox}>
       <div css={taskTop}>
         <div>Task</div>
-        <div>ProgressBar</div>
+        <div>
+          <UserProgressBar taskList={taskList} total={taskList.length} />
+        </div>
         <SelectUser
           memberInfo={studyInfo.memberList}
           select={select}
