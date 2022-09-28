@@ -82,6 +82,16 @@ const reset = css`
   th {
     padding: 0;
   }
+
+  &.site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  &.site-content {
+    flex: 1;
+  }
 `;
 
 export default reset;
