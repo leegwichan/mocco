@@ -8,7 +8,6 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface TaskCheckMapper {
-
     default TaskCheck taskCheckPostDtoToTaskCheck(TaskCheckDto.Post dto){
         Member member = new Member();
         member.setMemberId(dto.getMemberId());
@@ -22,7 +21,5 @@ public interface TaskCheckMapper {
         taskCheck.setImage(dto.getImage());
         return taskCheck;
     }
-
     TaskCheckDto.Response taskCheckToTaskCheckResponseDto(TaskCheck taskCheck);
-
 }
