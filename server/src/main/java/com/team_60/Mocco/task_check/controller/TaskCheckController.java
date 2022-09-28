@@ -3,7 +3,7 @@ package com.team_60.Mocco.task_check.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import com.team_60.Mocco.task_check.dto.TaskCheckDto;
@@ -26,7 +26,7 @@ public class TaskCheckController {
     private final TaskCheckService taskCheckService;
     private final TaskCheckMapper mapper;
     private final S3ImageUpload imageUpload;
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceLocal authenticationService;
 
     @GetMapping("/{task-check-id}")
     public ResponseEntity getTaskCheck(@PathVariable("task-check-id") long taskCheckId){
@@ -38,8 +38,8 @@ public class TaskCheckController {
     }
 
     @PostMapping
-    public ResponseEntity postTaskCheck(@RequestBody TaskCheckDto.Post requestBody, HttpServletRequest request){
-        authenticationService.AuthenticationCheckWithDto(requestBody,request);
+    public ResponseEntity postTaskCheck(@RequestBody TaskCheckDto.Post requestBody){
+        authenticationService.AuthenticationCheckWithDto(requestBody);
         TaskCheck taskCheck = mapper.taskCheckPostDtoToTaskCheck(requestBody);
         TaskCheck postTaskCheck = taskCheckService.createTaskCheck(taskCheck);
         TaskCheckDto.Response response = mapper.taskCheckToTaskCheckResponseDto(postTaskCheck);

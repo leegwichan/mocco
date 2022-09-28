@@ -1,6 +1,6 @@
 package com.team_60.Mocco.task.entity;
 
-import com.team_60.Mocco.audit.Auditable;
+import com.team_60.Mocco.base_entity.BaseEntity;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task_check.entity.TaskCheck;
 import lombok.*;
@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @Builder
-public class Task extends Auditable {
+public class Task extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long taskId;

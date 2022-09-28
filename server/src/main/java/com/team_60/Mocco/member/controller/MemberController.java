@@ -2,7 +2,7 @@ package com.team_60.Mocco.member.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.mapper.MemberMapper;
@@ -21,7 +21,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberMapper mapper;
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceLocal authenticationService;
 
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") long memberId){

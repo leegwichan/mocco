@@ -107,7 +107,7 @@ public class JwtTokenProvider {
 
     public String getEmail(String accessToken){
         try{
-            return JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("email").toString();
+            return JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("email").toString().replace("\"","");
         } catch (TokenExpiredException e){
             throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
         }

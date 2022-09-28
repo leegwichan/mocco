@@ -5,6 +5,7 @@ import com.team_60.Mocco.alarm.entity.Alarm;
 import com.team_60.Mocco.alarm.mapper.AlarmMapper;
 import com.team_60.Mocco.alarm.service.AlarmService;
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.helper.sse.SseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,17 @@ public class AlarmController {
 
     private final AlarmService alarmService;
     private final AlarmMapper alarmMapper;
+    private final AuthenticationServiceLocal authenticationService;
 
     @GetMapping("/subscribe")
     public SseEmitter alarmSubscribe(@RequestParam("member-id") long memberId){
+        authenticationService.AuthenticationCheckWithId("memberId",memberId);
         return alarmService.publishAlarm(memberId);
     }
 
     @GetMapping
     public ResponseEntity getAlarmsByMemberId(@RequestParam("member-id") long memberId){
+        authenticationService.AuthenticationCheckWithId("memberId",memberId);
         List<Alarm> findAlarms = alarmService.findAlarmsByMemberId(memberId);
         List<AlarmDto.Response> response = alarmMapper.alarmsToAlarmResponseDtos(findAlarms);
         return new ResponseEntity(
@@ -37,14 +41,14 @@ public class AlarmController {
 
     @DeleteMapping("/{alarm-id}")
     public ResponseEntity deleteAlarm(@PathVariable("alarm-id") long alarmId){
-
+        authenticationService.AuthenticationCheckWithId("alarmId",alarmId);
         alarmService.deleteAlarm(alarmId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping
     private ResponseEntity deleteAlarmsByMemberId(@RequestParam("member-id") long memberId){
-
+        authenticationService.AuthenticationCheckWithId("memberId",memberId);
         alarmService.deleteAlarmsByMemberId(memberId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
