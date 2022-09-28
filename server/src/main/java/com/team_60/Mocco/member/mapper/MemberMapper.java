@@ -4,13 +4,12 @@ import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.entity.MyInfo;
-import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
-import com.team_60.Mocco.study.mapper.StudyMapper;
 import com.team_60.Mocco.study_member.dto.StudyMemberDto;
 import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.study_member.mapper.StudyMemberMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,5 +82,4 @@ public interface MemberMapper {
                 member.getMyInfo().getProfileImage()
         );
     }
-
 }

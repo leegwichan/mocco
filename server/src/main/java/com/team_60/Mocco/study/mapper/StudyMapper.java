@@ -7,7 +7,6 @@ import com.team_60.Mocco.study.dto.StudyDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.task.entity.Task;
-import com.team_60.Mocco.task.mapper.TaskMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = MemberMapper.class)
 public interface StudyMapper {
 
     static StudyDto.SubResponse studyToStudySubResponseDto(Study study){
@@ -54,8 +53,6 @@ public interface StudyMapper {
     @Mapping(source = "teamLeader", target = "member")
     @Mapping(target = "studyMemberList", expression = "java(studyMembersToMemberSubResponseDtos(study.getStudyMemberList()))")
     StudyDto.Response studyToStudyResponseDto (Study study);
-
-
 
     List<StudyDto.SubResponse> studiesToStudySubResponseDtos (List<Study> studyList);
 

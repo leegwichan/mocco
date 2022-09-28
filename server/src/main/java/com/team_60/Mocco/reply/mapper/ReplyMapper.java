@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = MemberMapper.class)
 public interface ReplyMapper {
     default Reply replyPostDtoToReply(ReplyDto.Post dto){
         Member member = new Member();
