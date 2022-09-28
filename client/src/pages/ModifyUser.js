@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import ModifyUserInput from '../components/PageComponent/ModifyUser/ModifyUserInput';
 import ModifyUserButton from '../components/PageComponent/ModifyUser/ModifyUserButton';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import ChangePasswordModal from '../components/PageComponent/ModifyUser/ChangePasswordModal';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
@@ -10,19 +10,21 @@ import WithdrawalModal from '../components/PageComponent/ModifyUser/WithdrawalMo
 
 function ModifyUser() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-  console.log('u :', userInfo);
   const [changPasswordmodalOn, setChangePasswordModalOn] = useState(false);
   const [withdrawalModalOn, setWithdrawalModalOn] = useState(false);
-
+  console.log('u :', userInfo);
   const openChangePasswordModal = () => setChangePasswordModalOn(true);
   const closeChangePasswordModal = () => setChangePasswordModalOn(false);
 
   const openWithdrawalModal = () => setWithdrawalModalOn(true);
   const closeWithdrawalModal = () => setWithdrawalModalOn(false);
 
+  const [previewUrl, setPreviewUrl] = useState(userInfo.profileImage);
+  const inputRef = useRef(null);
+
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log('e');
+    console.log('e :', event.target);
     request({
       method: 'patch',
       url: `/api/members/${userInfo.memberId}`,
@@ -33,10 +35,41 @@ function ModifyUser() {
         githubRepository1: event.target.githubRepository1.value || null,
         githubRepository2: event.target.githubRepository2.value || null,
         githubRepository3: event.target.githubRepository3.value || null,
-        profileImage: null,
+        profileImage: previewUrl,
       },
     }).then((res) => setUserInfo(res.data.data));
   };
+
+  console.log('prev :', previewUrl);
+  console.log('userProfile :', userInfo.profileImage);
+  // 이미지 업로드 기능
+  const onUploadImage = useCallback((e) => {
+    if (!e.target.files) {
+      return;
+    }
+    console.log('a');
+    const formData = new FormData();
+    formData.append('image', e.target.files[0]);
+
+    request({
+      method: 'post',
+      url: '/api/members/image',
+      params: { 'file-size': e.target.files[0].size },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      data: formData,
+    }).then((res) => {
+      setPreviewUrl(res.data.data);
+    });
+  });
+
+  const onUploadImageButtonClick = useCallback(() => {
+    if (!inputRef.current) {
+      return;
+    }
+    inputRef.current.click();
+  }, []);
 
   return (
     <form
@@ -74,8 +107,36 @@ function ModifyUser() {
         type="button"
         onClick={openChangePasswordModal}
       />
-      {/* TODO: 변경 필요 */}
-      <ModifyUserInput labelText="이미지 추가 / 변경" type="textarea" />
+
+      {/* 이미지 업로드 */}
+      <ModifyUserInput
+        labelText="이미지 추가 / 변경"
+        type="file"
+        accept="image/*"
+        onChange={onUploadImage}
+        name="imageUpload"
+        style={{ display: 'none' }}
+        ref={inputRef}
+      />
+      <div>
+        {previewUrl && (
+          <img
+            css={css`
+              border-radius: 50%;
+              height: 350px;
+              filter: drop-shadow(8px 10px 5px #999999);
+            `}
+            src={previewUrl}
+            alt="previewImage"
+          />
+        )}
+      </div>
+      <ModifyUserButton
+        buttonText="이미지 업로드 하기"
+        type="button"
+        onClick={onUploadImageButtonClick}
+      />
+      {/* 자기소개 */}
       <ModifyUserInput
         labelText="자기소개"
         type="textarea"
