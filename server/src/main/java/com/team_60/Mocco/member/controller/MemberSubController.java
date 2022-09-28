@@ -2,7 +2,6 @@ package com.team_60.Mocco.member.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.helper.httpclient.GithubRestClient;
 import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
@@ -27,7 +26,7 @@ public class MemberSubController {
     private final S3ImageUpload imageUpload;
     private final MemberMapper mapper;
     private final MemberService memberService;
-    private final AuthenticationServiceLocal authenticationService;
+    private final AuthenticationService authenticationService;
     private final GithubRestClient githubRestClient;
 
     @PostMapping("/image")

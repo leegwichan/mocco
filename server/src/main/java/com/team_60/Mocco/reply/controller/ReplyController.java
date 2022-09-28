@@ -2,7 +2,6 @@ package com.team_60.Mocco.reply.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.reply.dto.ReplyDto;
 import com.team_60.Mocco.reply.entity.Reply;
 import com.team_60.Mocco.reply.mapper.ReplyMapper;
@@ -12,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequestMapping("/api/replies")
 @RequiredArgsConstructor
@@ -21,7 +18,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
     private final ReplyMapper mapper;
-    private final AuthenticationServiceLocal authenticationService;
+    private final AuthenticationService authenticationService;
 
     @GetMapping("/{reply-id}")
     public ResponseEntity getReply(@PathVariable("reply-id") long replyId){

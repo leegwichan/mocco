@@ -1,7 +1,7 @@
 package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
+import com.team_60.Mocco.helper.aop.AuthenticationService;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import com.team_60.Mocco.study.dto.StudyDto;
@@ -30,7 +30,7 @@ public class StudyBoardController {
     private final StudyMapper studyMapper;
     private final TaskMapper taskMapper;
     private final S3ImageUpload imageUpload;
-    private final AuthenticationServiceLocal authenticationService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping
     public ResponseEntity postStudy(@RequestBody StudyDto.Request requestBody){

@@ -6,13 +6,11 @@ import com.team_60.Mocco.comment.mapper.CommentMapper;
 import com.team_60.Mocco.comment.service.CommentService;
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -22,7 +20,7 @@ public class CommentController {
 
     private final CommentService commentService;
     private final CommentMapper mapper;
-    private final AuthenticationServiceLocal authenticationService;
+    private final AuthenticationService authenticationService;
 
     @GetMapping
     public ResponseEntity getComments(@RequestParam("study-id") long studyId){

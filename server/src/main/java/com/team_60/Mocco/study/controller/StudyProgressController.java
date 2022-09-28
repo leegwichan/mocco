@@ -2,7 +2,6 @@ package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.study.dto.StudyProgressDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.mapper.StudyProgressMapper;
@@ -19,7 +18,7 @@ public class StudyProgressController {
 
     private final StudyProgressService studyProgressService;
     private final StudyProgressMapper studyProgressMapper;
-    private final AuthenticationServiceLocal authenticationService;
+    private final AuthenticationService authenticationService;
 
     @GetMapping("/{study-id}/member/{member-id}")
     public ResponseEntity getStudyProgress(@PathVariable("study-id") long studyId,

@@ -2,7 +2,6 @@ package com.team_60.Mocco.proposal.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.proposal.dto.ProposalDto;
 import com.team_60.Mocco.proposal.entity.Proposal;
 import com.team_60.Mocco.proposal.mapper.ProposalMapper;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -22,7 +20,7 @@ public class ProposalController {
 
     private final ProposalService proposalService;
     private final ProposalMapper mapper;
-    private final AuthenticationServiceLocal authenticationService;
+    private final AuthenticationService authenticationService;
 
     @GetMapping
     public ResponseEntity getProposalsByStudyId(@RequestParam("study-id") long studyId){

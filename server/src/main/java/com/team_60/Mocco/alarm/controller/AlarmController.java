@@ -5,8 +5,7 @@ import com.team_60.Mocco.alarm.entity.Alarm;
 import com.team_60.Mocco.alarm.mapper.AlarmMapper;
 import com.team_60.Mocco.alarm.service.AlarmService;
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
-import com.team_60.Mocco.helper.sse.SseService;
+import com.team_60.Mocco.helper.aop.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ public class AlarmController {
 
     private final AlarmService alarmService;
     private final AlarmMapper alarmMapper;
-    private final AuthenticationServiceLocal authenticationService;
+    private final AuthenticationService authenticationService;
 
     @GetMapping("/subscribe")
     public SseEmitter alarmSubscribe(@RequestParam("member-id") long memberId){

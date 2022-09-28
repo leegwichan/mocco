@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 @Profile("!deploy")
-public class AuthenticationServiceLocal {
+public class AuthenticationServiceLocal implements AuthenticationService{
 
     public void AuthenticationCheckWithId(String parameterName, long id) { // patch, delete (id값 받는 경우)
     }
 
-    public void AuthenticationCheckWithDto(Object requestBody) { //post
+    public <T> void AuthenticationCheckWithDto(T requestBody) { //post
     }
 
     public void AuthenticationCheckStudyMember(long studyId) { //studyRoom
