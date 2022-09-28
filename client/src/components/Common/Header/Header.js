@@ -32,7 +32,7 @@ function Header() {
   };
 
   const handleMyPageClick = () => {
-    navigate(`/main/${userInfo.nickname}`);
+    navigate(`/main/${userInfo.memberId}`);
   };
 
   const handleProfileClick = () => {
