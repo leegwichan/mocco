@@ -14,7 +14,7 @@ function StudyBoard() {
   const nowStudy = {
     ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
   }[0];
-  console.log(nowStudy);
+  // console.log(nowStudy);
 
   const getStudyInfo = () => {
     request(`/api/study-progress/${studyId}/member/${memberId}`).then((res) => {

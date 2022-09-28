@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
 import AuthTaskModal from '../AuthTask/AuthTaskModal';
 
 function TaskItem({ task, select }) {
@@ -17,22 +17,49 @@ function TaskItem({ task, select }) {
         </div>
         <div css={content}>{task.content}</div>
         <div css={mark}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            width="73px"
-            height="73px"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="#0b6ff2"
-            onClick={() => setIsOpen(true)}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+          {task.taskCheck.taskCheckId ? (
+            <>
+              <svg
+                clipRule="evenodd"
+                fillRule="evenodd"
+                strokeLinejoin="round"
+                strokeMiterlimit="2"
+                viewBox="0 0 24 24"
+                fill="#0b68ff"
+                width="73px"
+                height="73px"
+                xmlns="http://www.w3.org/2000/svg"
+                onClick={() => setIsOpen(true)}
+              >
+                <path
+                  d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm-5.049 10.386 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z"
+                  fillRule="nonzero"
+                />
+              </svg>
+              <span className="check">완료</span>
+            </>
+          ) : (
+            <>
+              <svg
+                clipRule="evenodd"
+                fillRule="evenodd"
+                strokeLinejoin="round"
+                strokeMiterlimit="2"
+                fill="#0b68ff"
+                width="73px"
+                height="73px"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                onClick={() => setIsOpen(true)}
+              >
+                <path
+                  d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm0 1.5c-4.69 0-8.498 3.807-8.498 8.497s3.808 8.498 8.498 8.498 8.497-3.808 8.497-8.498-3.807-8.497-8.497-8.497zm-5.049 8.886 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z"
+                  fillRule="nonzero"
+                />
+              </svg>
+              <span className="check">인증</span>
+            </>
+          )}
           {isOpen && (
             <AuthTaskModal
               task={task}
@@ -41,7 +68,6 @@ function TaskItem({ task, select }) {
               select={select}
             />
           )}
-          <span>인증</span>
         </div>
       </div>
     </div>
@@ -60,6 +86,11 @@ const taskContainer = css`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 34px;
+
+  .check {
+    color: #0b68ff;
+    font-weight: 500;
+  }
 `;
 
 const deadline = css`
@@ -84,4 +115,8 @@ const content = css`
 
 const mark = css`
   margin-right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 15px;
 `;

@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
+import porfile from '../../../../asset/profile.png';
 
 function UserSelect({ memberInfo, select, setSelect }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,14 +17,14 @@ function UserSelect({ memberInfo, select, setSelect }) {
     setSelect({ ...clickedMember }[0]);
     setIsOpen(false);
   };
-  console.log('내가 셀렉트야', select);
+  //   console.log('내가 셀렉트야', select);
 
   return (
     <section css={container}>
       <label onClick={onChange} role="presentation" css={selected}>
         {select && (
           <>
-            <img src={select.profileImage} alt="p" />
+            <img src={porfile} alt="p" css={image} />
             <span> {select.nickname}</span>
           </>
         )}
@@ -53,7 +54,7 @@ function UserSelect({ memberInfo, select, setSelect }) {
                 role="presentation"
                 css={member}
               >
-                <img src={user.profileImage} alt="p" />
+                <img src={porfile} alt="p" css={image} />
                 {user.nickname}
               </li>
             );
@@ -84,7 +85,7 @@ const selected = css`
   align-items: center;
   font-size: 20px;
   font-weight: 500;
-  padding: 20px;
+  padding: 10px;
 `;
 
 const memberList = css`
@@ -103,6 +104,11 @@ const memberList = css`
   &.noneList {
     display: none;
   }
+`;
+
+const image = css`
+  width: 50px;
+  height: 50px;
 `;
 
 const member = css`

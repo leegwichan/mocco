@@ -13,7 +13,7 @@ function AuthTask({ authData, setAuthData }) {
     if (!e.target.files) {
       alert('이미지를 업로드해주세요');
     }
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
 
@@ -23,7 +23,7 @@ function AuthTask({ authData, setAuthData }) {
         formData
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setImage(res.data.data);
         setAuthData({ ...authData, image: res.data.data });
       })

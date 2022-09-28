@@ -20,7 +20,7 @@ function TaskBox({ studyInfo, studyId }) {
       `/api/study-progress/sub/${studyId}/member/${select.memberId}`
     ).then((res) => {
       setTaskList(res.data.data.taskList);
-      console.log(res.data.data.taskList);
+      // console.log(res.data.data.taskList);
     });
   };
 
