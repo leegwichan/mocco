@@ -55,7 +55,7 @@ const StudySection = ({ id }) => {
                   </span>
                 </Link>
                 <Link
-                  to={`/main/${studyInfo.member.nickname}`}
+                  to={`/main/${studyInfo.member.memberId}`}
                   css={css`
                     text-decoration: none;
                   `}

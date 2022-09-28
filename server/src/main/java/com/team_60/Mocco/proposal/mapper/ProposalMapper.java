@@ -11,7 +11,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = MemberMapper.class)
 public interface ProposalMapper {
 
     ProposalDto.Response proposalToProposalResponseDto(Proposal proposal);
