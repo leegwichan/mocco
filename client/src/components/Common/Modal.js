@@ -13,6 +13,7 @@ const Modal = ({ onClose, style, children }) => {
           position: fixed;
           inset: 0;
           background-color: rgba(0, 0, 0, 0.7);
+          z-index: 2;
         `}
         onClick={onClose}
         onKeyPress={onClose}
@@ -28,6 +29,7 @@ const Modal = ({ onClose, style, children }) => {
           transform: 'translate(-50%, -50%)',
           width: '300px',
           borderRadius: '8px',
+          zIndex: '3',
           ...style?.content,
         }}
       >

@@ -3,7 +3,6 @@ package com.team_60.Mocco.task_check.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import com.team_60.Mocco.task_check.dto.TaskCheckDto;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @RestController
@@ -38,8 +36,8 @@ public class TaskCheckController {
     }
 
     @PostMapping
-    public ResponseEntity postTaskCheck(@RequestBody TaskCheckDto.Post requestBody, HttpServletRequest request){
-        authenticationService.AuthenticationCheckWithDto(requestBody,request);
+    public ResponseEntity postTaskCheck(@RequestBody TaskCheckDto.Post requestBody){
+        authenticationService.AuthenticationCheckWithDto(requestBody);
         TaskCheck taskCheck = mapper.taskCheckPostDtoToTaskCheck(requestBody);
         TaskCheck postTaskCheck = taskCheckService.createTaskCheck(taskCheck);
         TaskCheckDto.Response response = mapper.taskCheckToTaskCheckResponseDto(postTaskCheck);

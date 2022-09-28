@@ -5,6 +5,7 @@ import com.team_60.Mocco.comment.entity.Comment;
 import com.team_60.Mocco.comment.mapper.CommentMapper;
 import com.team_60.Mocco.comment.service.CommentService;
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.helper.aop.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class CommentController {
 
     private final CommentService commentService;
     private final CommentMapper mapper;
+    private final AuthenticationService authenticationService;
 
     @GetMapping
     public ResponseEntity getComments(@RequestParam("study-id") long studyId){
@@ -40,7 +42,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity postComment(@RequestBody CommentDto.Post requestBody){
-
+        authenticationService.AuthenticationCheckWithDto(requestBody);
         Comment comment = mapper.commentPostDtoToComment(requestBody);
         Comment postComment = commentService.createComment(comment);
         CommentDto.Response response = mapper.commentToCommentResponseDto(postComment);
@@ -51,6 +53,7 @@ public class CommentController {
     @PatchMapping("/{comment-id}")
     private ResponseEntity patchComment(@PathVariable("comment-id") long commentId,
                                         @RequestBody CommentDto.Patch requestBody){
+        authenticationService.AuthenticationCheckWithId("commentId",commentId);
         Comment comment = mapper.commentPatchDtoToComment(requestBody);
         comment.setCommentId(commentId);
         Comment patchComment = commentService.updateComment(comment);
@@ -61,7 +64,7 @@ public class CommentController {
 
     @DeleteMapping("/{comment-id}")
     private ResponseEntity deleteComment(@PathVariable("comment-id") long commentId){
-
+        authenticationService.AuthenticationCheckWithId("commentId",commentId);
         Comment deleteComment = commentService.deleteComment(commentId);
         CommentDto.Response response = mapper.commentToCommentResponseDto(deleteComment);
         return new ResponseEntity(

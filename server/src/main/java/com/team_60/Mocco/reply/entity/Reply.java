@@ -1,6 +1,6 @@
 package com.team_60.Mocco.reply.entity;
 
-import com.team_60.Mocco.audit.Auditable;
+import com.team_60.Mocco.base_entity.BaseEntity;
 import com.team_60.Mocco.comment.entity.Comment;
 import com.team_60.Mocco.member.entity.Member;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class Reply extends Auditable {
+public class Reply extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long replyId;

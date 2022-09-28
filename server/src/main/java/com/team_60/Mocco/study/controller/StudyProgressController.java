@@ -2,7 +2,6 @@ package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
 import com.team_60.Mocco.study.dto.StudyProgressDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.mapper.StudyProgressMapper;

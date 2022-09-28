@@ -2,6 +2,7 @@ package com.team_60.Mocco.study.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team_60.Mocco.comment.dto.CommentDto;
+import com.team_60.Mocco.dto.PostDto;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.dto.TaskDto;
@@ -29,8 +30,7 @@ public class StudyDto {
     @NoArgsConstructor
     @Builder
     @AllArgsConstructor
-    public static class Request{
-        private long memberId;
+    public static class Request extends PostDto {
         private long studyId;
         private String teamName;
         private int capacity;

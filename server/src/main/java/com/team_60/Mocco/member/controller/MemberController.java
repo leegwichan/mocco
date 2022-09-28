@@ -2,7 +2,6 @@ package com.team_60.Mocco.member.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.mapper.MemberMapper;
