@@ -6,6 +6,7 @@ import { userInfoState } from '../atom/atom';
 import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRuleModal';
+import ProgressSection from '../components/PageComponent/StudyBoard/Progress/ProgressSection';
 
 function StudyBoard() {
   const { studyId, memberId } = useParams();
@@ -15,18 +16,32 @@ function StudyBoard() {
     ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
   }[0];
   // console.log(nowStudy);
-
-  const getStudyInfo = () => {
-    request(`/api/study-progress/${studyId}/member/${memberId}`).then((res) => {
-      setStudyInfo(res.data.data);
-    });
-  };
+  const [totalTask, setTotalTask] = useState(0);
+  const [expiredTaskCount, setExpiredTaskCount] = useState(0);
+  const [memberProgressArr, setMemberProgressArr] = useState();
 
   useEffect(() => {
     getStudyInfo();
   }, []);
 
-  console.log(studyInfo);
+  const getStudyInfo = () => {
+    request(`/api/study-progress/${studyId}/member/${memberId}`)
+      .then((res) => {
+        setStudyInfo(res.data.data);
+        return res;
+      })
+      .then((res) => {
+        setTotalTask(res.data.data.progress.totalTaskCount);
+        return res;
+      })
+      .then((res) => {
+        setExpiredTaskCount(res.data.data.progress.expiredTaskCount);
+        return res;
+      })
+      .then((res) => {
+        setMemberProgressArr(res.data.data.progress.memberProgress);
+      });
+  };
 
   return (
     <main css={totalContainer}>
@@ -35,7 +50,15 @@ function StudyBoard() {
           <h1>{nowStudy.teamName}</h1>
           <StudyRuleModal />
         </section>
-        <section css={animation}></section>
+        <section css={animation}>
+          <ProgressSection
+            studyInfo={studyInfo}
+            memberId={memberId}
+            totalTask={totalTask}
+            expiredTaskCount={expiredTaskCount}
+            memberProgressArr={memberProgressArr}
+          />
+        </section>
         <section css={taskSection}>
           <TaskBox studyInfo={studyInfo} studyId={studyId} />
         </section>
@@ -53,7 +76,7 @@ const totalContainer = css`
 `;
 
 const contentContainer = css`
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
 `;
 
@@ -66,8 +89,7 @@ const titleSection = css`
 `;
 
 const animation = css`
-  border: 1px solid green;
-  height: 407px;
+  height: auto;
 `;
 
 const taskSection = css`

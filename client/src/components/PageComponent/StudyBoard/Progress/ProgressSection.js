@@ -1,10 +1,8 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import ProgressBar from './ProgressBar';
-import dummyData from './DummyProgress';
 import { css } from '@emotion/react';
 
 const Total = css`
-  margin: 10%;
   width: 1100px;
   height: 405px;
   background-image: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcknW7m%2FbtrNb75XO4z%2FKbr8eYQxxKLwvSKBz8z6rk%2Fimg.png');
@@ -62,54 +60,62 @@ const BarSection = css`
   padding-top: 205px;
 `;
 
-function ProgressSection() {
-  let totalTask = dummyData.progress.totalTask;
-  let memberProgressArr = dummyData.progress.memberProgress;
-  let monsterProgress = dummyData.progress.passedTask;
-
-  let selectedMemberId = 1; // 클릭된 멤버 아이디 넣어주기
-
+function ProgressSection({
+  studyInfo,
+  memberId,
+  totalTask,
+  expiredTaskCount,
+  memberProgressArr,
+}) {
   return (
     <div css={Total}>
       <div css={CounterContainer}>
-        <div className="number">
-          {dummyData.taskList.map((el, idx) => (
-            <div key={el.taskId} className="numberRight">
-              <div css={CountNumber}>{idx + 1}</div>
-            </div>
-          ))}
-        </div>
-        <div className="inner">
-          {dummyData.taskList.map((el) => (
-            <div key={el.taskId} css={CountSectionBox}></div>
-          ))}
-        </div>
+        {studyInfo.taskList && (
+          <div className="number">
+            {studyInfo.taskList.map((el, idx) => (
+              <div key={el.taskId} className="numberRight">
+                <div css={CountNumber}>{idx + 1}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {studyInfo.taskList && (
+          <div className="inner">
+            {studyInfo.taskList.map((el) => (
+              <div key={el.taskId} css={CountSectionBox}></div>
+            ))}
+          </div>
+        )}
       </div>
       <section css={BarSection}>
         <ProgressBar
           who={'mocco'}
           totalTask={totalTask}
-          endTask={monsterProgress}
+          endTask={expiredTaskCount}
         />
-        <ul>
-          {memberProgressArr.map((item) => (
-            <li
-              key={item.memberId}
-              css={css`
-                list-style: none;
-              `}
-            >
-              <ProgressBar
-                endTask={item.endTask}
-                taskMemberId={item.memberId}
-                who={'character'}
-                totalTask={totalTask}
-                mocco={monsterProgress}
-                selectedMemberId={selectedMemberId}
-              />
-            </li>
-          ))}
-        </ul>
+        {memberProgressArr && (
+          <ul>
+            {memberProgressArr.map((item) => (
+              <li
+                key={item.memberId}
+                css={css`
+                  list-style: none;
+                `}
+              >
+                <ProgressBar
+                  item={item}
+                  endTask={item.endTaskCount}
+                  taskMemberId={item.memberId}
+                  who={'character'}
+                  totalTask={totalTask}
+                  mocco={expiredTaskCount}
+                  selectedMemberId={memberId}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </div>
   );
