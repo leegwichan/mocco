@@ -1,6 +1,7 @@
 package com.team_60.Mocco.security.config;
 
 import com.team_60.Mocco.member.repository.MemberRepository;
+import com.team_60.Mocco.security.filter.FailureHandler;
 import com.team_60.Mocco.security.filter.JwtAuthenticationFilter;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.security.filter.OAuth2SuccessHandler;
@@ -33,6 +34,7 @@ public class SecurityConfig {
     private final RedisTemplate redisTemplate;
     private final PrincipalOauth2UserService principalOauth2UserService;
     private final OAuth2SuccessHandler successHandler;
+    private final FailureHandler failureHandler;
 
     @Bean
     public WebSecurityCustomizer configure() {
@@ -49,10 +51,14 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .addFilterBefore(new JwtAuthenticationFilter(redisTemplate,jwtTokenProvider),UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
+                .redirectionEndpoint()
+                .baseUri("/login/oauth2/code/*")
+                .and()
                 .userInfoEndpoint()
                 .userService(principalOauth2UserService)
                 .and()
-                .successHandler(successHandler);
+                .successHandler(successHandler)
+                .failureHandler(failureHandler);
         return http.build();
     }
 

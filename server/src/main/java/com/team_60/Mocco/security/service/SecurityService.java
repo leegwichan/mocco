@@ -35,8 +35,6 @@ public class SecurityService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberMapper mapper;
     private final RedisTemplate redisTemplate;
 

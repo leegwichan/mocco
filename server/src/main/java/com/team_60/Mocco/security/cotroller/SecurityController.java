@@ -71,4 +71,10 @@ public class SecurityController {
                 new SingleResponseDto<>(email), HttpStatus.OK
         );
     }
+//    @GetMapping("/successLogin")
+//    public ResponseEntity successLoginPage(HttpServletRequest request, HttpServletResponse response){
+//        log.info("로그인 성공 페이지로 이동");
+//        String success = "로그인 성공";
+//        return new ResponseEntity<>(new SingleResponseDto<>(success),HttpStatus.OK);
+//    }
 }
