@@ -11,12 +11,14 @@ import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.study_member.repository.StudyMemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class StudyEvaluationServiceImpl implements StudyEvaluationService{
 
     private final StudyService studyService;
@@ -25,6 +27,7 @@ public class StudyEvaluationServiceImpl implements StudyEvaluationService{
     private final StudyMemberRepository studyMemberRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Study getStudyByStudyEvaluation(long studyId) {
 
         Study findStudy = studyService.findVerifiedStudy(studyId);

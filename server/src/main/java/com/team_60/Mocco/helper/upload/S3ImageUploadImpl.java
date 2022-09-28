@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class S3ImageUploadImpl implements S3ImageUpload{
 
     @Value("${cloud.aws.s3.bucket}")

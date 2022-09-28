@@ -10,11 +10,13 @@ import com.team_60.Mocco.reply.entity.Reply;
 import com.team_60.Mocco.reply.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReplyServiceImpl implements ReplyService{
 
     private final ReplyRepository replyRepository;
@@ -22,6 +24,7 @@ public class ReplyServiceImpl implements ReplyService{
     private final CommentService commentService;
 
     @Override
+    @Transactional(readOnly = true)
     public Reply findReply(long replyId) {
         return findVerifiedReply(replyId);
     }
