@@ -16,7 +16,6 @@ function ProgressBar({
   taskMemberId,
   selectedMemberId,
 }) {
-  // const [isMocco, setIsMocco] = useState(false);
   const [isSame, setIsSame] = useState(false);
 
   const bar = useRef(null);

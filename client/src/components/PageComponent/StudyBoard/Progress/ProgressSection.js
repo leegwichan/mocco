@@ -1,3 +1,4 @@
+import React from 'react'; // eslint-disable-line no-unused-vars
 import ProgressBar from './ProgressBar';
 import dummyData from './DummyProgress';
 import { css } from '@emotion/react';

@@ -1,23 +1,23 @@
 const dummyData = {
   progress: {
-    totalTask: 15,
-    passedTask: 8,
+    totalTask: 10,
+    passedTask: 5,
     memberProgress: [
       {
         memberId: 3,
-        endTask: 1,
-      },
-      {
-        memberId: 1,
         endTask: 0,
       },
       {
+        memberId: 1,
+        endTask: 2,
+      },
+      {
         memberId: 2,
-        endTask: 5,
+        endTask: 4,
       },
       {
         memberId: 4,
-        endTask: 10,
+        endTask: 8,
       },
     ],
   },
@@ -44,51 +44,51 @@ const dummyData = {
     },
   ],
   taskList: [
-    {
-      taskId: 3,
-      deadline: '2022-10-25',
-      content: '인강 25강 듣기',
-      taskCheck: {
-        taskCheckId: 3,
-        taskChecked: true,
-      },
-    },
-    {
-      taskId: 4,
-      deadline: '2022-10-30',
-      content: '토이 프로젝트 완성',
-      taskCheck: {
-        taskCheckId: 4,
-        taskChecked: true,
-      },
-    },
-    {
-      taskId: 5,
-      deadline: '2022-10-30',
-      content: '토이 프로젝트 완성',
-      taskCheck: {
-        taskCheckId: 4,
-        taskChecked: true,
-      },
-    },
-    {
-      taskId: 6,
-      deadline: '2022-10-30',
-      content: '토이 프로젝트 완성',
-      taskCheck: {
-        taskCheckId: 4,
-        taskChecked: true,
-      },
-    },
-    {
-      taskId: 7,
-      deadline: '2022-10-30',
-      content: '토이 프로젝트 완성',
-      taskCheck: {
-        taskCheckId: 4,
-        taskChecked: true,
-      },
-    },
+    // {
+    //   taskId: 3,
+    //   deadline: '2022-10-25',
+    //   content: '인강 25강 듣기',
+    //   taskCheck: {
+    //     taskCheckId: 3,
+    //     taskChecked: true,
+    //   },
+    // },
+    // {
+    //   taskId: 4,
+    //   deadline: '2022-10-30',
+    //   content: '토이 프로젝트 완성',
+    //   taskCheck: {
+    //     taskCheckId: 4,
+    //     taskChecked: true,
+    //   },
+    // },
+    // {
+    //   taskId: 5,
+    //   deadline: '2022-10-30',
+    //   content: '토이 프로젝트 완성',
+    //   taskCheck: {
+    //     taskCheckId: 4,
+    //     taskChecked: true,
+    //   },
+    // },
+    // {
+    //   taskId: 6,
+    //   deadline: '2022-10-30',
+    //   content: '토이 프로젝트 완성',
+    //   taskCheck: {
+    //     taskCheckId: 4,
+    //     taskChecked: true,
+    //   },
+    // },
+    // {
+    //   taskId: 7,
+    //   deadline: '2022-10-30',
+    //   content: '토이 프로젝트 완성',
+    //   taskCheck: {
+    //     taskCheckId: 4,
+    //     taskChecked: true,
+    //   },
+    // },
     {
       taskId: 8,
       deadline: '2022-10-30',

@@ -14,7 +14,6 @@ import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
 import ProgressSection from './components/PageComponent/StudyBoard/Progress/ProgressSection';
 
-
 function App() {
   return (
     <div>
