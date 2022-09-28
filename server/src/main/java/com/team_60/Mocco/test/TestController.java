@@ -1,5 +1,7 @@
 package com.team_60.Mocco.test;
 
+import com.team_60.Mocco.alarm.entity.Alarm;
+import com.team_60.Mocco.alarm.service.AlarmService;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.mail.sender.EmailSendable;
@@ -44,6 +46,7 @@ public class TestController {
     private StudyService studyService;
     private StudyMapper studyMapper;
     private SseService sseService;
+    private AlarmService alarmService;
 
     @GetMapping("/mail")
     public String checkSendMail(@RequestParam String email) {
@@ -108,6 +111,17 @@ public class TestController {
         Member member = new Member();
         member.setMemberId(memberId);
         sseService.publishAlarm(member);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/alarm")
+    public ResponseEntity sendAlarm(@RequestParam("member-id") long memberId){
+        Member member = memberService.findVerifiedMember(memberId);
+
+        Study study = new Study();
+        study.setTeamName("Test Study");
+        study.setTeamLeader(member);
+        alarmService.createAlarmWhenStudyNotOpen(study);
         return new ResponseEntity(HttpStatus.OK);
     }
 

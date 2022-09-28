@@ -28,7 +28,7 @@ public class GlobalExceptionAdvice {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleMultipartException(MultipartException e){
-        final ErrorResponse response = new ErrorResponse("파일 업로드 형식이 잘못되었습니다.",
+        final ErrorResponse response = new ErrorResponse("파일 업로드 형식이 잘못되었습니다. (파일 최대 5MB)",
                 400, new ArrayList<>());
         return response;
     }
