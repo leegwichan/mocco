@@ -74,7 +74,7 @@ public interface StudyProgressMapper {
                     }
 
                     TaskCheckDto.SubResponse taskCheckResponse = new TaskCheckDto.SubResponse(
-                            taskCheck != null ? task.getTaskId() : null,
+                            taskCheck != null ? taskCheck.getTaskCheckId() : null,
                             taskCheck != null
                     );
 

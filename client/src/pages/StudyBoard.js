@@ -1,18 +1,68 @@
 import { css } from '@emotion/react';
-import Button from '../components/Common/Button';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../atom/atom';
+import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
+import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRuleModal';
+import ProgressSection from '../components/PageComponent/StudyBoard/Progress/ProgressSection';
 
 function StudyBoard() {
+  const { studyId, memberId } = useParams();
+  const [studyInfo, setStudyInfo] = useState({});
+  const userInfo = useRecoilValue(userInfoState);
+  const nowStudy = {
+    ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
+  }[0];
+  // console.log(nowStudy);
+  const [totalTask, setTotalTask] = useState(0);
+  const [expiredTaskCount, setExpiredTaskCount] = useState(0);
+  const [memberProgressArr, setMemberProgressArr] = useState();
+
+  useEffect(() => {
+    getStudyInfo();
+  }, []);
+
+  const getStudyInfo = () => {
+    request(`/api/study-progress/${studyId}/member/${memberId}`)
+      .then((res) => {
+        setStudyInfo(res.data.data);
+        return res;
+      })
+      .then((res) => {
+        setTotalTask(res.data.data.progress.totalTaskCount);
+        return res;
+      })
+      .then((res) => {
+        setExpiredTaskCount(res.data.data.progress.expiredTaskCount);
+        return res;
+      })
+      .then((res) => {
+        setMemberProgressArr(res.data.data.progress.memberProgress);
+      });
+  };
+
   return (
     <main css={totalContainer}>
-      <section css={titleSection}>
-        <h1>모꼬스터디</h1>
-        <Button type={'big_blue'} text={'규칙'} />
-      </section>
-      <section css={animation}></section>
-      <section css={taskSection}>
-        <TaskBox />
-      </section>
+      <div css={contentContainer}>
+        <section css={titleSection}>
+          <h1>{nowStudy.teamName}</h1>
+          <StudyRuleModal />
+        </section>
+        <section css={animation}>
+          <ProgressSection
+            studyInfo={studyInfo}
+            memberId={memberId}
+            totalTask={totalTask}
+            expiredTaskCount={expiredTaskCount}
+            memberProgressArr={memberProgressArr}
+          />
+        </section>
+        <section css={taskSection}>
+          <TaskBox studyInfo={studyInfo} studyId={studyId} />
+        </section>
+      </div>
     </main>
   );
 }
@@ -20,11 +70,14 @@ function StudyBoard() {
 export default StudyBoard;
 
 const totalContainer = css`
-  width: 1200px;
+  width: 100vw;
+  height: calc(100vh - 64px);
+  padding-top: 100px;
+`;
+
+const contentContainer = css`
+  max-width: 1100px;
   margin: 0 auto;
-  margin-top: 47px;
-  margin-bottom: 85px;
-  border: 1px solid red;
 `;
 
 const titleSection = css`
@@ -36,8 +89,7 @@ const titleSection = css`
 `;
 
 const animation = css`
-  border: 1px solid green;
-  height: 407px;
+  height: auto;
 `;
 
 const taskSection = css`

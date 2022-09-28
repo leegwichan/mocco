@@ -2,7 +2,6 @@ package com.team_60.Mocco.proposal.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
 import com.team_60.Mocco.proposal.dto.ProposalDto;
 import com.team_60.Mocco.proposal.entity.Proposal;
 import com.team_60.Mocco.proposal.mapper.ProposalMapper;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -35,8 +33,8 @@ public class ProposalController {
     }
 
     @PostMapping
-    public ResponseEntity postProposal(@RequestBody ProposalDto.Post requestBody, HttpServletRequest request){
-        authenticationService.AuthenticationCheckWithDto(requestBody,request);
+    public ResponseEntity postProposal(@RequestBody ProposalDto.Post requestBody){
+        authenticationService.AuthenticationCheckWithDto(requestBody);
         Proposal proposal = mapper.proposalPostDtoToProposal(requestBody);
         Proposal postProposal = proposalService.createProposal(proposal);
         ProposalDto.Response response = mapper.proposalToProposalResponseDto(postProposal);

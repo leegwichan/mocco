@@ -1,6 +1,6 @@
 package com.team_60.Mocco.study_member.entity;
 
-import com.team_60.Mocco.audit.Auditable;
+import com.team_60.Mocco.base_entity.BaseEntity;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.warning.entity.Warning;
@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class StudyMember extends Auditable {
+public class StudyMember extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long studyMemberId;

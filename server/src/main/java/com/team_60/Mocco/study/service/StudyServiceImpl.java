@@ -53,17 +53,13 @@ public class StudyServiceImpl implements StudyService{
         study.setTeamLeader(memberService.findVerifiedMember(1));
         //스터디 생성
         return studyRepository.save(study);
-
     }
 
     @Transactional
     @Override
     public Study updateStudy(Study study) {
         Study findStudy = findVerifiedStudy(study.getStudyId());
-//        String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
-//        if(findStudy.getTeamLeader().getEmail() != jwtTokenProvider.getEmail(accessToken)){
-//            throw new BusinessLogicException(NOT_SAME_USER);
-//        }
+
         if (findStudy.getStudyStatus() != Study.StudyStatus.RECRUIT_PROGRESS){
             throw new BusinessLogicException(ExceptionCode.STUDY_NOT_RECRUIT);
         }

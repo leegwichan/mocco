@@ -1,6 +1,6 @@
 package com.team_60.Mocco.task_check.entity;
 
-import com.team_60.Mocco.audit.Auditable;
+import com.team_60.Mocco.base_entity.BaseEntity;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.warning.entity.Warning;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class TaskCheck extends Auditable {
+public class TaskCheck extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long taskCheckId;

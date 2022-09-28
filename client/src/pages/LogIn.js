@@ -26,6 +26,11 @@ function LogIn() {
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
         return res;
       })
+      .then((res) => {
+        localStorage.setItem('accessToken', res.headers.accesstoken);
+        localStorage.setItem('refreshToken', res.headers.refreshtoken);
+        return res;
+      })
       .then((res) =>
         request({
           method: 'get',

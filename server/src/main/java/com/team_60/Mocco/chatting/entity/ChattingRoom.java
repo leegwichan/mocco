@@ -1,6 +1,6 @@
 package com.team_60.Mocco.chatting.entity;
 
-import com.team_60.Mocco.audit.Auditable;
+import com.team_60.Mocco.base_entity.BaseEntity;
 import com.team_60.Mocco.study.entity.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class ChattingRoom extends Auditable {
+public class ChattingRoom extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long chattingRoomId;

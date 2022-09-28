@@ -2,6 +2,8 @@ package com.team_60.Mocco.helper.upload;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -22,11 +24,13 @@ public class S3ImageUploadImpl implements S3ImageUpload{
     private String dir;
 
     private final AmazonS3Client s3Client;
+    private final String[] acceptFileExtensions = new String[]{".jpg", ".png", ".JPG", ".PNG"};
 
     @Override
     public String upload(InputStream inputStream, String originFileName,
                          String fileSize, ImageUploadType imageUploadType) {
 
+        checkFileExtension(originFileName);
         String s3FileName = directoryName(imageUploadType) + newFileName(originFileName);
 
         ObjectMetadata objMeta = new ObjectMetadata();
@@ -34,6 +38,15 @@ public class S3ImageUploadImpl implements S3ImageUpload{
 
         s3Client.putObject(bucket, s3FileName, inputStream, objMeta);
         return s3Client.getUrl(bucket, s3FileName).toString();
+    }
+
+    private void checkFileExtension(String originalFileName){
+        for (String acceptFileExtension : acceptFileExtensions){
+            if (originalFileName.substring(originalFileName.length()-4).equals(acceptFileExtension)){
+                return;
+            }
+        }
+        throw new BusinessLogicException(ExceptionCode.NOT_ACCEPTED_EXTENSION);
     }
 
     private String directoryName(ImageUploadType imageUploadType){
