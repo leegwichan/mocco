@@ -1,7 +1,7 @@
 package com.team_60.Mocco.study.entity;
 
 import com.team_60.Mocco.alarm.entity.Alarm;
-import com.team_60.Mocco.audit.Auditable;
+import com.team_60.Mocco.base_entity.BaseEntity;
 import com.team_60.Mocco.chatting.entity.Chatting;
 import com.team_60.Mocco.chatting.entity.ChattingRoom;
 import com.team_60.Mocco.comment.entity.Comment;
@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Study extends Auditable {
+public class Study extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long studyId;

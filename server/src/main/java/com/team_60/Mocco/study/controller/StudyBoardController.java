@@ -1,8 +1,7 @@
 package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import com.team_60.Mocco.study.dto.StudyDto;
@@ -18,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,12 +30,12 @@ public class StudyBoardController {
     private final StudyMapper studyMapper;
     private final TaskMapper taskMapper;
     private final S3ImageUpload imageUpload;
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceLocal authenticationService;
 
     @PostMapping
-    public ResponseEntity postStudy(@RequestBody StudyDto.Request requestBody, HttpServletRequest request){
+    public ResponseEntity postStudy(@RequestBody StudyDto.Request requestBody){
         //스터디 모집 글 작성, 등록
-        authenticationService.AuthenticationCheckWithDto(requestBody, request);
+        authenticationService.AuthenticationCheckWithDto(requestBody);
         //taskDto -> task
         List<Task> taskList = taskMapper.taskRequestDtoListToTaskList(requestBody.getTaskList());
         //studyRequestDto -> study

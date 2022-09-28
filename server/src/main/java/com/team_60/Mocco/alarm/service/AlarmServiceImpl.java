@@ -87,7 +87,7 @@ public class AlarmServiceImpl implements AlarmService{
         return createAlarm;
     }
 
-    private Alarm findVerifiedAlarm(long alarmId){
+    public Alarm findVerifiedAlarm(long alarmId){
         Optional<Alarm> optionalAlarm = alarmRepository.findById(alarmId);
         Alarm findAlarm = optionalAlarm.orElseThrow( () ->
                 new BusinessLogicException(ExceptionCode.ALARM_NOT_FOUND));

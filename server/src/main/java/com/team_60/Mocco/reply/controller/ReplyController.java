@@ -2,7 +2,7 @@ package com.team_60.Mocco.reply.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.reply.dto.ReplyDto;
 import com.team_60.Mocco.reply.entity.Reply;
 import com.team_60.Mocco.reply.mapper.ReplyMapper;
@@ -21,7 +21,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
     private final ReplyMapper mapper;
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceLocal authenticationService;
 
     @GetMapping("/{reply-id}")
     public ResponseEntity getReply(@PathVariable("reply-id") long replyId){
@@ -33,8 +33,8 @@ public class ReplyController {
     }
 
     @PostMapping
-    public ResponseEntity postReply(@RequestBody ReplyDto.Post requestBody, HttpServletRequest request){
-        authenticationService.AuthenticationCheckWithDto(requestBody,request);
+    public ResponseEntity postReply(@RequestBody ReplyDto.Post requestBody){
+        authenticationService.AuthenticationCheckWithDto(requestBody);
         Reply reply = mapper.replyPostDtoToReply(requestBody);
         Reply postReply = replyService.createReply(reply);
         ReplyDto.Response response = mapper.replyToReplyResponseDto(postReply);

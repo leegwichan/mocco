@@ -1,4 +1,4 @@
-package com.team_60.Mocco.audit;
+package com.team_60.Mocco.base_entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class Auditable {
+public abstract class BaseEntity {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));

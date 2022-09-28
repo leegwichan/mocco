@@ -1,13 +1,12 @@
 package com.team_60.Mocco.comment.entity;
 
-import com.team_60.Mocco.audit.Auditable;
+import com.team_60.Mocco.base_entity.BaseEntity;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.reply.entity.Reply;
 import com.team_60.Mocco.study.entity.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.CommandLineRunner;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Comment extends Auditable {
+public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentId;

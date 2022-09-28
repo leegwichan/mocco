@@ -15,4 +15,5 @@ public interface AlarmService {
     void createAlarmWhenStudyOpen(Study study);
     Alarm createAlarmWhenStudyNotOpen(Study study);
     Alarm createAlarmWhenProposalApprove(Study study, Member member);
+    public Alarm findVerifiedAlarm(long alarmId);
 }

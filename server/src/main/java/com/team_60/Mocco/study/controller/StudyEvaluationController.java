@@ -2,7 +2,7 @@ package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
-import com.team_60.Mocco.helper.aop.AuthenticationServiceDeploy;
+import com.team_60.Mocco.helper.aop.AuthenticationServiceLocal;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.dto.StudyEvaluationDto;
 import com.team_60.Mocco.study.entity.Study;
@@ -23,7 +23,7 @@ public class StudyEvaluationController {
 
     private final StudyEvaluationService studyEvaluationService;
     private final StudyEvaluationMapper mapper;
-    private final AuthenticationService authenticationService;
+    private final AuthenticationServiceLocal authenticationService;
 
     @GetMapping("/{study-id}/member/{member-id}")
     public ResponseEntity getEvaluationInfo(@PathVariable("study-id") long studyId,
@@ -37,8 +37,8 @@ public class StudyEvaluationController {
     }
 
     @PostMapping
-    public ResponseEntity postEvaluationInfo(@RequestBody StudyEvaluationDto.Post requestBody, HttpServletRequest request){
-        authenticationService.AuthenticationCheckWithDto(requestBody,request);
+    public ResponseEntity postEvaluationInfo(@RequestBody StudyEvaluationDto.Post requestBody){
+        authenticationService.AuthenticationCheckWithDto(requestBody);
         List<Member> members = mapper.StudyEvaluationPostDtoToMemberList(requestBody);
         studyEvaluationService.evaluateStudyMembers(requestBody.getStudyId(), requestBody.getMemberId(), members);
 
