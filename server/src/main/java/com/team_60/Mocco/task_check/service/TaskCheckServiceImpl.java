@@ -13,6 +13,7 @@ import com.team_60.Mocco.task_check.entity.TaskCheck;
 import com.team_60.Mocco.task_check.repository.TaskCheckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TaskCheckServiceImpl implements TaskCheckService{
 
     private final MemberService memberService;
@@ -28,6 +30,7 @@ public class TaskCheckServiceImpl implements TaskCheckService{
     private final TaskCheckRepository taskCheckRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public TaskCheck findTaskCheck(long taskCheckId) {
         return findVerifiedTaskCheck(taskCheckId);
     }

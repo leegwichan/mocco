@@ -13,6 +13,7 @@ import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.study_member.serive.StudyMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProposalServiceImpl implements ProposalService{
 
     private final ProposalRepository proposalRepository;
@@ -29,6 +31,7 @@ public class ProposalServiceImpl implements ProposalService{
     private final AlarmService alarmService;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Proposal> findProposalsByStudyId(long studyId) {
         Study findStudy = studyService.findVerifiedStudy(studyId);
 

@@ -8,9 +8,11 @@ import com.team_60.Mocco.study_member.entity.StudyMember;
 import com.team_60.Mocco.study_member.repository.StudyMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StudyMemberServiceImpl implements StudyMemberService{
 
     private final StudyMemberRepository studyMemberRepository;

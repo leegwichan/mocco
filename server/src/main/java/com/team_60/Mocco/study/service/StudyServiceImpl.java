@@ -25,6 +25,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class StudyServiceImpl implements StudyService{
 
     private final StudyRepository studyRepository;
@@ -54,8 +55,6 @@ public class StudyServiceImpl implements StudyService{
         //스터디 생성
         return studyRepository.save(study);
     }
-
-    @Transactional
     @Override
     public Study updateStudy(Study study) {
         Study findStudy = findVerifiedStudy(study.getStudyId());
@@ -93,6 +92,7 @@ public class StudyServiceImpl implements StudyService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Study finishRecruitStudy(long studyId) {
         Study findStudy = findVerifiedStudy(studyId);
         if (findStudy.getStudyMemberList().size() <= 1){
@@ -109,17 +109,20 @@ public class StudyServiceImpl implements StudyService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Study findStudy(long studyId) {
         return findVerifiedStudy(studyId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Study> findStudies(int page, int size) {
         Pageable pageable = PageRequest.of(page,size,Sort.by("studyId").descending());
         return studyRepository.findByStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<Study> searchStudies(String query, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("studyId").descending());
         return studyRepository.findBySummaryContaining(query, pageable);

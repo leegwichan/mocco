@@ -10,12 +10,14 @@ import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.service.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
@@ -23,6 +25,7 @@ public class CommentServiceImpl implements CommentService{
     private final MemberService memberService;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Comment> findCommentsByStudyId(long studyId) {
 
         Study findStudy = studyService.findVerifiedStudy(studyId);
@@ -30,6 +33,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Comment findComment(long commentId) {
         return findVerifiedComment(commentId);
     }

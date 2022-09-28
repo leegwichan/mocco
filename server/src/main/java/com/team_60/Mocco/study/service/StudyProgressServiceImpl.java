@@ -7,17 +7,20 @@ import com.team_60.Mocco.study.repository.StudyRepository;
 import com.team_60.Mocco.study_member.entity.StudyMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StudyProgressServiceImpl implements StudyProgressService{
 
     private final StudyService studyService;
     private final StudyRepository studyRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Study findStudyWhenMemberMatched(long studyId, long memberId) {
 
         Study findStudy = studyService.findVerifiedStudy(studyId);
@@ -35,6 +38,7 @@ public class StudyProgressServiceImpl implements StudyProgressService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Study findStudy(long studyId) {
         Study findStudy = studyService.findVerifiedStudy(studyId);
         checkStudyProgress(findStudy);

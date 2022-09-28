@@ -6,11 +6,13 @@ import com.team_60.Mocco.helper.mail.sender.EmailSendable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class PasswordManagerImpl implements NewPasswordManager {
 
     private final EmailSendable emailSend;
