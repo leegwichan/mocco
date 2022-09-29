@@ -5,6 +5,7 @@ import request from '../api';
 import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
 import ForgotPasswordModal from '../components/PageComponent/Login/ForgotPasswordModal';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function LogIn() {
   const [modalOn, setModalOn] = useState(false);
@@ -24,8 +25,7 @@ function LogIn() {
       .then((res) => {
         localStorage.setItem('accessToken', res.headers.accesstoken);
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
-        request.defaults.headers.common['Authorization'] =
-          res.headers.accesstoken;
+        setAuthorizationToken(res.headers.accesstoken);
         return res;
       })
       .then((res) =>
