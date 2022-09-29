@@ -60,7 +60,7 @@ public class MemberDto {
                 message = "깃허브 레포지포리 형식을 갖추어야 합니다.")
         private String githubRepository3;
 
-        @Size(max = 100, message = "이미지 링크는 최대 200자 입니다.")
+        @Size(max = 200, message = "이미지 링크는 최대 200자 입니다.")
         private String profileImage;
     }
 

@@ -27,8 +27,7 @@ public class SseService {
     private final AlarmMapper alarmMapper;
 
     public SseEmitter subscribeAlarm(Member member){
-        SseEmitter emitter = new SseEmitter( 1 * 60 * 1000L);
-        // SseEmitter emitter = new SseEmitter(15 * 60 * 1000L);
+        SseEmitter emitter = new SseEmitter(1 * 60 * 1000L);
         String emitterId = member.getMemberId() + "_" + System.currentTimeMillis();
         sseEmitters.put(emitterId, emitter);
 

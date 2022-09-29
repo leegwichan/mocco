@@ -31,10 +31,8 @@ public class AlarmServiceImpl implements AlarmService{
         Member findMember = memberService.findVerifiedMember(memberId);
         SseEmitter sseEmitter = sseService.subscribeAlarm(findMember);
 
-//        List<Alarm> findAlarms = alarmRepository.findByMember(findMember);
-//        if (findAlarms.size() != 0){
-//            sseService.publishAlarm(sseEmitter, findMember);
-//        }
+        List<Alarm> findAlarms = alarmRepository.findByMember(findMember);
+        sseService.publishAlarm(findMember, findAlarms);
         return sseEmitter;
     }
 
