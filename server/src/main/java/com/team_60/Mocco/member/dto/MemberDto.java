@@ -19,10 +19,11 @@ public class MemberDto {
     @Setter
     public static class Post{
         @Email(message = "이메일 형식을 지켜야 합니다.")
+        @Size(max = 50, message = "이메일은 50자 이하이어야 합니다.")
         private String email;
 
-        @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎ가-힣]*$",
-                message = "닉네임은 숫자, 영어, 한글만을 사용해야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=/`]).{8,20}$",
+                message = "비밀번호는 영문과 특수문자 숫자를 포함하며 8자 이상, 20자 이하이어야 합니다.")
         private String password;
 
         @Size(min = 2, max = 10, message = "닉네임은 최소 2글자 최대 10글자 이어야 합니다.")
@@ -73,7 +74,7 @@ public class MemberDto {
         private long memberId;
         private String originalPassword;
 
-        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\\\d)(?=.*\\\\W).{8,20}$",
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=/`]).{8,20}$",
                 message = "비밀번호는 영문과 특수문자 숫자를 포함하며 8자 이상, 20자 이하이어야 합니다.")
         private String newPassword;
     }

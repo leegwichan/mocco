@@ -53,9 +53,11 @@ public class StudyDto {
         private String summary;
 
         @Size(max = 5000, message = "스터디 상세 내용은 최대 5000자 입니다.")
+        @NotBlank(message = "스터디 상세 내용은 빈칸일 수 없습니다.")
         private String detail;
 
         @Size(max = 2000, message = "스터디 규칙은 최대 2000자 입니다.")
+        @NotBlank(message = "스터디 규칙은 빈칸일 수 없습니다.")
         private String rule;
 
         private List<TaskDto> taskList;
