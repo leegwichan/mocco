@@ -25,6 +25,7 @@ function LogIn() {
       .then((res) => {
         localStorage.setItem('accessToken', res.headers.accesstoken);
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
+        console.log('res :', res.headers);
         setAuthorizationToken(res.headers.accesstoken);
         return res;
       })
