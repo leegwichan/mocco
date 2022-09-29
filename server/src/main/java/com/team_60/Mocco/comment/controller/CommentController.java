@@ -9,13 +9,17 @@ import com.team_60.Mocco.helper.aop.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
+@Validated
 public class CommentController {
 
     private final CommentService commentService;
@@ -23,7 +27,7 @@ public class CommentController {
     private final AuthenticationService authenticationService;
 
     @GetMapping
-    public ResponseEntity getComments(@RequestParam("study-id") long studyId){
+    public ResponseEntity getComments(@RequestParam("study-id") @Positive long studyId){
 
         List<Comment> findComments = commentService.findCommentsByStudyId(studyId);
         List<CommentDto.Response> responses = mapper.commentsToCommentResponseDtos(findComments);
@@ -41,7 +45,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity postComment(@RequestBody CommentDto.Post requestBody){
+    public ResponseEntity postComment(@RequestBody @Valid CommentDto.Post requestBody){
         authenticationService.AuthenticationCheckWithDto(requestBody);
         Comment comment = mapper.commentPostDtoToComment(requestBody);
         Comment postComment = commentService.createComment(comment);
@@ -52,7 +56,7 @@ public class CommentController {
 
     @PatchMapping("/{comment-id}")
     private ResponseEntity patchComment(@PathVariable("comment-id") long commentId,
-                                        @RequestBody CommentDto.Patch requestBody){
+                                        @RequestBody @Valid CommentDto.Patch requestBody){
         authenticationService.AuthenticationCheckWithId("commentId",commentId);
         Comment comment = mapper.commentPatchDtoToComment(requestBody);
         comment.setCommentId(commentId);
