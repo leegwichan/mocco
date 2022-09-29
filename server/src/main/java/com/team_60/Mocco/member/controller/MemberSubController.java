@@ -13,14 +13,19 @@ import com.team_60.Mocco.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Positive;
 import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/members")
 @RequiredArgsConstructor
+@Validated
 public class MemberSubController {
 
     private final S3ImageUpload imageUpload;
@@ -31,7 +36,8 @@ public class MemberSubController {
 
     @PostMapping("/image")
     public ResponseEntity memberImageUpload(@RequestParam("image") MultipartFile multipartFile,
-                                            @RequestParam("file-size") String fileSize) throws IOException{
+                                            @RequestParam("file-size") @Max(value = 5000000, message = "크기는 최대 5MB 입니다.")
+                                            String fileSize) throws IOException{
 
         String url = imageUpload.upload(multipartFile.getInputStream(),
                 multipartFile.getOriginalFilename(), fileSize, ImageUploadType.MEMBER_PROFILE);
@@ -41,8 +47,8 @@ public class MemberSubController {
     }
 
     @PatchMapping("/password/{member-id}")
-    public ResponseEntity patchPassword(@PathVariable("member-id") long memberId,
-                                      @RequestBody MemberDto.PatchPassword requestBody){
+    public ResponseEntity patchPassword(@PathVariable("member-id") @Positive long memberId,
+                                      @RequestBody @Valid MemberDto.PatchPassword requestBody){
         authenticationService.AuthenticationCheckWithId("memberId",memberId);
         requestBody.setMemberId(memberId);
         Member updateMember = memberService.updatePassword(requestBody);
@@ -52,7 +58,7 @@ public class MemberSubController {
     }
 
     @PatchMapping("/github-user/{member-id}")
-    public ResponseEntity patchGithubAccount(@PathVariable("member-id") long memberId,
+    public ResponseEntity patchGithubAccount(@PathVariable("member-id") @Positive long memberId,
                                             @RequestBody MemberDto.GithubInfo requestBody){
         authenticationService.AuthenticationCheckWithId("memberId",memberId);
         GithubRestClientDto.UserInfo githubUserInfo

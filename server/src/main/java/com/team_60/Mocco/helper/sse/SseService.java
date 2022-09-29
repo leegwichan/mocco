@@ -19,13 +19,14 @@ public class SseService {
     private static final Map<String, SseEmitter> sseEmitters = new ConcurrentHashMap<>();
 
     public SseEmitter subscribeAlarm(Member member){
-        //SseEmitter emitter = new SseEmitter(15 * 1000L);
-        SseEmitter emitter = new SseEmitter(15 * 60 * 1000L);
+        SseEmitter emitter = new SseEmitter(15 * 1000L);
+        // SseEmitter emitter = new SseEmitter(15 * 60 * 1000L);
         String emitterId = member.getMemberId() + "_" + System.currentTimeMillis();
         sseEmitters.put(emitterId, emitter);
 
         try{
             emitter.send("CONNECT", MediaType.APPLICATION_JSON);
+            log.info("구독 성공! memberId : {}", member.getMemberId());
         } catch (Exception e){
             throw new BusinessLogicException(ExceptionCode.FAIL_SSE_CONNECT);
         }

@@ -7,7 +7,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+
 public class ProposalDto {
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class Post extends PostDto {
+
+        @Positive(message = "스터디 식별자는 1 이상이어야 합니다.")
+        private long studyId;
+
+        @Size(max = 300, message = "신청글은 최대 30자입니다.")
+        @NotNull(message = "대댓글은 null이 아니어야 합니다.")
+        private String content;
+    }
 
     @AllArgsConstructor
     @Getter
@@ -18,14 +36,4 @@ public class ProposalDto {
         private String createdAt;
         private MemberDto.SubResponse member;
     }
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    @Setter
-    public static class Post extends PostDto {
-        private long studyId;
-        private String content;
-    }
-
 }
