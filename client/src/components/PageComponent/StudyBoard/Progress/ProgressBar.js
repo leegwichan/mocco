@@ -19,9 +19,9 @@ function ProgressBar({
   const [isSame, setIsSame] = useState(false);
 
   const bar = useRef(null);
-  console.log(who);
-  console.log('엔드' + endTask);
-  console.log(totalTask);
+  // console.log(who);
+  // console.log('엔드' + endTask);
+  // console.log(totalTask);
 
   useEffect(() => {
     if (taskMemberId === selectedMemberId) {
