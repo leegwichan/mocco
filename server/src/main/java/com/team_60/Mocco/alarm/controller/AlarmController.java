@@ -24,7 +24,7 @@ public class AlarmController {
     private final AlarmMapper alarmMapper;
     private final AuthenticationService authenticationService;
 
-    @GetMapping("/subscribe")
+    @GetMapping(value = "/subscribe", produces = "text/event-stream")
     public SseEmitter alarmSubscribe(@RequestParam("member-id") @Positive long memberId){
         authenticationService.AuthenticationCheckWithId("memberId",memberId);
         return alarmService.publishAlarm(memberId);

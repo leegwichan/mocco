@@ -31,10 +31,10 @@ public class AlarmServiceImpl implements AlarmService{
         Member findMember = memberService.findVerifiedMember(memberId);
         SseEmitter sseEmitter = sseService.subscribeAlarm(findMember);
 
-        List<Alarm> findAlarms = alarmRepository.findByMember(findMember);
-        if (findAlarms.size() != 0){
-            sseService.publishAlarm(sseEmitter, findMember);
-        }
+//        List<Alarm> findAlarms = alarmRepository.findByMember(findMember);
+//        if (findAlarms.size() != 0){
+//            sseService.publishAlarm(sseEmitter, findMember);
+//        }
         return sseEmitter;
     }
 
@@ -67,7 +67,7 @@ public class AlarmServiceImpl implements AlarmService{
             Alarm alarm = createNewAlarm(study, member, Alarm.AlarmType.STUDY_OPEN);
             alarm.setContent(study.getTeamName() + "가 오늘부터 시작되었습니다.");
             Alarm createAlarm = alarmRepository.save(alarm);
-            sseService.publishAlarm(member);
+            sseService.publishAlarm(member, createAlarm);
         }
     }
 
@@ -76,7 +76,7 @@ public class AlarmServiceImpl implements AlarmService{
         Alarm alarm = createNewAlarm(null, study.getTeamLeader(), Alarm.AlarmType.STUDY_NOT_OPEN);
         alarm.setContent(study.getTeamName() + "가 최소 인원이 충족되지 않아 개설되지 않았습니다.");
         Alarm createAlarm = alarmRepository.save(alarm);
-        sseService.publishAlarm(study.getTeamLeader());
+        sseService.publishAlarm(study.getTeamLeader(), createAlarm);
         return createAlarm;
     }
 
@@ -85,7 +85,7 @@ public class AlarmServiceImpl implements AlarmService{
         Alarm alarm = createNewAlarm(study, member, Alarm.AlarmType.STUDY_ENTER);
         alarm.setContent(study.getTeamName() + "에 초대되셨습니다.");
         Alarm createAlarm = alarmRepository.save(alarm);
-        sseService.publishAlarm(member);
+        sseService.publishAlarm(member, createAlarm);
         return createAlarm;
     }
 
