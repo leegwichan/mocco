@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -32,7 +33,10 @@ function Footer() {
             </svg>
           </a>
         </div>
-        <div css={text}>Terms of Use | Privacy Policy</div>
+        <div css={text}>
+          <Link to={`/termsuse`}>Terms of Use</Link> |
+          <Link to={`/privacypolicy`}> Privacy Policy</Link>
+        </div>
         <div css={text}>2022 ⓒ Copyright Mocco</div>
       </div>
     </footer>
@@ -49,6 +53,7 @@ const container = css`
   background-color: #d1d1d1;
   box-sizing: border-box;
   flex: 0 0 auto;
+  margin-top: 50px;
 `;
 
 const wrapper = css`
@@ -72,7 +77,17 @@ const icon = css`
 `;
 
 const text = css`
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 16px;
   word-spacing: 3px;
+  color: black;
+
+  a {
+    color: black;
+    text-decoration: none;
+
+    &:hover {
+      color: #0b6ff2;
+    }
+  }
 `;
