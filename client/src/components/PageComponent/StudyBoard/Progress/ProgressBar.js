@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import Character from '../../../Common/Character';
 import 달리는사람자신파랑 from '../../../../asset/달리는사람자신파랑.png';
 import 달리는사람 from '../../../../asset/달리는사람.png';
-
 import 달리는괴물 from '../../../../asset/달리는괴물.png';
 import 좌절하는사람자신파랑 from '../../../../asset/좌절하는사람자신파랑.png';
 import 좌절하는사람 from '../../../../asset/좌절하는사람.png';
@@ -13,22 +12,23 @@ function ProgressBar({
   totalTask,
   endTask,
   mocco,
-  taskMemberId,
-  selectedMemberId,
+  selectedId,
+  characterMemberId,
 }) {
   const [isSame, setIsSame] = useState(false);
 
   const bar = useRef(null);
-  console.log(who);
-  console.log('엔드' + endTask);
-  console.log(totalTask);
 
   useEffect(() => {
-    if (taskMemberId === selectedMemberId) {
+    setIsSame(false);
+    console.log('캐릭터 ' + characterMemberId);
+    console.log('선택된 유저 캐 ' + selectedId);
+    if (characterMemberId === selectedId) {
       setIsSame(true);
     }
+    console.log(selectedId);
     bar.current.style.width = (endTask / totalTask) * 100 + '%';
-  }, []);
+  }, [selectedId]);
 
   return (
     <section>
@@ -75,9 +75,33 @@ const Container = css`
   display: flex;
   align-items: center;
   margin-left: 50px;
+  animation: progressHeight 3s ease-in-out forwards;
+  @keyframes progressHeight {
+    0% {
+      height: 0px;
+    }
+    20% {
+      height: 40px;
+    }
+    40% {
+      height: 0px;
+    }
+    60% {
+      height: 50px;
+    }
+    80% {
+      height: 0px;
+    }
+  }
 `;
 const Progress = css`
   margin-right: -7%;
+  animation: progress 3s ease-in-out forwards;
+  @keyframes progress {
+    0% {
+      width: 0;
+    }
+  }
 `;
 
 const Charac = css`

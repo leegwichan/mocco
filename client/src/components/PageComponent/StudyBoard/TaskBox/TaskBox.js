@@ -7,7 +7,7 @@ import { userInfoState } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import UserProgressBar from './UserProgressBar';
 
-function TaskBox({ studyInfo, studyId }) {
+function TaskBox({ studyInfo, studyId, setSelectedId }) {
   const userInfo = useRecoilValue(userInfoState);
   const [select, setSelect] = useState({
     memberId: userInfo.memberId,
@@ -27,6 +27,7 @@ function TaskBox({ studyInfo, studyId }) {
   };
   useEffect(() => {
     taskHandler();
+    setSelectedId(select.memberId);
   }, [select]);
 
   return (
@@ -34,7 +35,11 @@ function TaskBox({ studyInfo, studyId }) {
       <div css={taskTop}>
         <div>Task</div>
         <div>
-          <UserProgressBar taskList={taskList} total={taskList.length} />
+          <UserProgressBar
+            taskList={taskList}
+            total={taskList.length}
+            select={select.memberId}
+          />
         </div>
         <SelectUser
           memberInfo={studyInfo.memberList}

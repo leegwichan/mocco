@@ -19,6 +19,7 @@ function StudyBoard() {
   const [totalTask, setTotalTask] = useState(0);
   const [expiredTaskCount, setExpiredTaskCount] = useState(0);
   const [memberProgressArr, setMemberProgressArr] = useState();
+  const [selectedId, setSelectedId] = useState(memberId);
 
   useEffect(() => {
     getStudyInfo();
@@ -53,14 +54,18 @@ function StudyBoard() {
         <section css={animation}>
           <ProgressSection
             studyInfo={studyInfo}
-            memberId={memberId}
             totalTask={totalTask}
             expiredTaskCount={expiredTaskCount}
             memberProgressArr={memberProgressArr}
+            selectedId={selectedId}
           />
         </section>
         <section css={taskSection}>
-          <TaskBox studyInfo={studyInfo} studyId={studyId} />
+          <TaskBox
+            studyInfo={studyInfo}
+            studyId={studyId}
+            setSelectedId={setSelectedId}
+          />
         </section>
       </div>
     </main>

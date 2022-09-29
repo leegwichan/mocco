@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 
-function UserProgressBar({ taskList, total }) {
+function UserProgressBar({ taskList, total, select }) {
   const [endTask, setEndTask] = useState(0);
   const bar = useRef(null);
 
@@ -9,8 +9,7 @@ function UserProgressBar({ taskList, total }) {
     const arr = taskList.filter((i) => i.taskCheck.taskChecked === true);
     setEndTask(arr.length);
     bar.current.style.width = (endTask / total) * 100 + '%';
-  }, [taskList]);
-
+  }, [taskList, select, endTask]);
   console.log('total' + total);
   console.log('endTask' + endTask);
 
@@ -18,7 +17,9 @@ function UserProgressBar({ taskList, total }) {
     <div>
       <div css={Container}>
         <div css={Progress} ref={bar}></div>
-        <div className="number">{(endTask / total) * 100 + '%'}</div>
+        <div className="number">
+          {Math.round((endTask / total) * 100) + '%'}
+        </div>
       </div>
     </div>
   );
