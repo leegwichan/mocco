@@ -27,9 +27,7 @@ public interface CommentMapper {
         comment.setStudy(study);
         return comment;
     }
-
     Comment commentPatchDtoToComment(CommentDto.Patch dto);
-
     CommentDto.Response commentToCommentResponseDto(Comment comment);
     List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments);
 }

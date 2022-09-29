@@ -19,7 +19,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JwtTokenProvider jwtTokenProvider;
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+        log.info("oauth 로그인 성공!");
         Map<String, Object> tokenInfo = jwtTokenProvider.generateToken(authentication,response);
+        //response.sendRedirect("/api/register/successLogin");
     }
 
 }

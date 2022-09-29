@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AlarmServiceImpl implements AlarmService{
 
     private final AlarmRepository alarmRepository;
@@ -38,6 +39,7 @@ public class AlarmServiceImpl implements AlarmService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Alarm> findAlarmsByMemberId(long memberId) {
 
         Member findMember = memberService.findVerifiedMember(memberId);

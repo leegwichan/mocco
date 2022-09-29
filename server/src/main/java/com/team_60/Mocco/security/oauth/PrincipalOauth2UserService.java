@@ -30,6 +30,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oauth2User = super.loadUser(userRequest);
         String provider = userRequest.getClientRegistration().getClientId();
         int providerId = oauth2User.getAttribute("id");
+        log.info(providerId+" : providerId 깃헙에서 받아온 것 ");
         String nickname = oauth2User.getAttribute("login");
 
         Member member = updateMember(String.valueOf(providerId),nickname);
