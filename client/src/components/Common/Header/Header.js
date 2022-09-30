@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useEffect, useMemo, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../../atom/atom';
 import { css } from '@emotion/react';
@@ -20,7 +20,29 @@ const Container = css`
 function Header() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState); //eslint-disable-line no-unused-vars
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); //eslint-disable-line no-unused-vars
+  const [alarm, setAlarm] = useState([]); //eslint-disable-line no-unused-vars
   const navigate = useNavigate();
+
+  // 알람 받기
+
+  useEffect(() => {
+    const evtSource = new EventSource(
+      `http://3.35.54.62:8080/api/alarm/subscribe?member-id=${userInfo.memberId}`
+    );
+    evtSource.onopen = () => {
+      // console.log('구독 성공');
+    };
+    evtSource.onmessage = (msg) => {
+      // console.log(JSON.parse(msg.data));
+      setAlarm([...JSON.parse(msg.data)]);
+    };
+    // evtSource.onerror = (err) => {
+    //   console.log(err);
+    // };
+    return () => {
+      evtSource.close();
+    };
+  }, []);
 
   // 버튼 클릭 핸들러
   const handleLoginClick = () => {
@@ -149,6 +171,7 @@ function Header() {
                     userInfo={userInfo}
                     handleLogoutClick={handleLogoutClick}
                     handleModifyClick={handleModifyClick}
+                    alarm={alarm}
                   />
                 ) : null}
               </div>

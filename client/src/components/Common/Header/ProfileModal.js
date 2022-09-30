@@ -1,7 +1,13 @@
 import { css } from '@emotion/react';
 import Button from '../Button';
+import Alarm from './Alarm';
 
-function ProfileModal({ userInfo, handleLogoutClick, handleModifyClick }) {
+function ProfileModal({
+  userInfo,
+  handleLogoutClick,
+  handleModifyClick,
+  alarm,
+}) {
   return (
     <div
       css={css`
@@ -132,6 +138,7 @@ function ProfileModal({ userInfo, handleLogoutClick, handleModifyClick }) {
           css={css`
             height: 10%;
             padding: 0.5rem;
+            border-bottom: 1px solid #999999;
           `}
         >
           <div
@@ -158,31 +165,17 @@ function ProfileModal({ userInfo, handleLogoutClick, handleModifyClick }) {
         </div>
         <ul
           css={css`
+            height: 90%;
+            overflow: hidden;
             overflow-y: scroll;
-            &::-webkit-scrollbar {
-              display: none;
+            li:last-of-type {
+              border-bottom: none;
             }
           `}
         >
-          <li
-            css={css`
-              padding: 0.5rem;
-              background-color: white;
-              border-top: 1px solid #999999;
-              border-bottom: 1px solid #999999;
-            `}
-          >
-            <div>1번 스터디</div>
-            <div>1번 스터디에 초대되었습니다.</div>
-            <div
-              css={css`
-                text-align: right;
-                font-size: 0.8rem;
-              `}
-            >
-              22년 09월 30일
-            </div>
-          </li>
+          {alarm.map((al, idx) => {
+            return <Alarm key={idx} alarm={al} />;
+          })}
         </ul>
       </div>
     </div>
