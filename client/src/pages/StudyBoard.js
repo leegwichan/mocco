@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { mypageOwnerAtom } from '../atom/atom';
+import { userInfoState } from '../atom/atom';
 import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRuleModal';
@@ -12,11 +12,11 @@ import Footer from '../components/Common/Footer';
 function StudyBoard() {
   const { studyId, memberId } = useParams();
   const [studyInfo, setStudyInfo] = useState({});
-  const userInfo = useRecoilValue(mypageOwnerAtom);
+  const userInfo = useRecoilValue(userInfoState);
   const nowStudy = {
     ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
   }[0];
-  console.log(nowStudy);
+  // console.log(nowStudy);
   const [totalTask, setTotalTask] = useState(0);
   const [expiredTaskCount, setExpiredTaskCount] = useState(0);
   const [memberProgressArr, setMemberProgressArr] = useState();
@@ -25,8 +25,6 @@ function StudyBoard() {
   useEffect(() => {
     getStudyInfo();
   }, []);
-
-  console.log(studyInfo);
 
   const getStudyInfo = () => {
     request(`/api/study-progress/${studyId}/member/${memberId}`)
