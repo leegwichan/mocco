@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { userInfoState } from '../atom/atom';
+import { mypageOwnerAtom } from '../atom/atom';
 import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRuleModal';
@@ -12,7 +12,7 @@ import Footer from '../components/Common/Footer';
 function StudyBoard() {
   const { studyId, memberId } = useParams();
   const [studyInfo, setStudyInfo] = useState({});
-  const userInfo = useRecoilValue(userInfoState);
+  const userInfo = useRecoilValue(mypageOwnerAtom);
   const nowStudy = {
     ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
   }[0];
