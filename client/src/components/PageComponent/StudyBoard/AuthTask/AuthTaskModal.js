@@ -14,7 +14,7 @@ function AuthTaskModal({ task, setIsOpen, select }) {
     image: '',
     content: '',
     taskId: task.taskId,
-    memberId: 1,
+    memberId: userInfo.memberId,
   });
   const [authContent, setAuthContent] = useState({});
 
