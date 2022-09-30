@@ -30,14 +30,14 @@ function Header() {
       `http://3.35.54.62:8080/api/alarm/subscribe?member-id=${userInfo.memberId}`
     );
     evtSource.onopen = () => {
-      console.log('구독 성공');
+      // console.log('구독 성공');
     };
     evtSource.onmessage = (msg) => {
-      console.log(JSON.parse(msg.data));
+      // console.log(JSON.parse(msg.data));
       setAlarm([...JSON.parse(msg.data)]);
     };
     evtSource.onerror = (err) => {
-      console.log(err);
+      // console.log(err);
     };
     return () => {
       evtSource.close();
