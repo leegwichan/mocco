@@ -25,6 +25,9 @@ const intro = css`
     justify-content: center;
     height: 100%;
   }
+  @media all and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 function MyIntro({ introduction }) {

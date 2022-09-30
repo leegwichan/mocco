@@ -6,7 +6,13 @@ const container = css`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media all and (max-width: 767px) {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
 `;
+
 const gitHubBtn = css`
   width: 100%;
   background-color: #0b6ff2;
@@ -42,6 +48,13 @@ const gitHubBtnGray = css`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media all and (max-width: 767px) {
+    width: 30%;
+    height: 100%;
+    padding: 8px;
+    font-size: 10px;
+  }
 `;
 
 const icon = css`

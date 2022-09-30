@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -23,14 +24,14 @@ public class AlarmController {
     private final AlarmMapper alarmMapper;
     private final AuthenticationService authenticationService;
 
-    @GetMapping("/subscribe")
-    public SseEmitter alarmSubscribe(@RequestParam("member-id") long memberId){
+    @GetMapping(value = "/subscribe", produces = "text/event-stream")
+    public SseEmitter alarmSubscribe(@RequestParam("member-id") @Positive long memberId){
         authenticationService.AuthenticationCheckWithId("memberId",memberId);
         return alarmService.publishAlarm(memberId);
     }
 
     @GetMapping
-    public ResponseEntity getAlarmsByMemberId(@RequestParam("member-id") long memberId){
+    public ResponseEntity getAlarmsByMemberId(@RequestParam("member-id") @Positive long memberId){
         authenticationService.AuthenticationCheckWithId("memberId",memberId);
         List<Alarm> findAlarms = alarmService.findAlarmsByMemberId(memberId);
         List<AlarmDto.Response> response = alarmMapper.alarmsToAlarmResponseDtos(findAlarms);
@@ -39,14 +40,14 @@ public class AlarmController {
     }
 
     @DeleteMapping("/{alarm-id}")
-    public ResponseEntity deleteAlarm(@PathVariable("alarm-id") long alarmId){
+    public ResponseEntity deleteAlarm(@PathVariable("alarm-id") @Positive long alarmId){
         authenticationService.AuthenticationCheckWithId("alarmId",alarmId);
         alarmService.deleteAlarm(alarmId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping
-    private ResponseEntity deleteAlarmsByMemberId(@RequestParam("member-id") long memberId){
+    private ResponseEntity deleteAlarmsByMemberId(@RequestParam("member-id") @Positive long memberId){
         authenticationService.AuthenticationCheckWithId("memberId",memberId);
         alarmService.deleteAlarmsByMemberId(memberId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);

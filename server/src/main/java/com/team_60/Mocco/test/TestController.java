@@ -106,14 +106,6 @@ public class TestController {
         return null;
     }
 
-    @GetMapping("/sse/publish")
-    public ResponseEntity sendSseMessage(@RequestParam("member-id") long memberId){
-        Member member = new Member();
-        member.setMemberId(memberId);
-        sseService.publishAlarm(member);
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     @PostMapping("/alarm")
     public ResponseEntity sendAlarm(@RequestParam("member-id") long memberId){
         Member member = memberService.findVerifiedMember(memberId);
