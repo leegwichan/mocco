@@ -36,9 +36,9 @@ function Header() {
       // console.log(JSON.parse(msg.data));
       setAlarm([...JSON.parse(msg.data)]);
     };
-    evtSource.onerror = (err) => {
-      // console.log(err);
-    };
+    // evtSource.onerror = (err) => {
+    //   console.log(err);
+    // };
     return () => {
       evtSource.close();
     };
