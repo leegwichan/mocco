@@ -48,7 +48,7 @@ const nameLocation = css`
   .locationText {
     display: flex;
     justify-content: center;
-    margin-bottom: -7px;
+    margin-bottom: -2px;
     width: 100%;
   }
 `;
@@ -108,11 +108,12 @@ function MyProfile({ githubId, isConnectedGit, isOwner }) {
 
           <div css={name}>{owner.nickname}</div>
         </section>
-
-        <div css={Evaluation}>
-          <ProfileStar evaluation={owner.evaluation} />
-          평점 {owner.evaluation}
-        </div>
+        {owner.evaluation > 0 ? (
+          <div css={Evaluation}>
+            <ProfileStar evaluation={owner.evaluation} />
+            평점 {owner.evaluation}
+          </div>
+        ) : null}
         {isConnectedGit ? (
           <GitHubBtnBlue githubId={githubId} />
         ) : isOwner ? (

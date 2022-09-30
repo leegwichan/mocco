@@ -20,6 +20,7 @@ function StudyBoard() {
   const [totalTask, setTotalTask] = useState(0);
   const [expiredTaskCount, setExpiredTaskCount] = useState(0);
   const [memberProgressArr, setMemberProgressArr] = useState();
+  const [selectedId, setSelectedId] = useState(memberId);
 
   useEffect(() => {
     getStudyInfo();
@@ -45,29 +46,31 @@ function StudyBoard() {
   };
 
   return (
-    <div>
-      <main css={totalContainer}>
-        <div css={contentContainer}>
-          <section css={titleSection}>
-            <h1>{nowStudy.teamName}</h1>
-            <StudyRuleModal />
-          </section>
-          <section css={animation}>
-            <ProgressSection
-              studyInfo={studyInfo}
-              memberId={memberId}
-              totalTask={totalTask}
-              expiredTaskCount={expiredTaskCount}
-              memberProgressArr={memberProgressArr}
-            />
-          </section>
-          <section css={taskSection}>
-            <TaskBox studyInfo={studyInfo} studyId={studyId} />
-          </section>
-        </div>
-      </main>
+    <main css={totalContainer}>
+      <div css={contentContainer}>
+        <section css={titleSection}>
+          <h1>{nowStudy.teamName}</h1>
+          <StudyRuleModal />
+        </section>
+        <section css={animation}>
+          <ProgressSection
+            studyInfo={studyInfo}
+            totalTask={totalTask}
+            expiredTaskCount={expiredTaskCount}
+            memberProgressArr={memberProgressArr}
+            selectedId={selectedId}
+          />
+        </section>
+        <section css={taskSection}>
+          <TaskBox
+            studyInfo={studyInfo}
+            studyId={studyId}
+            setSelectedId={setSelectedId}
+          />
+        </section>
+      </div>
       <Footer />
-    </div>
+    </main>
   );
 }
 
