@@ -9,11 +9,16 @@ import com.team_60.Mocco.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/api/replies")
 @RequiredArgsConstructor
+@Validated
 public class ReplyController {
 
     private final ReplyService replyService;
@@ -21,7 +26,7 @@ public class ReplyController {
     private final AuthenticationService authenticationService;
 
     @GetMapping("/{reply-id}")
-    public ResponseEntity getReply(@PathVariable("reply-id") long replyId){
+    public ResponseEntity getReply(@PathVariable("reply-id") @Positive long replyId){
 
         Reply findReply = replyService.findReply(replyId);
         ReplyDto.Response response = mapper.replyToReplyResponseDto(findReply);
@@ -30,7 +35,7 @@ public class ReplyController {
     }
 
     @PostMapping
-    public ResponseEntity postReply(@RequestBody ReplyDto.Post requestBody){
+    public ResponseEntity postReply(@RequestBody @Valid ReplyDto.Post requestBody){
         authenticationService.AuthenticationCheckWithDto(requestBody);
         Reply reply = mapper.replyPostDtoToReply(requestBody);
         Reply postReply = replyService.createReply(reply);
@@ -40,8 +45,8 @@ public class ReplyController {
     }
 
     @PatchMapping("/{reply-id}")
-    public ResponseEntity patchReply(@PathVariable("reply-id") long replyId,
-                                      @RequestBody ReplyDto.Patch requestBody){
+    public ResponseEntity patchReply(@PathVariable("reply-id") @Positive long replyId,
+                                      @RequestBody @Valid ReplyDto.Patch requestBody){
         authenticationService.AuthenticationCheckWithId("replyId",replyId);
         Reply reply = mapper.replyPatchDtoToReply(requestBody);
         reply.setReplyId(replyId);
@@ -52,7 +57,7 @@ public class ReplyController {
     }
 
     @DeleteMapping("/{reply-id}")
-    public ResponseEntity deleteReply(@PathVariable("reply-id") long replyId){
+    public ResponseEntity deleteReply(@PathVariable("reply-id") @Positive long replyId){
         authenticationService.AuthenticationCheckWithId("replyId",replyId);
         Reply deleteReply = replyService.deleteReply(replyId);
         ReplyDto.Response response = mapper.replyToReplyResponseDto(deleteReply);
