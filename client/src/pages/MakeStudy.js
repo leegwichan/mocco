@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useState } from 'react'; // eslint-disable-
 import { css } from '@emotion/react';
 import request from '../api/index';
 import TaskContainer from '../components/PageComponent/MakeStudy/TaskContainer';
+import Footer from '../components/Common/Footer';
 
 const Header = css`
   width: 100vw;
@@ -442,6 +443,7 @@ function MakeStudy() {
             </form>
           </section>
         </div>
+        <Footer />
       </main>
     </>
   );

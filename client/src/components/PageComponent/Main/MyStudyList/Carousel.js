@@ -14,14 +14,25 @@ const Container = css`
   .none {
     display: none;
   }
+  @media all and (max-width: 1023px) {
+    .icon {
+      display: none;
+    }
+  }
 `;
+
 const Slides_Wraper = css`
   width: 100%;
   max-width: 1000px;
-  padding: 30px;
+  padding: 2.5vw; //동적
   margin: 0 auto;
   overflow: hidden;
   box-sizing: border-box;
+  @media all and (max-width: 1023px) {
+    width: auto;
+    height: 100%;
+    overflow: visible;
+  }
 `;
 
 const Slides = css`
@@ -31,10 +42,23 @@ const Slides = css`
   transition: left 0.5s ease-out;
   ul {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   li {
     float: left;
-    margin-right: 100px;
+    margin-right: 70px;
+  }
+  @media all and (max-width: 1023px) {
+    height: 100%;
+    padding: 5vw;
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 1000px;
+      width: 95vw;
+    }
   }
 `;
 
@@ -47,13 +71,13 @@ function Carousel({ studyArr, progress, done, clickHandler }) {
   }
   useEffect(() => {
     const slideWidth = 250;
-    const slideMargin = 100;
+    const slideMargin = 70;
     slides.current.style.width =
       (slideWidth + slideMargin) * length - slideMargin + 'px';
   }, []);
 
   function moveSlide(num) {
-    slides.current.style.left = -num * 350 + 'px';
+    slides.current.style.left = -num * 320 + 'px';
     setCurrentIdx(num);
   }
 

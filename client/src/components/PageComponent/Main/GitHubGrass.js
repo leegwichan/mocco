@@ -4,6 +4,9 @@ const Grass = css`
   height: 200px;
   display: flex;
   justify-content: space-around;
+  @media all and (max-width: 767px) {
+    height: auto;
+  }
 `;
 
 const NoGrass = css`

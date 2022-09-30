@@ -12,6 +12,8 @@ import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
 import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfUse from './pages/TermsOfUse';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+        <Route path="/termsuse" element={<TermsOfUse />} />
       </Routes>
     </div>
   );
