@@ -10,6 +10,7 @@ import GitHubGrass from '../components/PageComponent/Main/GitHubGrass';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { userInfoState, mypageOwnerAtom } from '../atom/atom';
 import { useParams } from 'react-router-dom';
+import Footer from '../components/Common/Footer';
 
 const Header = css`
   width: 100vw;
@@ -114,6 +115,7 @@ function Main() {
           <DoneList />
         </section>
       </section>
+      <Footer />
     </>
   );
 }

@@ -6,6 +6,7 @@ import MakeStudyButton from '../components/PageComponent/StudyList/MakeStudyButt
 import StudyListTitle from '../components/PageComponent/StudyList/StudyListTitle';
 import request from '../api/index';
 import { useLocation } from 'react-router-dom';
+import Footer from '../components/Common/Footer';
 
 const Header = css`
   width: 100vw;
@@ -120,38 +121,43 @@ function StudyList() {
       <header css={Header} />
       <main css={MainContainer}>
         {studyLists ? (
-          <div css={ContentContainer}>
-            <section css={TitleAndButtonContainer}>
-              <StudyListTitle />
-              <MakeStudyButton />
-            </section>
-            <section css={SearchContainer}>
-              <SearchBar
-                searchContent={searchContent}
-                setSearchContent={setSearchContent}
-                setStudyLists={setStudyLists}
-                setApiPage={setApiPage}
-              />
-            </section>
-            <section>
-              <ul css={StudyCardContainer}>
-                {studyLists.map((studyData, i) => {
-                  if (studyLists.length - 4 === i) {
-                    return (
-                      <StudyCard
-                        key={i}
-                        studyData={studyData}
-                        boxRef={boxRef}
-                      />
-                    );
-                  } else {
-                    return <StudyCard key={i} studyData={studyData} />;
-                  }
-                })}
-              </ul>
-            </section>
+          <div>
+            <div css={ContentContainer}>
+              <section css={TitleAndButtonContainer}>
+                <StudyListTitle />
+                <MakeStudyButton />
+              </section>
+              <section css={SearchContainer}>
+                <SearchBar
+                  searchContent={searchContent}
+                  setSearchContent={setSearchContent}
+                  setStudyLists={setStudyLists}
+                  setApiPage={setApiPage}
+                />
+              </section>
+              <section>
+                <ul css={StudyCardContainer}>
+                  {studyLists.map((studyData, i) => {
+                    if (studyLists.length - 4 === i) {
+                      return (
+                        <StudyCard
+                          key={i}
+                          studyData={studyData}
+                          boxRef={boxRef}
+                        />
+                      );
+                    } else {
+                      return <StudyCard key={i} studyData={studyData} />;
+                    }
+                  })}
+                </ul>
+              </section>
+            </div>
             {isLastList ? (
-              <div css={LastListAlert}>더 이상 불러올 내용이 없습니다.</div>
+              <>
+                <div css={LastListAlert}>더 이상 불러올 내용이 없습니다.</div>
+                <Footer />
+              </>
             ) : null}
           </div>
         ) : (

@@ -20,7 +20,7 @@ function TaskBox({ studyInfo, studyId }) {
       `/api/study-progress/sub/${studyId}/member/${select.memberId}`
     ).then((res) => {
       setTaskList(res.data.data.taskList);
-      // console.log(res.data.data.taskList);
+      console.log('멤버별', res.data.data.taskList);
     });
   };
 
@@ -43,7 +43,11 @@ function TaskBox({ studyInfo, studyId }) {
         {taskList &&
           taskList.map((task) => (
             <div key={task.taskId}>
-              <TaskItem task={task} select={select} />
+              <TaskItem
+                task={task}
+                select={select}
+                taskHandlerf={taskHandler}
+              />
             </div>
           ))}
       </div>

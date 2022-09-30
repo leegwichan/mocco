@@ -4,26 +4,40 @@ import ModalContent from '../../../Common/ModalContent';
 import { css } from '@emotion/react';
 import AuthTask from './AuthTask';
 import request from '../../../../api';
-// import { userInfoState } from '../../../../atom/atom';
-// import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../../../../atom/atom';
+import { useRecoilValue } from 'recoil';
 
-function AuthTaskModal({ task, setIsOpen }) {
-  // const userInfo = useRecoilValue(userInfoState);
+function AuthTaskModal({ task, setIsOpen, select }) {
+  const userInfo = useRecoilValue(userInfoState);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authData, setAuthData] = useState({
     image: '',
     content: '',
     taskId: task.taskId,
-    memberId: 3,
+    memberId: 1,
   });
   const [authContent, setAuthContent] = useState({});
 
   const authHandler = () => {
     if (authData.image === '') {
       alert('인증 이미지를 삽입해주세요');
+      return;
     } else {
-      request.post(`/api/task-check`, authData).then((res) => {
-        console.log(res.data);
-      });
+      request
+        .post('/api/task-check', authData)
+        .then((res) => {
+          console.log(res.data.data);
+          setIsAuthOpen(true);
+          setAuthContent(res.data.data);
+          console.log(setAuthContent);
+        })
+        // .then((res) => {
+        //   console.log(res.data.data.taskCheck.taskCheckId);
+        //   getAuthTask();
+        // })
+        // .then(() => setIsAuthOpen(true))
+
+        .catch((err) => alert(err.response.data.message));
     }
   };
 
@@ -33,14 +47,17 @@ function AuthTaskModal({ task, setIsOpen }) {
       setAuthContent(res.data.data);
     });
   };
-  // console.log(authContent);
+  console.log(authContent);
   console.log('task', task);
 
   useEffect(() => {
     if (task.taskCheck.taskCheckId !== null) {
       getAuthTask();
     }
-  }, [task.taskCheck.taskCheckId]);
+    request(`/api/study-info/study-count`).then((res) =>
+      console.log('개수', res)
+    );
+  }, []);
 
   const onClose = () => {
     setIsOpen(false);
@@ -49,32 +66,67 @@ function AuthTaskModal({ task, setIsOpen }) {
 
   return (
     <div>
-      <Modal
-        onClose={onClose}
-        style={{
-          content: { width: 'auto', height: 'auto', borderRadius: '20px' },
-        }}
-      >
-        <ModalContent
-          text={`${task.content} 인증`}
-          content={
-            task.taskCheck.taskCheckId ? (
-              <div>
-                <img src={authContent.image} alt="auth_image" css={authImage} />
-                <div>{authContent.content}</div>
-              </div>
-            ) : (
-              <AuthTask authData={authData} setAuthData={setAuthData} />
-            )
-          }
-          firstBtnType={'small_blue'}
-          secondBtnType={'small_grey'}
-          firstBtnText={task.taskCheck.taskCheckId ? '완료' : '인증'}
-          secondBtnText={'닫기'}
-          setIsOpen={setIsOpen}
-          onClick={task.taskCheck.taskCheckId ? null : authHandler}
-        />
-      </Modal>
+      {select.nickname !== userInfo.nickname ? (
+        <Modal
+          onClose={onClose}
+          style={{
+            content: { width: 'auto', height: 'auto', borderRadius: '20px' },
+          }}
+        >
+          <ModalContent
+            text={`${task.content} 인증`}
+            content={
+              task.taskCheck.taskCheckId || isAuthOpen ? (
+                <div>
+                  <img
+                    src={authContent.image}
+                    alt="auth_image"
+                    css={authImage}
+                  />
+                  <div>{authContent.content}</div>
+                </div>
+              ) : (
+                <AuthTask authData={authData} setAuthData={setAuthData} />
+              )
+            }
+            firstBtnType={'small_blue'}
+            secondBtnType={'small_grey'}
+            firstBtnText={
+              task.taskCheck.taskCheckId || isAuthOpen ? '완료' : '인증'
+            }
+            secondBtnText={'닫기'}
+            setIsOpen={setIsOpen}
+            onClick={
+              task.taskCheck.taskCheckId || isAuthOpen ? null : authHandler
+            }
+          />
+        </Modal>
+      ) : (
+        <div>
+          {task.taskCheck.taskCheckId && (
+            <Modal>
+              <ModalContent
+                text={`${task.content} 인증`}
+                content={
+                  <div>
+                    <img
+                      src={authContent.image}
+                      alt="auth_image"
+                      css={authImage}
+                    />
+                    <div>{authContent.content}</div>
+                  </div>
+                }
+                firstBtnType={'small_blue'}
+                firstBtnText={'완료'}
+                secondBtnType={'small_grey'}
+                secondBtnText={'닫기'}
+                setIsOpen={setIsOpen}
+              />
+            </Modal>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -85,30 +137,3 @@ const authImage = css`
   height: 280px;
   margin-bottom: 10px;
 `;
-
-// ) : (
-//   <div>
-//     {task.taskCheck.taskCheckId && (
-//       <Modal>
-//         <ModalContent
-//           text={`${task.content} 인증`}
-//           content={
-//             <div>
-//               <img
-//                 src={authContent.image}
-//                 alt="auth_image"
-//                 css={authImage}
-//               />
-//               <div>{authContent.content}</div>
-//             </div>
-//           }
-//           firstBtnType={'small_blue'}
-//           firstBtnText={'완료'}
-//           secondBtnType={'small_grey'}
-//           secondBtnText={'닫기'}
-//           setIsOpen={setIsOpen}
-//         />
-//       </Modal>
-//     )}
-//   </div>
-// )}

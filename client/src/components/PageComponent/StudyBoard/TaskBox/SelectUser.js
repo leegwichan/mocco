@@ -72,7 +72,8 @@ const container = css`
   background-color: #ffffff;
   border-radius: 20px;
   z-index: 2;
-  box-shadow: 2px 9px 2px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
+  border: 2px solid #0b6ff2;
 
   &:hover {
     cursor: pointer;
@@ -94,8 +95,9 @@ const memberList = css`
   margin-top: 10px;
   position: absolute;
   border-radius: 20px;
+  overflow: hidden;
+  list-style: none;
   border: 2px solid #0b6ff2;
-  /* box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25); */
 
   &.showList {
     display: block;
@@ -117,4 +119,11 @@ const member = css`
   justify-content: space-between;
   padding: 20px;
   align-items: center;
+  transition: background-color 0.2s ease-in;
+  border-radius: 20px;
+
+  &:hover {
+    background-color: #f0f8ff;
+    box-sizing: border-box;
+  }
 `;

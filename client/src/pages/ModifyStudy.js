@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import request from '../api/index';
 import ModifyTaskSection from '../components/PageComponent/ModifyStudy/ModifyTaskSection';
 import ModifyStudyItem from '../components/PageComponent/ModifyStudy/ModifyStudyItem';
+import Footer from '../components/Common/Footer';
 
 function ModifyStudy() {
   const navigate = useNavigate();
@@ -115,6 +116,7 @@ function ModifyStudy() {
           </form>
         </section>
       </div>
+      <Footer />
     </main>
   );
 }
