@@ -7,6 +7,7 @@ import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRuleModal';
 import ProgressSection from '../components/PageComponent/StudyBoard/Progress/ProgressSection';
+import Footer from '../components/Common/Footer';
 
 function StudyBoard() {
   const { studyId, memberId } = useParams();
@@ -44,26 +45,29 @@ function StudyBoard() {
   };
 
   return (
-    <main css={totalContainer}>
-      <div css={contentContainer}>
-        <section css={titleSection}>
-          <h1>{nowStudy.teamName}</h1>
-          <StudyRuleModal />
-        </section>
-        <section css={animation}>
-          <ProgressSection
-            studyInfo={studyInfo}
-            memberId={memberId}
-            totalTask={totalTask}
-            expiredTaskCount={expiredTaskCount}
-            memberProgressArr={memberProgressArr}
-          />
-        </section>
-        <section css={taskSection}>
-          <TaskBox studyInfo={studyInfo} studyId={studyId} />
-        </section>
-      </div>
-    </main>
+    <div>
+      <main css={totalContainer}>
+        <div css={contentContainer}>
+          <section css={titleSection}>
+            <h1>{nowStudy.teamName}</h1>
+            <StudyRuleModal />
+          </section>
+          <section css={animation}>
+            <ProgressSection
+              studyInfo={studyInfo}
+              memberId={memberId}
+              totalTask={totalTask}
+              expiredTaskCount={expiredTaskCount}
+              memberProgressArr={memberProgressArr}
+            />
+          </section>
+          <section css={taskSection}>
+            <TaskBox studyInfo={studyInfo} studyId={studyId} />
+          </section>
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 }
 

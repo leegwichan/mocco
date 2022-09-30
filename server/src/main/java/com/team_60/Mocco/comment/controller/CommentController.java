@@ -36,7 +36,7 @@ public class CommentController {
     }
 
     @GetMapping("/{comment-id}")
-    public ResponseEntity getComment(@PathVariable("comment-id") long commentId){
+    public ResponseEntity getComment(@PathVariable("comment-id") @Positive long commentId){
 
         Comment findComment = commentService.findComment(commentId);
         CommentDto.Response response = mapper.commentToCommentResponseDto(findComment);
@@ -55,7 +55,7 @@ public class CommentController {
     }
 
     @PatchMapping("/{comment-id}")
-    private ResponseEntity patchComment(@PathVariable("comment-id") long commentId,
+    private ResponseEntity patchComment(@PathVariable("comment-id") @Positive long commentId,
                                         @RequestBody @Valid CommentDto.Patch requestBody){
         authenticationService.AuthenticationCheckWithId("commentId",commentId);
         Comment comment = mapper.commentPatchDtoToComment(requestBody);
@@ -67,7 +67,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{comment-id}")
-    private ResponseEntity deleteComment(@PathVariable("comment-id") long commentId){
+    private ResponseEntity deleteComment(@PathVariable("comment-id") @Positive long commentId){
         authenticationService.AuthenticationCheckWithId("commentId",commentId);
         Comment deleteComment = commentService.deleteComment(commentId);
         CommentDto.Response response = mapper.commentToCommentResponseDto(deleteComment);

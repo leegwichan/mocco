@@ -9,13 +9,17 @@ import com.team_60.Mocco.proposal.service.ProposalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/proposals")
 @RequiredArgsConstructor
+@Validated
 public class ProposalController {
 
     private final ProposalService proposalService;
@@ -23,7 +27,7 @@ public class ProposalController {
     private final AuthenticationService authenticationService;
 
     @GetMapping
-    public ResponseEntity getProposalsByStudyId(@RequestParam("study-id") long studyId){
+    public ResponseEntity getProposalsByStudyId(@RequestParam("study-id") @Positive long studyId){
 
         List<Proposal> findProposals = proposalService.findProposalsByStudyId(studyId);
         List<ProposalDto.Response> responses = mapper.proposalsToProposalResponseDtos(findProposals);
@@ -33,7 +37,7 @@ public class ProposalController {
     }
 
     @PostMapping
-    public ResponseEntity postProposal(@RequestBody ProposalDto.Post requestBody){
+    public ResponseEntity postProposal(@RequestBody @Valid ProposalDto.Post requestBody){
         authenticationService.AuthenticationCheckWithDto(requestBody);
         Proposal proposal = mapper.proposalPostDtoToProposal(requestBody);
         Proposal postProposal = proposalService.createProposal(proposal);
@@ -44,14 +48,14 @@ public class ProposalController {
     }
 
     @DeleteMapping("/{proposal-id}")
-    public ResponseEntity deleteProposal(@PathVariable("proposal-id") long proposalId){
+    public ResponseEntity deleteProposal(@PathVariable("proposal-id") @Positive long proposalId){
         authenticationService.AuthenticationCheckWithId("proposalId",proposalId);
         proposalService.deleteProposal(proposalId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping("/approve/{proposal-id}")
-    public ResponseEntity approveProposal(@PathVariable("proposal-id") long proposalId){
+    public ResponseEntity approveProposal(@PathVariable("proposal-id") @Positive long proposalId){
         authenticationService.AuthenticationCheckWithId("proposalId",proposalId);
         Proposal patchProposal = proposalService.approveProposal(proposalId);
         ProposalDto.Response response = mapper.proposalToProposalResponseDto(patchProposal);
@@ -60,7 +64,7 @@ public class ProposalController {
     }
 
     @PatchMapping("/denied/{proposal-id}")
-    public ResponseEntity deniedProposal(@PathVariable("proposal-id") long proposalId){
+    public ResponseEntity deniedProposal(@PathVariable("proposal-id") @Positive long proposalId){
         authenticationService.AuthenticationCheckWithId("proposalId",proposalId);
         Proposal patchProposal = proposalService.refuseProposal(proposalId);
         ProposalDto.Response response = mapper.proposalToProposalResponseDto(patchProposal);
