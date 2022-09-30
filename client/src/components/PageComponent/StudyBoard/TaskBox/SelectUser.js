@@ -123,7 +123,6 @@ const member = css`
   border-radius: 20px;
 
   &:hover {
-    background-color: #f0f8ff;
-    box-sizing: border-box;
+    color: #0b6ff2;
   }
 `;
