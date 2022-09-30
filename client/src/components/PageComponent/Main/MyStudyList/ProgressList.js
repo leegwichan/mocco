@@ -28,6 +28,11 @@ const Empty = css`
     margin-bottom: 5px;
     color: #0f6ad5;
   }
+  @media all and (max-width: 767px) {
+    svg {
+      width: 50px;
+    }
+  }
 `;
 
 function ProgressList() {
