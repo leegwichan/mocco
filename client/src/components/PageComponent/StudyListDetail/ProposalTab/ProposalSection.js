@@ -10,19 +10,19 @@ function ProposalSection({ proposal, getProposalInfof }) {
   const userInfo = useRecoilValue(userInfoState);
 
   const selectHandler = () => {
-    // if (studyInfo.member.memberId !== proposal.member.memberId) {
-    //   alert('권한이 없습니다');
-    // } else {
-    return request
-      .patch(`/api/proposals/approve/${proposal.proposalId}`)
-      .then((res) => {
-        console.log(res);
-        getProposalInfof();
-      })
-      .catch((err) => {
-        alert(err.response.data.message);
-      });
-    // }
+    if (studyInfo.member.memberId !== proposal.member.memberId) {
+      alert('권한이 없습니다');
+    } else {
+      return request
+        .patch(`/api/proposals/approve/${proposal.proposalId}`)
+        .then((res) => {
+          console.log(res);
+          getProposalInfof();
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    }
   };
 
   const refuseHandler = () => {

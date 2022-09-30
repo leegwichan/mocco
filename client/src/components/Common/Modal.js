@@ -13,7 +13,7 @@ const Modal = ({ onClose, style, children }) => {
           position: fixed;
           inset: 0;
           background-color: rgba(0, 0, 0, 0.7);
-          z-index: 3;
+          z-index: 2;
         `}
         onClick={onClose}
         onKeyPress={onClose}
