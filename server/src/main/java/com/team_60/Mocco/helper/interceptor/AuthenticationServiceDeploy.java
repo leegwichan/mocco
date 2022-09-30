@@ -1,4 +1,4 @@
-package com.team_60.Mocco.helper.aop;
+package com.team_60.Mocco.helper.interceptor;
 
 import com.team_60.Mocco.alarm.entity.Alarm;
 import com.team_60.Mocco.alarm.service.AlarmService;
@@ -23,18 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.team_60.Mocco.security.filter.JwtConstants.ACCESS_TOKEN_HEADER;
-import static com.team_60.Mocco.security.filter.JwtConstants.TOKEN_HEADER_PREFIX;
 
 @Component
 @Slf4j
-@Profile("deploy")
+@Profile("!deploy")
 public class AuthenticationServiceDeploy implements AuthenticationService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -55,8 +49,8 @@ public class AuthenticationServiceDeploy implements AuthenticationService {
 
     private final List<String> idList = List.of("studyId","memberId","commentId","replyList","proposalId","taskCheckId","alarmId");
 
-    public void AuthenticationCheckWithId(String parameterName, long id) { // patch, delete (id값 받는 경우)
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+    @Override
+    public void AuthenticationCheckWithId(String parameterName, long id, long memberId) { // patch, delete (id값 받는 경우)
         //request 헤더에 들어오는 토큰에 있는 정보와 매개변수로 받는 ID의 멤버 정보가 일치하는지 확인
         Member member = new Member();
             switch (parameterName) {
@@ -90,27 +84,22 @@ public class AuthenticationServiceDeploy implements AuthenticationService {
                 default:
                     throw new BusinessLogicException(ExceptionCode.PARAMETER_NOT_FOUND);
             }
-            if(!member.getEmail().equals(getEmailFromToken(request))){
+            if(member.getMemberId() != memberId){
                 throw new BusinessLogicException(ExceptionCode.DIFFERENT_USER_FROM_TOKEN);
             }
         }
-    public <T> void AuthenticationCheckWithDto(T requestBody){ //post
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        Member member = memberService.findVerifiedMember(((PostDto) requestBody).getMemberId());
-        if(!member.getEmail().equals(getEmailFromToken(request)))  {
-                throw new BusinessLogicException(ExceptionCode.DIFFERENT_USER_FROM_TOKEN);
-            }
+    @Override
+    public <T> void setMemberIdOfRequestBody(T requestBody, long tokenMemberId){ //post
+        log.info("DTO 검증 실행");
+        log.info(requestBody.toString());
+        if( requestBody instanceof PostDto){
+            ((PostDto) requestBody).setMemberId(tokenMemberId);
+        }
     }
-    public void AuthenticationCheckStudyMember(long studyId){ //studyRoom
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+    @Override
+    public void AuthenticationCheckStudyMember(long studyId, long memberId){ //studyRoom
         List<StudyMember> studyMemberList = studyService.findVerifiedStudy(studyId).getStudyMemberList();
-        studyMemberList.stream().forEach(n -> {if(!n.getMember().getEmail().equals(getEmailFromToken(request)))
+        studyMemberList.stream().forEach(n -> {if(n.getMember().getMemberId() != memberId)
             throw new BusinessLogicException(ExceptionCode.NOT_STUDY_MEMBER);});
-    }
-    private String getEmailFromToken(HttpServletRequest request){
-        if(request.getHeader(ACCESS_TOKEN_HEADER) == null) { throw new BusinessLogicException(ExceptionCode.BAD_REQUEST_TOKEN);}
-        String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
-        return jwtTokenProvider.getEmail(accessToken);
-
     }
 }

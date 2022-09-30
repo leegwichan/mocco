@@ -23,7 +23,6 @@ import java.io.IOException;
 @RequestMapping("/api/register")
 @RequiredArgsConstructor
 public class SecurityController {
-    private final JwtTokenProvider jwtTokenProvider;
     private final SecurityService securityService;
     private final MemberService memberService;
     private final MemberMapper mapper;

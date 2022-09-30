@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
+    private final MemberRepository memberRepository;
 
     //유저 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
     public Map<String, Object> generateToken(Authentication authentication, HttpServletResponse response) throws IOException {
@@ -45,7 +47,7 @@ public class JwtTokenProvider {
         String accessToken = JWT.create()
                 .withSubject("access token")
                 .withExpiresAt(new Date(now + ACCESS_TOKEN_EXP))
-                .withClaim("email", principalDetails.getUsername())
+                .withClaim("memberId", principalDetails.getMemberId())
                 .withClaim("auth", authorities)
                 .sign(Algorithm.HMAC512(JWT_SECRET));
 
@@ -69,15 +71,17 @@ public class JwtTokenProvider {
     //JWT 토큰으르 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {
             Claim claim = getClaim(accessToken);
-            String email = JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("email").asString();
+            long memberId = JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("memberId").asLong();
 
             if (claim == null) throw new BusinessLogicException(ExceptionCode.CLAIM_NOT_EXIST);
+            Member member = memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+            PrincipalDetails principal = new PrincipalDetails(member);
 
             //클레임에서 권한 정보 가져오기
             Collection<? extends GrantedAuthority> authorities = Arrays.stream(claim.toString().split(","))
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
-            return new UsernamePasswordAuthenticationToken(email, "", authorities);
+            return new UsernamePasswordAuthenticationToken(principal, "", authorities);
         }
 
 
@@ -105,9 +109,9 @@ public class JwtTokenProvider {
         return (expiration.getTime() - now);
     }
 
-    public String getEmail(String accessToken){
+    public long getMemberId(String accessToken){
         try{
-            return JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("email").toString().replace("\"","");
+            return JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("memberId").asLong();
         } catch (TokenExpiredException e){
             throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
         }

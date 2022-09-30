@@ -56,7 +56,7 @@ public class SecurityService {
         return new ResponseEntity(responseDto, HttpStatus.OK);
     }
     public ResponseEntity logout(HttpServletRequest request){
-        if(request.getHeader(ACCESS_TOKEN_HEADER).isEmpty()){
+        if(request.getHeader(ACCESS_TOKEN_HEADER) == null || request.getHeader(ACCESS_TOKEN_HEADER).length()<8){
             throw new BusinessLogicException(BAD_REQUEST);
         }
         String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
@@ -81,6 +81,10 @@ public class SecurityService {
         return new ResponseEntity(HttpStatus.OK);
     }
     public ResponseEntity refresh(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if(request.getHeader(ACCESS_TOKEN_HEADER) == null || request.getHeader(ACCESS_TOKEN_HEADER).length()<8 ||
+                request.getHeader(REFRESH_TOKEN_HEADER) == null || request.getHeader(REFRESH_TOKEN_HEADER).length()<8){
+            throw new BusinessLogicException(BAD_REQUEST);
+        }
         String reqRefreshToken = request.getHeader(REFRESH_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
         String reqAccessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
         //1. RefresgToken 검증

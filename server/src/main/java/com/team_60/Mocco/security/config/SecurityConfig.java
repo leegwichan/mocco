@@ -7,6 +7,7 @@ import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.security.filter.OAuth2SuccessHandler;
 import com.team_60.Mocco.security.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -29,6 +30,7 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
@@ -38,12 +40,13 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring().antMatchers("/api/register/**","/api/study-info/**","/h2/**");
+        return (web) -> web.ignoring().antMatchers("/api/register/**","/api/study-info/**","/h2/**","api/test/**",
+                "/login/oauth2/**","/oauth2/authorization/*");
     }
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception{
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

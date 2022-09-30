@@ -1,5 +1,7 @@
 package com.team_60.Mocco.security.filter;
 
+import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -7,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -25,6 +28,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         log.info("권한 인증 필터 시작");
+        HttpServletRequest currentRequest = (HttpServletRequest) request;
+        ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(currentRequest);
         //header에서 JWT 토큰 추출
         String token = getToken((HttpServletRequest) request);
 
@@ -38,7 +43,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-        chain.doFilter(request, response);
+        chain.doFilter(wrappedRequest, response);
     }
     private String getToken(HttpServletRequest request){
         String authorizationHeader = request.getHeader(JwtConstants.ACCESS_TOKEN_HEADER);
@@ -46,6 +51,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         if(authorizationHeader != null && authorizationHeader.startsWith(JwtConstants.TOKEN_HEADER_PREFIX)){
             return authorizationHeader.substring(JwtConstants.TOKEN_HEADER_PREFIX.length());
         }
+        //throw new BusinessLogicException(ExceptionCode.BAD_REQUEST_TOKEN);
         return null;
     }
 }
