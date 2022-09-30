@@ -77,10 +77,10 @@ function TaskItem({ task, select }) {
 export default TaskItem;
 
 const taskContainer = css`
-  width: 1100px;
+  width: 990px;
   height: 128px;
   background-color: #ffffff;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
