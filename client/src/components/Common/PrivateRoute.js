@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const PrivateRoute = ({ authenticated, element }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(authenticated);
   useEffect(() => {
-    if (!authenticated) navigate('/login', { from: location.pathname });
-  }, []);
+    if (!authenticated)
+      navigate('/login', { state: { from: location.pathname } });
+  }, [authenticated]);
   return element;
 };
 

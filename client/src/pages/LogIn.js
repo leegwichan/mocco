@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import request from '../api';
 import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
@@ -10,9 +10,18 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 function LogIn() {
   const [modalOn, setModalOn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const setUserInfoState = useSetRecoilState(userInfoState);
   const onSubmit = (event) => {
     event.preventDefault();
+
+    // setTimeout(() => {
+    //   localStorage.setItem('accessToken', 'accessToken-test');
+    //   localStorage.setItem('refreshToken', 'refreshToken-test');
+
+    //   setUserInfoState({ memberId: '29', username: 'seraheo' });
+    //   navigate(location.state ? location.state.from : `/main/29`);
+    // }, 1000);
 
     request({
       method: 'post',
@@ -25,7 +34,6 @@ function LogIn() {
       .then((res) => {
         localStorage.setItem('accessToken', res.headers.accesstoken);
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
-        console.log('res :', res.headers);
         setAuthorizationToken(res.headers.accesstoken);
         return res;
       })
@@ -37,7 +45,11 @@ function LogIn() {
       )
       .then((res) => {
         setUserInfoState(res.data.data);
-        navigate(`/main/${res.data.data.memberId}`);
+        navigate(
+          location.state
+            ? location.state.from
+            : `/main/${res.data.data.memberId}`
+        );
       })
       .catch((err) => console.log(err));
   };
