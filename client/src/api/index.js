@@ -4,8 +4,9 @@ const request = axios.create({
   //   baseURL: process.env.REACT_APP_API_URL,
   proxy: true,
 });
-// request.defaults.headers.common['AccessToken'] =
-//   localStorage.getItem('accessToken');
+
+request.defaults.headers.common['AccessToken'] =
+  localStorage.getItem('accessToken');
 
 // request.interceptors.response.use(
 //   (res) => {

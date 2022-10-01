@@ -16,6 +16,7 @@ import PrivateRoute from './components/Common/PrivateRoute';
 
 function App() {
   const isLogin = localStorage.getItem('accessToken');
+  console.log('l :', isLogin);
 
   return (
     <div>

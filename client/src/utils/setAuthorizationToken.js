@@ -4,8 +4,9 @@ function setAuthorizationToken(token) {
   if (token) {
     request.defaults.headers.common['AccessToken'] = token;
   } else {
-    delete localStorage.removeItem('accessToken') &&
-      localStorage.removeItem('refreshToken');
+    delete request.defaults.headers.common['AccessToken'];
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   }
 }
 

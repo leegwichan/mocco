@@ -15,6 +15,14 @@ function SignUp() {
     password: null,
   });
 
+  const [buttonActive, setButtonActive] = useState(false);
+
+  const onAgreeButtonActive = () => {
+    setButtonActive((prev) => {
+      return !prev;
+    });
+  };
+
   const onChangeNickname = (event) => {
     setNicknameValue(event.currentTarget.value);
     setNicknameChecked(false);
@@ -28,7 +36,11 @@ function SignUp() {
     // TODO: 인풋 요소들과 체크가 되었을때만 이벤트 실행.
     // if (event.target.email.value === '' || ) return;
 
-    if (event.target.password.value === event.target.passwordConfirm.value) {
+    if (
+      event.target.password.value === event.target.passwordConfirm.value &&
+      setNicknameChecked(true) &&
+      setButtonActive(true)
+    ) {
       request({
         method: 'post',
         url: '/api/register/signup',
@@ -273,15 +285,26 @@ function SignUp() {
                 display: flex;
               `}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24px"
-                height="24px"
-                viewBox="0 0 24 24"
-                style={{ fill: '#D1D1D1' }}
+              <button
+                onClick={onAgreeButtonActive}
+                css={css`
+                  border: 0;
+                  background-color: white;
+                  cursor: pointer;
+                `}
+                type="button"
               >
-                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z" />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  style={{ fill: buttonActive ? '#0b6ff2' : '#D1D1D1' }}
+                >
+                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z" />
+                </svg>
+              </button>
+
               <p
                 css={css`
                   font-size: 12px;
