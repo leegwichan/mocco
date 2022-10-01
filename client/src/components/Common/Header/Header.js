@@ -25,24 +25,24 @@ function Header() {
 
   // 알람 받기
 
-  useEffect(() => {
-    const evtSource = new EventSource(
-      `http://3.35.54.62:8080/api/alarm/subscribe?member-id=${userInfo.memberId}`
-    );
-    evtSource.onopen = () => {
-      // console.log('구독 성공');
-    };
-    evtSource.onmessage = (msg) => {
-      // console.log(JSON.parse(msg.data));
-      setAlarm([...JSON.parse(msg.data)]);
-    };
-    // evtSource.onerror = (err) => {
-    //   console.log(err);
-    // };
-    return () => {
-      evtSource.close();
-    };
-  }, []);
+  // useEffect(() => {
+  //   const evtSource = new EventSource(
+  //     `http://3.35.54.62:8080/api/alarm/subscribe?member-id=${userInfo.memberId}`
+  //   );
+  //   evtSource.onopen = () => {
+  //     // console.log('구독 성공');
+  //   };
+  //   evtSource.onmessage = (msg) => {
+  //     // console.log(JSON.parse(msg.data));
+  //     setAlarm([...JSON.parse(msg.data)]);
+  //   };
+  //   // evtSource.onerror = (err) => {
+  //   //   console.log(err);
+  //   // };
+  //   return () => {
+  //     evtSource.close();
+  //   };
+  // }, []);
 
   // 버튼 클릭 핸들러
   const handleLoginClick = () => {

@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import request from '../api/index';
 import ModifyTaskSection from '../components/PageComponent/ModifyStudy/ModifyTaskSection';
-import ModifyStudyItem from '../components/PageComponent/ModifyStudy/ModifyStudyItem';
+import ModifyStudySection from '../components/PageComponent/ModifyStudy/ModifyStudySection';
 import Footer from '../components/Common/Footer';
 
 function ModifyStudy() {
@@ -17,6 +17,7 @@ function ModifyStudy() {
     teamName: studyInfo.teamName,
     startDate: studyInfo.startDate,
     endDate: studyInfo.endDate,
+    image: studyInfo.image,
     capacity: studyInfo.capacity,
     summary: studyInfo.summary,
     detail: studyInfo.detail,
@@ -85,7 +86,7 @@ function ModifyStudy() {
         </section>
         <section>
           <form action="submit">
-            <ModifyStudyItem
+            <ModifyStudySection
               editContent={editContent}
               setEditContent={setEditContent}
             />
@@ -126,11 +127,12 @@ export default ModifyStudy;
 const main_container = css`
   width: 100vw;
   height: calc(100vh - 64px);
-  padding-top: 60px;
+  padding-top: 100px;
 `;
 
 const content_container = css`
   max-width: 1200px;
+  padding: 0 10px;
   margin: 0 auto;
 `;
 
@@ -138,4 +140,9 @@ const edit_title = css`
   font-size: 35px;
   font-weight: 500;
   margin-bottom: 30px;
+
+  @media all and (max-width: 768px) {
+    font-size: 20px;
+    font-weight: 500;
+  }
 `;

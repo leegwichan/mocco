@@ -68,4 +68,11 @@ const task_top = css`
     border-bottom: 3px solid #0b6ff2;
     font-size: 2rem;
   }
+
+  @media all and (max-width: 768px) {
+    div {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
 `;

@@ -16,7 +16,7 @@ function StudyBoard() {
   const nowStudy = {
     ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
   }[0];
-  // console.log(nowStudy);
+  console.log(nowStudy);
   const [totalTask, setTotalTask] = useState(0);
   const [expiredTaskCount, setExpiredTaskCount] = useState(0);
   const [memberProgressArr, setMemberProgressArr] = useState();
@@ -49,7 +49,7 @@ function StudyBoard() {
     <main css={totalContainer}>
       <div css={contentContainer}>
         <section css={titleSection}>
-          <h1>{nowStudy.teamName}</h1>
+          {/* <h1>{nowStudy.teamName}</h1> */}
           <StudyRuleModal />
         </section>
         <section css={animation}>

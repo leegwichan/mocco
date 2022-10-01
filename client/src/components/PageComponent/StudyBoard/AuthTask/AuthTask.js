@@ -49,16 +49,17 @@ function AuthTask({ authData, setAuthData }) {
   return (
     <form encType="multipart/form-data">
       <section>
-        <div htmlFor="file" css={imageTitle}>
+        <label htmlFor="file" css={imageTitle}>
           사진 인증하기
           <span className="noEdit">한 번 인증하면 수정할 수 없습니다</span>
-        </div>
+        </label>
         <input
           css={imgInput}
           ref={imgRef}
           type="file"
-          id="file"
-          accept="image/jpg, image/jpeg, image/png"
+          name="file"
+          // id="file"
+          accept="image/jpg, image/png"
           onChange={imageHandler}
           required
         />

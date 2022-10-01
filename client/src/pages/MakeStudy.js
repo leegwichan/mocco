@@ -280,14 +280,14 @@ function MakeStudy() {
   }, []);
 
   // 내일 날짜
-  const tomorrow = {
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-    date: new Date().getDate() + 1,
-  };
-  const startDate = `${tomorrow.year}-${('0' + String(tomorrow.month)).slice(
-    -2
-  )}-${tomorrow.date}`;
+  // const tomorrow = {
+  //   year: new Date().getFullYear(),
+  //   month: new Date().getMonth() + 1,
+  //   date: new Date().getDate() + 1,
+  // };
+  // const startDate = `${tomorrow.year}-${('0' + String(tomorrow.month)).slice(
+  //   -2
+  // )}-${tomorrow.date}`;
 
   return (
     <>
@@ -335,8 +335,8 @@ function MakeStudy() {
                     <input
                       type="date"
                       name="studyStart"
-                      min={startDate}
-                      value={startDate}
+                      // min={startDate}
+                      // value={startDate}
                       required
                       onChange={handleChangeStartDate}
                       css={InputLeft}
