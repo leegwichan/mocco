@@ -12,13 +12,22 @@ import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
 import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
+import PrivateRoute from './components/Common/PrivateRoute';
 
 function App() {
+  const isLogin = localStorage.getItem('accessToken');
+
   return (
     <div>
       <Header />
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route
+          path="/studylist"
+          element={
+            <PrivateRoute authenticated={isLogin} element={<StudyList />} />
+          }
+        />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/findpassword" element={<FindPassword />} />
