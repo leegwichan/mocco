@@ -9,7 +9,7 @@ function Alarm({ alarm }) {
         border-bottom: 1px solid #999999;
       `}
     >
-      <div>1번 스터디</div>
+      <div>모코모코</div>
       <div>{alarm.content}</div>
       <div
         css={css`
@@ -17,7 +17,7 @@ function Alarm({ alarm }) {
           font-size: 0.8rem;
         `}
       >
-        22년 09월 30일
+        {alarm.createdAt}
       </div>
     </li>
   );

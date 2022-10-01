@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useEffect, useMemo, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../../atom/atom';
 import { css } from '@emotion/react';
@@ -21,28 +21,43 @@ function Header() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState); //eslint-disable-line no-unused-vars
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); //eslint-disable-line no-unused-vars
   const [alarm, setAlarm] = useState([]); //eslint-disable-line no-unused-vars
+  const [subscribeId, setSubscribeId] = useState({}); //eslint-disable-line no-unused-vars
   const navigate = useNavigate();
 
   // 알람 받기
+  useEffect(() => {
+    if (userInfo) {
+      const evtSource = new EventSource(
+        `${process.env.REACT_APP_API_URL}/api/alarm/subscribe?member-id=${userInfo.memberId}`
+      );
+      evtSource.onopen = () => {
+        console.log('구독 성공');
+      };
+      evtSource.onmessage = (msg) => {
+        const message = JSON.parse(msg.data);
+        if (Array.isArray(message)) {
+          setAlarm(message);
+        } else {
+          setSubscribeId(message);
+        }
+      };
+    }
+  }, []);
+
+  // 새로고침 / 창 닫을 시 구독 해제
+  const unsubscribeApi = () => {
+    request.delete(
+      `/api/alarm/unsubscribe?subscribe-id=${subscribeId.subscribeId}`
+    );
+  };
 
   useEffect(() => {
-    const evtSource = new EventSource(
-      `http://3.35.54.62:8080/api/alarm/subscribe?member-id=${userInfo.memberId}`
-    );
-    evtSource.onopen = () => {
-      // console.log('구독 성공');
-    };
-    evtSource.onmessage = (msg) => {
-      // console.log(JSON.parse(msg.data));
-      setAlarm([...JSON.parse(msg.data)]);
-    };
-    // evtSource.onerror = (err) => {
-    //   console.log(err);
-    // };
+    console.log(subscribeId);
+    window.addEventListener('beforeunload', unsubscribeApi);
     return () => {
-      evtSource.close();
+      window.removeEventListener('beforeunload', unsubscribeApi);
     };
-  }, []);
+  }, [subscribeId]);
 
   // 버튼 클릭 핸들러
   const handleLoginClick = () => {
@@ -63,6 +78,7 @@ function Header() {
 
   const handleModifyClick = () => {
     navigate('/modifyUser');
+    setIsProfileModalOpen(false);
   };
 
   const handleLogoutClick = () => {
