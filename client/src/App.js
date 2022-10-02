@@ -35,7 +35,10 @@ function App() {
           path="/login"
           element={<PublicRoute authenticated={isLogin} element={<LogIn />} />}
         />
-        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/signup"
+          element={<PublicRoute authenticated={isLogin} element={<SignUp />} />}
+        />
         {/* <Route path="/login" element={<LogIn />} /> */}
         <Route path="/findpassword" element={<FindPassword />} />
         <Route path="/main/:id" element={<Main />} />
