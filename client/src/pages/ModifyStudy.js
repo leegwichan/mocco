@@ -131,8 +131,8 @@ const main_container = css`
 `;
 
 const content_container = css`
-  max-width: 1200px;
-  padding: 0 10px;
+  max-width: 1260px;
+  padding: 0 30px;
   margin: 0 auto;
 `;
 

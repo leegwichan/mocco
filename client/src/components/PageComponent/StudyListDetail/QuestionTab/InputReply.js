@@ -63,6 +63,11 @@ const reply_input = css`
     border-radius: 5px;
     border: 1px solid #d1d1d1;
     padding: 10px;
+    resize: none;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    outline: none;
   }
   .button_container {
     display: flex;
