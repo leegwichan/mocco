@@ -19,6 +19,10 @@ const NoGrass = css`
   align-items: center;
   font-size: 15px;
   color: #2d2d2d;
+  @media all and (max-width: 767px) {
+    height: auto;
+    padding: 40px;
+  }
 `;
 
 function GitHubGrass({ githubId }) {

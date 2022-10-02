@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import Carousel from './Carousel';
 import { useRecoilValue } from 'recoil';
 import { mypageOwnerAtom } from '../../../../atom/atom';
+import ShortListSection from './ShortListSection';
 const Empty = css`
   height: 252px;
   border: 1px solid #d1d1d1;
@@ -22,6 +23,8 @@ const Empty = css`
     svg {
       width: 50px;
     }
+    height: auto;
+    padding: 40px;
   }
 `;
 
@@ -47,6 +50,8 @@ function DoneList() {
           </svg>
           <span>완료된 스터디가 없습니다</span>
         </div>
+      ) : studyArr && studyArr.length < 5 ? (
+        <ShortListSection studyArr={studyArr} done={'done'} />
       ) : (
         <Carousel studyArr={studyArr} done={'done'} />
       )}

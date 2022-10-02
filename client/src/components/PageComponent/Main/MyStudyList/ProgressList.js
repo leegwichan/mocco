@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import request from '../../../../api';
 import Modal from '../../../Common/Modal';
 import EvalueModal from '../Evaluation/EvalueModal';
+import ShortListSection from './ShortListSection';
 
 const Empty = css`
   height: 252px;
@@ -32,6 +33,8 @@ const Empty = css`
     svg {
       width: 50px;
     }
+    height: auto;
+    padding: 40px;
   }
 `;
 
@@ -66,7 +69,7 @@ function ProgressList() {
       });
   };
 
-  const clickHandler = (studyData) => {
+  const clickHandlerFnc = (studyData) => {
     console.log(studyData);
     if (
       studyData.studyStatus === 'STUDY_COMPLETE' &&
@@ -78,6 +81,7 @@ function ProgressList() {
       navigate(`/studyboard/${studyData.studyId}/${owner.memberId}`);
     }
   };
+
   const onClose = () => {
     setIsOpen(false);
   };
@@ -122,11 +126,17 @@ function ProgressList() {
           </svg>
           <span>진행중인 스터디가 없습니다</span>
         </div>
+      ) : studyArr && studyArr.length < 5 ? (
+        <ShortListSection
+          studyArr={studyArr}
+          progress={'propgress'}
+          clickHandler={clickHandlerFnc}
+        />
       ) : (
         <Carousel
           studyArr={studyArr}
           progress={'propgress'}
-          clickHandler={clickHandler}
+          clickHandler={clickHandlerFnc}
         />
       )}
     </div>
