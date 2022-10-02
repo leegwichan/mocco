@@ -136,8 +136,10 @@ function ProfileModal({
       >
         <div
           css={css`
+            display: flex;
             height: 10%;
             padding: 0.5rem;
+            align-items: center;
             border-bottom: 1px solid #999999;
           `}
         >
@@ -155,13 +157,21 @@ function ProfileModal({
           <div
             css={css`
               display: inline-block;
-              width: 85%;
-              height: 20%;
+              width: 50%;
+              height: 100%;
               font-size: 1.3rem;
             `}
           >
             내 알림
           </div>
+          <button
+            css={css`
+              display: inline-block;
+              width: 35%;
+            `}
+          >
+            전체 삭제
+          </button>
         </div>
         <ul
           css={css`

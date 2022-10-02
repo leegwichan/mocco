@@ -45,19 +45,28 @@ function Header() {
   }, []);
 
   // 새로고침 / 창 닫을 시 구독 해제
-  const unsubscribeApi = () => {
-    request.delete(
-      `/api/alarm/unsubscribe?subscribe-id=${subscribeId.subscribeId}`
-    );
+  const subscribeIdRef = useRef(subscribeId);
+  const refToState = (data) => {
+    subscribeIdRef.current = data;
+  };
+
+  const unsubscribeApi = (e) => {
+    e.preventDefault();
+    e.returnValue = '';
+    const id = subscribeIdRef.current.subscribeId;
+    console.log('구독해제');
+    console.log(id);
+    request.delete(`/api/alarm/unsubscribe?subscribe-id=${id}`);
   };
 
   useEffect(() => {
-    console.log(subscribeId);
-    window.addEventListener('beforeunload', unsubscribeApi);
-    return () => {
-      window.removeEventListener('beforeunload', unsubscribeApi);
-    };
+    refToState(subscribeId);
   }, [subscribeId]);
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', unsubscribeApi);
+    window.removeEventListener('beforeunload', unsubscribeApi);
+  }, []);
 
   // 버튼 클릭 핸들러
   const handleLoginClick = () => {
