@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react';
 import SelectUser from './SelectUser';
 import TaskItem from './TaskItem';
 import request from '../../../../api';
-import { userInfoState } from '../../../../atom/atom';
+import { userInfoState, mypageOwnerAtom } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import UserProgressBar from './UserProgressBar';
+import { useNavigate } from 'react-router-dom';
 
 function TaskBox({ studyInfo, studyId, setSelectedId }) {
   const userInfo = useRecoilValue(userInfoState);
@@ -15,16 +16,24 @@ function TaskBox({ studyInfo, studyId, setSelectedId }) {
     profileImage: userInfo.profileImage,
   });
   const [taskList, setTaskList] = useState([]);
+  const navigate = useNavigate();
+  const myPageOwner = useRecoilValue(mypageOwnerAtom);
 
   const taskHandler = () => {
-    request(
-      `/api/study-progress/sub/${studyId}/member/${select.memberId}`
-    ).then((res) => {
-      setTaskList(res.data.data.taskList);
-      // console.log(res.data.data.taskList);
-      console.log(res);
-    });
+    request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
+      .then((res) => {
+        setTaskList(res.data.data.taskList);
+        // console.log(res.data.data.taskList);
+        console.log(res);
+      })
+      .catch((err) => {
+        if (err.response.data.message === '스터디의 멤버가 아닙니다.') {
+          navigate(`/main/${myPageOwner.memberId}`);
+          alert(err.response.data.message);
+        }
+      });
   };
+
   useEffect(() => {
     taskHandler();
     setSelectedId(select.memberId);
