@@ -8,9 +8,10 @@ import ForgotPasswordModal from '../components/PageComponent/Login/ForgotPasswor
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function LogIn() {
-  const [modalOn, setModalOn] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [modalOn, setModalOn] = useState(false);
   const setUserInfoState = useSetRecoilState(userInfoState);
   const onSubmit = (event) => {
     event.preventDefault();

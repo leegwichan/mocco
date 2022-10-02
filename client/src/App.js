@@ -1,4 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from './atom/atom';
+import PrivateRoute from './components/Common/Authentication/PrivateRoute';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -12,13 +15,9 @@ import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
 import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
-import PrivateRoute from './components/Common/Authentication/PrivateRoute';
-import { useRecoilValue } from 'recoil';
-import { userInfoState } from './atom/atom';
-import PublicRoute from './components/Common/Authentication/PublicRoute';
 
 function App() {
-  const isLogin = !!useRecoilValue(userInfoState);
+  const authenticated = !!useRecoilValue(userInfoState);
 
   return (
     <div>
@@ -28,17 +27,14 @@ function App() {
         <Route
           path="/makestudy"
           element={
-            <PrivateRoute authenticated={isLogin} element={<MakeStudy />} />
+            <PrivateRoute
+              authenticated={authenticated}
+              element={<MakeStudy />}
+            />
           }
         />
-        <Route
-          path="/login"
-          element={<PublicRoute authenticated={isLogin} element={<LogIn />} />}
-        />
-        <Route
-          path="/signup"
-          element={<PublicRoute authenticated={isLogin} element={<SignUp />} />}
-        />
+        {!authenticated && <Route path="/login" element={<LogIn />} />}
+        {!authenticated && <Route path="/signup" element={<SignUp />} />}
         {/* <Route path="/login" element={<LogIn />} /> */}
         <Route path="/findpassword" element={<FindPassword />} />
         <Route path="/main/:id" element={<Main />} />
@@ -49,6 +45,7 @@ function App() {
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
   );
