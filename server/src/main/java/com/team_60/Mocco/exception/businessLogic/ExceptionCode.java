@@ -61,6 +61,7 @@ public enum ExceptionCode {
     URI_MAKING_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. URIBuilder Error"),
     STRING_ENTITY_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. StringEntity Error, Response Error"),
     REST_CLIENT_ERROR(500, "서버에서 통신중에 에러가 발생했습니다."),
+    FILTER_UNKNOWN_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. Security Filter Error."),
     NOT_NORMAL_AUTHORIZATION_CODE(400, "정상작인 authorization code 가 아닙니다."),
     GITHUB_CONNECTION_ALREADY_EXIST(400, "이 계정의 깃허브를 연동한 유저가 이미 존재합니다.");
 

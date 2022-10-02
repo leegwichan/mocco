@@ -1,4 +1,4 @@
-package com.team_60.Mocco.security.filter;
+package com.team_60.Mocco.security.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
