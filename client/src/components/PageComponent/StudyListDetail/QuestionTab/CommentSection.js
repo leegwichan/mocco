@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
@@ -29,21 +29,13 @@ const CommentSection = ({
 
   const deleteHandler = (e) => {
     e.preventDefault();
-    if (userInfo.memberId !== member.memberId) {
-      alert('권한이 없습니다');
-    } else {
-      return request.delete(`/api/comments/${commentId}`).then(() => {
-        getCommentInfof();
-      });
-    }
+    return request.delete(`/api/comments/${commentId}`).then(() => {
+      getCommentInfof();
+    });
   };
 
   const editOpenHandler = () => {
-    if (userInfo.memberId !== member.memberId) {
-      alert('권한이 없습니다');
-    } else {
-      setIsEditOpen(true);
-    }
+    setIsEditOpen(true);
   };
 
   const editHandler = () => {
@@ -88,17 +80,26 @@ const CommentSection = ({
             {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
           </div>
           <div className="button_container">
+            <span className="day">{createdAt}</span>
             <Button
               type={'small_blue'}
               text={'답글'}
               onClick={() => setIsReplyOpen(true)}
             />
-            <Button
-              type={'small_white'}
-              text={'수정'}
-              onClick={editOpenHandler}
-            />
-            <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
+            {userInfo.memberId === member.memberId && (
+              <>
+                <Button
+                  type={'small_white'}
+                  text={'수정'}
+                  onClick={editOpenHandler}
+                />
+                <Button
+                  type={'small_grey'}
+                  text={'삭제'}
+                  onClick={deleteHandler}
+                />
+              </>
+            )}
           </div>
         </div>
         {isEditOpen && (
@@ -150,6 +151,13 @@ const container = css`
     justify-content: flex-end;
   }
 
+  .day {
+    font-size: 15px;
+    color: #999999;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+
   .main_link {
     color: black;
     &:hover {
@@ -161,7 +169,7 @@ const container = css`
 
 const edited = css`
   margin-left: 20px;
-  font-size: 15px;
+  font-size: 12px;
   color: #999999;
 `;
 
@@ -200,7 +208,6 @@ const profile = css`
 `;
 
 const image = css`
-  width: 50px;
-  height: 50px;
-  /* border: 1px solid red; */
+  width: 40px;
+  height: 40px;
 `;

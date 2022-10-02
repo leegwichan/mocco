@@ -1,3 +1,4 @@
+import React from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
@@ -78,17 +79,24 @@ function ProposalSection({ proposal, getProposalInfof }) {
         {proposal.content}
       </div>
       <div css={button_container}>
-        <Button
-          type={'small_blue'}
-          text={'수락'}
-          onClick={() => selectHandler()}
-        />
-        <Button
-          type={'small_white'}
-          text={'거절'}
-          onClick={() => refuseHandler()}
-        />
-        <Button type={'small_grey'} text={'취소'} onClick={deleteHander} />
+        <span className="day">{proposal.createdAt}</span>
+        {studyInfo.member.memberId === proposal.member.memberId && (
+          <>
+            <Button
+              type={'small_blue'}
+              text={'수락'}
+              onClick={() => selectHandler()}
+            />
+            <Button
+              type={'small_white'}
+              text={'거절'}
+              onClick={() => refuseHandler()}
+            />
+          </>
+        )}
+        {userInfo.memberId === proposal.member.memberId && (
+          <Button type={'small_grey'} text={'취소'} onClick={deleteHander} />
+        )}
       </div>
     </div>
   );
@@ -113,6 +121,13 @@ const container = css`
       color: #066ff2;
     }
   }
+
+  .day {
+    margin-top: 13px;
+    margin-right: 10px;
+    font-size: 15px;
+    color: #999999;
+  }
 `;
 
 const button_container = css`
@@ -136,7 +151,6 @@ const profile = css`
 `;
 
 const image = css`
-  width: 50px;
-  height: 50px;
-  /* border: 1px solid red; */
+  width: 40px;
+  height: 40px;
 `;
