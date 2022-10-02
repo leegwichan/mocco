@@ -7,7 +7,7 @@ import request from '../../../../api';
 import { userInfoState } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 
-function AuthTaskModal({ task, setIsOpen, select }) {
+function AuthTaskModal({ task, setIsOpen, select, taskHandlerf }) {
   const userInfo = useRecoilValue(userInfoState);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authData, setAuthData] = useState({
@@ -27,10 +27,11 @@ function AuthTaskModal({ task, setIsOpen, select }) {
         .post('/api/task-check', authData)
         .then((res) => {
           console.log(res.data.data);
-          setIsAuthOpen(true);
           setAuthContent(res.data.data);
-          console.log(setAuthContent);
+          console.log(authContent);
         })
+        .then(() => setIsAuthOpen(true))
+        .then(() => taskHandlerf())
         // .then((res) => {
         //   console.log(res.data.data.taskCheck.taskCheckId);
         //   getAuthTask();

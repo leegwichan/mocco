@@ -1,12 +1,9 @@
 import { css } from '@emotion/react';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import request from '../../../../api';
 import porfile from '../../../../asset/profile.png';
 
 function AuthTask({ authData, setAuthData }) {
-  const [image, setImage] = useState('');
-  const [content, setContent] = useState('');
-
   const imgRef = useRef();
 
   const imageHandler = async (e) => {
@@ -24,7 +21,6 @@ function AuthTask({ authData, setAuthData }) {
       )
       .then((res) => {
         // console.log(res);
-        setImage(res.data.data);
         setAuthData({ ...authData, image: res.data.data });
       })
       .catch((err) => console.log(err));
@@ -40,11 +36,10 @@ function AuthTask({ authData, setAuthData }) {
   };
 
   const changeHandler = (e) => {
-    setContent(e.target.value);
-    setAuthData({ ...authData, content: content });
+    setAuthData({ ...authData, content: e.target.value });
   };
 
-  // console.log(authData);
+  console.log('어쓰', authData);
 
   return (
     <form encType="multipart/form-data">
@@ -65,7 +60,11 @@ function AuthTask({ authData, setAuthData }) {
         />
       </section>
       <section css={writingSection}>
-        <img src={image ? image : porfile} alt="auth_image" css={authImage} />
+        <img
+          src={authData.image ? authData.image : porfile}
+          alt="auth_image"
+          css={authImage}
+        />
         <button onClick={uploadHandler} css={uploadButton}>
           이미지 업로드
         </button>
@@ -75,7 +74,7 @@ function AuthTask({ authData, setAuthData }) {
       </div>
       <textarea
         type="text"
-        value={content}
+        value={authData.content}
         placeholder="수행한 테스크에 대해 간락하게 설명해주세요"
         onChange={changeHandler}
         css={writingInput}
