@@ -17,13 +17,18 @@ function TaskBox({ studyInfo, studyId, setSelectedId }) {
   const [taskList, setTaskList] = useState([]);
 
   const taskHandler = () => {
-    request(
-      `/api/study-progress/sub/${studyId}/member/${select.memberId}`
-    ).then((res) => {
-      setTaskList(res.data.data.taskList);
-      // console.log(res.data.data.taskList);
-      console.log(res);
-    });
+    request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
+      .then((res) => {
+        console.log(res);
+        return res.data.data.taskList.sort(
+          (a, b) => new Date(a.deadline) - new Date(b.deadline)
+        );
+      })
+      .then((res) => {
+        setTaskList(res);
+        console.log(res);
+        // console.log(res);
+      });
   };
   useEffect(() => {
     taskHandler();
@@ -51,7 +56,11 @@ function TaskBox({ studyInfo, studyId, setSelectedId }) {
         {taskList &&
           taskList.map((task) => (
             <div key={task.taskId}>
-              <TaskItem task={task} select={select} />
+              <TaskItem
+                task={task}
+                select={select}
+                taskHandlerf={taskHandler}
+              />
             </div>
           ))}
       </div>

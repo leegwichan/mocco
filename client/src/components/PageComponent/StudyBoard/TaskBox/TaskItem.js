@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
 import AuthTaskModal from '../AuthTask/AuthTaskModal';
 
-function TaskItem({ task, select }) {
+function TaskItem({ task, select, taskHandlerf }) {
   const [isOpen, setIsOpen] = useState(false);
 
   // const onChange = () => {
@@ -66,6 +66,7 @@ function TaskItem({ task, select }) {
               setIsOpen={setIsOpen}
               isOpen={isOpen}
               select={select}
+              taskHandlerf={taskHandlerf}
             />
           )}
         </div>
