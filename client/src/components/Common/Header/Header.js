@@ -50,13 +50,10 @@ function Header() {
     subscribeIdRef.current = data;
   };
 
-  const unsubscribeApi = (e) => {
-    e.preventDefault();
-    e.returnValue = '';
+  const unsubscribeApi = () => {
     const id = subscribeIdRef.current.subscribeId;
-    console.log('구독해제');
-    console.log(id);
-    request.delete(`/api/alarm/unsubscribe?subscribe-id=${id}`);
+    const apiUrl = process.env.REACT_APP_API_URL;
+    navigator.sendBeacon(`${apiUrl}/api/alarm/unsubscribe?subscribe-id=${id}`);
   };
 
   useEffect(() => {
@@ -64,8 +61,7 @@ function Header() {
   }, [subscribeId]);
 
   useEffect(() => {
-    window.addEventListener('beforeunload', unsubscribeApi);
-    window.removeEventListener('beforeunload', unsubscribeApi);
+    window.addEventListener('unload', unsubscribeApi);
   }, []);
 
   // 버튼 클릭 핸들러
