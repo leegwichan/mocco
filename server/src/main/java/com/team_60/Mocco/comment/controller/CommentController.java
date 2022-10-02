@@ -31,8 +31,8 @@ public class CommentController {
 
         List<Comment> findComments = commentService.findCommentsByStudyId(studyId);
         List<CommentDto.Response> responses = mapper.commentsToCommentResponseDtos(findComments);
-        return new ResponseEntity(
-                new SingleResponseDto(responses), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(responses), HttpStatus.OK);
     }
 
     @GetMapping("/{comment-id}")
@@ -40,8 +40,8 @@ public class CommentController {
 
         Comment findComment = commentService.findComment(commentId);
         CommentDto.Response response = mapper.commentToCommentResponseDto(findComment);
-        return new ResponseEntity(
-                new SingleResponseDto(response), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @PostMapping
@@ -50,8 +50,8 @@ public class CommentController {
         Comment comment = mapper.commentPostDtoToComment(requestBody);
         Comment postComment = commentService.createComment(comment);
         CommentDto.Response response = mapper.commentToCommentResponseDto(postComment);
-        return new ResponseEntity(
-                new SingleResponseDto(response), HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{comment-id}")
@@ -62,8 +62,8 @@ public class CommentController {
         comment.setCommentId(commentId);
         Comment patchComment = commentService.updateComment(comment);
         CommentDto.Response response = mapper.commentToCommentResponseDto(patchComment);
-        return new ResponseEntity(
-                new SingleResponseDto(response), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @DeleteMapping("/{comment-id}")
@@ -71,8 +71,8 @@ public class CommentController {
         authenticationService.AuthenticationCheckWithId("commentId",commentId);
         Comment deleteComment = commentService.deleteComment(commentId);
         CommentDto.Response response = mapper.commentToCommentResponseDto(deleteComment);
-        return new ResponseEntity(
-                new SingleResponseDto(response), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
 
