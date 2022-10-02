@@ -33,53 +33,64 @@ const StudySection = ({ id }) => {
     <div>
       <div css={container}>
         <div css={top_container}>
-          <div>
-            <span className="title">{studyInfo.teamName}</span>
-            <Button type={'small_white'} text={'수정'} onClick={editHandler} />
+          <div css={titleContainer}>
+            <div css={title}>{studyInfo.teamName}</div>
+            {studyInfo.member.memberId === userInfo.memberId && (
+              <div className="btn">
+                <Button
+                  type={'small_white'}
+                  text={'수정'}
+                  onClick={editHandler}
+                />
 
-            <Button type={'small_grey'} text={'삭제'} onClick={deleteHandler} />
+                <Button
+                  type={'small_grey'}
+                  text={'삭제'}
+                  onClick={deleteHandler}
+                />
+              </div>
+            )}
           </div>
           <div css={info}>
             <span className="info">{`${studyInfo.startDate} ~ ${studyInfo.endDate}`}</span>
             <span className="info">{`${studyInfo.capacity}명`}</span>
             {studyInfo.member?.nickname ? (
-              <div>
-                <Link
-                  to={`/main/${studyInfo.member.nickname}`}
-                  css={css`
-                    text-decoration: none;
-                  `}
-                >
-                  <span className="main_link">
-                    {studyInfo.member.profileImage}
-                  </span>
-                </Link>
-                <Link
-                  to={`/main/${studyInfo.member.memberId}`}
-                  css={css`
-                    text-decoration: none;
-                  `}
-                >
+              <Link
+                to={`/main/${studyInfo.member.nickname}`}
+                css={css`
+                  text-decoration: none;
+                `}
+              >
+                <div css={profile}>
+                  <img
+                    css={image}
+                    src={studyInfo.member.profileImage}
+                    alt="profile"
+                  />
                   <span className="main_link">{studyInfo.member.nickname}</span>
-                </Link>
-              </div>
+                </div>
+              </Link>
             ) : null}
           </div>
         </div>
         <div>
           <div className="detail_title">스터디 요약</div>
+          <hr />
           <div className="study_content">{studyInfo.summary}</div>
         </div>
         <div>
           <div className="detail_title">스터디 상세 설명</div>
+          <hr />
           <div className="study_content">{studyInfo.detail}</div>
         </div>
         <div>
           <div className="detail_title">스터디 규칙</div>
+          <hr />
           <div className="study_content">{studyInfo.rule}</div>
         </div>
         <div css={task_container}>
           <div className="task_title">스터디 Task</div>
+          <hr />
           {studyInfo.taskList &&
             studyInfo.taskList.map((task, idx) => (
               <TaskItem task={task} key={task.taskId} idx={idx} />
@@ -97,22 +108,22 @@ const container = css`
   flex-direction: column;
   .detail_title {
     font-size: 25px;
-    padding-bottom: 23px;
+    padding-bottom: 15px;
     /* border-bottom: 2px solid black; */
-    box-shadow: 0px 8px 2px -2px rgba(0, 0, 0, 0.25);
+    /* box-shadow: 0px 8px 2px -2px rgba(0, 0, 0, 0.25); */
+    /* box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%); */
+  }
+
+  hr {
+    box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 5%);
+    height: 5px;
+    border: 0;
+    background: #d1d1d1;
   }
   .study_content {
     font-size: 20px;
     padding-top: 36px;
     margin-bottom: 118px;
-  }
-
-  .main_link {
-    color: black;
-    &:hover {
-      cursor: pointer;
-      color: #066ff2;
-    }
   }
 `;
 
@@ -120,11 +131,7 @@ const top_container = css`
   display: flex;
   justify-content: space-between;
   margin-bottom: 17px;
-  .title {
-    font-size: 35px;
-    margin-right: 37px;
-    color: #000000;
-  }
+
   .info {
     font-size: 25px;
     color: #066ff2;
@@ -137,6 +144,20 @@ const top_container = css`
   }
 `;
 
+const titleContainer = css`
+  display: flex;
+
+  .btn {
+    padding-top: 10px;
+  }
+`;
+
+const title = css`
+  font-size: 35px;
+  margin-right: 37px;
+  color: #000000;
+`;
+
 const info = css`
   display: flex;
   flex-direction: column;
@@ -147,7 +168,26 @@ const task_container = css`
   padding-bottom: 118px;
   .task_title {
     font-size: 25px;
-    padding-bottom: 23px;
-    box-shadow: 0px 8px 2px -2px rgba(0, 0, 0, 0.25);
+    padding-bottom: 15px;
   }
+`;
+
+const profile = css`
+  display: flex;
+  align-items: center;
+
+  .main_link {
+    color: black;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+  }
+`;
+
+const image = css`
+  width: 50px;
+  height: 50px;
+  /* border: 1px solid red; */
+  margin-right: 10px;
 `;

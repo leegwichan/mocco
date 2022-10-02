@@ -62,7 +62,7 @@ const container = css`
   height: 170px;
   margin-bottom: 25px;
   border-radius: 15px;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
   padding: 20px;
   font-size: 20px;
   display: flex;

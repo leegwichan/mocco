@@ -63,47 +63,22 @@ const CommentSection = ({
     <div>
       <div>
         <div css={container}>
-          <div>
-            <Link
-              to={`/main/${member.memberId}`}
-              css={css`
-                text-decoration: none;
-              `}
-            >
-              <span className="main_link">
-                {/* <img
-                  src={member.profileImage}
-                  alt="프로필 이미지"
-                  css={css`
-                    width: 50px;
-                    height: 50px;
-                  `}
-                /> */}
-                {member.profileImage}
-              </span>
-            </Link>
-
-            <Link
-              to={`/main/${member.memberId}`}
-              css={css`
-                text-decoration: none;
-              `}
-            >
-              <span
-                className="main_link"
-                css={css`
-                  margin: 12px;
-                `}
-              >
-                {member.nickname}
-              </span>
-            </Link>
-            {userInfo.memberId === studyInfo.member.memberId ? (
-              <span>
-                <Button type="small_lightblue" text="스터디장" />
-              </span>
-            ) : null}
-          </div>
+          <Link
+            to={`/main/${member.memberId}`}
+            css={css`
+              text-decoration: none;
+            `}
+          >
+            <div css={profile}>
+              <img src={member.profileImage} alt="프로필 이미지" css={image} />
+              <span className="main_link">{member.nickname}</span>
+              {userInfo.memberId === studyInfo.member.memberId ? (
+                <span>
+                  <Button type="small_lightblue" text="스터디장" />
+                </span>
+              ) : null}
+            </div>
+          </Link>
           <div
             css={css`
               margin-top: 16px;
@@ -164,7 +139,7 @@ const container = css`
   margin-bottom: 25px;
   margin-top: 30px;
   border-radius: 15px;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
   padding: 20px;
   font-size: 20px;
   word-break: break-all;
@@ -208,4 +183,24 @@ const btn_container = css`
   justify-content: flex-end;
   padding: 0 20px;
   margin-top: 10px;
+`;
+
+const profile = css`
+  display: flex;
+  align-items: center;
+
+  .main_link {
+    color: black;
+    margin: 12px;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+  }
+`;
+
+const image = css`
+  width: 50px;
+  height: 50px;
+  /* border: 1px solid red; */
 `;

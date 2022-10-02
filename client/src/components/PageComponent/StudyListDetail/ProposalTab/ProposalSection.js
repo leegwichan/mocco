@@ -55,31 +55,21 @@ function ProposalSection({ proposal, getProposalInfof }) {
 
   return (
     <div css={container}>
-      <div>
-        <Link
-          to={`/main/${proposal.member.nickname}`}
-          css={css`
-            text-decoration: none;
-          `}
-        >
-          <span className="main_link">{proposal.member.profileImage}</span>
-        </Link>
-        <Link
-          to={`/main/${proposal.member.nickname}`}
-          css={css`
-            text-decoration: none;
-          `}
-        >
-          <span
-            className="main_link"
-            css={css`
-              margin: 0px 12px;
-            `}
-          >
-            {proposal.member.nickname}
-          </span>
-        </Link>
-      </div>
+      <Link
+        to={`/main/${proposal.member.memberId}`}
+        css={css`
+          text-decoration: none;
+        `}
+      >
+        <div css={profile}>
+          <img
+            src={proposal.member.profileImage}
+            alt="프로필 이미지"
+            css={image}
+          />
+          <span className="main_link">{proposal.member.nickname}</span>
+        </div>
+      </Link>
       <div
         css={css`
           margin-top: 16px;
@@ -88,7 +78,6 @@ function ProposalSection({ proposal, getProposalInfof }) {
         {proposal.content}
       </div>
       <div css={button_container}>
-        {' '}
         <Button
           type={'small_blue'}
           text={'수락'}
@@ -112,7 +101,7 @@ const container = css`
   margin-bottom: 25px;
   margin-top: 30px;
   border-radius: 15px;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
   padding: 20px;
   font-size: 20px;
   word-break: break-all;
@@ -130,4 +119,24 @@ const button_container = css`
   margin-top: 16px;
   display: flex;
   justify-content: flex-end;
+`;
+
+const profile = css`
+  display: flex;
+  align-items: center;
+
+  .main_link {
+    color: black;
+    margin: 12px;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+  }
+`;
+
+const image = css`
+  width: 50px;
+  height: 50px;
+  /* border: 1px solid red; */
 `;

@@ -53,29 +53,22 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   return (
     <div css={container}>
       <div className="reply_box">
-        <div>
-          <Link
-            to={`/main/${member.nickname}`}
-            css={css`
-              text-decoration: none;
-            `}
-          >
-            <span className="main_link">{member.profileImage}</span>
-          </Link>
-          <Link
-            to={`/main/${member.nickname}`}
-            css={css`
-              text-decoration: none;
-            `}
-          >
+        <Link
+          to={`/main/${member.memberId}`}
+          css={css`
+            text-decoration: none;
+          `}
+        >
+          <div css={profile}>
+            <img src={member.profileImage} alt="프로필 이미지" css={image} />
             <span className="main_link">{member.nickname}</span>
-          </Link>
-          {userInfo.memberId === studyInfo.member.memberId ? (
-            <span>
-              <Button type="small_lightblue" text="스터디장" />
-            </span>
-          ) : null}
-        </div>
+            {userInfo.memberId === studyInfo.member.memberId ? (
+              <span>
+                <Button type="small_lightblue" text="스터디장" />
+              </span>
+            ) : null}
+          </div>
+        </Link>
         <div
           css={css`
             margin-top: 16px;
@@ -121,7 +114,7 @@ const container = css`
     width: 990px;
     margin-bottom: 25px;
     border-radius: 15px;
-    box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
     padding: 20px;
     font-size: 20px;
 
@@ -165,4 +158,24 @@ const btn_container = css`
   justify-content: flex-end;
   padding: 0 20px;
   margin-top: 10px;
+`;
+
+const profile = css`
+  display: flex;
+  align-items: center;
+
+  .main_link {
+    color: black;
+    margin: 12px;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+  }
+`;
+
+const image = css`
+  width: 50px;
+  height: 50px;
+  /* border: 1px solid red; */
 `;
