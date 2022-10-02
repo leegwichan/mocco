@@ -12,9 +12,10 @@ import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
 import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
-import PrivateRoute from './components/Common/PrivateRoute';
+import PrivateRoute from './components/Common/Authentication/PrivateRoute';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from './atom/atom';
+import PublicRoute from './components/Common/Authentication/PublicRoute';
 
 function App() {
   const isLogin = !!useRecoilValue(userInfoState);
@@ -30,8 +31,12 @@ function App() {
             <PrivateRoute authenticated={isLogin} element={<MakeStudy />} />
           }
         />
+        <Route
+          path="/login"
+          element={<PublicRoute authenticated={isLogin} element={<LogIn />} />}
+        />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
+        {/* <Route path="/login" element={<LogIn />} /> */}
         <Route path="/findpassword" element={<FindPassword />} />
         <Route path="/main/:id" element={<Main />} />
         <Route path="/studylist" element={<StudyList />} />
