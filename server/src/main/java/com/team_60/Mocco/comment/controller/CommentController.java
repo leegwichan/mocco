@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
-@Validated
+// @Validated  // TODO 이거 추가하면 Spring에서 주입을 안해준다.
 public class CommentController {
 
     private final CommentService commentService;
