@@ -39,6 +39,7 @@ public interface MemberMapper {
     Member githubRestClientUserInfoDtoToMember(GithubRestClientDto.UserInfo dto);
 
     default MemberDto.Response memberToMemberResponseDto(Member member){
+        if (member == null) return null;
         float evaluation = member.getMyInfo().getEvaluationNumber() == 0 ?
                 0 : (float) member.getMyInfo().getEvaluationTotal() / (float) member.getMyInfo().getEvaluationNumber();
 
@@ -76,6 +77,7 @@ public interface MemberMapper {
     }
 
     static MemberDto.SubResponse memberToMemberSubResponseDto(Member member){
+        if (member == null) return null;
         return new MemberDto.SubResponse(
                 member.getMemberId(),
                 member.getNickname(),
