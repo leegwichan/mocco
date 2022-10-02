@@ -193,6 +193,7 @@ function Header() {
                     handleLogoutClick={handleLogoutClick}
                     handleModifyClick={handleModifyClick}
                     alarm={alarm}
+                    setAlarm={setAlarm}
                   />
                 ) : null}
               </div>

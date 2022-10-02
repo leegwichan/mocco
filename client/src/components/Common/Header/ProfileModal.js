@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import request from '../../../api/index';
 import Button from '../Button';
 import Alarm from './Alarm';
 
@@ -7,7 +8,25 @@ function ProfileModal({
   handleLogoutClick,
   handleModifyClick,
   alarm,
+  setAlarm,
 }) {
+  // 삭제 버튼 클릭 핸들러
+  const handleDeleteAll = () => {
+    request
+      .delete(`/api/alarm?member-id=${userInfo.memberId}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    setAlarm([]);
+  };
+
+  const handleDeleteAlarm = (alarmId) => {
+    request.delete(`/api/alarm/${alarmId}`);
+    setAlarm(
+      alarm.filter((item) => {
+        if (item.alarmId !== alarmId) return item;
+      })
+    );
+  };
   return (
     <div
       css={css`
@@ -15,7 +34,7 @@ function ProfileModal({
         position: absolute;
         top: 83px;
         right: 0;
-        width: 300px;
+        width: 350px;
         height: 650px;
         padding: 1rem;
         flex-direction: column;
@@ -150,6 +169,7 @@ function ProfileModal({
               height: 100%;
               margin-right: 5%;
               font-size: 1.3rem;
+              text-align: center;
             `}
           >
             🔔
@@ -157,7 +177,7 @@ function ProfileModal({
           <div
             css={css`
               display: inline-block;
-              width: 50%;
+              width: 60%;
               height: 100%;
               font-size: 1.3rem;
             `}
@@ -165,9 +185,12 @@ function ProfileModal({
             내 알림
           </div>
           <button
+            onClick={() => {
+              handleDeleteAll(userInfo.memberId);
+            }}
             css={css`
               display: inline-block;
-              width: 35%;
+              width: 25%;
             `}
           >
             전체 삭제
@@ -184,7 +207,13 @@ function ProfileModal({
           `}
         >
           {alarm.map((al, idx) => {
-            return <Alarm key={idx} alarm={al} />;
+            return (
+              <Alarm
+                key={idx}
+                alarm={al}
+                handleDeleteAlarm={handleDeleteAlarm}
+              />
+            );
           })}
         </ul>
       </div>
