@@ -1,14 +1,21 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 
+const None = css`
+  text-decoration-line: none;
+  width: 100%;
+  @media all and (max-width: 767px) {
+    height: 30%;
+  }
+`;
+
 const Blue = css`
   background-color: #0b6ff2;
   border-radius: 8px;
   color: white;
   font-size: 14px;
   font-weight: 600;
-  width: 9vw;
-  max-width: 180px;
+  width: 100%;
   padding: 10px;
   display: flex;
   align-items: center;
@@ -22,15 +29,16 @@ const Blue = css`
       fill: #0b6ff2;
     }
   }
+  @media all and (max-width: 767px) {
+    height: 100%;
+  }
 `;
 
 const Icon = css`
   margin: 0px 6px 0px 14px;
   fill: white;
 `;
-const None = css`
-  text-decoration-line: none;
-`;
+
 function GitHubBtnBlue({ githubId }) {
   return (
     <a href={'https://github.com/' + githubId} css={None}>

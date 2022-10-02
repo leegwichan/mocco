@@ -30,13 +30,7 @@ public class SseService {
         SseEmitter emitter = new SseEmitter(1 * 60 * 1000L);
         String emitterId = member.getMemberId() + "_" + System.currentTimeMillis();
         sseEmitters.put(emitterId, emitter);
-
-        try{
-            emitter.send("CONNECT", MediaType.APPLICATION_JSON);
-            log.info("구독 성공! memberId : {}", member.getMemberId());
-        } catch (Exception e){
-            throw new BusinessLogicException(ExceptionCode.FAIL_SSE_CONNECT);
-        }
+        log.info("구독 성공! memberId : {}", member.getMemberId());
 
         emitter.onTimeout(() -> sseEmitters.remove(emitterId));
         emitter.onCompletion(() -> sseEmitters.remove(emitterId));

@@ -1,30 +1,41 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 
+const None = css`
+  text-decoration-line: none;
+  width: 100%;
+  @media all and (max-width: 767px) {
+    height: 30%;
+  }
+`;
+
 const gray = css`
   background-color: #999999;
   border-radius: 8px;
   color: white;
   font-size: 14px;
   font-weight: 600;
-  width: 110%;
-  padding: 7px;
+  width: 100%;
+  padding: 10px;
   padding-bottom: 8px;
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
   border: none;
   display: flex;
+  align-items: center;
+  justify-content: center;
   :hover {
     background-color: #0b6ff2;
     color: white;
+  }
+  @media all and (max-width: 767px) {
+    height: 100%;
   }
 `;
 const icon = css`
   margin: 0px 6px 0px 14px;
   fill: white;
 `;
-const None = css`
-  text-decoration-line: none;
-`;
+
 function GitHubBtnMyGray() {
   const connectURI = `https://github.com/login/oauth/authorize?client_id=Iv1.56f7d0178056b5a9&redirect_uri=http://localhost:3000/oauthcallback`;
   return (
