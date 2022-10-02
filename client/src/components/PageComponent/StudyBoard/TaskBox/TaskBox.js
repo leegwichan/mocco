@@ -16,6 +16,7 @@ function TaskBox({ studyInfo, studyId, setSelectedId }) {
   });
   const [taskList, setTaskList] = useState([]);
 
+  // task가 날짜순으로 들어오도록 구현
   const taskHandler = () => {
     request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
       .then((res) => {

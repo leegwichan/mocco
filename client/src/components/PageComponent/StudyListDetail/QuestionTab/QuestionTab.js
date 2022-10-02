@@ -44,7 +44,13 @@ function QuestionTab() {
               />
             </div>
           ) : (
-            <DeletedComment key={idx} />
+            <div key={comment.commentId}>
+              <DeletedComment key={idx} />
+              <ReplySection
+                replys={comment.replyList}
+                getCommentInfof={getCommentInfo}
+              />
+            </div>
           )
         )}
       </ul>
