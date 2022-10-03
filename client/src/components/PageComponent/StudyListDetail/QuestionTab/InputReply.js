@@ -72,6 +72,11 @@ const container = css`
   svg {
     margin-left: 20px;
     margin-top: -10px;
+
+    @media all and (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
   }
 `;
 
@@ -94,7 +99,12 @@ const replyInput = css`
     ::-webkit-scrollbar {
       display: none;
     }
+
+    @media all and (max-width: 768px) {
+      width: 96%;
+    }
   }
+
   .button_container {
     display: flex;
     justify-content: flex-end;

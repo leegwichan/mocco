@@ -43,7 +43,7 @@ const container = css`
 const tabTitle = css`
   display: flex;
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 600;
 
   .tab {
     padding: 17px;
@@ -56,13 +56,26 @@ const tabTitle = css`
     color: #5b5d61;
     transition: all 0.1s linear;
     margin-bottom: -2px;
+    margin-right: 3px;
+    /* -webkit-border-top-left-radius: 15px;
+    -webkit-border-top-right-radius: 15px;
+    -moz-border-radius-topleft: 15px;
+    -moz-border-radius-topright: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px; */
   }
   .tab:hover,
   .focused {
+    /* background-color: #ffffff; */
     color: #0b6ff2;
-    border-top: 10px solid #0b6ff2;
-    padding-top: 8px;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #0b6ff2;
+    /* padding-top: 8px; */
+    /* border-bottom: 2px solid #fff; */
+  }
+
+  @media all and (max-width: 768px) {
+    font-size: 15px;
+    font-weight: 600;
   }
 `;
 

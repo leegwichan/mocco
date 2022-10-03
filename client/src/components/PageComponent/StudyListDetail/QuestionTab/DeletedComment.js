@@ -11,6 +11,7 @@ function DeletedComment() {
         width="60"
         height="60"
         stroke="#a4a4a4"
+        className="delete"
       >
         <path
           strokeLinecap="round"
@@ -44,4 +45,15 @@ const container = css`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media all and (max-width: 768px) {
+    font-size: 15px;
+    height: 145px;
+
+    .delete {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 5px;
+    }
+  }
 `;

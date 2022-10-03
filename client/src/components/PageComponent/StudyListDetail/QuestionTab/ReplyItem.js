@@ -49,7 +49,6 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         width="50"
         height="50"
         fill="#0b6ff2"
-        className="bi bi-arrow-return-right"
         viewBox="0 0 16 16"
       >
         <path
@@ -135,6 +134,11 @@ const main = css`
   svg {
     margin-left: 20px;
     margin-top: 10px;
+
+    @media all and (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
   }
 `;
 
@@ -144,6 +148,7 @@ const container = css`
   align-items: flex-end;
   word-break: break-all;
   flex-grow: 1;
+
   .reply_box {
     width: 99%;
     margin-bottom: 25px;
@@ -159,6 +164,12 @@ const container = css`
         color: #066ff2;
       }
     }
+
+    @media all and (max-width: 768px) {
+      font-size: 15px;
+      width: 96%;
+      padding: 10px 20px;
+    }
   }
 
   .button_container {
@@ -172,6 +183,10 @@ const container = css`
     margin-right: 10px;
     font-size: 15px;
     color: #999999;
+
+    @media all and (max-width: 768px) {
+      font-size: 12px;
+    }
   }
 `;
 

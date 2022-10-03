@@ -69,6 +69,11 @@ const main = css`
 const arrow = css`
   margin-left: 20px;
   margin-top: 10px;
+
+  @media all and (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const mainContainer = css`
@@ -93,5 +98,20 @@ const container = css`
   .delete_text {
     color: #a4a4a4;
     font-weight: 500;
+  }
+
+  @media all and (max-width: 768px) {
+    width: 96%;
+    height: 145px;
+
+    svg {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 5px;
+    }
+
+    .delete_text {
+      font-size: 15px;
+    }
   }
 `;

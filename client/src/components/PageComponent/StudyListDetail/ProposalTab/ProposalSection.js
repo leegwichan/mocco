@@ -11,13 +11,10 @@ function ProposalSection({ proposal, getProposalInfof }) {
   const userInfo = useRecoilValue(userInfoState);
 
   const selectHandler = () => {
-    // if (studyInfo.member.memberId !== proposal.member.memberId) {
-    //   alert('권한이 없습니다');
-    // } else {
     return request
       .patch(`/api/proposals/approve/${proposal.proposalId}`)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        // console.log(res);
         getProposalInfof();
       })
       .catch((err) => {
@@ -27,31 +24,23 @@ function ProposalSection({ proposal, getProposalInfof }) {
   };
 
   const refuseHandler = () => {
-    if (studyInfo.member.memberId !== proposal.member.memberId) {
-      alert('권한이 없습니다');
-    } else {
-      return request
-        .patch(`/api/proposals/denied/${proposal.proposalId}`)
-        .then(() => {
-          getProposalInfof();
-        })
-        .catch((err) => {
-          alert(err.response.data.message);
-        });
-    }
+    return request
+      .patch(`/api/proposals/denied/${proposal.proposalId}`)
+      .then(() => {
+        getProposalInfof();
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+      });
   };
 
   const deleteHander = () => {
-    if (userInfo.memberId !== proposal.member.memberId) {
-      alert('권한이 없습니다');
-    } else {
-      return request
-        .delete(`/api/proposals/${proposal.proposalId}`)
-        .then(() => {
-          getProposalInfof();
-        })
-        .catch((err) => alert(err.response.data.message));
-    }
+    return request
+      .delete(`/api/proposals/${proposal.proposalId}`)
+      .then(() => {
+        getProposalInfof();
+      })
+      .catch((err) => alert(err.response.data.message));
   };
 
   return (
@@ -80,7 +69,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
       </div>
       <div css={buttonContainer}>
         <span className="day">{proposal.createdAt}</span>
-        {studyInfo.member.memberId === proposal.member.memberId && (
+        {studyInfo.member.memberId !== proposal.member.memberId && (
           <>
             <Button
               type={'small_blue'}
@@ -127,6 +116,15 @@ const container = css`
     margin-right: 10px;
     font-size: 15px;
     color: #999999;
+
+    @media all and (max-width: 768px) {
+      font-size: 12px;
+    }
+  }
+
+  @media all and (max-width: 768px) {
+    font-size: 15px;
+    padding: 10px 20px;
   }
 `;
 
@@ -153,4 +151,5 @@ const profile = css`
 const image = css`
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 `;

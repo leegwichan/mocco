@@ -157,6 +157,10 @@ const container = css`
     color: #999999;
     margin-top: 10px;
     margin-right: 10px;
+
+    @media all and (max-width: 768px) {
+      font-size: 12px;
+    }
   }
 
   .main_link {
@@ -165,6 +169,11 @@ const container = css`
       cursor: pointer;
       color: #066ff2;
     }
+  }
+
+  @media all and (max-width: 768px) {
+    font-size: 15px;
+    padding: 10px 20px;
   }
 `;
 

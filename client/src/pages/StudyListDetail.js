@@ -5,20 +5,20 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import request from '../api';
 import { singleStudyState } from '../atom/atom';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import Footer from '../components/Common/Footer';
 
 function StudyListDetail() {
   const { id } = useParams();
-  const [studyInfo, setStudyInfo] = useRecoilState(singleStudyState);
+  const setStudyInfo = useSetRecoilState(singleStudyState);
 
   const getStudyInfo = () => {
     request(`/api/study-info/board/${id}`)
       .then((res) => {
-        console.log('나는 전체 데이터', res);
+        // console.log('나는 전체 데이터', res);
         setStudyInfo(res.data.data);
-        console.log(studyInfo);
-        console.log(res.data.data.member.nickname);
+        // console.log(studyInfo);
+        // console.log(res.data.data.member.nickname);
       })
       .catch((err) => console.log(err));
   };
