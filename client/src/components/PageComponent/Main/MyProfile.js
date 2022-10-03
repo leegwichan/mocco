@@ -132,8 +132,8 @@ function MyProfile({ githubId, isConnectedGit, isOwner }) {
           <div css={name}>{owner.nickname}</div>
           {owner.evaluation > 0 ? (
             <div css={Evaluation}>
-              <ProfileStar evaluation={owner.evaluation} />
-              평점 {owner.evaluation}
+              <ProfileStar evaluation={owner.evaluation.toFixed(1)} />
+              평점 {owner.evaluation.toFixed(1)}
             </div>
           ) : null}
         </section>

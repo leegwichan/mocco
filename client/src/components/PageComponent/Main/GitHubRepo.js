@@ -24,10 +24,17 @@ const gitHubBtn = css`
   height: 65px;
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
   border: none;
+  .icon {
+    margin-right: 8px;
+    fill: white;
+  }
   :hover {
     background-color: white;
     a {
       color: #0b6ff2;
+    }
+    .icon {
+      fill: #0b6ff2;
     }
   }
   @media all and (max-width: 767px) {
@@ -36,6 +43,7 @@ const gitHubBtn = css`
     font-size: 11px;
   }
 `;
+
 const textdeco = css`
   text-decoration-line: none;
   color: white;
@@ -57,6 +65,10 @@ const gitHubBtnGray = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  .icon {
+    margin-right: 8px;
+    fill: white;
+  }
 
   @media all and (max-width: 767px) {
     width: 30%;
@@ -65,10 +77,6 @@ const gitHubBtnGray = css`
   }
 `;
 
-const icon = css`
-  margin-right: 8px;
-  fill: white;
-`;
 function GitHubRepo({ githubRepositoryList }) {
   return (
     <section css={container}>
@@ -82,7 +90,7 @@ function GitHubRepo({ githubRepositoryList }) {
         {githubRepositoryList && githubRepositoryList[0] ? (
           <a href={githubRepositoryList[0]} css={textdeco}>
             <svg
-              css={icon}
+              className="icon"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -95,7 +103,7 @@ function GitHubRepo({ githubRepositoryList }) {
         ) : (
           <>
             <svg
-              css={icon}
+              className="icon"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -117,7 +125,7 @@ function GitHubRepo({ githubRepositoryList }) {
         {githubRepositoryList && githubRepositoryList[1] ? (
           <a href={githubRepositoryList[1]} css={textdeco}>
             <svg
-              css={icon}
+              className="icon"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -130,7 +138,7 @@ function GitHubRepo({ githubRepositoryList }) {
         ) : (
           <>
             <svg
-              css={icon}
+              className="icon"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -153,7 +161,7 @@ function GitHubRepo({ githubRepositoryList }) {
         {githubRepositoryList && githubRepositoryList[2] ? (
           <a href={githubRepositoryList[2]} css={textdeco}>
             <svg
-              css={icon}
+              className="icon"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -166,7 +174,7 @@ function GitHubRepo({ githubRepositoryList }) {
         ) : (
           <>
             <svg
-              css={icon}
+              className="icon"
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"

@@ -24,7 +24,7 @@ const Container = css`
 const Slides_Wraper = css`
   width: 100%;
   max-width: 1000px;
-  padding: 2.5vw; //동적
+  padding: 2.5vw;
   margin: 0 auto;
   overflow: hidden;
   box-sizing: border-box;
@@ -81,8 +81,11 @@ function Carousel({ studyArr, progress, done, clickHandler }) {
       (slideWidth + slideMargin) * length - slideMargin + 'px';
   }, [length]);
 
+  useEffect(() => {
+    slides.current.style.left = -currentIdx * 320 + 'px';
+  }, [currentIdx]);
+
   function moveSlide(num) {
-    slides.current.style.left = -num * 320 + 'px';
     setCurrentIdx(num);
   }
 

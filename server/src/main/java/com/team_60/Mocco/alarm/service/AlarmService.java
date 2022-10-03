@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface AlarmService {
     SseEmitter publishAlarm(long memberId);
+    void unsubscribeAlarm(String subscribeId);
     List<Alarm> findAlarmsByMemberId(long memberId);
     void deleteAlarm(long alarmId);
     void deleteAlarmsByMemberId(long memberId);

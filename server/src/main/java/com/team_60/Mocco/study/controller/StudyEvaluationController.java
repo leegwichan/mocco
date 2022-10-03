@@ -1,7 +1,7 @@
 package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.aop.AuthenticationService;
+import com.team_60.Mocco.helper.interceptor.IdRequired;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.dto.StudyEvaluationDto;
 import com.team_60.Mocco.study.entity.Study;
@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
@@ -25,12 +26,12 @@ public class StudyEvaluationController {
 
     private final StudyEvaluationService studyEvaluationService;
     private final StudyEvaluationMapper mapper;
-    private final AuthenticationService authenticationService;
 
-    @GetMapping("/{study-id}/member/{member-id}")
+    @IdRequired
+    @GetMapping("/{study-id}")
     public ResponseEntity getEvaluationInfo(@PathVariable("study-id") @Positive long studyId,
-                                            @PathVariable("member-id") @Positive long memberId){
-        authenticationService.AuthenticationCheckWithId("studyId",studyId);
+                                            HttpServletRequest request){
+        long memberId = (long) request.getAttribute("memberId");
         Study study = studyEvaluationService.getStudyByStudyEvaluation(studyId);
         StudyEvaluationDto.Response response = mapper.studyToStudyEvaluationResponseDto(study, memberId);
 
@@ -38,9 +39,10 @@ public class StudyEvaluationController {
                 new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
+    @IdRequired
     @PostMapping
-    public ResponseEntity postEvaluationInfo(@RequestBody @Valid StudyEvaluationDto.Post requestBody){
-        authenticationService.AuthenticationCheckWithDto(requestBody);
+    public ResponseEntity postEvaluationInfo(@RequestBody @Valid StudyEvaluationDto.Post requestBody, HttpServletRequest request){
+        requestBody.setMemberId((Long) request.getAttribute("memberId"));
         List<Member> members = mapper.StudyEvaluationPostDtoToMemberList(requestBody);
         studyEvaluationService.evaluateStudyMembers(requestBody.getStudyId(), requestBody.getMemberId(), members);
 

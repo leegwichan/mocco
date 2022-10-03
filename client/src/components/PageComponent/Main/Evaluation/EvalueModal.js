@@ -17,15 +17,30 @@ const Container = css`
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
-  padding: 49px 31px 18px 31px;
+  /* padding: 49px 31px 18px 31px; */
+  padding: 9% 6% 4% 6%;
+
   .title {
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 700;
     font-size: 30px;
     line-height: 36px;
     color: #0b6ff2;
     margin-bottom: 31px;
+  }
+  @media all and (max-width: 1023px) {
+    height: 55vw;
+    min-height: 400px;
+    width: 50vw;
+    min-width: 350px;
+    .title {
+      font-size: 3vw;
+      margin-bottom: 15px;
+    }
+  }
+  @media all and (max-width: 700px) {
+    .title {
+      font-size: 21px;
+    }
   }
 `;
 
@@ -38,6 +53,16 @@ const InnerContainer = css`
   padding: 23px 26px 20px 26px;
   :overflow-y {
     overflow: scroll;
+  }
+  @media all and (max-width: 1023px) {
+    height: 50vw;
+    min-height: 280px;
+    width: 43vw;
+    min-width: 300px;
+    padding: 4%;
+    .title {
+      font-size: 3vw;
+    }
   }
 `;
 
@@ -52,9 +77,13 @@ const Date = css`
   display: flex;
   flex-direction: row-reverse;
   margin-bottom: 10px;
+  font-size: 15px;
+  @media all and (max-width: 767px) {
+    font-size: 10px;
+  }
 `;
 
-const ConstentContainer = css`
+const ContentContainer = css`
   width: 427px;
   height: 60px;
   background: #f0f8ff;
@@ -65,6 +94,21 @@ const ConstentContainer = css`
   display: flex;
   align-items: center;
   justify-content: space-around;
+  span {
+    width: 11vw;
+    text-align: center;
+  }
+  @media all and (max-width: 1023px) {
+    border-radius: 8px;
+    height: 5vw;
+    min-height: 39px;
+    width: 100%;
+    min-width: 280px;
+    span {
+      width: 120px;
+      text-align: center;
+    }
+  }
 `;
 
 function EvalueModal({
@@ -165,7 +209,7 @@ function EvalueModal({
         {studyInfo.memberList ? (
           studyInfo.memberList.map(({ memberId, nickname }) => (
             <div key={memberId}>
-              <div css={ConstentContainer}>
+              <div css={ContentContainer}>
                 <span>{nickname}</span>
                 <Star member={memberId} fnc={fnc} />
               </div>
