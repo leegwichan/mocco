@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React, { useEffect, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import GitHubBtnBlue from './GitHubBtn/GitHubBtnBlue';
 import GitHubBtnMyGray from './GitHubBtn/GitHubBtnMyGray';
@@ -7,18 +7,18 @@ import Avatar from '../../Common/Avatar';
 import { useRecoilValue } from 'recoil';
 import { mypageOwnerAtom } from '../../../atom/atom';
 import ProfileStar from './ProfileStar';
+
 const container = css`
   width: 15%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  border: 1px solid red;
+  justify-content: space-between;
   @media all and (max-width: 767px) {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    margin-bottom: 20px;
   }
 `;
 
@@ -30,13 +30,21 @@ const roundImg = css`
 const name = css`
   font-size: 20px;
   font-weight: 500;
+  margin: 2px;
+  @media all and (max-width: 767px) {
+    font-size: 25px;
+    margin: 8px;
+  }
 `;
 
 const nameLocation = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
+  height: 100%;
+  margin-bottom: 5px;
   .locationIcon {
     color: #4391f9;
     width: 17px;
@@ -44,39 +52,54 @@ const nameLocation = css`
   .smallText {
     font-size: 8px;
   }
-  display: flex;
-  .locationText {
+  .location {
     display: flex;
     justify-content: center;
     margin-bottom: -2px;
     width: 100%;
   }
+  @media all and (max-width: 767px) {
+    .location {
+      display: flex;
+      justify-content: center;
+      margin-bottom: -5px;
+    }
+    .smallText {
+      font-size: 12px;
+    }
+    .locationIcon {
+    }
+  }
 `;
+
 const Evaluation = css`
   display: flex;
   align-items: center;
   font-size: smaller;
+  @media all and (max-width: 767px) {
+    /* height: 80%; */
+  }
 `;
 
 const withoutImg = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid red;
   height: 100%;
   max-height: 50%;
   width: 100%;
   justify-content: space-between;
 
   @media all and (max-width: 767px) {
-    width: 50%;
-    height: 170px;
+    width: 65%;
+    height: 150px;
     justify-content: space-between;
   }
 `;
 
 function MyProfile({ githubId, isConnectedGit, isOwner }) {
   const owner = useRecoilValue(mypageOwnerAtom);
+
   return (
     <section css={container}>
       <section css={roundImg}>
@@ -89,7 +112,7 @@ function MyProfile({ githubId, isConnectedGit, isOwner }) {
       <section css={withoutImg}>
         <section css={nameLocation}>
           {owner.location && (
-            <div className="locationText">
+            <div className="location">
               <svg
                 className="locationIcon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -107,13 +130,13 @@ function MyProfile({ githubId, isConnectedGit, isOwner }) {
           )}
 
           <div css={name}>{owner.nickname}</div>
+          {owner.evaluation > 0 ? (
+            <div css={Evaluation}>
+              <ProfileStar evaluation={owner.evaluation.toFixed(1)} />
+              평점 {owner.evaluation.toFixed(1)}
+            </div>
+          ) : null}
         </section>
-        {owner.evaluation > 0 ? (
-          <div css={Evaluation}>
-            <ProfileStar evaluation={owner.evaluation} />
-            평점 {owner.evaluation}
-          </div>
-        ) : null}
         {isConnectedGit ? (
           <GitHubBtnBlue githubId={githubId} />
         ) : isOwner ? (

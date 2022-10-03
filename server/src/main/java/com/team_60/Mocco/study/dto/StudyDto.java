@@ -7,25 +7,13 @@ import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.dto.TaskDto;
 import lombok.*;
-import org.aspectj.lang.annotation.After;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
 public class StudyDto {
-
-    @AllArgsConstructor
-    @Getter
-    @Setter
-    public static class SubResponse{
-        private long studyId;
-        private String image;
-        private String teamName;
-        private int capacity;
-        private String summary;
-        private Study.StudyStatus studyStatus;
-    }
 
     @Getter
     @Setter
@@ -62,17 +50,26 @@ public class StudyDto {
 
         private List<TaskDto> taskList;
 
-        @Past(message = "시작 날짜는 오늘 날짜보다 이전이어야 합니다.")
-        @NotBlank(message = "시작 날짜는 빈칸일 수 없습니다.")
+        @Future(message = "시작 날짜는 오늘 날짜보다 이후이어야 합니다.")
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate startDate;
 
-        @Past(message = "종료 날짜는 오늘 날짜보다 이전이어야 합니다.")
-        @NotBlank(message = "종료 날짜는 빈칸일 수 없습니다.")
+        @Future(message = "종료 날짜는 오늘 날짜보다 이후이어야 합니다.")
         @JsonFormat(pattern = "yyyy-MM-dd")
         private LocalDate endDate;
     }
 
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class SubResponse{
+        private long studyId;
+        private String image;
+        private String teamName;
+        private int capacity;
+        private String summary;
+        private Study.StudyStatus studyStatus;
+    }
 
     @Getter
     @Setter
@@ -85,6 +82,7 @@ public class StudyDto {
         private String detail;
         private String rule;
         private int capacity;
+        private String image;
         private LocalDate startDate;
         private LocalDate endDate;
         private MemberDto.SubResponse member;
