@@ -8,21 +8,16 @@ import request from '../api/index';
 import { useLocation } from 'react-router-dom';
 import Footer from '../components/Common/Footer';
 
-const Header = css`
-  width: 100vw;
-  height: 4rem;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
 const MainContainer = css`
   width: 100vw;
-  height: calc(100vh - 64px);
-  padding-top: 60px;
+  height: calc(100vh - 4rem);
+  padding-top: 8rem;
 `;
 
 const ContentContainer = css`
-  max-width: 1200px;
+  max-width: 1260px;
   margin: auto;
+  padding: 0 2rem;
 `;
 
 const TitleAndButtonContainer = css`
@@ -124,7 +119,6 @@ function StudyList() {
 
   return (
     <>
-      <header css={Header} />
       <main css={MainContainer}>
         {studyLists ? (
           <div>
