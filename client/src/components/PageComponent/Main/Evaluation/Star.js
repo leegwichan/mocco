@@ -13,6 +13,10 @@ const RatingContainer = css`
 `;
 const RatingStar = css`
   width: 35px;
+
+  @media all and (max-width: 767px) {
+    width: 25px;
+  }
 `;
 
 function Star({ member, fnc }) {
