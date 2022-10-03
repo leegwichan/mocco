@@ -53,6 +53,7 @@ const LastListAlert = css`
   font-size: 1.5rem;
 `;
 
+// URI의 쿼리 찾는 함수
 function getSearchQuery() {
   const { search } = useLocation();
   return useMemo(() => new URLSearchParams(search), [search]);
@@ -66,15 +67,31 @@ function StudyList() {
     getSearchQuery().get('search')
   );
 
+  // 검색어 변경시 스터디리스트 받아옴
   useEffect(() => {
     getStudyLists();
   }, [searchContent]);
 
+  const observerRef = useRef();
+  const boxRef = useRef(null);
+
+  // 관측요소가 관측된다면 관측요소의 관측 취소하고 스터디리스트를 새로 받아옴
+  const intersectionObserver = (entries, io) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        io.unobserve(entry.target);
+        getStudyLists();
+      }
+    });
+  };
+
+  // 스터디리스트가 바뀌면 즉 추가 로딩이 있으면 IntersectionObserver의 관측 요소 변경
   useEffect(() => {
-    obeserverRef.current = new IntersectionObserver(intersectionObserver);
-    boxRef.current && obeserverRef.current.observe(boxRef.current);
+    observerRef.current = new IntersectionObserver(intersectionObserver);
+    boxRef.current && observerRef.current.observe(boxRef.current);
   }, [studyLists]);
 
+  // 스터디 리스트 받아오기 : 검색어 없을때 / 검색어 있을때
   const getStudyLists = () => {
     if (searchContent === null) {
       request(`/api/study-info/board?page=${apiPage}&size=20`)
@@ -105,17 +122,6 @@ function StudyList() {
     }
   };
 
-  const obeserverRef = useRef();
-  const boxRef = useRef(null);
-
-  const intersectionObserver = (entries, io) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        io.unobserve(entry.target);
-        getStudyLists();
-      }
-    });
-  };
   return (
     <>
       <header css={Header} />
