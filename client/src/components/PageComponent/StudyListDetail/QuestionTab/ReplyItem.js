@@ -43,68 +43,97 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   };
 
   return (
-    <div css={container}>
-      <div className="reply_box">
-        <Link
-          to={`/main/${member.memberId}`}
-          css={css`
-            text-decoration: none;
-          `}
-        >
-          <div css={profile}>
-            <img src={member.profileImage} alt="프로필 이미지" css={image} />
-            <span className="main_link">{member.nickname}</span>
-            {userInfo.memberId === studyInfo.member.memberId ? (
-              <span>
-                <Button type="small_lightblue" text="스터디장" />
-              </span>
-            ) : null}
+    <main css={main}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="50"
+        height="50"
+        fill="#0b6ff2"
+        className="bi bi-arrow-return-right"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fillRule="evenodd"
+          d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"
+        />
+      </svg>
+      <section css={container}>
+        <div className="reply_box">
+          <Link
+            to={`/main/${member.memberId}`}
+            css={css`
+              text-decoration: none;
+            `}
+          >
+            <div css={profile}>
+              <img src={member.profileImage} alt="프로필 이미지" css={image} />
+              <span className="main_link">{member.nickname}</span>
+              {userInfo.memberId === studyInfo.member.memberId ? (
+                <span>
+                  <Button type="small_lightblue" text="스터디장" />
+                </span>
+              ) : null}
+            </div>
+          </Link>
+          <div
+            css={css`
+              margin-top: 16px;
+            `}
+          >
+            {reply.content}
+            {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
           </div>
-        </Link>
-        <div
-          css={css`
-            margin-top: 16px;
-          `}
-        >
-          {reply.content}
-          {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
+          <div className="button_container">
+            <span className="day">{reply.createdAt}</span>
+            {userInfo.memberId === member.memberId && (
+              <>
+                <Button
+                  type={'small_white'}
+                  text={'수정'}
+                  onClick={editOpenHandler}
+                />
+                <Button
+                  type={'small_grey'}
+                  text={'삭제'}
+                  onClick={deleteHandler}
+                />
+              </>
+            )}
+          </div>
         </div>
-        <div className="button_container">
-          <span className="day">{reply.createdAt}</span>
-          {userInfo.memberId === member.memberId && (
-            <>
+        {isEditOpen && (
+          <div css={edit_container}>
+            <textarea css={edit_input} value={value} onChange={handleChange} />
+            <div css={btn_container}>
               <Button
                 type={'small_white'}
-                text={'수정'}
-                onClick={editOpenHandler}
+                text={'완료'}
+                onClick={handleClick}
               />
               <Button
                 type={'small_grey'}
-                text={'삭제'}
-                onClick={deleteHandler}
+                text={'취소'}
+                onClick={() => setIsEditOpen(false)}
               />
-            </>
-          )}
-        </div>
-      </div>
-      {isEditOpen && (
-        <div css={edit_container}>
-          <textarea css={edit_input} value={value} onChange={handleChange} />
-          <div css={btn_container}>
-            <Button type={'small_white'} text={'완료'} onClick={handleClick} />
-            <Button
-              type={'small_grey'}
-              text={'취소'}
-              onClick={() => setIsEditOpen(false)}
-            />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </section>
+    </main>
   );
 }
 
 export default ReplyItem;
+
+const main = css`
+  display: flex;
+  justify-content: space-between;
+
+  svg {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+`;
 
 const container = css`
   display: flex;
@@ -185,4 +214,5 @@ const profile = css`
 const image = css`
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 `;

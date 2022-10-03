@@ -186,8 +186,8 @@ const profile = css`
 `;
 
 const image = css`
-  width: 50px;
-  height: 50px;
-  /* border: 1px solid red; */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   margin-right: 10px;
 `;
