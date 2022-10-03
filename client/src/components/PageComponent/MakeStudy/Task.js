@@ -56,6 +56,8 @@ function Task({
   studyBoardForm,
   setStudyBoardForm,
   setIsButtonDisable,
+  startDate,
+  endMaximumDate,
 }) {
   // handle input change
   const handleTaskContentChange = (e) => {
@@ -96,7 +98,13 @@ function Task({
         `}
       >
         <input type="text" onChange={handleTaskContentChange} css={TaskInput} />
-        <input type="date" onChange={handleTaskDeadlineChange} css={DueDate} />
+        <input
+          type="date"
+          min={startDate}
+          max={endMaximumDate}
+          onChange={handleTaskDeadlineChange}
+          css={DueDate}
+        />
       </div>
     </li>
   );

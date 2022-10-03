@@ -1,10 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useCallback, useEffect, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import request from '../api/index';
 import TaskContainer from '../components/PageComponent/MakeStudy/TaskContainer';
 import Footer from '../components/Common/Footer';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
+import { useNavigate } from 'react-router-dom';
 
 const Header = css`
   width: 100vw;
@@ -248,9 +249,11 @@ function MakeStudy() {
     // console.log(studyBoardForm);
   };
 
+  // 취소 버튼 클릭 시 이전 페이지로 이동
+  const navigate = useNavigate();
   const handleCancelButton = (e) => {
     e.preventDefault();
-    console.log('취소');
+    navigate(-1);
   };
 
   // image 프리뷰 및 버튼 숨기기 위한 ref
@@ -299,9 +302,13 @@ function MakeStudy() {
   startDate = startDate.toISOString().slice(0, 10);
 
   // 스터디 최대 만료 날짜(180일 뒤)
-  let endMaximumDate = new Date(startDate);
-  endMaximumDate.setDate(endMaximumDate.getDate() + 180);
-  endMaximumDate = endMaximumDate.toISOString().slice(0, 10);
+  const [endMaximumDate, setEndMaximumDate] = useState();
+  useEffect(() => {
+    let emd = new Date(studyBoardForm.startDate);
+    emd.setDate(emd.getDate() + 180);
+    emd = emd.toISOString().slice(0, 10);
+    setEndMaximumDate(emd);
+  }, [studyBoardForm]);
 
   return (
     <>
@@ -364,6 +371,7 @@ function MakeStudy() {
                     <input
                       type="date"
                       name="studyEnd"
+                      min={studyBoardForm.startDate}
                       max={endMaximumDate}
                       disabled={studyBoardForm.startDate ? false : true}
                       required
@@ -467,6 +475,8 @@ function MakeStudy() {
               <TaskContainer
                 studyBoardForm={studyBoardForm}
                 setStudyBoardForm={setStudyBoardForm}
+                startDate={studyBoardForm.startDate}
+                endMaximumDate={endMaximumDate}
               />
               <div
                 css={css`

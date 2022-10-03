@@ -39,7 +39,12 @@ const DisableAddTask = css`
   background-color: #999999;
 `;
 
-function TaskContainer({ studyBoardForm, setStudyBoardForm }) {
+function TaskContainer({
+  studyBoardForm,
+  setStudyBoardForm,
+  startDate,
+  endMaximumDate,
+}) {
   const [taskValues, setTaskValues] = useState([]);
   const [isButtonDisable, setIsButtonDisable] = useState(true);
 
@@ -93,6 +98,8 @@ function TaskContainer({ studyBoardForm, setStudyBoardForm }) {
               studyBoardForm={studyBoardForm}
               setStudyBoardForm={setStudyBoardForm}
               setIsButtonDisable={setIsButtonDisable}
+              startDate={startDate}
+              endMaximumDate={endMaximumDate}
             />
           );
         })}
