@@ -37,7 +37,7 @@ function ProfileModal({
         height: 650px;
         padding: 1rem;
         flex-direction: column;
-        border: 2px solid #0b6ff2;
+        border: 2px solid #afdafd;
         border-radius: 5px;
         background-color: #f0f8ff;
 
@@ -48,7 +48,7 @@ function ProfileModal({
           top: -20px;
           border-right: 10px solid transparent;
           border-left: 10px solid transparent;
-          border-bottom: 20px solid #0b6ff2;
+          border-bottom: 20px solid #afdafd;
         }
       `}
     >
@@ -67,6 +67,7 @@ function ProfileModal({
             display: inline-block;
             height: 100%;
             margin-right: 0.8rem;
+            flex-shrink: 0;
           `}
         >
           <img
@@ -82,21 +83,22 @@ function ProfileModal({
             display: inline-flex;
             height: 100%;
             padding: 0.5rem 0;
+            flex-grow: 1;
+            flex-shrink: 1;
             flex-direction: column;
+            justify-content: center;
           `}
         >
           <div
             css={css`
-              height: 50%;
-              line-height: 200%;
+              padding-bottom: 0.5rem;
             `}
           >
             {userInfo.nickname}
           </div>
           <div
             css={css`
-              height: 50%;
-              line-height: 200%;
+              word-break: break-word;
             `}
           >
             {userInfo.email}
@@ -149,6 +151,7 @@ function ProfileModal({
           height: 400px;
           flex: 5 0;
           border: 1px solid #0b6ff2;
+          border-radius: 0.2rem;
           background-color: white;
         `}
       >
@@ -167,7 +170,6 @@ function ProfileModal({
               width: 10%;
               height: 100%;
               margin-right: 5%;
-              font-size: 1.3rem;
               text-align: center;
             `}
           >
@@ -179,6 +181,7 @@ function ProfileModal({
               stroke="currentColor"
               className="w-6 h-6"
               css={css`
+                height: 100%;
                 color: #0b6bff;
               `}
             >
@@ -194,7 +197,8 @@ function ProfileModal({
               display: inline-block;
               width: 60%;
               height: 100%;
-              font-size: 1.3rem;
+              font-size: 1.1rem;
+              line-height: 150%;
             `}
           >
             내 알림
