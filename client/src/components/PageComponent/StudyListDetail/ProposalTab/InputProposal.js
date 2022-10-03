@@ -59,12 +59,13 @@ const container = css`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  width: 100%;
 
   input {
-    width: 975px;
     height: 40px;
     border: 1px solid #d1d1d1;
     border-radius: 5px;
     padding: 0.5rem;
+    flex-grow: 1;
   }
 `;

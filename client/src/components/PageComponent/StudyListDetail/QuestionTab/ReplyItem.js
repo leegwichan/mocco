@@ -84,7 +84,9 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
             {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
           </div>
           <div className="button_container">
-            <span className="day">{reply.createdAt}</span>
+            <span className="day">
+              {createdAt !== modifiedAt ? modifiedAt : createdAt}
+            </span>
             {userInfo.memberId === member.memberId && (
               <>
                 <Button
@@ -102,9 +104,9 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
           </div>
         </div>
         {isEditOpen && (
-          <div css={edit_container}>
-            <textarea css={edit_input} value={value} onChange={handleChange} />
-            <div css={btn_container}>
+          <div css={editContainer}>
+            <textarea css={editInput} value={value} onChange={handleChange} />
+            <div css={btnContainer}>
               <Button
                 type={'small_white'}
                 text={'완료'}
@@ -128,6 +130,7 @@ export default ReplyItem;
 const main = css`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 
   svg {
     margin-left: 20px;
@@ -140,8 +143,9 @@ const container = css`
   flex-direction: column;
   align-items: flex-end;
   word-break: break-all;
+  flex-grow: 1;
   .reply_box {
-    width: 990px;
+    width: 99%;
     margin-bottom: 25px;
     border-radius: 15px;
     box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
@@ -177,20 +181,20 @@ const edited = css`
   color: #999999;
 `;
 
-const edit_container = css`
+const editContainer = css`
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
+  width: 99%;
 `;
 
-const edit_input = css`
-  width: 990px;
+const editInput = css`
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #d1d1d1;
 `;
 
-const btn_container = css`
+const btnContainer = css`
   display: flex;
   justify-content: flex-end;
   padding: 0 20px;

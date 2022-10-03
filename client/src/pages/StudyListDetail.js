@@ -28,20 +28,26 @@ function StudyListDetail() {
   }, [id]);
 
   return (
-    <div>
-      <div css={container}>
+    <main css={container}>
+      <div css={mainContainer}>
         <StudySection id={id} />
         <TabSection />
       </div>
       <Footer />
-    </div>
+    </main>
   );
 }
 
 export default StudyListDetail;
 
 const container = css`
-  max-width: 1200px;
+  width: 100vw;
+  height: calc(100vh - 64px);
+  padding-top: 100px;
+`;
+
+const mainContainer = css`
+  max-width: 1260px;
+  padding: 0 2rem;
   margin: auto;
-  margin-top: 170px;
 `;

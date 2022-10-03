@@ -33,7 +33,6 @@ function DeletedComment() {
 export default DeletedComment;
 
 const container = css`
-  width: 1080px;
   height: 170px;
   margin-top: 30px;
   margin-bottom: 30px;

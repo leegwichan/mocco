@@ -78,7 +78,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
       >
         {proposal.content}
       </div>
-      <div css={button_container}>
+      <div css={buttonContainer}>
         <span className="day">{proposal.createdAt}</span>
         {studyInfo.member.memberId === proposal.member.memberId && (
           <>
@@ -105,7 +105,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
 export default ProposalSection;
 
 const container = css`
-  width: 1080px;
+  width: 100%;
   margin-bottom: 25px;
   margin-top: 30px;
   border-radius: 15px;
@@ -130,7 +130,7 @@ const container = css`
   }
 `;
 
-const button_container = css`
+const buttonContainer = css`
   margin-top: 16px;
   display: flex;
   justify-content: flex-end;

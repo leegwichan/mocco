@@ -52,9 +52,9 @@ const CommentSection = ({
   };
 
   return (
-    <div>
+    <main>
       <div>
-        <div css={container}>
+        <section css={container}>
           <Link
             to={`/main/${member.memberId}`}
             css={css`
@@ -80,7 +80,9 @@ const CommentSection = ({
             {modifiedAt !== createdAt ? <span css={edited}>수정됨</span> : null}
           </div>
           <div className="button_container">
-            <span className="day">{createdAt}</span>
+            <span className="day">
+              {createdAt !== modifiedAt ? modifiedAt : createdAt}
+            </span>
             <Button
               type={'small_blue'}
               text={'답글'}
@@ -101,11 +103,11 @@ const CommentSection = ({
               </>
             )}
           </div>
-        </div>
+        </section>
         {isEditOpen && (
-          <div css={edit_container}>
-            <input css={edit_input} value={value} onChange={handleChange} />
-            <div css={btn_container}>
+          <section css={editContainer}>
+            <input css={editInput} value={value} onChange={handleChange} />
+            <div css={btnContainer}>
               <Button
                 type={'small_white'}
                 text={'완료'}
@@ -117,7 +119,7 @@ const CommentSection = ({
                 onClick={() => setIsEditOpen(false)}
               />
             </div>
-          </div>
+          </section>
         )}
       </div>
       {isReplyOpen && (
@@ -128,15 +130,14 @@ const CommentSection = ({
           getCommentInfof={getCommentInfof}
         />
       )}
-    </div>
+    </main>
   );
 };
 
-CommentSection.displayName = 'CommentSection';
 export default CommentSection;
 
 const container = css`
-  width: 1080px;
+  width: 100%;
   margin-bottom: 25px;
   margin-top: 30px;
   border-radius: 15px;
@@ -173,20 +174,20 @@ const edited = css`
   color: #999999;
 `;
 
-const edit_container = css`
+const editContainer = css`
   display: flex;
+  width: 100%;
   flex-direction: column;
   margin-bottom: 25px;
 `;
 
-const edit_input = css`
-  width: 1080px;
+const editInput = css`
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #d1d1d1;
 `;
 
-const btn_container = css`
+const btnContainer = css`
   display: flex;
   justify-content: flex-end;
   padding: 0 20px;

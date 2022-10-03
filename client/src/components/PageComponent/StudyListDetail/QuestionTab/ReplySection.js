@@ -16,7 +16,7 @@ function ReplySection({ replys, getCommentInfof }) {
             />
           </div>
         ) : (
-          <div css={main}>
+          <section css={main} key={reply.replyId}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="50"
@@ -31,13 +31,7 @@ function ReplySection({ replys, getCommentInfof }) {
                 d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"
               />
             </svg>
-            <div
-              key={idx}
-              css={css`
-                display: flex;
-                justify-content: flex-end;
-              `}
-            >
+            <div key={idx} css={mainContainer}>
               <div css={container}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -54,17 +48,10 @@ function ReplySection({ replys, getCommentInfof }) {
                     d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
                   />
                 </svg>
-                <div
-                  css={css`
-                    color: #a4a4a4;
-                    font-weight: 500;
-                  `}
-                >
-                  삭제된 댓글입니다
-                </div>
+                <div className="delete_text">삭제된 댓글입니다</div>
               </div>
             </div>
-          </div>
+          </section>
         )
       )}
     </div>
@@ -76,6 +63,7 @@ export default ReplySection;
 const main = css`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const arrow = css`
@@ -83,16 +71,27 @@ const arrow = css`
   margin-top: 10px;
 `;
 
+const mainContainer = css`
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+`;
+
 const container = css`
-  width: 990px;
-  height: 170px;
-  margin-bottom: 25px;
-  border-radius: 15px;
-  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
-  padding: 20px;
-  font-size: 20px;
+  width: 99%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  font-size: 20px;
+  height: 170px;
+  margin-bottom: 25px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
+
+  .delete_text {
+    color: #a4a4a4;
+    font-weight: 500;
+  }
 `;

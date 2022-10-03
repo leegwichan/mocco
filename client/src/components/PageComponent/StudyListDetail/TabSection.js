@@ -17,7 +17,7 @@ function TabSection() {
 
   return (
     <div css={container}>
-      <ul css={tab_title}>
+      <ul css={tabTitle}>
         {tabList.map((el, idx) => (
           <li
             key={idx}
@@ -29,7 +29,7 @@ function TabSection() {
           </li>
         ))}
       </ul>
-      <div css={tab_container}>{tabList[currentTab].content}</div>
+      <div css={tabContainer}>{tabList[currentTab].content}</div>
     </div>
   );
 }
@@ -40,7 +40,7 @@ const container = css`
   padding-bottom: 100px;
 `;
 
-const tab_title = css`
+const tabTitle = css`
   display: flex;
   font-size: 17px;
   font-weight: 500;
@@ -60,14 +60,13 @@ const tab_title = css`
   .tab:hover,
   .focused {
     color: #0b6ff2;
-    /* border-bottom: 3px solid #0b6ff2; */
     border-top: 10px solid #0b6ff2;
     padding-top: 8px;
     border-bottom: 2px solid #fff;
   }
 `;
 
-const tab_container = css`
+const tabContainer = css`
   display: flex;
   flex-direction: column;
   align-items: center;

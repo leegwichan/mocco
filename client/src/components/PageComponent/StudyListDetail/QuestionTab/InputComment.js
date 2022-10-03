@@ -35,7 +35,7 @@ const InputComment = ({ getCommentInfof }) => {
   };
 
   return (
-    <div css={container}>
+    <form css={container}>
       <input
         type="text"
         placeholder="스터디에 대한 궁금한 점을 물어보세요"
@@ -43,7 +43,7 @@ const InputComment = ({ getCommentInfof }) => {
         onChange={handleChange}
       />
       <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
-    </div>
+    </form>
   );
 };
 
@@ -54,12 +54,13 @@ const container = css`
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+  width: 100%;
 
   input {
-    width: 975px;
     height: 40px;
     border: 1px solid #d1d1d1;
     border-radius: 5px;
     padding: 0.5rem;
+    flex-grow: 1;
   }
 `;

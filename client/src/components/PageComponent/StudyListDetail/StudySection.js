@@ -32,10 +32,10 @@ const StudySection = ({ id }) => {
   return (
     <div>
       <div css={container}>
-        <div css={top_container}>
+        <section css={topContainer}>
           <div css={titleContainer}>
             <div css={title}>{studyInfo.teamName}</div>
-            {studyInfo.member.memberId === userInfo.memberId && (
+            {studyInfo.member.memberId !== userInfo.memberId && (
               <div className="btn">
                 <Button
                   type={'small_white'}
@@ -72,7 +72,7 @@ const StudySection = ({ id }) => {
               </Link>
             ) : null}
           </div>
-        </div>
+        </section>
         <div>
           <div className="detail_title">스터디 요약</div>
           <hr />
@@ -88,7 +88,7 @@ const StudySection = ({ id }) => {
           <hr />
           <div className="study_content">{studyInfo.rule}</div>
         </div>
-        <div css={task_container}>
+        <div css={taskContainer}>
           <div className="task_title">스터디 Task</div>
           <hr />
           {studyInfo.taskList &&
@@ -106,12 +106,16 @@ export default StudySection;
 const container = css`
   display: flex;
   flex-direction: column;
+
   .detail_title {
     font-size: 25px;
     padding-bottom: 15px;
-    /* border-bottom: 2px solid black; */
-    /* box-shadow: 0px 8px 2px -2px rgba(0, 0, 0, 0.25); */
-    /* box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%); */
+  }
+
+  .study_content {
+    font-size: 20px;
+    padding-top: 36px;
+    margin-bottom: 118px;
   }
 
   hr {
@@ -120,28 +124,24 @@ const container = css`
     border: 0;
     background: #d1d1d1;
   }
-  .study_content {
-    font-size: 20px;
-    padding-top: 36px;
-    margin-bottom: 118px;
+
+  @media all and (max-width: 768px) {
+    .detail_title {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .study_content {
+      font-size: 15px;
+      padding-top: 16px;
+    }
   }
 `;
 
-const top_container = css`
+const topContainer = css`
   display: flex;
   justify-content: space-between;
   margin-bottom: 17px;
-
-  .info {
-    font-size: 25px;
-    color: #066ff2;
-    margin-bottom: 16px;
-  }
-
-  span:last-child {
-    font-size: 20px;
-    color: #000000;
-  }
 `;
 
 const titleContainer = css`
@@ -150,25 +150,55 @@ const titleContainer = css`
   .btn {
     padding-top: 10px;
   }
+
+  @media all and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const title = css`
   font-size: 35px;
   margin-right: 37px;
   color: #000000;
+
+  @media all and (max-width: 768px) {
+    font-size: 20px;
+    font-weight: 600;
+  }
 `;
 
 const info = css`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+  .info {
+    font-size: 25px;
+    color: #066ff2;
+    margin-bottom: 16px;
+  }
+
+  @media all and (max-width: 768px) {
+    .info {
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
 `;
 
-const task_container = css`
+const taskContainer = css`
   padding-bottom: 118px;
+
   .task_title {
     font-size: 25px;
     padding-bottom: 15px;
+  }
+
+  @media all and (max-width: 768px) {
+    .task_title {
+      font-size: 20px;
+      font-weight: 500;
+    }
   }
 `;
 
@@ -178,9 +208,17 @@ const profile = css`
 
   .main_link {
     color: black;
+    font-size: 20px;
     &:hover {
       cursor: pointer;
       color: #066ff2;
+    }
+  }
+
+  @media all and (max-width: 768px) {
+    .main_link {
+      font-size: 15px;
+      font-weight: 500;
     }
   }
 `;

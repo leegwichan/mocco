@@ -284,7 +284,6 @@ const introduce_rule_container = css`
     padding: 1rem;
     border: 1px solid #999999;
     border-radius: 5px;
-    /* font-size: 30px; */
     font-size: 1.2rem;
     resize: none;
   }
@@ -293,6 +292,10 @@ const introduce_rule_container = css`
     label {
       font-size: 20px;
       font-weight: 500;
+    }
+
+    textarea {
+      height: 200px;
     }
   }
 `;

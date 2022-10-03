@@ -29,7 +29,7 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
   };
 
   return (
-    <main css={main}>
+    <section css={container}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="50"
@@ -43,7 +43,7 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
           d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"
         />
       </svg>
-      <div css={reply_input}>
+      <form css={replyInput}>
         <textarea
           value={value}
           onChange={handleChange}
@@ -57,16 +57,17 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
             onClick={() => setIsReplyOpen(false)}
           />
         </div>
-      </div>
-    </main>
+      </form>
+    </section>
   );
 }
 
 export default InputReply;
 
-const main = css`
+const container = css`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 
   svg {
     margin-left: 20px;
@@ -74,23 +75,25 @@ const main = css`
   }
 `;
 
-const reply_input = css`
+const replyInput = css`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   margin-bottom: 25px;
+  flex-grow: 1;
 
   textarea {
-    width: 990px;
+    width: 99%;
     height: 40px;
     border-radius: 5px;
     border: 1px solid #d1d1d1;
     padding: 10px;
     resize: none;
+    outline: none;
+
     ::-webkit-scrollbar {
       display: none;
     }
-    outline: none;
   }
   .button_container {
     display: flex;
