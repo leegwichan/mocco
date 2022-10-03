@@ -7,6 +7,7 @@ import com.team_60.Mocco.alarm.service.AlarmService;
 import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.helper.aop.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/alarm")
+@Slf4j
 public class AlarmController {
 
     private final AlarmService alarmService;
@@ -28,6 +30,13 @@ public class AlarmController {
     public SseEmitter alarmSubscribe(@RequestParam("member-id") @Positive long memberId){
         authenticationService.AuthenticationCheckWithId("memberId",memberId);
         return alarmService.publishAlarm(memberId);
+    }
+
+    @PostMapping("/unsubscribe")
+    public ResponseEntity alarmUnsubscribe(@RequestParam("subscribe-id") String subscribeId){
+        alarmService.unsubscribeAlarm(subscribeId);
+        log.info("구독 해제 요청 왔음 subscribeId: {}", subscribeId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping

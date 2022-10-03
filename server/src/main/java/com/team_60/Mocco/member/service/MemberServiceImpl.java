@@ -161,10 +161,5 @@ public class MemberServiceImpl implements MemberService{
                     throw new BusinessLogicException(ExceptionCode.GITHUB_REPOSITORY_DUPLICATION);
             }
         }
-
-        for (String repository : repositories){
-            if (repository.length() < 20 || !repository.substring(0,19).equals("https://github.com/"))
-                throw new BusinessLogicException(ExceptionCode.NOT_GITHUB_REPOSITORY);
-        }
     }
 }

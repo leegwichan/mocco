@@ -32,8 +32,13 @@ public class AlarmServiceImpl implements AlarmService{
         SseEmitter sseEmitter = sseService.subscribeAlarm(findMember);
 
         List<Alarm> findAlarms = alarmRepository.findByMember(findMember);
-        sseService.publishAlarm(findMember, findAlarms);
+        sseService.publishAlarmToEmitter(findMember, findAlarms, sseEmitter);
         return sseEmitter;
+    }
+
+    @Override
+    public void unsubscribeAlarm(String subscribeId) {
+        sseService.unsubscribeAlarm(subscribeId);
     }
 
     @Override
