@@ -5,7 +5,6 @@ const intro = css`
   border: 1px solid #d1d1d1;
   border-radius: 8px;
   width: 65%;
-  max-height: 250px;
   padding: 25px;
   font-size: 15px;
   .empty {
@@ -24,6 +23,11 @@ const intro = css`
     align-items: center;
     justify-content: center;
     height: 100%;
+  }
+  @media all and (max-width: 767px) {
+    width: 100%;
+    margin-bottom: 20px;
+    height: auto;
   }
 `;
 

@@ -105,7 +105,12 @@ public class StudyServiceImpl implements StudyService{
 
     @Override
     public void deleteStudy(long studyId) {
-        studyRepository.delete(findVerifiedStudy(studyId));
+        Study findStudy = findVerifiedStudy(studyId);
+        if(findStudy.getStudyStatus()== Study.StudyStatus.STUDY_PROGRESS
+                || findStudy.getStudyStatus()== Study.StudyStatus.STUDY_COMPLETE){
+            throw new BusinessLogicException(ExceptionCode.STUDY_NOT_DELETE);
+        }
+        studyRepository.delete(findStudy);
     }
 
     @Override

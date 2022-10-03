@@ -13,15 +13,19 @@ import com.team_60.Mocco.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
 import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/members")
 @RequiredArgsConstructor
+@Validated
 public class MemberSubController {
 
     private final S3ImageUpload imageUpload;
@@ -31,7 +35,8 @@ public class MemberSubController {
 
     @PostMapping("/image")
     public ResponseEntity memberImageUpload(@RequestParam("image") MultipartFile multipartFile,
-                                            @RequestParam("file-size") String fileSize) throws IOException{
+                                            @RequestParam("file-size") @Max(value = 5000000, message = "크기는 최대 5MB 입니다.")
+                                            String fileSize) throws IOException{
 
         String url = imageUpload.upload(multipartFile.getInputStream(),
                 multipartFile.getOriginalFilename(), fileSize, ImageUploadType.MEMBER_PROFILE);
@@ -43,7 +48,7 @@ public class MemberSubController {
     @IdRequired
     @PatchMapping("/password")
     public ResponseEntity patchPassword(HttpServletRequest request,
-                                        @RequestBody MemberDto.PatchPassword requestBody){
+                                        @RequestBody @Valid MemberDto.PatchPassword requestBody){
         requestBody.setMemberId((long) request.getAttribute("memberId"));
         Member updateMember = memberService.updatePassword(requestBody);
         MemberDto.Response response = mapper.memberToMemberResponseDto(updateMember);
@@ -65,5 +70,4 @@ public class MemberSubController {
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.OK);
     }
-
 }

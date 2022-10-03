@@ -57,16 +57,17 @@ const CountSectionBox = css`
 
 const BarSection = css`
   position: relative;
-  padding-top: 205px;
+  padding-top: 190px;
 `;
 
 function ProgressSection({
   studyInfo,
-  memberId,
   totalTask,
   expiredTaskCount,
   memberProgressArr,
+  selectedId,
 }) {
+  console.log(memberProgressArr);
   return (
     <div css={Total}>
       <div css={CounterContainer}>
@@ -106,11 +107,11 @@ function ProgressSection({
                 <ProgressBar
                   item={item}
                   endTask={item.endTaskCount}
-                  taskMemberId={item.memberId}
+                  characterMemberId={item.memberId}
                   who={'character'}
                   totalTask={totalTask}
                   mocco={expiredTaskCount}
-                  selectedMemberId={memberId}
+                  selectedId={selectedId}
                 />
               </li>
             ))}

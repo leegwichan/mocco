@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 public class CommentDto {
@@ -18,7 +21,12 @@ public class CommentDto {
     @Getter
     @Setter
     public static class Post extends PostDto {
+
+        @Size(max = 300, message = "댓글은 최대 300자입니다.")
+        @NotBlank(message = "댓글은 공백이 아니어야 합니다.")
         private String content;
+
+        @Positive(message = "study 식별자는 양수만 들어갈 수 있습니다.")
         private long studyId;
     }
 
@@ -27,6 +35,8 @@ public class CommentDto {
     @Getter
     @Setter
     public static class Patch{
+        @Size(max = 300, message = "댓글은 최대 300자입니다.")
+        @NotBlank(message = "댓글은 공백이 아니어야 합니다.")
         private String content;
     }
 

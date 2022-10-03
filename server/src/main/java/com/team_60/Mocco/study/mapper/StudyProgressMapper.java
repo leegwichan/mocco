@@ -83,6 +83,6 @@ public interface StudyProgressMapper {
                 }).collect(Collectors.toList());
     }
 
-    StudyProgressDto.Rule studyToStudyProgressResponseRuleDto(Study study);
-    Study studyProgressResponseRuleDtoToStudy(StudyProgressDto.Rule dto);
+    StudyProgressDto.PatchRule studyToStudyProgressResponseRuleDto(Study study);
+    Study studyProgressResponseRuleDtoToStudy(StudyProgressDto.PatchRule dto);
 }

@@ -10,6 +10,7 @@ import GitHubGrass from '../components/PageComponent/Main/GitHubGrass';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { userInfoState, mypageOwnerAtom } from '../atom/atom';
 import { useParams } from 'react-router-dom';
+import Footer from '../components/Common/Footer';
 
 const Header = css`
   width: 100vw;
@@ -24,27 +25,40 @@ const totalContainer = css`
   margin-top: 50px;
   margin-bottom: 100px;
   .githubmargin {
-    height: 300px;
+    margin-bottom: 10%;
+  }
+  @media all and (max-width: 1023px) {
+    padding: 0px 24px;
+    margin-top: 34px;
     margin-bottom: 10%;
   }
 `;
 
 const title = css`
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 600;
+  @media all and (max-width: 767px) {
+    /* font-size: 30px; */
+  }
 `;
 
 const infoSection = css`
   display: flex;
   justify-content: space-between;
   margin-top: 33px;
-  margin-bottom: 5%;
-  height: 250px;
+  margin-bottom: 10%;
+  height: auto;
+
+  @media all and (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
 `;
 
 const sectionItem = css`
-  height: 300px;
-  margin-bottom: 15%; // 원래 3%. 캐러셀 구현하려고 늘려놓음. 버튼 양옆으로 배치한 후 다시 돌려놓기
+  height: auto;
+  margin-bottom: 10%;
 `;
 
 const sectionTitle = css`
@@ -114,6 +128,7 @@ function Main() {
           <DoneList />
         </section>
       </section>
+      <Footer />
     </>
   );
 }

@@ -12,23 +12,29 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.IOException;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/register")
 @RequiredArgsConstructor
+@Validated
 public class SecurityController {
     private final SecurityService securityService;
     private final MemberService memberService;
     private final MemberMapper mapper;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody SecurityDto.Login login, HttpServletResponse response) throws IOException {
+    public ResponseEntity login(@RequestBody @Valid SecurityDto.Login login, HttpServletResponse response) throws IOException {
         return securityService.login(login,response);
     }
     @PostMapping("/logout")
@@ -42,7 +48,7 @@ public class SecurityController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity signupMember(@RequestBody MemberDto.Post requestBody){
+    public ResponseEntity signupMember(@RequestBody @Valid MemberDto.Post requestBody){
 
         Member member = mapper.memberPostDtoToMember(requestBody);
 
@@ -55,15 +61,18 @@ public class SecurityController {
     }
 
     @GetMapping("/nickname-check")
-    public ResponseEntity nicknameDuplicationCheck(@RequestParam("nickname") String nickname){
-
+    public ResponseEntity nicknameDuplicationCheck(@RequestParam("nickname")
+                                                       @Size(min = 2, max = 10, message = "닉네임은 최소 2자, 최대 10자입니다.")
+                                                       @Pattern(regexp = "^[0-9a-zA-Zㄱ-ㅎ가-힣]*$",
+                                                               message = "닉네임은 숫자, 영어, 한글만을 사용해야 합니다.")
+                                                       String nickname){
         memberService.findMemberByNicknameExpectNull(nickname);
         return new ResponseEntity(
                 new SingleResponseDto(nickname), HttpStatus.OK);
     }
 
     @GetMapping("/finding-password")
-    public ResponseEntity resetPassword(@RequestParam String email){
+    public ResponseEntity resetPassword(@RequestParam @Email(message = "이메일 형식어야 합니다.") String email){
 
         memberService.resetMemberPasswordByEmail(email);
         return new ResponseEntity(

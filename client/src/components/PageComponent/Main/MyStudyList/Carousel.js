@@ -14,14 +14,25 @@ const Container = css`
   .none {
     display: none;
   }
+  @media all and (max-width: 1023px) {
+    .icon {
+      display: none;
+    }
+  }
 `;
+
 const Slides_Wraper = css`
   width: 100%;
   max-width: 1000px;
-  padding: 30px;
+  padding: 2.5vw; //동적
   margin: 0 auto;
   overflow: hidden;
   box-sizing: border-box;
+  @media all and (max-width: 1023px) {
+    height: 100%;
+    overflow: visible;
+    padding: 0vw;
+  }
 `;
 
 const Slides = css`
@@ -31,29 +42,47 @@ const Slides = css`
   transition: left 0.5s ease-out;
   ul {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   li {
     float: left;
-    margin-right: 100px;
+    margin-right: 70px;
+  }
+  @media all and (max-width: 1023px) {
+    height: 100%;
+    padding: 0vw;
+    width: 100%;
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 1000px;
+      width: 100vw;
+    }
   }
 `;
 
 function Carousel({ studyArr, progress, done, clickHandler }) {
   const [currentIdx, setCurrentIdx] = useState(0);
+
   const slides = useRef(null);
+
   let length;
+
   if (studyArr) {
     length = studyArr.length;
   }
+
   useEffect(() => {
     const slideWidth = 250;
-    const slideMargin = 100;
+    const slideMargin = 70;
     slides.current.style.width =
       (slideWidth + slideMargin) * length - slideMargin + 'px';
-  }, []);
+  }, [length]);
 
   function moveSlide(num) {
-    slides.current.style.left = -num * 350 + 'px';
+    slides.current.style.left = -num * 320 + 'px';
     setCurrentIdx(num);
   }
 
@@ -76,23 +105,21 @@ function Carousel({ studyArr, progress, done, clickHandler }) {
 
   return (
     <div css={Container}>
-      {studyArr && length < 4 ? null : (
-        <svg
-          onClick={goPrev}
-          className="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      )}
+      <svg
+        onClick={goPrev}
+        className="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
       <div css={Slides_Wraper}>
         <div css={Slides} ref={slides}>
           <ul>
@@ -117,23 +144,21 @@ function Carousel({ studyArr, progress, done, clickHandler }) {
           </ul>
         </div>
       </div>
-      {studyArr && length < 4 ? null : (
-        <svg
-          onClick={goNext}
-          className="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      )}
+      <svg
+        onClick={goNext}
+        className="icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
     </div>
   );
 }

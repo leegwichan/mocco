@@ -16,6 +16,7 @@ public enum ExceptionCode {
     NOT_MEMBER_ABOVE_2(400, "현재 스터디의 스터디원이 1명 이하입니다."),
     STUDY_NOT_PROGRESS(400, "스터디가 진행중이 아닙니다."),
     STUDY_NOT_COMPLETE(400, "스터디가 아직 종료되지 않았습니다."),
+    STUDY_NOT_DELETE(400, "스터디가 모집중이 아니어서 삭제할 수 없습니다."),
     NOT_STUDY_MEMBER(400, "스터디의 멤버가 아닙니다."),
     NOT_STUDY_EVALUATION_STATUS(400, "이미 투표를 했거나 투표기간이 지났습니다."),
     NOT_EVALUATION_MEMBER(400, "투표 대상이 아닌 사람을 투표했습니다."),

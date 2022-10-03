@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +18,8 @@ import java.util.List;
 import static com.team_60.Mocco.study.entity.Study.StudyStatus.*;
 import static com.team_60.Mocco.study_member.entity.StudyMember.StudyMemberEvaluationStatus.*;
 
-@Component
+@Service
+@Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class Scheduler {
@@ -26,8 +29,8 @@ public class Scheduler {
 
     @Scheduled(cron = "0 0 1 * * *")
     public void changeStudyStatusStart(){
-        List<Study> studyList = studyRepository.findByStudyStatusAndStartDateBefore(RECRUIT_PROGRESS,LocalDate.now());
-        studyList.addAll(studyRepository.findByStudyStatusAndStartDateBefore(RECRUIT_COMPLETE,LocalDate.now()));
+        List<Study> studyList = studyRepository.findByStudyStatusAndStartDateBefore(RECRUIT_PROGRESS, LocalDate.now().plusDays(1));
+        studyList.addAll(studyRepository.findByStudyStatusAndStartDateBefore(RECRUIT_COMPLETE, LocalDate.now().plusDays(1)));
         for (Study study : studyList) {
             List<StudyMember> studyMemberList = studyMemberRepository.findByStudy(study);
             if (studyMemberList.size() > 1) {
@@ -47,7 +50,7 @@ public class Scheduler {
     }
     @Scheduled(cron = "0 0 1 * * *")
     public void changeStudyStatusEnd() throws InterruptedException {
-        List<Study> studyList = studyRepository.findByStudyStatusAndEndDateBefore(STUDY_PROGRESS,LocalDate.now());
+        List<Study> studyList = studyRepository.findByStudyStatusAndEndDateBefore(STUDY_PROGRESS,LocalDate.now().plusDays(1));
         if(studyList.size() > 0) {
             for (Study study : studyList) {
                 study.setStudyStatus(STUDY_COMPLETE);
@@ -58,7 +61,7 @@ public class Scheduler {
     }
     @Scheduled(cron = "0 0 1-3 * * *")
     public void changeStudyStatusEvaluation() throws InterruptedException {
-        List<Study> studyList = studyRepository.findByStudyStatusAndEndDate(STUDY_COMPLETE,LocalDate.now().minusWeeks(2));
+        List<Study> studyList = studyRepository.findByStudyStatusAndEndDate(STUDY_COMPLETE,LocalDate.now().minusWeeks(2).minusDays(1));
         if(studyList.size() > 0) {
             for (Study study : studyList) {
                 log.info(study.getStudyId() + "번 스터디");

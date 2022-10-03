@@ -15,9 +15,12 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
 
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000","http://www.gwichanlee.shop","https://api.github.com/**","https://github.com/**")
+                .allowedOrigins("http://localhost:3000","http://www.gwichanlee.shop",
+                        "https://api.github.com/**","https://github.com/**", "https://mocco.kr")
                 .allowedHeaders("*")
-                .allowedMethods("GET", "POST", "PATCH", "OPTIONS", "DELETE");
+                .allowedMethods("GET", "POST", "PATCH", "OPTIONS", "DELETE")
+                .exposedHeaders("AccessToken", "RefreshToken")
+                .allowCredentials(true);
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
