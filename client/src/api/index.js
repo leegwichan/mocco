@@ -37,4 +37,49 @@ request.defaults.headers.common['AccessToken'] =
 //   }
 // );
 
+// 1. 서버로 요청 날림
+// 2. 서버에서 403 날려줌
+// 3. 응답을 가로채서 에러 났을때 서버로 다시 acessToken 재발급 요청
+// 4. 재발급 받고 그 토큰을 가지고 다시 요청
+request.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  async function (error) {
+    if (error.response && error.response.status === 403) {
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
+      const data = await axios({
+        method: 'post',
+        url: '/api/register/refresh',
+        headers: { RefreshToken: refreshToken, AccessToken: accessToken },
+        proxy: true,
+      });
+      console.log(data);
+    }
+    return Promise.reject(error);
+  }
+);
+
+// request.interceptors.request.use(
+//   function (res) {
+//     return res;
+//   },
+//   async function (error) {
+//     if (error.res && error.res.status === 403) {
+//       const originalRequest = error.config;
+//       const data = await request({
+//         method: 'post',
+//         url: '/api/register/refresh',
+//       });
+//       if (data) {
+//         const { accessToken, refreshToken } = data.data;
+//         localStorage.removeItem('accessToken');
+//         localStorage.removeItem('refreshToken');
+//         originalRequest.headers['AccessToken'] = accessToken;
+//         originalRequest.headers['refreshToken'] = refreshToken;
+//       }
+//     }
+//   }
+// );
 export default request;

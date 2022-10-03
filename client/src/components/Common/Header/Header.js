@@ -45,16 +45,10 @@ function Header() {
   };
 
   const handleLogoutClick = () => {
-    console.log(request.defaults.headers.common);
-    request
-      .post('/api/register/logout')
-      .then(() => {
-        setAuthorizationToken();
-        setUserInfo(null);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    request.post('/api/register/logout').then(() => {
+      setAuthorizationToken();
+      setUserInfo(null);
+    });
   };
   return (
     <header css={Container}>

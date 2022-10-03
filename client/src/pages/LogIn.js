@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import request from '../api';
+import request from '../api/index';
 import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
 import ForgotPasswordModal from '../components/PageComponent/Login/ForgotPasswordModal';
