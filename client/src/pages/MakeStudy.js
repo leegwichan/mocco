@@ -227,26 +227,48 @@ function MakeStudy() {
   // button click handler
   const handleMakeStudyButton = (e) => {
     e.preventDefault();
-    if (
-      studyBoardForm.teamName &&
-      studyBoardForm.capacity &&
-      studyBoardForm.summary &&
-      studyBoardForm.detail &&
-      studyBoardForm.rule &&
-      studyBoardForm.taskList[0].content &&
-      studyBoardForm.taskList[0].deadline &&
-      studyBoardForm.startDate &&
-      studyBoardForm.endDate
-    ) {
-      console.log(studyBoardForm);
-      request
-        .post('/api/study-board', studyBoardForm)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-    } else {
-      console.log('필수 입력 항목을 채워주세요');
+    // 유효성 검사
+    for (let task of studyBoardForm.taskList) {
+      if (
+        task.content === null ||
+        task.deadline === null ||
+        task.content > 100
+      ) {
+        alert('task는 100자 이하로 입력해야 합니다');
+        return;
+      }
     }
-    // console.log(studyBoardForm);
+    if (
+      studyBoardForm.teamName === '' ||
+      studyBoardForm.teamName > 30 ||
+      studyBoardForm.teamName < 2
+    ) {
+      alert('스터디 이름은 2글자 이상 30자 이하로 입력해야 합니다');
+      return;
+    }
+    if (
+      studyBoardForm.capacity === '' ||
+      studyBoardForm.capacity > 5 ||
+      studyBoardForm.capacity < 2
+    ) {
+      alert('스터디 정원은 2명 이상 5명 이하로 입력해야 합니다');
+      return;
+    }
+    if (studyBoardForm.summary === '' || studyBoardForm.summary > 1500) {
+      alert('요약글은 1500자 이상으로 입력해야 합니다');
+      return;
+    }
+    if (studyBoardForm.detail === '' || studyBoardForm.detail > 5000) {
+      alert('스터디 소개는 5000자 이하로 입력해야 합니다');
+      return;
+    }
+    if (studyBoardForm.rule === '' || studyBoardForm.rule > 2000) {
+      alert('스터디 규칙은 2000자 이하로 입력해야 합니다');
+      return;
+    }
+    request
+      .post('/api/study-board', studyBoardForm)
+      .catch((err) => console.log(err));
   };
 
   // 취소 버튼 클릭 시 이전 페이지로 이동
