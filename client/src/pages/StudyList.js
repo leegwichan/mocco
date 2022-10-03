@@ -36,8 +36,13 @@ const SearchContainer = css`
 const StudyCardContainer = css`
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-wrap: wrap;
+  gap: 0 6.66%;
+
+  @media (max-width: 1200px) {
+    gap: 0 5%;
+  }
 `;
 
 const LastListAlert = css`

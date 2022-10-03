@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Card = css`
   display: inline-block;
-  width: 250px;
+  /* width: 250px; */
+  width: 20%;
   height: 250px;
   margin-bottom: 4rem;
   border-radius: 10px;
@@ -11,6 +12,12 @@ const Card = css`
   transition: all 0.1s linear;
   &:hover {
     transform: translateY(-1rem);
+  }
+  @media (max-width: 1200px) {
+    width: 30%;
+  }
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
