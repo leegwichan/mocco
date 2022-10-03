@@ -107,7 +107,7 @@ const SummaryTextArea = css`
   padding: 0.5rem;
   border: 1px solid #999999;
   border-radius: 5px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   resize: none;
 `;
 
@@ -130,7 +130,7 @@ const BigTextArea = css`
   padding: 1rem;
   border: 1px solid #999999;
   border-radius: 5px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   resize: none;
 `;
 
@@ -318,7 +318,7 @@ function MakeStudy() {
                     <input
                       type="text"
                       name="studyName"
-                      placeholder="ex) 모코모코"
+                      placeholder="2자 이상 30자 이하"
                       onChange={handleChangeName}
                       required
                       css={InputLeft}
@@ -329,9 +329,11 @@ function MakeStudy() {
                       스터디 정원
                     </label>
                     <input
-                      type="text"
+                      type="number"
+                      min={2}
+                      max={5}
                       name="studyCapacity"
-                      placeholder="ex) 5"
+                      placeholder="2 ~ 5"
                       required
                       onChange={handleChangeCapacity}
                       css={InputLeft}
@@ -393,7 +395,8 @@ function MakeStudy() {
                     />
                     <div css={ImageContainer}>
                       <img
-                        src="https://avatars.githubusercontent.com/u/71388830?v=4"
+                        // src="https://avatars.githubusercontent.com/u/71388830?v=4"
+                        src="/no_image.jpeg"
                         alt="profile_image"
                         ref={imageRef}
                         css={StudyImage}
