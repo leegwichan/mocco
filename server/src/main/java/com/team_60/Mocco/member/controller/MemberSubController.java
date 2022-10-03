@@ -1,7 +1,6 @@
 package com.team_60.Mocco.member.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.interceptor.AuthenticationService;
 import com.team_60.Mocco.helper.httpclient.GithubRestClient;
 import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
 import com.team_60.Mocco.helper.interceptor.IdRequired;

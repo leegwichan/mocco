@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -57,7 +56,7 @@ public class SecurityService {
     }
     public ResponseEntity logout(HttpServletRequest request){
         if(request.getHeader(ACCESS_TOKEN_HEADER) == null || request.getHeader(ACCESS_TOKEN_HEADER).length()<8){
-            throw new BusinessLogicException(BAD_REQUEST);
+            throw new BusinessLogicException(BAD_TOKEN_REQUEST);
         }
         String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
         //1. AccessToken 검증
@@ -83,7 +82,7 @@ public class SecurityService {
     public ResponseEntity refresh(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(request.getHeader(ACCESS_TOKEN_HEADER) == null || request.getHeader(ACCESS_TOKEN_HEADER).length()<8 ||
                 request.getHeader(REFRESH_TOKEN_HEADER) == null || request.getHeader(REFRESH_TOKEN_HEADER).length()<8){
-            throw new BusinessLogicException(BAD_REQUEST);
+            throw new BusinessLogicException(BAD_TOKEN_REQUEST);
         }
         String reqRefreshToken = request.getHeader(REFRESH_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
         String reqAccessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
@@ -101,7 +100,7 @@ public class SecurityService {
         // (추가) 로그아웃되어 Redis 에 RefreshToken 이 존재하지 않는 경우 처리
         if(ObjectUtils.isEmpty(refreshToken)) {
             log.info("잘못된 요청입니다.");
-            throw new BusinessLogicException(BAD_REQUEST);
+            throw new BusinessLogicException(BAD_TOKEN_REQUEST);
         }
         if(!refreshToken.equals(request.getHeader(REFRESH_TOKEN_HEADER))) {
             log.info("Refresh Token 정보가 일치하지 않습니다.");

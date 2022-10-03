@@ -1,7 +1,6 @@
 package com.team_60.Mocco.proposal.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.interceptor.AuthenticationService;
 import com.team_60.Mocco.helper.interceptor.IdRequired;
 import com.team_60.Mocco.proposal.dto.ProposalDto;
 import com.team_60.Mocco.proposal.entity.Proposal;

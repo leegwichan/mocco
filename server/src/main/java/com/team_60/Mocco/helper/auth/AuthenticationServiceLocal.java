@@ -1,11 +1,12 @@
-package com.team_60.Mocco.helper.interceptor;
+package com.team_60.Mocco.helper.auth;
 
+import com.team_60.Mocco.helper.auth.AuthenticationService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
 @Profile("deploy")
-public class AuthenticationServiceLocal implements AuthenticationService{
+public class AuthenticationServiceLocal implements AuthenticationService {
 
     @Override
     public void AuthenticationCheckWithId(String parameterName, long id, long memberId) {

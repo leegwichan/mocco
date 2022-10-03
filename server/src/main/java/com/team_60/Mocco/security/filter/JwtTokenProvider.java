@@ -1,6 +1,7 @@
 package com.team_60.Mocco.security.filter;
 
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
@@ -92,6 +93,7 @@ public class JwtTokenProvider {
             return true;
         } catch (JWTVerificationException e) {
             if(e.getClass().getSimpleName().equals("TokenExpiredException")){
+                log.info(e.getClass().getSimpleName());
                 throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
             }
             throw new BusinessLogicException(ExceptionCode.FAIL_DECODE_TOKEN);
@@ -114,6 +116,8 @@ public class JwtTokenProvider {
             return JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("memberId").asLong();
         } catch (TokenExpiredException e){
             throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
+        } catch (JWTDecodeException e){
+            throw new BusinessLogicException(ExceptionCode.FAIL_DECODE_TOKEN);
         }
     }
 

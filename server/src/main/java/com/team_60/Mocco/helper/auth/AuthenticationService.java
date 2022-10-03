@@ -1,4 +1,4 @@
-package com.team_60.Mocco.helper.interceptor;
+package com.team_60.Mocco.helper.auth;
 
 public interface AuthenticationService {
     void AuthenticationCheckWithId(String parameterName, long id, long memberId); // patch, delete (id값 받는 경우)

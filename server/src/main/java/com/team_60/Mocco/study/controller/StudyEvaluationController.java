@@ -1,7 +1,6 @@
 package com.team_60.Mocco.study.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.interceptor.AuthenticationService;
 import com.team_60.Mocco.helper.interceptor.IdRequired;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.study.dto.StudyEvaluationDto;

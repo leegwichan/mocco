@@ -5,7 +5,6 @@ import com.team_60.Mocco.comment.entity.Comment;
 import com.team_60.Mocco.comment.mapper.CommentMapper;
 import com.team_60.Mocco.comment.service.CommentService;
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.interceptor.AuthenticationService;
 import com.team_60.Mocco.helper.interceptor.IdRequired;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -5,7 +5,6 @@ import com.team_60.Mocco.alarm.entity.Alarm;
 import com.team_60.Mocco.alarm.mapper.AlarmMapper;
 import com.team_60.Mocco.alarm.service.AlarmService;
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.interceptor.AuthenticationService;
 import com.team_60.Mocco.helper.interceptor.IdRequired;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

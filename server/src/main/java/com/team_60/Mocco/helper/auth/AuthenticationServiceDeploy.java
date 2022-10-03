@@ -1,4 +1,4 @@
-package com.team_60.Mocco.helper.interceptor;
+package com.team_60.Mocco.helper.auth;
 
 import com.team_60.Mocco.alarm.entity.Alarm;
 import com.team_60.Mocco.alarm.service.AlarmService;
@@ -7,6 +7,7 @@ import com.team_60.Mocco.comment.service.CommentService;
 import com.team_60.Mocco.dto.PostDto;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
+import com.team_60.Mocco.helper.auth.AuthenticationService;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.proposal.entity.Proposal;
@@ -22,11 +23,14 @@ import com.team_60.Mocco.task_check.service.TaskCheckService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 
-@Component
+@Service
+@Transactional
 @Slf4j
 @Profile("!deploy")
 public class AuthenticationServiceDeploy implements AuthenticationService {
