@@ -288,15 +288,23 @@ function MakeStudy() {
     fileInputRef.current.click();
   }, []);
 
-  // 내일 날짜
-  const tomorrow = {
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-    date: new Date().getDate() + 1,
-  };
-  const startDate = `${tomorrow.year}-${('0' + String(tomorrow.month)).slice(
-    -2
-  )}-${tomorrow.date}`;
+  // 스터디 최소 시작 날짜(내일)
+  // const tomorrow = {
+  //   year: new Date().getFullYear(),
+  //   month: new Date().getMonth() + 1,
+  //   date: new Date().getDate() + 1,
+  // };
+  // const startDate = `${tomorrow.year}-${('0' + String(tomorrow.month)).slice(
+  //   -2
+  // )}-${tomorrow.date}`;
+
+  let startDate = new Date();
+  startDate.setDate(startDate.getDate() + 1);
+  startDate = startDate.toISOString().slice(0, 10);
+
+  let endMaximumDate = new Date(startDate);
+  endMaximumDate.setDate(endMaximumDate.getDate() + 180);
+  endMaximumDate = endMaximumDate.toISOString().slice(0, 10);
 
   return (
     <>
@@ -360,6 +368,7 @@ function MakeStudy() {
                     <input
                       type="date"
                       name="studyEnd"
+                      max={endMaximumDate}
                       required
                       onChange={handleChangeEndDate}
                       css={InputLeft}
@@ -395,7 +404,6 @@ function MakeStudy() {
                     />
                     <div css={ImageContainer}>
                       <img
-                        // src="https://avatars.githubusercontent.com/u/71388830?v=4"
                         src="/no_image.jpeg"
                         alt="profile_image"
                         ref={imageRef}
