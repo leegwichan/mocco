@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Task from './Task';
 
 const BigLabel = css`
@@ -13,16 +13,40 @@ const ValidStar = css`
   font-size: 2rem;
 `;
 
-function TaskContainer({ studyBoardForm, setStudyBoardForm }) {
-  // Task 추가를 위한 index state
-  // const taskForm = {
-  //   content: null,
-  //   deadline: null,
-  // };
+const AddTask = css`
+  height: 40px;
+  padding: 0 1rem;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #0b6ff2;
+  transition: all 0.1s linear;
+  &:hover {
+    color: #0b6ff2;
+    background-color: white;
+    border: 1px solid #0b6ff2;
+  }
+`;
 
-  // const [taskValues, setTaskValues] = useState([{ ...taskForm }]);
+const DisableAddTask = css`
+  height: 40px;
+  padding: 0 1rem;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #999999;
+`;
+
+function TaskContainer({ studyBoardForm, setStudyBoardForm }) {
   const [taskValues, setTaskValues] = useState([]);
-  const [isButtonDisable, setIsButtonDisable] = useState(false);
+  const [isButtonDisable, setIsButtonDisable] = useState(true);
+
+  useEffect(() => {
+    if (studyBoardForm.startDate !== null && studyBoardForm.endDate !== null)
+      setIsButtonDisable(false);
+  }, [studyBoardForm]);
 
   const handleMakeTaskButton = (e) => {
     e.preventDefault();
@@ -52,21 +76,7 @@ function TaskContainer({ studyBoardForm, setStudyBoardForm }) {
         <button
           disabled={isButtonDisable ? true : false}
           onClick={handleMakeTaskButton}
-          css={css`
-            height: 40px;
-            padding: 0 1rem;
-            color: white;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 8px;
-            background-color: #0b6ff2;
-            transition: all 0.1s linear;
-            &:hover {
-              color: #0b6ff2;
-              background-color: white;
-              border: 1px solid #0b6ff2;
-            }
-          `}
+          css={isButtonDisable ? DisableAddTask : AddTask}
         >
           TASK 추가하기
         </button>
