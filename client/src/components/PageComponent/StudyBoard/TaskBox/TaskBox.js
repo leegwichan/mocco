@@ -31,7 +31,7 @@ function TaskBox({ studyInfo, studyId, setSelectedId }) {
         setTaskList(res);
         console.log(res);
         // console.log(res);
-        })
+      })
       .catch((err) => {
         if (err.response.data.message === '스터디의 멤버가 아닙니다.') {
           navigate(`/main/${myPageOwner.memberId}`);

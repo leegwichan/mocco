@@ -60,11 +60,11 @@ const TextDecorationNone = css`
 
 function StudyCard({ studyData, boxRef }) {
   return (
-    <Link
-      to={`/studylist/detail/${studyData.studyId}`}
-      css={TextDecorationNone}
-    >
-      <li css={Card} ref={boxRef ? boxRef : null}>
+    <li css={Card} ref={boxRef ? boxRef : null}>
+      <Link
+        to={`/studylist/detail/${studyData.studyId}`}
+        css={TextDecorationNone}
+      >
         <div css={ImageContainer}>
           <img src={studyData.image} alt="스터디 대표 사진" />
         </div>
@@ -80,8 +80,8 @@ function StudyCard({ studyData, boxRef }) {
             <span>정원 {studyData.capacity}명</span>
           </div>
         </div>
-      </li>
-    </Link>
+      </Link>
+    </li>
   );
 }
 
