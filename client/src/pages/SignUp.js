@@ -13,6 +13,7 @@ function SignUp() {
     nickname: null,
     email: null,
     password: null,
+    agreePersonalInformation: null,
   });
 
   const [buttonActive, setButtonActive] = useState(false);
@@ -21,6 +22,9 @@ function SignUp() {
     setButtonActive((prev) => {
       return !prev;
     });
+    if (!buttonActive) {
+      setErrorMessage((prev) => ({ ...prev, agreePersonalInformation: null }));
+    }
   };
 
   const onChangeNickname = (event) => {
@@ -31,15 +35,11 @@ function SignUp() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log('pw :', event.target.password.value);
-
-    // TODO: 인풋 요소들과 체크가 되었을때만 이벤트 실행.
-    // if (event.target.email.value === '' || ) return;
 
     if (
+      nicknameChecked &&
       event.target.password.value === event.target.passwordConfirm.value &&
-      setNicknameChecked(true) &&
-      setButtonActive(true)
+      buttonActive
     ) {
       request({
         method: 'post',
@@ -53,19 +53,67 @@ function SignUp() {
         .then(() => navigate('/login'))
         .catch((error) => {
           if (error.response) {
-            setErrorMessage((prev) => ({
-              ...prev,
-              password: null,
+            setErrorMessage(() => ({
+              nickname: null,
               email: error.response.data.message,
+              password: null,
+              agreePersonalInformation: null,
             }));
           }
         });
     } else {
-      setErrorMessage((prev) => ({
-        ...prev,
-        password: '비밀번호가 일치하지 않습니다.',
-      }));
+      setErrorMessage((prev) => {
+        return {
+          ...prev,
+          nickname: !nicknameChecked ? '닉네임 체크를 해주세요' : null,
+          password:
+            event.target.password.value !== event.target.passwordConfirm.value
+              ? '비밀번호가 일치하지 않습니다.'
+              : null,
+          agreePersonalInformation: !buttonActive
+            ? '개인정보 취급방침에 동의 해 주세요.'
+            : null,
+        };
+      });
     }
+
+    // if (
+    //   event.target.password.value === event.target.passwordConfirm.value &&
+    //   setNicknameChecked(true) &&
+    //   setButtonActive(true)
+    // ) {
+    //   request({
+    //     method: 'post',
+    //     url: '/api/register/signup',
+    //     data: {
+    //       email: event.target.email.value,
+    //       password: event.target.password.value,
+    //       nickname: event.target.nickname.value,
+    //     },
+    //   })
+    //     .then(() => navigate('/login'))
+    //     .catch((error) => {
+    //       if (error.response) {
+    //         setErrorMessage((prev) => ({
+    //           ...prev,
+    //           password: null,
+    //           email: error.response.data.message,
+    //         }));
+    //       }
+    //     });
+    // } else if (
+    //   event.target.password.value !== event.target.passwordConfirm.value
+    // ) {
+    //   setErrorMessage((prev) => ({
+    //     ...prev,
+    //     password: '비밀번호가 일치하지 않습니다.',
+    //   }));
+    // } else if (buttonActive) {
+    //   setErrorMessage((prev) => ({
+    //     ...prev,
+    //     agreePersonalInformation: '개인정보 취급방침에 동의 해 주세요.',
+    //   }));
+    // }
   };
 
   const onClick = () => {
@@ -334,6 +382,18 @@ function SignUp() {
                 에 동의합니다.
               </p>
             </div>
+            {errorMessage.agreePersonalInformation && (
+              <p
+                css={css`
+                  margin-bottom: 12px;
+                  margin-top: 18px;
+                  font-size: 12px;
+                  color: red;
+                `}
+              >
+                {errorMessage.agreePersonalInformation}
+              </p>
+            )}
             <button
               type="submit"
               css={css`
