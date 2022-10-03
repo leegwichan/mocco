@@ -3,6 +3,8 @@ import { css } from '@emotion/react';
 import request from '../api/index';
 import TaskContainer from '../components/PageComponent/MakeStudy/TaskContainer';
 import Footer from '../components/Common/Footer';
+import { useRecoilState } from 'recoil';
+import { userInfoState } from '../atom/atom';
 
 const Header = css`
   width: 100vw;
@@ -172,9 +174,11 @@ const Cancel = css`
 `;
 
 function MakeStudy() {
+  // 유저 정보 recoil state
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState); // eslint-disable-line no-unused-vars
   // studyboard post를 위한 state
   const [studyBoardForm, setStudyBoardForm] = useState({
-    memberId: 1,
+    memberId: userInfo.memberId,
     teamName: null,
     capacity: null,
     image: null,
