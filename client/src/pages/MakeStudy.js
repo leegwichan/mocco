@@ -17,9 +17,9 @@ const MainContainer = css`
 `;
 
 const ContentContainer = css`
-  max-width: calc(1200px + 1rem);
+  max-width: calc(1200px + 2rem);
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
 `;
 
 const MakeStudyTitle = css`
@@ -258,11 +258,15 @@ function MakeStudy() {
     formData.append('image', e.target.files[0]);
 
     request
-      .post('/api/study-board/image?file-size=251722', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      .post(
+        `/api/study-board/image?file-size=${e.target.files[0].size}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      )
       .then((res) => {
         imageRef.current.src = res.data.data;
         setStudyBoardForm({ ...studyBoardForm, image: res.data.data });
