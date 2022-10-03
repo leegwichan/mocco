@@ -14,7 +14,6 @@ function ProfileModal({
   const handleDeleteAll = () => {
     request
       .delete(`/api/alarm?member-id=${userInfo.memberId}`)
-      .then((res) => console.log(res))
       .catch((err) => console.log(err));
     setAlarm([]);
   };
@@ -172,7 +171,23 @@ function ProfileModal({
               text-align: center;
             `}
           >
-            🔔
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+              css={css`
+                color: #0b6bff;
+              `}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+              />
+            </svg>
           </div>
           <div
             css={css`
@@ -191,6 +206,20 @@ function ProfileModal({
             css={css`
               display: inline-block;
               width: 25%;
+              padding: 0.5rem 0;
+              border: 1px solid #0a6ff2;
+              border-radius: 0.2rem;
+              background-color: #0a6ff2;
+              color: white;
+              transition: all 0.1s linear;
+              &:hover {
+                border: 1px solid #0a6ff2;
+                background-color: #ffffff;
+                color: #0a6ff2;
+              }
+              &:active {
+                transform: scale(0.9);
+              }
             `}
           >
             전체 삭제
@@ -203,6 +232,9 @@ function ProfileModal({
             overflow-y: scroll;
             li:last-of-type {
               border-bottom: none;
+            }
+            li:first-of-type {
+              border-bottom: 1px solid #999999;
             }
           `}
         >

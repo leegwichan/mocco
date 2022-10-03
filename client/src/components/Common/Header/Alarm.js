@@ -19,9 +19,9 @@ function Alarm({ alarm, handleDeleteAlarm }) {
           border: none;
           background: none;
           font-weight: bold;
-          color: #0b6ff2;
+          color: #999999;
           &:hover {
-            color: #db4455;
+            color: #0b6ff2;
           }
         `}
       >
