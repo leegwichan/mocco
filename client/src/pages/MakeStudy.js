@@ -17,9 +17,9 @@ const MainContainer = css`
 `;
 
 const ContentContainer = css`
-  max-width: 1260px;
+  max-width: calc(1200px + 1rem);
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 1rem;
 `;
 
 const MakeStudyTitle = css`
