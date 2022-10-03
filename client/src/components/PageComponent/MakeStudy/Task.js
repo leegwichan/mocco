@@ -55,6 +55,7 @@ function Task({
   setTaskValues,
   studyBoardForm,
   setStudyBoardForm,
+  setIsButtonDisable,
 }) {
   // handle input change
   const handleTaskContentChange = (e) => {
@@ -76,7 +77,7 @@ function Task({
     const newTaskValues = [...taskValues];
     newTaskValues.splice(idx, 1);
     setTaskValues([...newTaskValues]);
-    console.log(taskValues);
+    if (taskValues.length <= 15) setIsButtonDisable(false);
   };
   return (
     <li css={TaskList}>

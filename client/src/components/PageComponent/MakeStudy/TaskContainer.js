@@ -8,19 +8,26 @@ const BigLabel = css`
   font-size: 2rem;
 `;
 
+const ValidStar = css`
+  color: red;
+  font-size: 2rem;
+`;
+
 function TaskContainer({ studyBoardForm, setStudyBoardForm }) {
   // Task 추가를 위한 index state
-  const taskForm = {
-    content: null,
-    deadline: null,
-  };
+  // const taskForm = {
+  //   content: null,
+  //   deadline: null,
+  // };
 
-  const [taskValues, setTaskValues] = useState([{ ...taskForm }]);
+  // const [taskValues, setTaskValues] = useState([{ ...taskForm }]);
+  const [taskValues, setTaskValues] = useState([]);
+  const [isButtonDisable, setIsButtonDisable] = useState(false);
 
   const handleMakeTaskButton = (e) => {
     e.preventDefault();
-    setTaskValues([...taskValues, { ...taskForm }]);
-    console.log(taskValues);
+    setTaskValues([...taskValues, {}]);
+    if (taskValues.length >= 14) setIsButtonDisable(true);
   };
 
   return (
@@ -38,8 +45,12 @@ function TaskContainer({ studyBoardForm, setStudyBoardForm }) {
           align-items: center;
         `}
       >
-        <div css={BigLabel}>스터디 TASK</div>
+        <div>
+          <div css={BigLabel}>스터디 TASK</div>
+          <span css={ValidStar}> *</span>
+        </div>
         <button
+          disabled={isButtonDisable ? true : false}
           onClick={handleMakeTaskButton}
           css={css`
             height: 40px;
@@ -71,6 +82,7 @@ function TaskContainer({ studyBoardForm, setStudyBoardForm }) {
               setTaskValues={setTaskValues}
               studyBoardForm={studyBoardForm}
               setStudyBoardForm={setStudyBoardForm}
+              setIsButtonDisable={setIsButtonDisable}
             />
           );
         })}

@@ -173,6 +173,10 @@ const Cancel = css`
   }
 `;
 
+const ValidStar = css`
+  color: red;
+`;
+
 function MakeStudy() {
   // 유저 정보 recoil state
   const [userInfo, setUserInfo] = useRecoilState(userInfoState); // eslint-disable-line no-unused-vars
@@ -228,7 +232,8 @@ function MakeStudy() {
       studyBoardForm.summary &&
       studyBoardForm.detail &&
       studyBoardForm.rule &&
-      studyBoardForm.taskList &&
+      studyBoardForm.taskList[0].content &&
+      studyBoardForm.taskList[0].deadline &&
       studyBoardForm.startDate &&
       studyBoardForm.endDate
     ) {
@@ -289,19 +294,11 @@ function MakeStudy() {
   }, []);
 
   // 스터디 최소 시작 날짜(내일)
-  // const tomorrow = {
-  //   year: new Date().getFullYear(),
-  //   month: new Date().getMonth() + 1,
-  //   date: new Date().getDate() + 1,
-  // };
-  // const startDate = `${tomorrow.year}-${('0' + String(tomorrow.month)).slice(
-  //   -2
-  // )}-${tomorrow.date}`;
-
   let startDate = new Date();
   startDate.setDate(startDate.getDate() + 1);
   startDate = startDate.toISOString().slice(0, 10);
 
+  // 스터디 최대 만료 날짜(180일 뒤)
   let endMaximumDate = new Date(startDate);
   endMaximumDate.setDate(endMaximumDate.getDate() + 180);
   endMaximumDate = endMaximumDate.toISOString().slice(0, 10);
@@ -321,7 +318,7 @@ function MakeStudy() {
                 <div css={StudyDetailLeft}>
                   <div>
                     <label htmlFor="studyName" css={Label}>
-                      스터디 이름
+                      스터디 이름 <span css={ValidStar}>*</span>
                     </label>
                     <input
                       type="text"
@@ -334,7 +331,7 @@ function MakeStudy() {
                   </div>
                   <div>
                     <label htmlFor="studyCapacity" css={Label}>
-                      스터디 정원
+                      스터디 정원 <span css={ValidStar}>*</span>
                     </label>
                     <input
                       type="number"
@@ -349,7 +346,7 @@ function MakeStudy() {
                   </div>
                   <div>
                     <label htmlFor="studyStart" css={Label}>
-                      스터디 시작일
+                      스터디 시작일 <span css={ValidStar}>*</span>
                     </label>
                     <input
                       type="date"
@@ -362,7 +359,7 @@ function MakeStudy() {
                   </div>
                   <div>
                     <label htmlFor="studyEnd" css={Label}>
-                      스터디 만료일
+                      스터디 만료일 <span css={ValidStar}>*</span>
                     </label>
                     <input
                       type="date"
@@ -378,7 +375,7 @@ function MakeStudy() {
                 <div css={StudyDetailRight}>
                   <div css={SummaryContainer}>
                     <label htmlFor="summary" css={Label}>
-                      스터디 요약글
+                      스터디 요약글 <span css={ValidStar}>*</span>
                     </label>
                     <textarea
                       type="text"
@@ -418,9 +415,20 @@ function MakeStudy() {
               </div>
               <div css={IntroduceAndRulesContainer}>
                 <div>
-                  <label htmlFor="introduce" css={BigLabel}>
-                    스터디 소개
-                  </label>
+                  <div>
+                    <label htmlFor="introduce" css={BigLabel}>
+                      스터디 소개
+                    </label>
+                    <span
+                      css={css`
+                        color: red;
+                        font-size: 2rem;
+                      `}
+                    >
+                      {' '}
+                      *
+                    </span>
+                  </div>
                   <textarea
                     type="text"
                     name="introduce"
@@ -431,9 +439,21 @@ function MakeStudy() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="rules" css={BigLabel}>
-                    스터디 규칙
-                  </label>
+                  <div>
+                    <label htmlFor="rules" css={BigLabel}>
+                      스터디 규칙
+                    </label>
+                    <span
+                      css={css`
+                        color: red;
+                        font-size: 2rem;
+                      `}
+                    >
+                      {' '}
+                      *
+                    </span>
+                  </div>
+
                   <textarea
                     type="text"
                     name="rules"
