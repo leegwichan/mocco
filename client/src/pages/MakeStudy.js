@@ -355,7 +355,6 @@ function MakeStudy() {
                       type="date"
                       name="studyStart"
                       min={startDate}
-                      value={startDate}
                       required
                       onChange={handleChangeStartDate}
                       css={InputLeft}
@@ -369,6 +368,7 @@ function MakeStudy() {
                       type="date"
                       name="studyEnd"
                       max={endMaximumDate}
+                      disabled={studyBoardForm.startDate ? false : true}
                       required
                       onChange={handleChangeEndDate}
                       css={InputLeft}
