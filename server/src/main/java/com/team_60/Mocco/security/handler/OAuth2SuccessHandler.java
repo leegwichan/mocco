@@ -1,5 +1,6 @@
-package com.team_60.Mocco.security.filter;
+package com.team_60.Mocco.security.handler;
 
+import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

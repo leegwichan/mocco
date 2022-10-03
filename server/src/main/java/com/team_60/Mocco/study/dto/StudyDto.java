@@ -7,8 +7,8 @@ import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.task.dto.TaskDto;
 import lombok.*;
-import org.aspectj.lang.annotation.After;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;

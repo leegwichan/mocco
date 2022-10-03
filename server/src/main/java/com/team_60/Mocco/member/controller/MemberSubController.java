@@ -1,9 +1,9 @@
 package com.team_60.Mocco.member.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.aop.AuthenticationService;
 import com.team_60.Mocco.helper.httpclient.GithubRestClient;
 import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
+import com.team_60.Mocco.helper.interceptor.IdRequired;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
 import com.team_60.Mocco.helper.upload.S3ImageUpload;
 import com.team_60.Mocco.member.dto.MemberDto;
@@ -17,9 +17,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
-import javax.validation.constraints.Positive;
 import java.io.IOException;
 
 @RestController
@@ -31,7 +31,6 @@ public class MemberSubController {
     private final S3ImageUpload imageUpload;
     private final MemberMapper mapper;
     private final MemberService memberService;
-    private final AuthenticationService authenticationService;
     private final GithubRestClient githubRestClient;
 
     @PostMapping("/image")
@@ -46,30 +45,29 @@ public class MemberSubController {
                 new SingleResponseDto(url), HttpStatus.OK);
     }
 
-    @PatchMapping("/password/{member-id}")
-    public ResponseEntity patchPassword(@PathVariable("member-id") @Positive long memberId,
-                                      @RequestBody @Valid MemberDto.PatchPassword requestBody){
-        authenticationService.AuthenticationCheckWithId("memberId",memberId);
-        requestBody.setMemberId(memberId);
+    @IdRequired
+    @PatchMapping("/password")
+    public ResponseEntity patchPassword(HttpServletRequest request,
+                                        @RequestBody @Valid MemberDto.PatchPassword requestBody){
+        requestBody.setMemberId((long) request.getAttribute("memberId"));
         Member updateMember = memberService.updatePassword(requestBody);
         MemberDto.Response response = mapper.memberToMemberResponseDto(updateMember);
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.OK);
     }
 
-    @PatchMapping("/github-user/{member-id}")
-    public ResponseEntity patchGithubAccount(@PathVariable("member-id") @Positive long memberId,
+    @IdRequired
+    @PatchMapping("/github-user")
+    public ResponseEntity patchGithubAccount(HttpServletRequest request,
                                             @RequestBody MemberDto.GithubInfo requestBody){
-        authenticationService.AuthenticationCheckWithId("memberId",memberId);
         GithubRestClientDto.UserInfo githubUserInfo
                 = githubRestClient.getGithubUserInfo(requestBody.getAuthorizationCode());
         Member member = mapper.githubRestClientUserInfoDtoToMember(githubUserInfo);
-        member.setMemberId(memberId);
+        member.setMemberId((long) request.getAttribute("memberId"));
 
         Member updateMember = memberService.updateGithubInfo(member);
         MemberDto.Response response = mapper.memberToMemberResponseDto(updateMember);
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.OK);
     }
-
 }

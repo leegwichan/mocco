@@ -16,6 +16,7 @@ public enum ExceptionCode {
     NOT_MEMBER_ABOVE_2(400, "현재 스터디의 스터디원이 1명 이하입니다."),
     STUDY_NOT_PROGRESS(400, "스터디가 진행중이 아닙니다."),
     STUDY_NOT_COMPLETE(400, "스터디가 아직 종료되지 않았습니다."),
+    STUDY_NOT_DELETE(400, "스터디가 모집중이 아니어서 삭제할 수 없습니다."),
     NOT_STUDY_MEMBER(400, "스터디의 멤버가 아닙니다."),
     NOT_STUDY_EVALUATION_STATUS(400, "이미 투표를 했거나 투표기간이 지났습니다."),
     NOT_EVALUATION_MEMBER(400, "투표 대상이 아닌 사람을 투표했습니다."),
@@ -47,13 +48,14 @@ public enum ExceptionCode {
     ALARM_NOT_FOUND(404, "해당 알람을 찾을 수 없습니다."),
     FAIL_SSE_CONNECT(500 ,"서버에서 구독이 정상적으로 작동하지 않았습니다."),
     NOT_ACCEPTED_EXTENSION(400, "이미지은 jpg, png 파일만 업로드 할 수 있습니다."),
+    BAD_REQUEST(400,"잘못된 요청입니다."),
     
     USERNAME_NOT_FOUND(401,"해당하는 유저를 찾을 수 없습니다."),
     CLAIM_NOT_EXIST(403,"권한 정보가 없는 토큰입니다."),
     TOKEN_EXPIRED_EXCEPTION(403,"이미 만료된 토큰입니다."),
     FAIL_DECODE_TOKEN(403,"토큰 검증에 실패하였습니다."),
     BAD_REFRESH_TOKEN(403,"Refresh Token 정보가 일치하지 않습니다."),
-    BAD_REQUEST(403,"잘못된 요청입니다."),
+    BAD_TOKEN_REQUEST(403,"잘못된 Token 요청입니다."),
     BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다."),
     NOT_SAME_USER(400,"잘못된 유저 접근입니다."),
     NOT_PASSWORD_MATCHED(400, "기존 비밀번호가 틀렸습니다."),
@@ -61,6 +63,7 @@ public enum ExceptionCode {
     URI_MAKING_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. URIBuilder Error"),
     STRING_ENTITY_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. StringEntity Error, Response Error"),
     REST_CLIENT_ERROR(500, "서버에서 통신중에 에러가 발생했습니다."),
+    FILTER_UNKNOWN_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. Security Filter Error."),
     NOT_NORMAL_AUTHORIZATION_CODE(400, "정상작인 authorization code 가 아닙니다."),
     GITHUB_CONNECTION_ALREADY_EXIST(400, "이 계정의 깃허브를 연동한 유저가 이미 존재합니다.");
 
