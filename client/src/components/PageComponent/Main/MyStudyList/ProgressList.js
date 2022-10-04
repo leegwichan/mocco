@@ -73,7 +73,8 @@ function ProgressList() {
     console.log(studyData);
     if (
       studyData.studyStatus === 'STUDY_COMPLETE' &&
-      studyData.evaluationStatus === 'BEFORE_EVALUATION'
+      studyData.evaluationStatus === 'BEFORE_EVALUATION' &&
+      owner.memberId === user.memberId
     ) {
       getEvaluateInfo(studyData);
       setIsOpen(true);

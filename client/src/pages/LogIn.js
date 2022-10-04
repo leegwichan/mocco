@@ -1,17 +1,28 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
-import request from '../api';
+import { useNavigate, useLocation } from 'react-router-dom';
+import request from '../api/index';
 import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
 import ForgotPasswordModal from '../components/PageComponent/Login/ForgotPasswordModal';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function LogIn() {
-  const [modalOn, setModalOn] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [modalOn, setModalOn] = useState(false);
   const setUserInfoState = useSetRecoilState(userInfoState);
   const onSubmit = (event) => {
     event.preventDefault();
+
+    // setTimeout(() => {
+    //   localStorage.setItem('accessToken', 'accessToken-test');
+    //   localStorage.setItem('refreshToken', 'refreshToken-test');
+
+    //   setUserInfoState({ memberId: '29', username: 'seraheo' });
+    //   navigate(location.state ? location.state.from : `/main/29`);
+    // }, 1000);
 
     request({
       method: 'post',
@@ -24,22 +35,16 @@ function LogIn() {
       .then((res) => {
         localStorage.setItem('accessToken', res.headers.accesstoken);
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
-        return res;
-      })
-      .then((res) => {
-        localStorage.setItem('accessToken', res.headers.accesstoken);
-        localStorage.setItem('refreshToken', res.headers.refreshtoken);
-        return res;
-      })
-      .then((res) =>
-        request({
-          method: 'get',
-          url: `/api/members/${res.data.memberId}`,
-        })
-      )
-      .then((res) => {
+        setAuthorizationToken(res.headers.accesstoken);
         setUserInfoState(res.data.data);
-        navigate(`/main/${res.data.data.memberId}`);
+        return res;
+      })
+      .then((res) => {
+        navigate(
+          location.state
+            ? location.state.from
+            : `/main/${res.data.data.memberId}`
+        );
       })
       .catch((err) => console.log(err));
   };

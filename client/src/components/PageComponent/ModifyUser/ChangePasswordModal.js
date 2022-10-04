@@ -3,18 +3,13 @@ import { css } from '@emotion/react';
 import ModifyUserInput from './ModifyUserInput';
 import ModifyUserButton from './ModifyUserButton';
 import request from '../../../api';
-import { useRecoilValue } from 'recoil';
-import { userInfoState } from '../../../atom/atom';
 
 function ChangePasswordModal({ onClose }) {
-  const userInfo = useRecoilValue(userInfoState);
-
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log('et :', event.target.originalPassword.value);
     request({
       method: 'patch',
-      url: `/api/members/password/${userInfo.memberId}`,
+      url: `/api/members/password`,
       data: {
         originalPassword: event.target.originalPassword.value,
         newPassword: event.target.newPassword.value,

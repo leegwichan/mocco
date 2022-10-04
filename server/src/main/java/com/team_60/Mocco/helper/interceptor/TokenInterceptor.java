@@ -40,10 +40,12 @@ public class TokenInterceptor implements HandlerInterceptor {
                 .substring(TOKEN_HEADER_PREFIX.length());
         long tokenMemberId = jwtTokenProvider.getMemberId(accessToken);
         List<String> urIList = Arrays.stream(request.getRequestURI().split("/")).collect(Collectors.toList());
+        String studyProgress = "StudyProgressController";
 
         try {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            if (handlerMethod.getBean().getClass().getSimpleName().equals("StudyProgressController")) {
+            String controllerName = handlerMethod.getBean().getClass().getSimpleName();
+             if (controllerName.startsWith(studyProgress)) {
                 long studyId = Long.parseLong(urIList.get(4));
             if (urIList.size() < 6) {
                 authenticationService.AuthenticationCheckStudyMember(studyId, tokenMemberId);
@@ -62,7 +64,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             if(methodName.equals("getComments") || methodName.equals("getProposalsByStudyId")) {
                 return;
             }
-            if (n.hasParameterAnnotation(PathVariable.class) && (!handlerMethod.getMethod().getName().equals("getMember"))) {
+            if (n.hasParameterAnnotation(PathVariable.class) && (!methodName.equals("getMember"))) {
                 long id = Long.parseLong(urIList.get(3));
                 if(methodName.equals("approveProposal") || methodName.equals("deniedProposal")){
                     authenticationService.AuthenticationCheckStudyLeader(id,tokenMemberId);
