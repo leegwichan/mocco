@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import request from '../../../api/index';
 import Button from '../Button';
 import ProfileModal from './ProfileModal';
+import setAuthorizationToken from '../../../utils/setAuthorizationToken';
 
 const Container = css`
   position: fixed;
@@ -87,22 +88,10 @@ function Header() {
   };
 
   const handleLogoutClick = () => {
-    request
-      .post(
-        '/api/register/logout',
-        {},
-        {
-          headers: {
-            AccessToken: localStorage.getItem('accessToken'),
-          },
-        }
-      )
-      .then(() => {
-        setUserInfo(null);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    request.post('/api/register/logout').then(() => {
+      setAuthorizationToken();
+      setUserInfo(null);
+    });
   };
   return (
     <header css={Container}>
@@ -141,11 +130,13 @@ function Header() {
             type={'header_skyblue'}
             onClick={handleFindStudyClick}
           />
-          <Button
-            text={'마이 페이지'}
-            type={'header_skyblue'}
-            onClick={handleMyPageClick}
-          />
+          {userInfo ? (
+            <Button
+              text={'마이 페이지'}
+              type={'header_skyblue'}
+              onClick={handleMyPageClick}
+            />
+          ) : null}
         </div>
         {/* 오른쪽 컨테이너 */}
         <div
@@ -178,7 +169,7 @@ function Header() {
                   `}
                 >
                   <img
-                    src="/logo192.png"
+                    src={userInfo.profileImage}
                     alt="프로필사진"
                     css={css`
                       height: 60%;

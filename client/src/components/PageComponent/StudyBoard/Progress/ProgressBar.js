@@ -27,8 +27,9 @@ function ProgressBar({
       setIsSame(true);
     }
     console.log(selectedId);
+    console.log(endTask);
     bar.current.style.width = (endTask / totalTask) * 100 + '%';
-  }, [selectedId]);
+  }, [selectedId, endTask]);
 
   return (
     <section>

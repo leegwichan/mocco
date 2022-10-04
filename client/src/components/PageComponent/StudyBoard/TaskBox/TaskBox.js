@@ -104,7 +104,7 @@ export default TaskBox;
 
 const taskBox = css`
   background-color: #f0f8ff;
-  padding: 0px 50px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;

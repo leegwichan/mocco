@@ -20,15 +20,23 @@ const Header = css`
 
 const totalContainer = css`
   max-width: 1260px;
+<<<<<<< HEAD
   padding: 0px 2rem;
+=======
+>>>>>>> 2ee9cd40995be1506f2e5629aa562dbee7936d64
   height: 2000px;
   margin: auto;
+  padding: 0px 1rem;
   margin-top: 50px;
   margin-bottom: 100px;
   .githubmargin {
     margin-bottom: 10%;
   }
   @media all and (max-width: 1023px) {
+<<<<<<< HEAD
+=======
+    /* padding: 0px 24px; */
+>>>>>>> 2ee9cd40995be1506f2e5629aa562dbee7936d64
     margin-top: 34px;
     margin-bottom: 10%;
   }
