@@ -25,6 +25,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
             request
               .patch(`/api/study-board/${studyInfo.studyId}/finish-recruit`)
               .then(() => alert('스터디 모집이 마감되었습니다'))
+              .then(() => navigate(`/studylist`))
               .catch((err) => console.log(err));
           }
         });
@@ -79,7 +80,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
       </div>
       <div className="btn">
         <span className="day">{proposal.createdAt}</span>
-        {studyInfo.member.memberId === userInfo.memberId && (
+        {userInfo !== null && studyInfo.member.memberId === userInfo.memberId && (
           <>
             <Button
               type={'small_blue'}

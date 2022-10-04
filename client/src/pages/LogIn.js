@@ -37,7 +37,6 @@ function LogIn() {
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
         setAuthorizationToken(res.headers.accesstoken);
         setUserInfoState(res.data.data);
-        console.log(res.data.data);
         return res;
       })
       .then((res) => {
