@@ -28,7 +28,8 @@ function App() {
 
         {/* Restricted public route */}
         {!authenticated && <Route path="/login" element={<LogIn />} />}
-        {!authenticated && <Route path="/signup" element={<SignUp />} />}
+        {/* {!authenticated && <Route path="/signup" element={<SignUp />} />} */}
+        <Route path="/signup" element={<SignUp />} />
 
         {/* Private route */}
         <Route

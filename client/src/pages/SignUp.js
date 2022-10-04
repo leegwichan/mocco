@@ -33,6 +33,13 @@ function SignUp() {
     setErrorMessage((prev) => ({ ...prev, nickname: null }));
   };
 
+  const onChangeConfirmPassword = () => {
+    setErrorMessage((prev) => ({
+      ...prev,
+      password: null,
+    }));
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -273,6 +280,8 @@ function SignUp() {
                 {errorMessage.email}
               </p>
             )}
+
+            {/* 비밀번호 중복 확인 input */}
             <label
               htmlFor="password"
               css={css`
@@ -294,6 +303,7 @@ function SignUp() {
                 border: 1px solid #d1d1d1;
                 margin-bottom: 12px;
               `}
+              onChange={onChangeConfirmPassword}
             ></input>
             <label
               htmlFor="passwordConfirm"
@@ -306,7 +316,7 @@ function SignUp() {
             </label>
             <input
               type="password"
-              name="passwordConfirm"
+              name="password"
               id="passwordConfirm"
               css={css`
                 width: 100%;
@@ -316,6 +326,7 @@ function SignUp() {
                 border: 1px solid #d1d1d1;
                 margin-bottom: 12px;
               `}
+              onChange={onChangeConfirmPassword}
             ></input>
             {errorMessage.password && (
               <p
