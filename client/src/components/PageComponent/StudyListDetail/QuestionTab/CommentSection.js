@@ -88,7 +88,7 @@ const CommentSection = ({
               text={'답글'}
               onClick={() => setIsReplyOpen(true)}
             />
-            {userInfo.memberId === member.memberId && (
+            {userInfo.memberId !== member.memberId && (
               <>
                 <Button
                   type={'small_white'}
@@ -107,7 +107,7 @@ const CommentSection = ({
         {isEditOpen && (
           <section css={editContainer}>
             <input css={editInput} value={value} onChange={handleChange} />
-            <div css={btnContainer}>
+            <div className="btn">
               <Button
                 type={'small_white'}
                 text={'완료'}
@@ -150,6 +150,15 @@ const container = css`
     margin-top: 16px;
     display: flex;
     justify-content: flex-end;
+
+    @media all and (max-width: 768px) {
+      button {
+        width: 50px;
+        height: 30px;
+        margin-left: 7px;
+        font-size: 13px;
+      }
+    }
   }
 
   .day {
@@ -188,19 +197,28 @@ const editContainer = css`
   width: 100%;
   flex-direction: column;
   margin-bottom: 25px;
+
+  .btn {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+    margin-top: 10px;
+
+    @media all and (max-width: 768px) {
+      button {
+        width: 50px;
+        height: 30px;
+        margin-left: 7px;
+        font-size: 13px;
+      }
+    }
+  }
 `;
 
 const editInput = css`
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #d1d1d1;
-`;
-
-const btnContainer = css`
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 20px;
-  margin-top: 10px;
 `;
 
 const profile = css`

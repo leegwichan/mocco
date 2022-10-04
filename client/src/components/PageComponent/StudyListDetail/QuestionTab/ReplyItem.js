@@ -105,7 +105,7 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         {isEditOpen && (
           <div css={editContainer}>
             <textarea css={editInput} value={value} onChange={handleChange} />
-            <div css={btnContainer}>
+            <div className="btn">
               <Button
                 type={'small_white'}
                 text={'완료'}
@@ -176,6 +176,15 @@ const container = css`
     margin-top: 16px;
     display: flex;
     justify-content: flex-end;
+
+    @media all and (max-width: 768px) {
+      button {
+        width: 50px;
+        height: 30px;
+        margin-left: 7px;
+        font-size: 13px;
+      }
+    }
   }
 
   .day {
@@ -201,19 +210,32 @@ const editContainer = css`
   flex-direction: column;
   margin-bottom: 25px;
   width: 99%;
+
+  @media all and (max-width: 768px) {
+    width: 95%;
+  }
+
+  .btn {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+    margin-top: 10px;
+
+    @media all and (max-width: 768px) {
+      button {
+        width: 50px;
+        height: 30px;
+        margin-left: 7px;
+        font-size: 13px;
+      }
+    }
+  }
 `;
 
 const editInput = css`
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #d1d1d1;
-`;
-
-const btnContainer = css`
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 20px;
-  margin-top: 10px;
 `;
 
 const profile = css`

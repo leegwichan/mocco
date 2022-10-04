@@ -110,5 +110,14 @@ const replyInput = css`
     justify-content: flex-end;
     padding: 0 20px;
     margin-top: 10px;
+
+    @media all and (max-width: 768px) {
+      button {
+        width: 50px;
+        height: 30px;
+        margin-left: 7px;
+        font-size: 13px;
+      }
+    }
   }
 `;

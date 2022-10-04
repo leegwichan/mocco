@@ -119,7 +119,7 @@ const container = css`
   }
 
   hr {
-    box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 5%);
+    box-shadow: 0px 0px 5px 3px rgb(0 0 0 / 5%);
     height: 5px;
     border: 0;
     background: #d1d1d1;
@@ -149,6 +149,16 @@ const titleContainer = css`
 
   .btn {
     padding-top: 10px;
+
+    button {
+      @media all and (max-width: 768px) {
+        margin-left: 0px;
+        margin-right: 5px;
+        font-size: 12px;
+        height: 25px;
+        width: 45px;
+      }
+    }
   }
 
   @media all and (max-width: 768px) {

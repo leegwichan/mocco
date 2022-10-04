@@ -67,7 +67,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
       >
         {proposal.content}
       </div>
-      <div css={buttonContainer}>
+      <div className="btn">
         <span className="day">{proposal.createdAt}</span>
         {studyInfo.member.memberId !== proposal.member.memberId && (
           <>
@@ -111,6 +111,21 @@ const container = css`
     }
   }
 
+  .btn {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+
+    @media all and (max-width: 768px) {
+      button {
+        width: 50px;
+        height: 30px;
+        margin-left: 7px;
+        font-size: 13px;
+      }
+    }
+  }
+
   .day {
     margin-top: 13px;
     margin-right: 10px;
@@ -126,12 +141,6 @@ const container = css`
     font-size: 15px;
     padding: 10px 20px;
   }
-`;
-
-const buttonContainer = css`
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const profile = css`

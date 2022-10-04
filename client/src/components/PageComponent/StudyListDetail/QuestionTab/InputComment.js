@@ -42,7 +42,9 @@ const InputComment = ({ getCommentInfof }) => {
         value={value}
         onChange={handleChange}
       />
-      <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
+      <div className="btn_container">
+        <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
+      </div>
     </form>
   );
 };
@@ -62,5 +64,14 @@ const container = css`
     border-radius: 5px;
     padding: 0.5rem;
     flex-grow: 1;
+  }
+
+  .btn_container {
+    @media all and (max-width: 768px) {
+      button {
+        font-size: 15px;
+        padding: 0 15px;
+      }
+    }
   }
 `;
