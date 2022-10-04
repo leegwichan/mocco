@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
-import porfile from '../../../../asset/profile.png';
 
 function UserSelect({ memberInfo, select, setSelect }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,17 +13,17 @@ function UserSelect({ memberInfo, select, setSelect }) {
     const clickedMember = memberInfo.filter(
       (user) => user.nickname === innerText
     );
+    // console.log('내가 클릭드야', clickedMember);
     setSelect({ ...clickedMember }[0]);
     setIsOpen(false);
   };
-  //   console.log('내가 셀렉트야', select);
 
   return (
     <section css={container}>
       <label onClick={onChange} role="presentation" css={selected}>
         {select && (
           <>
-            <img src={porfile} alt="p" css={image} />
+            <img src={select.profileImage} alt="profile" css={image} />
             <span> {select.nickname}</span>
           </>
         )}
@@ -54,7 +53,7 @@ function UserSelect({ memberInfo, select, setSelect }) {
                 role="presentation"
                 css={member}
               >
-                <img src={porfile} alt="p" css={image} />
+                <img src={user.profileImage} alt="p" css={image} />
                 {user.nickname}
               </li>
             );
@@ -92,10 +91,13 @@ const selected = css`
   font-size: 20px;
   font-weight: 500;
   padding: 10px;
+  width: 215px;
+  word-break: break-all;
 
   @media all and (max-width: 767px) {
     font-size: 15px;
     padding: 7px;
+    width: 150px;
     svg {
       width: 16px;
     }
@@ -103,14 +105,15 @@ const selected = css`
 `;
 
 const memberList = css`
-  width: 205px;
+  width: 215px;
   background-color: #ffffff;
-  margin-top: 17rem;
+  margin-top: 16rem;
   position: absolute;
   border-radius: 20px;
   overflow: hidden;
   list-style: none;
   border: 2px solid #0b6ff2;
+  word-break: break-all;
 
   &.showList {
     display: block;
@@ -121,15 +124,15 @@ const memberList = css`
   }
 
   @media all and (max-width: 767px) {
-    margin-top: 11rem;
-    width: 140px;
+    margin-top: 14rem;
+    width: 150px;
     border-radius: 15px;
   }
 `;
 
 const image = css`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 
   @media all and (max-width: 767px) {
@@ -143,10 +146,11 @@ const member = css`
   font-size: 20px;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 10px 20px;
   align-items: center;
   transition: background-color 0.2s ease-in;
   border-radius: 20px;
+  height: 80px;
 
   &:hover {
     color: #0b6ff2;

@@ -13,8 +13,8 @@ function TaskItem({ task, select, taskHandlerf, getStudyInfof }) {
 
   const today = `${year}-${month}-${day}`;
 
-  console.log(today);
-  console.log('select', select);
+  // console.log(today);
+  // console.log('select', select);
 
   return (
     <div>

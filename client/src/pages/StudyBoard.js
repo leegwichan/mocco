@@ -22,10 +22,6 @@ function StudyBoard() {
   const [memberProgressArr, setMemberProgressArr] = useState();
   const [selectedId, setSelectedId] = useState(memberId);
 
-  useEffect(() => {
-    getStudyInfo();
-  }, []);
-
   const getStudyInfo = () => {
     request(`/api/study-progress/main/${studyId}/member/${memberId}`)
       .then((res) => {
@@ -48,6 +44,12 @@ function StudyBoard() {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    getStudyInfo();
+  }, []);
+
+  console.log(selectedId);
 
   return (
     <main css={totalContainer}>

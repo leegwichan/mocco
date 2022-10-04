@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
 import { useInputValid } from '../hooks/useInputValid';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
   const { value, setIsValid, handleChange, handleClick } = useInputValid({
@@ -12,6 +12,7 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
     },
   });
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const replyInfo = {
     memberId: userInfo && userInfo.memberId,
@@ -21,7 +22,7 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
 
   const replyHandler = () => {
     if (userInfo === null) {
-      navigate(`/login`);
+      navigate('/login', { state: { from: `/studylist/detail/${id}` } });
     } else {
       return request
         .post(`/api/replies`, replyInfo)

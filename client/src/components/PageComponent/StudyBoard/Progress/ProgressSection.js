@@ -101,6 +101,7 @@ function ProgressSection({
   memberProgressArr,
   selectedId,
 }) {
+  console.log('셀렉티드', studyInfo);
   console.log(memberProgressArr);
   return (
     <div css={Total} style={{ backgroundImage: `url(${모꼬배경})` }}>

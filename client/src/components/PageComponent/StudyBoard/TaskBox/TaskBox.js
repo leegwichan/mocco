@@ -21,12 +21,13 @@ function TaskBox({
   const [select, setSelect] = useState({
     memberId: userInfo.memberId,
     nickname: userInfo.nickname,
-    profileImage: userInfo.rofileImage,
+    profileImage: userInfo.profileImage,
   });
   const [taskList, setTaskList] = useState([]);
   const navigate = useNavigate();
   const myPageOwner = useRecoilValue(mypageOwnerAtom);
-  console.log('select', userInfo);
+  // console.log('select', userInfo);
+
   const taskHandler = () => {
     request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
       .then((res) => {
@@ -37,9 +38,9 @@ function TaskBox({
       })
       .then((res) => {
         setTaskList(res);
-        console.log(res);
         // console.log(res);
       })
+      .then(() => getStudyInfof())
       .catch((err) => {
         if (err.response.data.message === '스터디의 멤버가 아닙니다.') {
           navigate(`/main/${myPageOwner.memberId}`);
@@ -49,9 +50,9 @@ function TaskBox({
   };
 
   useEffect(() => {
+    // getStudyInfof();
     taskHandler();
     setSelectedId(select.memberId);
-    getStudyInfof();
   }, [select]);
 
   return (
