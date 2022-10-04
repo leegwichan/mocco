@@ -40,15 +40,22 @@ function ProfileModal({
         border: 2px solid #afdafd;
         border-radius: 5px;
         background-color: #f0f8ff;
-
-        &::before {
-          content: '';
-          position: absolute;
-          right: 15px;
-          top: -20px;
-          border-right: 10px solid transparent;
-          border-left: 10px solid transparent;
-          border-bottom: 20px solid #afdafd;
+        @media (min-width: 769px) {
+          &::before {
+            content: '';
+            position: absolute;
+            right: 15px;
+            top: -20px;
+            border-right: 10px solid transparent;
+            border-left: 10px solid transparent;
+            border-bottom: 20px solid #afdafd;
+          }
+        }
+        @media (max-width: 768px) {
+          width: calc(100vw);
+          height: calc(100vh - 8rem);
+          top: 4rem;
+          right: -1rem;
         }
       `}
     >
@@ -75,6 +82,9 @@ function ProfileModal({
             alt="프로필사진"
             css={css`
               height: 100%;
+              background-color: #ffffff;
+              border-radius: 50%;
+              aspect-ratio: 1/1;
             `}
           />
         </div>
@@ -198,7 +208,7 @@ function ProfileModal({
               width: 60%;
               height: 100%;
               font-size: 1.1rem;
-              line-height: 150%;
+              line-height: 200%;
             `}
           >
             내 알림
@@ -216,13 +226,20 @@ function ProfileModal({
               background-color: #0a6ff2;
               color: white;
               transition: all 0.1s linear;
-              &:hover {
+              /* &:hover {
                 border: 1px solid #0a6ff2;
                 background-color: #ffffff;
                 color: #0a6ff2;
-              }
+              } */
               &:active {
                 transform: scale(0.9);
+              }
+              @media (hover: hover) {
+                &:hover {
+                  border: 1px solid #0a6ff2;
+                  background-color: #ffffff;
+                  color: #0a6ff2;
+                }
               }
             `}
           >
