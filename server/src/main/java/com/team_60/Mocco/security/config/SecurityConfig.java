@@ -5,14 +5,12 @@ import com.team_60.Mocco.security.handler.FailureHandler;
 import com.team_60.Mocco.security.filter.JwtAuthenticationFilter;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.security.handler.OAuth2SuccessHandler;
-import com.team_60.Mocco.security.oauth.CustomAuthenticationProvider;
 import com.team_60.Mocco.security.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -81,9 +79,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        return new CustomAuthenticationProvider();
-//    }
 
 }
