@@ -33,6 +33,13 @@ function SignUp() {
     setErrorMessage((prev) => ({ ...prev, nickname: null }));
   };
 
+  const onChangeConfirmPassword = () => {
+    setErrorMessage((prev) => ({
+      ...prev,
+      password: null,
+    }));
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -116,6 +123,7 @@ function SignUp() {
     // }
   };
 
+  // 닉네임 중복체크
   const onClick = () => {
     setLoadingCheckNickname(true);
     request({
@@ -136,302 +144,311 @@ function SignUp() {
   };
 
   return (
-    <div>
-      <div>
+    <div
+      css={css`
+        margin-top: 64px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      `}
+    >
+      <div
+        css={css`
+          width: 100%;
+          max-width: 350px;
+        `}
+      >
         <div
           css={css`
-            max-width: 350px;
-            margin: 0 auto;
-            padding: 100px 0px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #d1d1d1;
+            padding-bottom: 18px;
+            font-size: 32px;
           `}
         >
+          <h3>회원가입</h3>
+        </div>
+
+        <form
+          css={css`
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+          `}
+          onSubmit={onSubmit}
+        >
+          <label
+            htmlFor="nickname"
+            css={css`
+              font-size: 18px;
+            `}
+          >
+            닉네임
+          </label>
           <div
             css={css`
-              margin-bottom: 18px;
-              border-bottom: 1px solid #d1d1d1;
-              padding-bottom: 18px;
-              font-size: 32px;
-            `}
-          >
-            <h3>회원가입</h3>
-          </div>
-
-          <form
-            css={css`
               display: flex;
-              flex-direction: column;
-              gap: 4px;
+              margin-top: 12px;
+              margin-bottom: 12px;
             `}
-            onSubmit={onSubmit}
           >
-            <label
-              htmlFor="nickname"
-              css={css`
-                font-size: 18px;
-              `}
-            >
-              닉네임
-            </label>
-            <div
-              css={css`
-                display: flex;
-                margin-top: 12px;
-                margin-bottom: 12px;
-              `}
-            >
-              <input
-                type="text"
-                name="nickname"
-                id="nickname"
-                css={css`
-                  flex: 1;
-                  height: 40px;
-                  background-color: #ffffff;
-                  border-radius: 5px;
-                  border: 1px solid #d1d1d1;
-                `}
-                value={nicknameValue}
-                onChange={onChangeNickname}
-              />
-              <button
-                css={css`
-                  min-width: 40px;
-                  height: 40px;
-                  background-color: #0b6ff2;
-                  border-radius: 5px;
-                  font-size: 16px;
-                  border-width: 0px;
-                  font-weight: normal;
-                  color: #ffffff;
-                  margin-left: 8px;
-                `}
-                type="button"
-                onClick={onClick}
-                disabled={nicknameChecked || loadingCheckNickname}
-              >
-                {nicknameChecked ? '✔' : '중복확인'}
-              </button>
-            </div>
-
-            {/* 닉네임 중복 체크 유효성 검사 */}
-            {errorMessage.nickname && (
-              <span
-                css={css`
-                  margin-bottom: 12px;
-                  font-size: 12px;
-                  color: red;
-                `}
-              >
-                {errorMessage.nickname}
-              </span>
-            )}
-            {nicknameChecked ? (
-              <p
-                css={css`
-                  margin-bottom: 12px;
-                  font-size: 12px;
-                  color: green;
-                `}
-              >
-                사용가능한 닉네임 입니다.
-              </p>
-            ) : null}
-
-            {/* 이메일 입력 input */}
-            <label
-              htmlFor="email"
-              css={css`
-                font-size: 18px;
-              `}
-            >
-              이메일
-            </label>
             <input
-              type="email"
-              name="email"
-              id="email"
+              type="text"
+              name="nickname"
+              id="nickname"
               css={css`
-                width: 100%;
+                flex: 1;
                 height: 40px;
                 background-color: #ffffff;
                 border-radius: 5px;
                 border: 1px solid #d1d1d1;
-                margin-top: 12px;
               `}
-            ></input>
-
-            {/* 이메일 에러메세지 */}
-            {errorMessage.email && (
-              <p
-                css={css`
-                  font-size: 12px;
-                  color: red;
-                  margin-top: 12px;
-                  margin-bottom: 12px;
-                `}
-              >
-                {errorMessage.email}
-              </p>
-            )}
-            <label
-              htmlFor="password"
-              css={css`
-                font-size: 18px;
-                margin-bottom: 12px;
-              `}
-            >
-              비밀번호
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              css={css`
-                width: 100%;
-                height: 40px;
-                background-color: #ffffff;
-                border-radius: 5px;
-                border: 1px solid #d1d1d1;
-                margin-bottom: 12px;
-              `}
-            ></input>
-            <label
-              htmlFor="passwordConfirm"
-              css={css`
-                font-size: 18px;
-                margin-bottom: 12px;
-              `}
-            >
-              비밀번호 확인
-            </label>
-            <input
-              type="password"
-              name="passwordConfirm"
-              id="passwordConfirm"
-              css={css`
-                width: 100%;
-                height: 40px;
-                background-color: #ffffff;
-                border-radius: 5px;
-                border: 1px solid #d1d1d1;
-                margin-bottom: 12px;
-              `}
-            ></input>
-            {errorMessage.password && (
-              <p
-                css={css`
-                  margin-bottom: 12px;
-                  font-size: 12px;
-                  color: red;
-                `}
-              >
-                {errorMessage.password}
-              </p>
-            )}
-            <div
-              css={css`
-                display: flex;
-              `}
-            >
-              <button
-                onClick={onAgreeButtonActive}
-                css={css`
-                  border: 0;
-                  background-color: white;
-                  cursor: pointer;
-                `}
-                type="button"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24px"
-                  height="24px"
-                  viewBox="0 0 24 24"
-                  style={{ fill: buttonActive ? '#0b6ff2' : '#D1D1D1' }}
-                >
-                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z" />
-                </svg>
-              </button>
-
-              <p
-                css={css`
-                  font-size: 12px;
-                  margin-left: 10px;
-                  display: flex;
-                  align-items: center;
-                `}
-              >
-                (필수)
-                <span
-                  css={css`
-                    color: #0b6ff2;
-                    text-decoration: underline;
-                  `}
-                >
-                  서비스 이용약관
-                </span>
-                과
-                <span
-                  css={css`
-                    color: #0b6ff2;
-                    text-decoration: underline;
-                  `}
-                >
-                  개인정보 취급방침
-                </span>
-                에 동의합니다.
-              </p>
-            </div>
-            {errorMessage.agreePersonalInformation && (
-              <p
-                css={css`
-                  margin-bottom: 12px;
-                  margin-top: 18px;
-                  font-size: 12px;
-                  color: red;
-                `}
-              >
-                {errorMessage.agreePersonalInformation}
-              </p>
-            )}
+              value={nicknameValue}
+              onChange={onChangeNickname}
+            />
             <button
-              type="submit"
               css={css`
-                width: 100%;
+                min-width: 40px;
                 height: 40px;
-                color: #ffffff;
                 background-color: #0b6ff2;
                 border-radius: 5px;
+                font-size: 16px;
                 border-width: 0px;
-                margin-top: 12px;
-                margin-bottom: 30px;
-                font-size: 18px;
                 font-weight: normal;
+                color: #ffffff;
+                margin-left: 8px;
               `}
+              type="button"
+              onClick={onClick}
+              disabled={nicknameChecked || loadingCheckNickname}
             >
-              회원가입
+              {nicknameChecked ? '✔' : '중복확인'}
             </button>
-            <div
+          </div>
+
+          {/* 닉네임 중복 체크 유효성 검사 */}
+          {errorMessage.nickname && (
+            <span
               css={css`
-                display: flex;
-                justify-content: space-between;
-                font-size: 14px;
-                border-top: 1px solid #d1d1d1;
-                padding-top: 18px;
+                margin-bottom: 12px;
+                font-size: 12px;
+                color: red;
               `}
             >
-              <p>이미 계정이 있으신가요?</p>
-              <Link
-                to="/login"
+              {errorMessage.nickname}
+            </span>
+          )}
+          {nicknameChecked ? (
+            <p
+              css={css`
+                margin-bottom: 12px;
+                font-size: 12px;
+                color: green;
+              `}
+            >
+              사용가능한 닉네임 입니다.
+            </p>
+          ) : null}
+
+          {/* 이메일 입력 input */}
+          <label
+            htmlFor="email"
+            css={css`
+              font-size: 18px;
+            `}
+          >
+            이메일
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            css={css`
+              width: 100%;
+              height: 40px;
+              background-color: #ffffff;
+              border-radius: 5px;
+              border: 1px solid #d1d1d1;
+              margin-top: 12px;
+            `}
+          ></input>
+
+          {/* 이메일 에러메세지 */}
+          {errorMessage.email && (
+            <p
+              css={css`
+                font-size: 12px;
+                color: red;
+                margin-top: 12px;
+                margin-bottom: 12px;
+              `}
+            >
+              {errorMessage.email}
+            </p>
+          )}
+
+          {/* 비밀번호 중복 확인 input */}
+          <label
+            htmlFor="password"
+            css={css`
+              font-size: 18px;
+              margin-bottom: 12px;
+            `}
+          >
+            비밀번호
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            css={css`
+              width: 100%;
+              height: 40px;
+              background-color: #ffffff;
+              border-radius: 5px;
+              border: 1px solid #d1d1d1;
+              margin-bottom: 12px;
+            `}
+            onChange={onChangeConfirmPassword}
+          ></input>
+          <label
+            htmlFor="passwordConfirm"
+            css={css`
+              font-size: 18px;
+              margin-bottom: 12px;
+            `}
+          >
+            비밀번호 확인
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="passwordConfirm"
+            css={css`
+              width: 100%;
+              height: 40px;
+              background-color: #ffffff;
+              border-radius: 5px;
+              border: 1px solid #d1d1d1;
+              margin-bottom: 12px;
+            `}
+            onChange={onChangeConfirmPassword}
+          ></input>
+          {errorMessage.password && (
+            <p
+              css={css`
+                margin-bottom: 12px;
+                font-size: 12px;
+                color: red;
+              `}
+            >
+              {errorMessage.password}
+            </p>
+          )}
+          <div
+            css={css`
+              display: flex;
+            `}
+          >
+            <button
+              onClick={onAgreeButtonActive}
+              css={css`
+                border: 0;
+                background-color: white;
+                cursor: pointer;
+              `}
+              type="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                style={{ fill: buttonActive ? '#0b6ff2' : '#D1D1D1' }}
+              >
+                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.25 16.518l-4.5-4.319 1.396-1.435 3.078 2.937 6.105-6.218 1.421 1.409-7.5 7.626z" />
+              </svg>
+            </button>
+
+            <p
+              css={css`
+                font-size: 12px;
+                margin-left: 10px;
+                display: flex;
+                align-items: center;
+              `}
+            >
+              (필수)
+              <span
                 css={css`
                   color: #0b6ff2;
-                  text-decoration: none;
+                  text-decoration: underline;
                 `}
               >
-                로그인
-              </Link>
-            </div>
-          </form>
+                서비스 이용약관
+              </span>
+              과
+              <span
+                css={css`
+                  color: #0b6ff2;
+                  text-decoration: underline;
+                `}
+              >
+                개인정보 취급방침
+              </span>
+              에 동의합니다.
+            </p>
+          </div>
+          {errorMessage.agreePersonalInformation && (
+            <p
+              css={css`
+                margin-bottom: 12px;
+                margin-top: 18px;
+                font-size: 12px;
+                color: red;
+              `}
+            >
+              {errorMessage.agreePersonalInformation}
+            </p>
+          )}
+          <button
+            type="submit"
+            css={css`
+              width: 100%;
+              height: 40px;
+              color: #ffffff;
+              background-color: #0b6ff2;
+              border-radius: 5px;
+              border-width: 0px;
+              margin-top: 12px;
+              margin-bottom: 30px;
+              font-size: 18px;
+              font-weight: normal;
+            `}
+          >
+            회원가입
+          </button>
+        </form>
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            border-top: 1px solid #d1d1d1;
+            padding-top: 18px;
+          `}
+        >
+          <p>이미 계정이 있으신가요?</p>
+          <Link
+            to="/login"
+            css={css`
+              color: #0b6ff2;
+              text-decoration: none;
+            `}
+          >
+            로그인
+          </Link>
         </div>
       </div>
     </div>
