@@ -86,7 +86,7 @@ const totalContainer = css`
   height: calc(100vh - 64px);
   padding-top: 100px;
   @media all and (max-width: 767px) {
-    padding-top: 34px;
+    padding-top: 68px;
   }
 `;
 
