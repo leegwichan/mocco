@@ -78,4 +78,5 @@ const container = css`
         padding: 0 15px;
       }
     }
+  }
 `;

@@ -93,7 +93,7 @@ const container = css`
   height: 170px;
   margin-bottom: 25px;
   border-radius: 15px;
-  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
+  box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
 
   .delete_text {
     color: #a4a4a4;
