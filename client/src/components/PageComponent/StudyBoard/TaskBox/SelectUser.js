@@ -129,6 +129,7 @@ const memberList = css`
 const image = css`
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 
   @media all and (max-width: 767px) {
     width: 30px;
