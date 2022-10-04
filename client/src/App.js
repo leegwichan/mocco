@@ -13,8 +13,6 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import StudyBoard from './pages/StudyBoard';
 import Callback from './pages/Callback';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfUse from './pages/TermsOfUse';
 import Header from './components/Common/Header/Header';
 
 function App() {
