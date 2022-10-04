@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Getter
@@ -17,10 +18,11 @@ import java.time.format.DateTimeFormatter;
 public abstract class BaseEntity {
     @CreatedDate
     @Column(name = "created_at", updatable = false)
-    private String createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
-
+    private String createdAt = LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul"))
+                    .format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
 
     @LastModifiedDate
     @Column(name = "last_modified_at")
-    private String modifiedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
+    private String modifiedAt = LocalDateTime.now().atZone(ZoneId.of("Asia/Seoul"))
+            .format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
 }
