@@ -11,7 +11,6 @@ import MakeStudy from './pages/MakeStudy';
 import StudyListDetail from './pages/StudyListDetail';
 import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
-import FindPassword from './pages/FindPassword';
 import StudyBoard from './pages/StudyBoard';
 import Header from './components/Common/Header/Header';
 import Callback from './pages/Callback';
@@ -36,7 +35,6 @@ function App() {
         {!authenticated && <Route path="/login" element={<LogIn />} />}
         {!authenticated && <Route path="/signup" element={<SignUp />} />}
         {/* <Route path="/login" element={<LogIn />} /> */}
-        <Route path="/findpassword" element={<FindPassword />} />
         <Route path="/main/:id" element={<Main />} />
         <Route path="/studylist" element={<StudyList />} />
         {/* <Route path="/makestudy" element={<MakeStudy />} /> */}

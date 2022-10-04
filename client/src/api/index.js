@@ -61,25 +61,4 @@ request.interceptors.response.use(
   }
 );
 
-// request.interceptors.request.use(
-//   function (res) {
-//     return res;
-//   },
-//   async function (error) {
-//     if (error.res && error.res.status === 403) {
-//       const originalRequest = error.config;
-//       const data = await request({
-//         method: 'post',
-//         url: '/api/register/refresh',
-//       });
-//       if (data) {
-//         const { accessToken, refreshToken } = data.data;
-//         localStorage.removeItem('accessToken');
-//         localStorage.removeItem('refreshToken');
-//         originalRequest.headers['AccessToken'] = accessToken;
-//         originalRequest.headers['refreshToken'] = refreshToken;
-//       }
-//     }
-//   }
-// );
 export default request;
