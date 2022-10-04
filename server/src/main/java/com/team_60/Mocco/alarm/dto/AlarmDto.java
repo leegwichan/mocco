@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 public class AlarmDto {
 
     @Getter
@@ -16,5 +18,6 @@ public class AlarmDto {
         private Alarm.AlarmType alarmType;
         private String content;
         private StudyDto.SubResponse study;
+        private String createdAt;
     }
 }

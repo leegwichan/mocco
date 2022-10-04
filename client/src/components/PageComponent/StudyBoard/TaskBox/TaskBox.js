@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import SelectUser from './SelectUser';
 import TaskItem from './TaskItem';
 import request from '../../../../api';
-import { userInfoState } from '../../../../atom/atom';
+import { userInfoState, mypageOwnerAtom } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
+import UserProgressBar from './UserProgressBar';
+import { useNavigate } from 'react-router-dom';
 
-function TaskBox({ studyInfo, studyId }) {
+function TaskBox({ studyInfo, studyId, setSelectedId }) {
   const userInfo = useRecoilValue(userInfoState);
   const [select, setSelect] = useState({
     memberId: userInfo.memberId,
@@ -14,25 +16,46 @@ function TaskBox({ studyInfo, studyId }) {
     profileImage: userInfo.profileImage,
   });
   const [taskList, setTaskList] = useState([]);
+  const navigate = useNavigate();
+  const myPageOwner = useRecoilValue(mypageOwnerAtom);
 
   const taskHandler = () => {
-    request(
-      `/api/study-progress/sub/${studyId}/member/${select.memberId}`
-    ).then((res) => {
-      setTaskList(res.data.data.taskList);
-      // console.log(res.data.data.taskList);
-    });
+    request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
+      .then((res) => {
+        console.log(res);
+        return res.data.data.taskList.sort(
+          (a, b) => new Date(a.deadline) - new Date(b.deadline)
+        );
+      })
+      .then((res) => {
+        setTaskList(res);
+        console.log(res);
+        // console.log(res);
+      })
+      .catch((err) => {
+        if (err.response.data.message === '스터디의 멤버가 아닙니다.') {
+          navigate(`/main/${myPageOwner.memberId}`);
+          alert(err.response.data.message);
+        }
+      });
   };
 
   useEffect(() => {
     taskHandler();
+    setSelectedId(select.memberId);
   }, [select]);
 
   return (
     <div css={taskBox}>
       <div css={taskTop}>
         <div>Task</div>
-        <div>ProgressBar</div>
+        <div>
+          <UserProgressBar
+            taskList={taskList}
+            total={taskList.length}
+            select={select.memberId}
+          />
+        </div>
         <SelectUser
           memberInfo={studyInfo.memberList}
           select={select}
@@ -43,7 +66,11 @@ function TaskBox({ studyInfo, studyId }) {
         {taskList &&
           taskList.map((task) => (
             <div key={task.taskId}>
-              <TaskItem task={task} select={select} />
+              <TaskItem
+                task={task}
+                select={select}
+                taskHandlerf={taskHandler}
+              />
             </div>
           ))}
       </div>

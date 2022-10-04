@@ -1,34 +1,32 @@
 package com.team_60.Mocco.security.config;
 
-import com.team_60.Mocco.member.repository.MemberRepository;
-import com.team_60.Mocco.security.filter.FailureHandler;
+import com.team_60.Mocco.security.handler.CustomAuthenticationEntryPoint;
+import com.team_60.Mocco.security.handler.FailureHandler;
 import com.team_60.Mocco.security.filter.JwtAuthenticationFilter;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
-import com.team_60.Mocco.security.filter.OAuth2SuccessHandler;
+import com.team_60.Mocco.security.handler.OAuth2SuccessHandler;
 import com.team_60.Mocco.security.oauth.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
@@ -38,12 +36,13 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring().antMatchers("/api/register/**","/api/study-info/**","/h2/**");
+        return (web) -> web.ignoring().antMatchers("/api/register/**","/api/study-info/**","/h2/**","api/test/**",
+                "/login/oauth2/**","/oauth2/authorization/*");
     }
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception{
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -58,7 +57,10 @@ public class SecurityConfig {
                 .userService(principalOauth2UserService)
                 .and()
                 .successHandler(successHandler)
-                .failureHandler(failureHandler);
+                .failureHandler(failureHandler)
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
         return http.build();
     }
 
@@ -69,6 +71,8 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PATCH","OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.addExposedHeader("AccessToken");
+        configuration.addExposedHeader("RefreshToken");
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

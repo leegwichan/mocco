@@ -23,7 +23,7 @@ public class MemberServiceImpl implements MemberService{
     private final NewPasswordManager newPasswordManager;
     private final BCryptPasswordEncoder encoder;
     @Value("${image.default.member}")
-    private List<String> memberImageList;
+    private List<String> memberDefaultImageList;
 
     @Override
     @Transactional(readOnly = true)
@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService{
         findMemberByNicknameExpectNull(member.getNickname());
 
         member.setPassword(encoder.encode(member.getPassword()));
-        String defaultImage = memberImageList.get((int) Math.floor(Math.random() * memberImageList.size()));
+        String defaultImage = memberDefaultImageList.get((int) Math.floor(Math.random() * memberDefaultImageList.size()));
         member.getMyInfo().setProfileImage(defaultImage);
         return memberRepository.save(member);
     }
@@ -160,11 +160,6 @@ public class MemberServiceImpl implements MemberService{
                 if (repositories[i] != null && repositories[i].equals(repositories[j]))
                     throw new BusinessLogicException(ExceptionCode.GITHUB_REPOSITORY_DUPLICATION);
             }
-        }
-
-        for (String repository : repositories){
-            if (repository.length() < 20 || !repository.substring(0,19).equals("https://github.com/"))
-                throw new BusinessLogicException(ExceptionCode.NOT_GITHUB_REPOSITORY);
         }
     }
 }

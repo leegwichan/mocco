@@ -4,6 +4,9 @@ import { css } from '@emotion/react';
 const Title = css`
   display: inline-block;
   font-size: 2.5rem;
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 function StudyListTitle() {

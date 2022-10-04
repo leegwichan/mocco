@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import request from '../api';
 import { singleStudyState } from '../atom/atom';
 import { useRecoilState } from 'recoil';
+import Footer from '../components/Common/Footer';
 
 function StudyListDetail() {
   const { id } = useParams();
@@ -27,9 +28,12 @@ function StudyListDetail() {
   }, [id]);
 
   return (
-    <div css={container}>
-      <StudySection id={id} />
-      <TabSection />
+    <div>
+      <div css={container}>
+        <StudySection id={id} />
+        <TabSection />
+      </div>
+      <Footer />
     </div>
   );
 }

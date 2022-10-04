@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +19,9 @@ public class StudyEvaluationDto {
     @Getter
     @Setter
     public static class Post extends PostDto {
+        @Positive(message = "Study 식별자는 양수만 들어갈 수 있습니다.")
         private long studyId;
+
         private List<MemberDto.PostEvaluation> evaluations;
     }
 

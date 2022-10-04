@@ -1,7 +1,7 @@
 package com.team_60.Mocco.reply.controller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
-import com.team_60.Mocco.helper.aop.AuthenticationService;
+import com.team_60.Mocco.helper.interceptor.IdRequired;
 import com.team_60.Mocco.reply.dto.ReplyDto;
 import com.team_60.Mocco.reply.entity.Reply;
 import com.team_60.Mocco.reply.mapper.ReplyMapper;
@@ -9,19 +9,24 @@ import com.team_60.Mocco.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/api/replies")
 @RequiredArgsConstructor
+@Validated
 public class ReplyController {
 
     private final ReplyService replyService;
     private final ReplyMapper mapper;
-    private final AuthenticationService authenticationService;
 
     @GetMapping("/{reply-id}")
-    public ResponseEntity getReply(@PathVariable("reply-id") long replyId){
+    public ResponseEntity getReply(@PathVariable("reply-id") @Positive long replyId){
 
         Reply findReply = replyService.findReply(replyId);
         ReplyDto.Response response = mapper.replyToReplyResponseDto(findReply);
@@ -29,9 +34,10 @@ public class ReplyController {
                 new SingleResponseDto(response), HttpStatus.OK);
     }
 
+    @IdRequired
     @PostMapping
-    public ResponseEntity postReply(@RequestBody ReplyDto.Post requestBody){
-        authenticationService.AuthenticationCheckWithDto(requestBody);
+    public ResponseEntity postReply(@RequestBody @Valid ReplyDto.Post requestBody, HttpServletRequest request){
+        requestBody.setMemberId((Long) request.getAttribute("memberId"));
         Reply reply = mapper.replyPostDtoToReply(requestBody);
         Reply postReply = replyService.createReply(reply);
         ReplyDto.Response response = mapper.replyToReplyResponseDto(postReply);
@@ -40,9 +46,8 @@ public class ReplyController {
     }
 
     @PatchMapping("/{reply-id}")
-    public ResponseEntity patchReply(@PathVariable("reply-id") long replyId,
-                                      @RequestBody ReplyDto.Patch requestBody){
-        authenticationService.AuthenticationCheckWithId("replyId",replyId);
+    public ResponseEntity patchReply(@PathVariable("reply-id") @Positive long replyId,
+                                      @RequestBody @Valid ReplyDto.Patch requestBody){
         Reply reply = mapper.replyPatchDtoToReply(requestBody);
         reply.setReplyId(replyId);
         Reply patchReply = replyService.updateReply(reply);
@@ -52,12 +57,10 @@ public class ReplyController {
     }
 
     @DeleteMapping("/{reply-id}")
-    public ResponseEntity deleteReply(@PathVariable("reply-id") long replyId){
-        authenticationService.AuthenticationCheckWithId("replyId",replyId);
+    public ResponseEntity deleteReply(@PathVariable("reply-id") @Positive long replyId){
         Reply deleteReply = replyService.deleteReply(replyId);
         ReplyDto.Response response = mapper.replyToReplyResponseDto(deleteReply);
         return new ResponseEntity(
                 new SingleResponseDto(response), HttpStatus.OK);
     }
-
 }

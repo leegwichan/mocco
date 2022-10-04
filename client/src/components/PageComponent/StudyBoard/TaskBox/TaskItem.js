@@ -2,12 +2,18 @@ import { css } from '@emotion/react';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
 import AuthTaskModal from '../AuthTask/AuthTaskModal';
 
-function TaskItem({ task, select }) {
+function TaskItem({ task, select, taskHandlerf }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // const onChange = () => {
-  //   setIsOpen(true);
-  // };
+  let year = new Date().getFullYear().toString();
+  let month = new Date().getMonth() + 1;
+  month = month < 10 ? '0' + month.toString() : month.toString();
+  let day = new Date().getDate();
+  day = day < 10 ? '0' + day.toString() : day.toString();
+
+  const today = `${year}-${month}-${day}`;
+
+  console.log(today);
 
   return (
     <div>
@@ -17,7 +23,27 @@ function TaskItem({ task, select }) {
         </div>
         <div css={content}>{task.content}</div>
         <div css={mark}>
-          {task.taskCheck.taskCheckId ? (
+          {task.deadline < today && !task.taskCheck.taskChecked ? (
+            <>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                width="73px"
+                height="73px"
+                stroke="#ff0000"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span className="fail">실패</span>
+            </>
+          ) : task.taskCheck.taskCheckId ? (
             <>
               <svg
                 clipRule="evenodd"
@@ -66,6 +92,7 @@ function TaskItem({ task, select }) {
               setIsOpen={setIsOpen}
               isOpen={isOpen}
               select={select}
+              taskHandlerf={taskHandlerf}
             />
           )}
         </div>
@@ -77,10 +104,10 @@ function TaskItem({ task, select }) {
 export default TaskItem;
 
 const taskContainer = css`
-  width: 1100px;
+  width: 990px;
   height: 128px;
   background-color: #ffffff;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
@@ -89,6 +116,11 @@ const taskContainer = css`
 
   .check {
     color: #0b68ff;
+    font-weight: 500;
+  }
+
+  .fail {
+    color: #ff0000;
     font-weight: 500;
   }
 `;
