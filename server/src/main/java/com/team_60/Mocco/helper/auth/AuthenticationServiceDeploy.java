@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -103,7 +104,19 @@ public class AuthenticationServiceDeploy implements AuthenticationService {
     @Override
     public void AuthenticationCheckStudyMember(long studyId, long memberId){ //studyRoom
         List<StudyMember> studyMemberList = studyService.findVerifiedStudy(studyId).getStudyMemberList();
-        studyMemberList.stream().forEach(n -> {if(n.getMember().getMemberId() != memberId)
-            throw new BusinessLogicException(ExceptionCode.NOT_STUDY_MEMBER);});
+        List<Long> memberIdList = studyMemberList.stream()
+                .map(n -> n.getMember().getMemberId()).collect(Collectors.toList());
+        if(!memberIdList.contains(memberId)){
+            throw new BusinessLogicException(ExceptionCode.NOT_STUDY_MEMBER);
+        }
+    }
+
+    @Override
+    public void AuthenticationCheckStudyLeader(long proposalId, long memberId){
+        Proposal proposal = proposalService.findVerifiedProposal(proposalId);
+        if(proposal.getStudy().getTeamLeader().getMemberId() != memberId){
+            throw new BusinessLogicException(ExceptionCode.NOT_STUDY_TEAM_LEADER);
+        }
+
     }
 }
