@@ -26,7 +26,6 @@ function TaskBox({
   const navigate = useNavigate();
   const myPageOwner = useRecoilValue(mypageOwnerAtom);
 
-  // task가 날짜순으로 들어오도록 구현
   const taskHandler = () => {
     request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
       .then((res) => {

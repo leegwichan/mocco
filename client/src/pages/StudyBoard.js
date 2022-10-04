@@ -16,7 +16,7 @@ function StudyBoard() {
   const nowStudy = {
     ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
   }[0];
-  console.log(nowStudy);
+  // console.log(nowStudy);
   const [totalTask, setTotalTask] = useState(0);
   const [expiredTaskCount, setExpiredTaskCount] = useState(0);
   const [memberProgressArr, setMemberProgressArr] = useState();
@@ -72,6 +72,7 @@ function StudyBoard() {
             setSelectedId={setSelectedId}
             expiredTaskCount={expiredTaskCount}
             teamName={nowStudy.teamName}
+            getStudyInfof={getStudyInfo}
           />
         </section>
       </div>
@@ -92,7 +93,7 @@ const totalContainer = css`
 `;
 
 const contentContainer = css`
-  max-width: calc(1200px + 2rem);
+  max-width: 1260px;
   padding: 0px 2rem;
   margin: 0 auto;
 `;
