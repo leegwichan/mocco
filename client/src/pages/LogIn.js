@@ -37,11 +37,13 @@ function LogIn() {
         localStorage.setItem('accessToken', res.headers.accesstoken);
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
         setAuthorizationToken(res.headers.accesstoken);
-        setUserInfoState(res.data);
-        console.log(userInfo);
-        console.log('res', res.data);
+        setUserInfoState(res.data.data);
+        console.log('res', res);
+        return res;
       })
       .then((res) => {
+        console.log('u', userInfo);
+        console.log('res', res.data);
         navigate(
           location.state ? location.state.from : `/main/${res.data.memberId}`
         );
@@ -53,128 +55,151 @@ function LogIn() {
 
   const closeForgotPasswordModal = () => setModalOn(false);
 
+  const onClick = () => {
+    request({
+      method: 'get',
+      url: '/oauth2/authorization/github',
+    });
+  };
+
   return (
     <div
       css={css`
-        max-width: 350px;
-        margin: 0 auto;
-        padding: 100px 0px;
+        padding-top: 64px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* border: 1px solid gray; */
       `}
     >
       <div
         css={css`
-          margin-bottom: 18px;
-          border-bottom: 1px solid #d1d1d1;
-          padding-bottom: 18px;
-          font-size: 32px;
+          width: 100%;
+          max-width: 350px;
         `}
       >
-        <h3>로그인</h3>
-      </div>
-
-      <form
-        css={css`
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        `}
-        onSubmit={onSubmit}
-      >
-        <label
-          htmlFor="email"
-          css={css`
-            font-size: 18px;
-          `}
-        >
-          이메일
-        </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          css={css`
-            width: 100%;
-            height: 40px;
-            background-color: #ffffff;
-            border-radius: 5px;
-            border: 1px solid #d1d1d1;
-            margin-top: 12px;
-          `}
-        ></input>
         <div
           css={css`
-            margin-top: 12px;
-            margin-bottom: 12px;
-          `}
-        ></div>
-
-        <label
-          htmlFor="password"
-          css={css`
-            font-size: 18px;
-            margin-bottom: 12px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #d1d1d1;
+            padding-bottom: 18px;
+            font-size: 32px;
           `}
         >
-          비밀번호
-        </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          css={css`
-            width: 100%;
-            height: 40px;
-            background-color: #ffffff;
-            border-radius: 5px;
-            border: 1px solid #d1d1d1;
-            margin-bottom: 12px;
-          `}
-        ></input>
-
-        <div
-          css={css`
-            display: flex;
-            justify-content: flex-end;
-          `}
-        >
-          <button
-            css={css`
-              font-size: 12px;
-              color: #0b6ff2;
-              text-align: right;
-              border: 0;
-              background-color: white;
-            `}
-            onClick={openForgotPasswordModal}
-            type="button"
-          >
-            비밀번호 찾기
-          </button>
+          <h3>로그인</h3>
         </div>
 
-        <button
-          type="submit"
+        {/* 로그인 form */}
+        <form
           css={css`
-            width: 100%;
-            height: 40px;
-            color: #ffffff;
-            background-color: #0b6ff2;
-            border-radius: 5px;
-            border-width: 0px;
-            margin-top: 12px;
-            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
           `}
+          onSubmit={onSubmit}
         >
-          로그인
+          <label
+            htmlFor="email"
+            css={css`
+              font-size: 18px;
+            `}
+          >
+            이메일
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            css={css`
+              width: 100%;
+              height: 40px;
+              background-color: #ffffff;
+              border-radius: 5px;
+              border: 1px solid #d1d1d1;
+              margin-top: 12px;
+            `}
+          ></input>
+          <div
+            css={css`
+              margin-top: 12px;
+              margin-bottom: 12px;
+            `}
+          ></div>
+
+          <label
+            htmlFor="password"
+            css={css`
+              font-size: 18px;
+              margin-bottom: 12px;
+            `}
+          >
+            비밀번호
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            css={css`
+              width: 100%;
+              height: 40px;
+              background-color: #ffffff;
+              border-radius: 5px;
+              border: 1px solid #d1d1d1;
+              margin-bottom: 12px;
+            `}
+          ></input>
+
+          <div
+            css={css`
+              display: flex;
+              justify-content: flex-end;
+            `}
+          >
+            <button
+              css={css`
+                font-size: 12px;
+                color: #0b6ff2;
+                text-align: right;
+                border: 0;
+                background-color: white;
+              `}
+              onClick={openForgotPasswordModal}
+              type="button"
+            >
+              비밀번호 찾기
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            css={css`
+              width: 100%;
+              height: 40px;
+              color: #ffffff;
+              background-color: #0b6ff2;
+              border-radius: 5px;
+              border-width: 0px;
+              margin-top: 12px;
+              margin-bottom: 30px;
+            `}
+          >
+            로그인
+          </button>
+        </form>
+
+        {/* github oauth login */}
+        <button onClick={onClick}>
+          <p
+            css={css`
+              text-align: center;
+              font-size: 14px;
+            `}
+          >
+            소셜로 로그인 하기
+          </p>
         </button>
-        <p
-          css={css`
-            text-align: center;
-            font-size: 14px;
-          `}
-        >
-          소셜로 로그인 하기
-        </p>
+
         <div
           css={css`
             display: flex;
@@ -211,7 +236,7 @@ function LogIn() {
             회원가입
           </p>
         </div>
-      </form>
+      </div>
 
       {modalOn && <ForgotPasswordModal onClose={closeForgotPasswordModal} />}
     </div>

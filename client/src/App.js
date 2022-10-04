@@ -13,14 +13,20 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import StudyBoard from './pages/StudyBoard';
 import Callback from './pages/Callback';
-// import Header from './components/Common/Header/Header';
+import Header from './components/Common/Header/Header';
+import { css } from '@emotion/react';
+
 
 function App() {
   const authenticated = !!useRecoilValue(userInfoState);
 
   return (
-    <div>
-      {/* <Header /> */}
+    <div
+      css={css`
+        height: 100%;
+      `}
+    >
+      <Header />
       <Routes>
         {/* Public route */}
         <Route path="/" element={<Landing />} />
@@ -28,7 +34,8 @@ function App() {
 
         {/* Restricted public route */}
         {!authenticated && <Route path="/login" element={<LogIn />} />}
-        {!authenticated && <Route path="/signup" element={<SignUp />} />}
+        {/* {!authenticated && <Route path="/signup" element={<SignUp />} />} */}
+        <Route path="/signup" element={<SignUp />} />
 
         {/* Private route */}
         <Route
