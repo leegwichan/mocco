@@ -21,7 +21,7 @@ function StudyMember() {
             text-decoration: none;
           `}
         >
-          <div css={profile}>
+          <div className="profile">
             <img
               css={image}
               src={studyInfo.member.profileImage}
@@ -68,9 +68,10 @@ const container = css`
   width: 230px;
   height: 57px;
   background-color: #ffffff;
-  border-radius: 20px;
+  border-radius: 10px;
   z-index: 2;
   box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
+  border: 2px solid #0b6ff2;
 
   &:hover {
     cursor: pointer;
@@ -81,9 +82,38 @@ const selected = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 20px;
-  font-weight: 500;
   padding: 10px;
+  padding-bottom: 5px;
+
+  .profile {
+    display: flex;
+    align-items: center;
+  }
+
+  .main_link {
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+  }
+
+  @media all and (max-width: 768px) {
+    .main_link {
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
+`;
+
+const image = css`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid red;
+  margin-right: 10px;
 `;
 
 const memberList = css`
@@ -103,34 +133,6 @@ const memberList = css`
   &.noneList {
     display: none;
   }
-`;
-
-const profile = css`
-  display: flex;
-  align-items: center;
-
-  .main_link {
-    color: black;
-    font-size: 20px;
-    &:hover {
-      cursor: pointer;
-      color: #066ff2;
-    }
-  }
-
-  @media all and (max-width: 768px) {
-    .main_link {
-      font-size: 15px;
-      font-weight: 500;
-    }
-  }
-`;
-
-const image = css`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
 `;
 
 const member = css`

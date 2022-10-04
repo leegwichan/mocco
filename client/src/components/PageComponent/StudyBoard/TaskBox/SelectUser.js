@@ -78,6 +78,11 @@ const container = css`
   &:hover {
     cursor: pointer;
   }
+
+  @media all and (max-width: 767px) {
+    height: 45px;
+    border-radius: 10px;
+  }
 `;
 
 const selected = css`
@@ -87,6 +92,14 @@ const selected = css`
   font-size: 20px;
   font-weight: 500;
   padding: 10px;
+
+  @media all and (max-width: 767px) {
+    font-size: 15px;
+    padding: 7px;
+    svg {
+      width: 16px;
+    }
+  }
 `;
 
 const memberList = css`
@@ -106,12 +119,23 @@ const memberList = css`
   &.noneList {
     display: none;
   }
+
+  @media all and (max-width: 767px) {
+    width: 150px;
+    border-radius: 15px;
+  }
 `;
 
 const image = css`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+
+  @media all and (max-width: 767px) {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+  }
 `;
 
 const member = css`
@@ -125,5 +149,9 @@ const member = css`
 
   &:hover {
     color: #0b6ff2;
+  }
+
+  @media all and (max-width: 767px) {
+    padding: 12px;
   }
 `;

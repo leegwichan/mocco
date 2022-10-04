@@ -69,6 +69,8 @@ function StudyBoard() {
             studyInfo={studyInfo}
             studyId={studyId}
             setSelectedId={setSelectedId}
+            expiredTaskCount={expiredTaskCount}
+            teamName={nowStudy.teamName}
           />
         </section>
       </div>
@@ -83,10 +85,14 @@ const totalContainer = css`
   width: 100vw;
   height: calc(100vh - 64px);
   padding-top: 100px;
+  @media all and (max-width: 767px) {
+    padding-top: 68px;
+  }
 `;
 
 const contentContainer = css`
-  max-width: 1100px;
+  max-width: 1260px;
+  padding: 0px 2rem;
   margin: 0 auto;
 `;
 
@@ -96,6 +102,9 @@ const titleSection = css`
   align-items: center;
   font-size: 40px;
   margin-bottom: 20px;
+  @media all and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const animation = css`

@@ -34,8 +34,13 @@ function StudyRuleModal() {
   };
 
   return (
-    <div>
-      <Button type={'big_blue'} text={'규칙'} onClick={getStudyRule} />
+    <div css={displayBtn}>
+      <div className="big">
+        <Button type={'big_blue'} text={'규칙'} onClick={getStudyRule} />
+      </div>
+      <div className="small">
+        <Button type={'small_blue'} text={'규칙'} onClick={getStudyRule} />
+      </div>
       {isOpen && (
         <Modal
           style={{
@@ -78,4 +83,17 @@ const editor = css`
   height: 100%;
   border-radius: 10px;
   resize: none;
+`;
+
+const displayBtn = css`
+  .big {
+    @media all and (max-width: 767px) {
+      display: none;
+    }
+  }
+  .small {
+    @media all and (min-width: 767px) {
+      display: none;
+    }
+  }
 `;

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import request from '../../../api/index';
 import Button from '../Button';
 import ProfileModal from './ProfileModal';
+import setAuthorizationToken from '../../../utils/setAuthorizationToken';
 
 const Container = css`
   position: fixed;
@@ -87,22 +88,10 @@ function Header() {
   };
 
   const handleLogoutClick = () => {
-    request
-      .post(
-        '/api/register/logout',
-        {},
-        {
-          headers: {
-            AccessToken: localStorage.getItem('accessToken'),
-          },
-        }
-      )
-      .then(() => {
-        setUserInfo(null);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    request.post('/api/register/logout').then(() => {
+      setAuthorizationToken();
+      setUserInfo(null);
+    });
   };
   return (
     <header css={Container}>
