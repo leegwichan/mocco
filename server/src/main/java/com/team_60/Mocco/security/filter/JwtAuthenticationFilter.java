@@ -43,12 +43,14 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
-            }catch (SecurityException e) {
+            }catch (NullPointerException e){
                 request.setAttribute("exception", ExceptionCode.BAD_REQUEST_TOKEN.getStatus());
+            }catch (SecurityException e) {
+                request.setAttribute("exception", ExceptionCode.FILTER_UNKNOWN_ERROR.getStatus());
             } catch (TokenExpiredException e) {
                 request.setAttribute("exception", ExceptionCode.TOKEN_EXPIRED_EXCEPTION.getStatus());
             } catch (IllegalArgumentException e) {
-                request.setAttribute("exception", ExceptionCode.BAD_REQUEST_TOKEN.getStatus());
+                request.setAttribute("exception", ExceptionCode.NOT_CORRECT_ARGUMENT.getStatus());
             } catch (Exception e) {
                 log.error("================================================");
                 log.error("JwtFilter - doFilterInternal() 오류발생");
