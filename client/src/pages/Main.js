@@ -19,16 +19,17 @@ const Header = css`
 `;
 
 const totalContainer = css`
-  max-width: 1200px;
+  max-width: 1260px;
   height: 2000px;
   margin: auto;
+  padding: 0px 1rem;
   margin-top: 50px;
   margin-bottom: 100px;
   .githubmargin {
     margin-bottom: 10%;
   }
   @media all and (max-width: 1023px) {
-    padding: 0px 24px;
+    /* padding: 0px 24px; */
     margin-top: 34px;
     margin-bottom: 10%;
   }
