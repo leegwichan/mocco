@@ -29,7 +29,8 @@ function StudyMember() {
             role="presentation"
             onClick={() => navigate(`/main/${studyInfo.member.memberId}`)}
           >
-            {studyInfo.member.nickname}
+            {/* {studyInfo.member.nickname} */}
+            가나다라마바사아
           </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +80,6 @@ const container = css`
   background-color: #ffffff;
   border-radius: 10px;
   z-index: 2;
-  /* box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%); */
   border: 2px solid #0b6ff2;
 
   &:hover {
@@ -99,11 +99,16 @@ const selected = css`
 
   .main_link {
     color: black;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 500;
+
     &:hover {
       cursor: pointer;
       color: #066ff2;
+    }
+
+    @media all and (max-width: 767px) {
+      font-size: 10px;
     }
   }
 
@@ -142,7 +147,7 @@ const memberList = css`
 `;
 
 const member = css`
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 500;
   color: #000000;
   display: flex;
@@ -154,5 +159,12 @@ const member = css`
 
   &:hover {
     color: #0b6ff2;
+  }
+
+  @media all and (max-width: 768px) {
+    .main_link {
+      font-size: 15px;
+      font-weight: 300;
+    }
   }
 `;

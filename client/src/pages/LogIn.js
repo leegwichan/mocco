@@ -38,10 +38,10 @@ function LogIn() {
         setAuthorizationToken(res.headers.accesstoken);
         return res;
       })
-      .then((res) =>
+      .then(() =>
         request({
           method: 'get',
-          url: `/api/members/${res.data.memberId}`,
+          url: `/api/members`,
         })
       )
       .then((res) => {
