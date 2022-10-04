@@ -4,16 +4,18 @@ import { ModalContent } from '../../Common/ModalContent';
 import { useState } from 'react';
 import request from '../../../api';
 import { css } from '@emotion/react';
+import { useParams } from 'react-router-dom';
 
 function StudyRuleModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState('');
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editContent, setEditContent] = useState('');
+  const { studyId } = useParams();
 
   const getStudyRule = () => {
     setIsOpen(true);
-    return request(`/api/study-progress/rule/357`).then((res) => {
+    return request(`/api/study-progress/rule/${studyId}`).then((res) => {
       console.log(res);
       setContent(res.data.data.rule);
     });
@@ -25,7 +27,7 @@ function StudyRuleModal() {
 
   const editHandler = () => {
     return request
-      .patch(`/api/study-progress/rule/357`, { rule: editContent })
+      .patch(`/api/study-progress/rule/${studyId}`, { rule: editContent })
       .then((res) => {
         console.log('edit', res);
         setIsEditOpen(false);
@@ -83,6 +85,8 @@ const editor = css`
   height: 100%;
   border-radius: 10px;
   resize: none;
+  outline: none;
+  font-size: 18px;
 `;
 
 const displayBtn = css`

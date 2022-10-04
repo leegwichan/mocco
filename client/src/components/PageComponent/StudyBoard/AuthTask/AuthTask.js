@@ -93,6 +93,14 @@ const imageTitle = css`
     font-size: 12px;
     color: #999999;
   }
+
+  @media all and (max-width: 1023px) {
+    font-size: 13px;
+
+    span {
+      font-size: 11px;
+    }
+  }
 `;
 
 const imgInput = css`
@@ -105,6 +113,18 @@ const authImage = css`
   height: 170px;
   overflow: hidden;
   border: 1px solid #d1d1d1;
+
+  @media all and (max-width: 1023px) {
+    height: 140px;
+  }
+
+  @media all and (max-width: 900px) {
+    height: 120px;
+  }
+
+  @media all and (max-width: 800px) {
+    height: 100px;
+  }
 `;
 
 const uploadButton = css`
@@ -119,6 +139,26 @@ const uploadButton = css`
   background-color: #0b6ff2;
   color: #ffffff;
   font-weight: 500;
+
+  @media all and (max-width: 1023px) {
+    margin-left: 50px;
+    bottom: 44%;
+  }
+
+  @media all and (max-width: 900px) {
+    margin-left: 45px;
+    bottom: 41%;
+  }
+
+  @media all and (max-width: 800px) {
+    margin-left: 40px;
+    bottom: 38%;
+  }
+
+  @media all and (max-width: 743px) {
+    margin-left: 35px;
+    bottom: 40%;
+  }
 `;
 
 const writingSection = css`
@@ -130,6 +170,19 @@ const writingTitle = css`
   font-size: 15px;
   margin-top: 37px;
   margin-bottom: 3px;
+
+  @media all and (max-width: 1023px) {
+    font-size: 13px;
+    margin-top: 37px;
+  }
+
+  @media all and (max-width: 935px) {
+    margin-top: 33px;
+  }
+
+  @media all and (max-width: 862px) {
+    margin-top: 31px;
+  }
 `;
 
 const writingInput = css`
@@ -142,5 +195,13 @@ const writingInput = css`
   outline: none;
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  @media all and (max-width: 862px) {
+    height: 80px;
+  }
+
+  @media all and (max-width: 825px) {
+    height: 63px;
   }
 `;

@@ -21,6 +21,21 @@ const Container = css`
     color: #0b6ff2;
     margin-bottom: 31px;
   }
+  @media all and (max-width: 1023px) {
+    height: 55vw;
+    min-height: 400px;
+    width: 50vw;
+    min-width: 350px;
+    .title {
+      font-size: 3vw;
+      margin-bottom: 15px;
+    }
+  }
+  @media all and (max-width: 700px) {
+    .title {
+      font-size: 21px;
+    }
+  }
 `;
 
 const InnerContainer = css`
@@ -34,12 +49,26 @@ const InnerContainer = css`
   :overflow-y {
     overflow: scroll;
   }
+  @media all and (max-width: 1023px) {
+    height: 50vw;
+    min-height: 270px;
+    width: 43vw;
+    min-width: 300px;
+    padding: 4%;
+    .title {
+      font-size: 3vw;
+    }
+  }
 `;
 
 const ButtonContainer = css`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+
+  @media all and (max-width: 700px) {
+    margin-bottom: 5px;
+  }
 `;
 
 export const ModalContent = ({

@@ -142,6 +142,18 @@ const authImage = css`
   height: 280px;
   width: 100%;
   margin-bottom: 10px;
+
+  @media all and (max-width: 1000px) {
+    height: 258px;
+  }
+
+  @media all and (max-width: 900px) {
+    height: 220px;
+  }
+
+  @media all and (max-width: 800px) {
+    height: 190px;
+  }
 `;
 
 const authWriting = css`
@@ -149,4 +161,14 @@ const authWriting = css`
   overflow: auto;
   word-break: break-all;
   font-size: 18px;
+
+  @media all and (max-width: 1000px) {
+    font-size: 15px;
+    height: 50px;
+  }
+
+  @media all and (max-width: 800px) {
+    height: 40px;
+    font-size: 13px;
+  }
 `;
