@@ -28,7 +28,7 @@ public class CommentController {
     private final CommentService commentService;
     private final CommentMapper mapper;
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity getComments(@RequestParam("study-id") @Positive long studyId){
 
         List<Comment> findComments = commentService.findCommentsByStudyId(studyId);
