@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { singleStudyState, userInfoState } from '../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
-import request from '../../../api/index';
+import request from '../../../api';
 import TaskItem from './TaskItem';
 import Button from '../../Common/Button';
 

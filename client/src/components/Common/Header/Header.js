@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useEffect, useMemo, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../../atom/atom';
 import { css } from '@emotion/react';
@@ -21,28 +21,48 @@ function Header() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState); //eslint-disable-line no-unused-vars
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); //eslint-disable-line no-unused-vars
   const [alarm, setAlarm] = useState([]); //eslint-disable-line no-unused-vars
+  const [subscribeId, setSubscribeId] = useState({}); //eslint-disable-line no-unused-vars
   const navigate = useNavigate();
 
   // 알람 받기
+  useEffect(() => {
+    if (userInfo) {
+      const evtSource = new EventSource(
+        `${process.env.REACT_APP_API_URL}/api/alarm/subscribe?member-id=${userInfo.memberId}`
+      );
+      evtSource.onopen = () => {
+        console.log('구독 성공');
+      };
+      evtSource.onmessage = (msg) => {
+        const message = JSON.parse(msg.data);
+        if (Array.isArray(message)) {
+          setAlarm(message);
+        } else {
+          setSubscribeId(message);
+        }
+      };
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   const evtSource = new EventSource(
-  //     `http://3.35.54.62:8080/api/alarm/subscribe?member-id=${userInfo.memberId}`
-  //   );
-  //   evtSource.onopen = () => {
-  //     // console.log('구독 성공');
-  //   };
-  //   evtSource.onmessage = (msg) => {
-  //     // console.log(JSON.parse(msg.data));
-  //     setAlarm([...JSON.parse(msg.data)]);
-  //   };
-  //   // evtSource.onerror = (err) => {
-  //   //   console.log(err);
-  //   // };
-  //   return () => {
-  //     evtSource.close();
-  //   };
-  // }, []);
+  // 새로고침 / 창 닫을 시 구독 해제
+  const subscribeIdRef = useRef(subscribeId);
+  const refToState = (data) => {
+    subscribeIdRef.current = data;
+  };
+
+  const unsubscribeApi = () => {
+    const id = subscribeIdRef.current.subscribeId;
+    const apiUrl = process.env.REACT_APP_API_URL;
+    navigator.sendBeacon(`${apiUrl}/api/alarm/unsubscribe?subscribe-id=${id}`);
+  };
+
+  useEffect(() => {
+    refToState(subscribeId);
+  }, [subscribeId]);
+
+  useEffect(() => {
+    window.addEventListener('unload', unsubscribeApi);
+  }, []);
 
   // 버튼 클릭 핸들러
   const handleLoginClick = () => {
@@ -63,6 +83,7 @@ function Header() {
 
   const handleModifyClick = () => {
     navigate('/modifyUser');
+    setIsProfileModalOpen(false);
   };
 
   const handleLogoutClick = () => {
@@ -164,6 +185,30 @@ function Header() {
                       border-radius: 50%;
                     `}
                   />
+                  {alarm.length !== 0 ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                      css={css`
+                        position: absolute;
+                        width: 40%;
+                        border-radius: 50%;
+                        background-color: #0b6bff;
+                        color: white;
+                        transform: translate(100%, -100%);
+                      `}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                      />
+                    </svg>
+                  ) : null}
                 </button>
                 {/* 프로필 모달 */}
                 {isProfileModalOpen ? (
@@ -172,6 +217,7 @@ function Header() {
                     handleLogoutClick={handleLogoutClick}
                     handleModifyClick={handleModifyClick}
                     alarm={alarm}
+                    setAlarm={setAlarm}
                   />
                 ) : null}
               </div>
