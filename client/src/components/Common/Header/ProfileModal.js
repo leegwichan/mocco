@@ -71,7 +71,7 @@ function ProfileModal({
           `}
         >
           <img
-            src="/logo192.png"
+            src={userInfo.profileImage}
             alt="프로필사진"
             css={css`
               height: 100%;

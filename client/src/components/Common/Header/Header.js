@@ -141,11 +141,13 @@ function Header() {
             type={'header_skyblue'}
             onClick={handleFindStudyClick}
           />
-          <Button
-            text={'마이 페이지'}
-            type={'header_skyblue'}
-            onClick={handleMyPageClick}
-          />
+          {userInfo ? (
+            <Button
+              text={'마이 페이지'}
+              type={'header_skyblue'}
+              onClick={handleMyPageClick}
+            />
+          ) : null}
         </div>
         {/* 오른쪽 컨테이너 */}
         <div
@@ -178,7 +180,7 @@ function Header() {
                   `}
                 >
                   <img
-                    src="/logo192.png"
+                    src={userInfo.profileImage}
                     alt="프로필사진"
                     css={css`
                       height: 60%;
