@@ -72,6 +72,7 @@ function StudyBoard() {
             setSelectedId={setSelectedId}
             expiredTaskCount={expiredTaskCount}
             teamName={nowStudy.teamName}
+            getStudyInfof={getStudyInfo}
           />
         </section>
       </div>
