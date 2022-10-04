@@ -52,7 +52,7 @@ function StudyBoard() {
     <main css={totalContainer}>
       <div css={contentContainer}>
         <section css={titleSection}>
-          {/* <h1>{nowStudy.teamName}</h1> */}
+          <h1>{nowStudy.teamName}</h1>
           <StudyRuleModal />
         </section>
         <section css={animation}>
@@ -91,7 +91,7 @@ const totalContainer = css`
 `;
 
 const contentContainer = css`
-  max-width: 1260px;
+  max-width: 1200px + 2rem;
   padding: 0px 2rem;
   margin: 0 auto;
 `;

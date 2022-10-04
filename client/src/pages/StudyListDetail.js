@@ -47,7 +47,7 @@ const container = css`
 `;
 
 const mainContainer = css`
-  max-width: 1260px;
+  max-width: 1200px + 2rem;
   padding: 0 2rem;
   margin: auto;
 `;

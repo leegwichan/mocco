@@ -82,7 +82,7 @@ function ModifyStudy() {
     <main css={main_container}>
       <div css={content_container}>
         <section css={edit_title}>
-          <div>스터디 공고 수정하기</div>
+          <div>스터디 공고 수정</div>
         </section>
         <section>
           <form action="submit">
@@ -149,7 +149,7 @@ const edit_title = css`
   margin-bottom: 30px;
 
   @media all and (max-width: 768px) {
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 500;
   }
 `;
