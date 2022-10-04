@@ -119,7 +119,7 @@ const taskContainer = css`
 `;
 
 const deadline = css`
-  width: 15vw;
+  width: 18%;
   height: 128px;
   background-color: #0b6ff2;
   border-radius: 20px;
@@ -134,6 +134,10 @@ const deadline = css`
     font-weight: 500;
     color: #ffffff;
     text-align: center;
+  }
+
+  @media all and (max-width: 940px) {
+    width: 21%;
   }
 
   @media all and (max-width: 767px) {

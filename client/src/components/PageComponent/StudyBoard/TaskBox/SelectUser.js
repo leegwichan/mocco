@@ -103,9 +103,9 @@ const selected = css`
 `;
 
 const memberList = css`
-  width: 230px;
+  width: 205px;
   background-color: #ffffff;
-  margin-top: 10px;
+  margin-top: 17rem;
   position: absolute;
   border-radius: 20px;
   overflow: hidden;
@@ -121,7 +121,8 @@ const memberList = css`
   }
 
   @media all and (max-width: 767px) {
-    width: 150px;
+    margin-top: 11rem;
+    width: 140px;
     border-radius: 15px;
   }
 `;
@@ -153,5 +154,6 @@ const member = css`
 
   @media all and (max-width: 767px) {
     padding: 12px;
+    font-size: 15px;
   }
 `;
