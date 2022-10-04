@@ -52,7 +52,7 @@ function TaskItem({ task, select, taskHandlerf, getStudyInfof }) {
                 fillRule="evenodd"
                 strokeLinejoin="round"
                 strokeMiterlimit="2"
-                fill="#0b68ff"
+                fill={task.deadline < today ? '#999999' : '#0b68ff'}
                 width="73px"
                 height="73px"
                 viewBox="0 0 24 24"
@@ -64,9 +64,11 @@ function TaskItem({ task, select, taskHandlerf, getStudyInfof }) {
                   fillRule="nonzero"
                 />
               </svg>
-              <span className="check">
-                {task.deadline < today ? '만료' : '인증'}
-              </span>
+              {task.deadline < today ? (
+                <span className="fail">인증 필요</span>
+              ) : (
+                <span className="check">인증 </span>
+              )}
             </>
           )}
           {isOpen && (
@@ -105,7 +107,7 @@ const taskContainer = css`
   }
 
   .fail {
-    color: #ff0000;
+    color: #999999;
     font-weight: 500;
   }
 
@@ -166,6 +168,7 @@ const mark = css`
   flex-direction: column;
   align-items: center;
   font-size: 15px;
+
   @media all and (max-width: 767px) {
     margin-right: 13px;
     svg {
