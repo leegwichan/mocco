@@ -88,7 +88,7 @@ const CommentSection = ({
               text={'답글'}
               onClick={() => setIsReplyOpen(true)}
             />
-            {userInfo.memberId !== member.memberId && (
+            {userInfo.memberId === member.memberId && (
               <>
                 <Button
                   type={'small_white'}
@@ -106,7 +106,7 @@ const CommentSection = ({
         </section>
         {isEditOpen && (
           <section css={editContainer}>
-            <input css={editInput} value={value} onChange={handleChange} />
+            <textarea css={editInput} value={value} onChange={handleChange} />
             <div className="btn">
               <Button
                 type={'small_white'}
@@ -138,8 +138,7 @@ export default CommentSection;
 
 const container = css`
   width: 100%;
-  margin-bottom: 25px;
-  margin-top: 30px;
+  margin-bottom: 30px;
   border-radius: 15px;
   box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
   padding: 20px;
@@ -196,7 +195,7 @@ const editContainer = css`
   display: flex;
   width: 100%;
   flex-direction: column;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 
   .btn {
     display: flex;
@@ -219,6 +218,12 @@ const editInput = css`
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #d1d1d1;
+  outline: none;
+  resize: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const profile = css`

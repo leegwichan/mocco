@@ -38,19 +38,17 @@ function InputProposal({ getProposalInfof }) {
   };
 
   return (
-    <div>
-      <div css={container}>
-        <input
-          type="text"
-          placeholder="신청을 위한 한 마디를 적어주세요"
-          value={value}
-          onChange={handleChange}
-        />
-        <div className="btn_container">
-          <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
-        </div>
+    <section css={container}>
+      <input
+        type="text"
+        placeholder="신청을 위한 한 마디를 적어주세요"
+        value={value}
+        onChange={handleChange}
+      />
+      <div className="btn_container">
+        <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -60,7 +58,7 @@ const container = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   width: 100%;
 
   input {

@@ -69,7 +69,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
       </div>
       <div className="btn">
         <span className="day">{proposal.createdAt}</span>
-        {studyInfo.member.memberId !== proposal.member.memberId && (
+        {studyInfo.member.memberId === proposal.member.memberId && (
           <>
             <Button
               type={'small_blue'}
@@ -95,8 +95,7 @@ export default ProposalSection;
 
 const container = css`
   width: 100%;
-  margin-bottom: 25px;
-  margin-top: 30px;
+  margin-bottom: 30px;
   border-radius: 15px;
   box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
   padding: 20px;

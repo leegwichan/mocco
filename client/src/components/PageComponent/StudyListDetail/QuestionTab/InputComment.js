@@ -35,7 +35,7 @@ const InputComment = ({ getCommentInfof }) => {
   };
 
   return (
-    <form css={container}>
+    <section css={container}>
       <input
         type="text"
         placeholder="스터디에 대한 궁금한 점을 물어보세요"
@@ -45,7 +45,7 @@ const InputComment = ({ getCommentInfof }) => {
       <div className="btn_container">
         <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
       </div>
-    </form>
+    </section>
   );
 };
 
@@ -55,7 +55,7 @@ const container = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   width: 100%;
 
   input {

@@ -151,7 +151,7 @@ const container = css`
 
   .reply_box {
     width: 99%;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     border-radius: 15px;
     box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
     padding: 20px;
@@ -208,7 +208,7 @@ const edited = css`
 const editContainer = css`
   display: flex;
   flex-direction: column;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   width: 99%;
 
   @media all and (max-width: 768px) {
@@ -236,6 +236,12 @@ const editInput = css`
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #d1d1d1;
+  outline: none;
+  resize: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const profile = css`

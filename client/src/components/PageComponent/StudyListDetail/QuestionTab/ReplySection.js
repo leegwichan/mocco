@@ -91,7 +91,7 @@ const container = css`
   padding: 20px;
   font-size: 20px;
   height: 170px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   border-radius: 15px;
   box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
 
