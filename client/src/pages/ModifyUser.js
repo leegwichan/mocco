@@ -85,12 +85,16 @@ function ModifyUser() {
       >
         <h3>회원정보 수정</h3>
       </div>
-      <ModifyUserInput
-        labelText="닉네임"
-        type="text"
-        defaultValue={userInfo.nickname}
-        name="nickname"
-      />
+      <div>
+        <ModifyUserInput
+          labelText="닉네임"
+          type="text"
+          defaultValue={userInfo.nickname}
+          name="nickname"
+        />
+        <ModifyUserButton />
+      </div>
+
       <ModifyUserInput
         labelText="위치"
         type="text"

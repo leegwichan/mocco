@@ -123,6 +123,7 @@ function SignUp() {
     // }
   };
 
+  // 닉네임 중복체크
   const onClick = () => {
     setLoadingCheckNickname(true);
     request({
