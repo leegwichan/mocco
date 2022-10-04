@@ -90,6 +90,10 @@ const container = css`
   &:hover {
     cursor: pointer;
   }
+
+  @media all and (max-width: 767px) {
+    height: 47px;
+  }
 `;
 
 const selected = css`
@@ -111,13 +115,11 @@ const selected = css`
       cursor: pointer;
       color: #066ff2;
     }
-
-    @media all and (max-width: 767px) {
-      font-size: 10px;
-    }
   }
 
   @media all and (max-width: 768px) {
+    padding: 3px 8px;
+
     .main_link {
       font-size: 15px;
       font-weight: 500;
@@ -167,9 +169,7 @@ const member = css`
   }
 
   @media all and (max-width: 768px) {
-    .main_link {
-      font-size: 15px;
-      font-weight: 300;
-    }
+    font-size: 15px;
+    font-weight: 500;
   }
 `;
