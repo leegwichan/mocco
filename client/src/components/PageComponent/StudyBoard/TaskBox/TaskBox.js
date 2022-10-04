@@ -17,16 +17,19 @@ function TaskBox({
   expiredTaskCount,
 }) {
   const userInfo = useRecoilValue(userInfoState);
+  console.log(userInfo);
   const [select, setSelect] = useState({
-    memberId: userInfo.memberId,
-    nickname: userInfo.nickname,
-    profileImage: userInfo.profileImage,
+    memberId: userInfo.data.memberId,
+    nickname: userInfo.data.nickname,
+    profileImage: userInfo.data.profileImage,
   });
   const [taskList, setTaskList] = useState([]);
   const navigate = useNavigate();
   const myPageOwner = useRecoilValue(mypageOwnerAtom);
 
   const taskHandler = () => {
+    console.log(select);
+    console.log('d');
     request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
       .then((res) => {
         console.log(res);
@@ -48,6 +51,7 @@ function TaskBox({
   };
 
   useEffect(() => {
+    console.log('유즈');
     taskHandler();
     setSelectedId(select.memberId);
   }, [select]);

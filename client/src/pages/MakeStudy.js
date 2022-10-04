@@ -1,8 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
+import React, { useCallback, useEffect, useRef, useState } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import request from '../api/index';
 import TaskContainer from '../components/PageComponent/MakeStudy/TaskContainer';
 import Footer from '../components/Common/Footer';
+import { useRecoilState } from 'recoil';
+import { userInfoState } from '../atom/atom';
+import { useNavigate } from 'react-router-dom';
 
 const Header = css`
   width: 100vw;
@@ -17,18 +20,26 @@ const MainContainer = css`
 `;
 
 const ContentContainer = css`
-  max-width: 1200px;
+  max-width: calc(1200px + 2rem);
   margin: 0 auto;
+  padding: 0 2rem;
 `;
 
 const MakeStudyTitle = css`
   font-size: 2.5rem;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const StudyDetailContainer = css`
   display: flex;
   width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const StudyDetailLeft = css`
@@ -36,6 +47,11 @@ const StudyDetailLeft = css`
   width: 45%;
   margin-right: 5%;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-right: 0;
+  }
 `;
 
 const StudyDetailRight = css`
@@ -43,6 +59,10 @@ const StudyDetailRight = css`
   width: 45%;
   margin-left: 5%;
   flex-direction: column;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 
 const Label = css`
@@ -58,6 +78,9 @@ const InputLeft = css`
   border: 1px solid #999999;
   border-radius: 5px;
   font-size: 1.2rem;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const SummaryContainer = css`
@@ -104,8 +127,11 @@ const SummaryTextArea = css`
   padding: 0.5rem;
   border: 1px solid #999999;
   border-radius: 5px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   resize: none;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const IntroduceAndRulesContainer = css`
@@ -117,6 +143,9 @@ const BigLabel = css`
   display: inline-block;
   border-bottom: 3px solid #0b6ff2;
   font-size: 2rem;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const BigTextArea = css`
@@ -127,8 +156,12 @@ const BigTextArea = css`
   padding: 1rem;
   border: 1px solid #999999;
   border-radius: 5px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   resize: none;
+  @media (max-width: 768px) {
+    height: 200px;
+    font-size: 1rem;
+  }
 `;
 
 const Submit = css`
@@ -168,12 +201,29 @@ const Cancel = css`
   &:active {
     transform: scale(0.9);
   }
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const ValidStar = css`
+  color: red;
+`;
+
+const BigLabelValidStar = css`
+  color: red;
+  font-size: 2rem;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 function MakeStudy() {
+  // 유저 정보 recoil state
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState); // eslint-disable-line no-unused-vars
   // studyboard post를 위한 state
   const [studyBoardForm, setStudyBoardForm] = useState({
-    memberId: 1,
+    memberId: userInfo.memberId,
     teamName: null,
     capacity: null,
     image: null,
@@ -217,30 +267,59 @@ function MakeStudy() {
   // button click handler
   const handleMakeStudyButton = (e) => {
     e.preventDefault();
+    // 유효성 검사
     if (
-      studyBoardForm.teamName &&
-      studyBoardForm.capacity &&
-      studyBoardForm.summary &&
-      studyBoardForm.detail &&
-      studyBoardForm.rule &&
-      studyBoardForm.taskList &&
-      studyBoardForm.startDate &&
-      studyBoardForm.endDate
+      studyBoardForm.teamName === '' ||
+      studyBoardForm.teamName > 30 ||
+      studyBoardForm.teamName < 2
     ) {
-      console.log(studyBoardForm);
-      request
-        .post('/api/study-board', studyBoardForm)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-    } else {
-      console.log('필수 입력 항목을 채워주세요');
+      alert('스터디 이름은 2글자 이상 30자 이하로 입력해야 합니다');
+      return;
     }
-    // console.log(studyBoardForm);
+    if (
+      studyBoardForm.capacity === '' ||
+      studyBoardForm.capacity > 5 ||
+      studyBoardForm.capacity < 2
+    ) {
+      alert('스터디 정원은 2명 이상 5명 이하로 입력해야 합니다');
+      return;
+    }
+    if (studyBoardForm.summary === '' || studyBoardForm.summary > 1500) {
+      alert('요약글은 1500자 이상으로 입력해야 합니다');
+      return;
+    }
+    if (studyBoardForm.detail === '' || studyBoardForm.detail > 5000) {
+      alert('스터디 소개는 5000자 이하로 입력해야 합니다');
+      return;
+    }
+    if (studyBoardForm.rule === '' || studyBoardForm.rule > 2000) {
+      alert('스터디 규칙은 2000자 이하로 입력해야 합니다');
+      return;
+    }
+    if (studyBoardForm.taskList === null) {
+      alert('최소 1개의 task가 존재해야 합니다');
+      return;
+    }
+    for (let task of studyBoardForm.taskList) {
+      if (
+        task.content === null ||
+        task.deadline === null ||
+        task.content > 100
+      ) {
+        alert('task는 100자 이하로 입력해야 합니다');
+        return;
+      }
+    }
+    request
+      .post('/api/study-board', studyBoardForm)
+      .catch((err) => console.log(err));
   };
 
+  // 취소 버튼 클릭 시 이전 페이지로 이동
+  const navigate = useNavigate();
   const handleCancelButton = (e) => {
     e.preventDefault();
-    console.log('취소');
+    navigate(-1);
   };
 
   // image 프리뷰 및 버튼 숨기기 위한 ref
@@ -257,11 +336,15 @@ function MakeStudy() {
     formData.append('image', e.target.files[0]);
 
     request
-      .post('/api/study-board/image?file-size=251722', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      .post(
+        `/api/study-board/image?file-size=${e.target.files[0].size}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      )
       .then((res) => {
         imageRef.current.src = res.data.data;
         setStudyBoardForm({ ...studyBoardForm, image: res.data.data });
@@ -279,15 +362,19 @@ function MakeStudy() {
     fileInputRef.current.click();
   }, []);
 
-  // 내일 날짜
-  const tomorrow = {
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-    date: new Date().getDate() + 1,
-  };
-  const startDate = `${tomorrow.year}-${('0' + String(tomorrow.month)).slice(
-    -2
-  )}-${tomorrow.date}`;
+  // 스터디 최소 시작 날짜(내일)
+  let startDate = new Date();
+  startDate.setDate(startDate.getDate() + 1);
+  startDate = startDate.toISOString().slice(0, 10);
+
+  // 스터디 최대 만료 날짜(180일 뒤)
+  const [endMaximumDate, setEndMaximumDate] = useState();
+  useEffect(() => {
+    let emd = new Date(studyBoardForm.startDate);
+    emd.setDate(emd.getDate() + 180);
+    emd = emd.toISOString().slice(0, 10);
+    setEndMaximumDate(emd);
+  }, [studyBoardForm]);
 
   return (
     <>
@@ -295,7 +382,7 @@ function MakeStudy() {
       <main css={MainContainer}>
         <div css={ContentContainer}>
           <section css={MakeStudyTitle}>
-            <h1>스터디 공고 작성하기</h1>
+            <h1>스터디 공고 작성</h1>
           </section>
           <section>
             <form action="submit">
@@ -304,12 +391,12 @@ function MakeStudy() {
                 <div css={StudyDetailLeft}>
                   <div>
                     <label htmlFor="studyName" css={Label}>
-                      스터디 이름
+                      스터디 이름 <span css={ValidStar}>*</span>
                     </label>
                     <input
                       type="text"
                       name="studyName"
-                      placeholder="ex) 모코모코"
+                      placeholder="2자 이상 30자 이하"
                       onChange={handleChangeName}
                       required
                       css={InputLeft}
@@ -317,12 +404,14 @@ function MakeStudy() {
                   </div>
                   <div>
                     <label htmlFor="studyCapacity" css={Label}>
-                      스터디 정원
+                      스터디 정원 <span css={ValidStar}>*</span>
                     </label>
                     <input
-                      type="text"
+                      type="number"
+                      min={2}
+                      max={5}
                       name="studyCapacity"
-                      placeholder="ex) 5"
+                      placeholder="2 ~ 5"
                       required
                       onChange={handleChangeCapacity}
                       css={InputLeft}
@@ -330,13 +419,12 @@ function MakeStudy() {
                   </div>
                   <div>
                     <label htmlFor="studyStart" css={Label}>
-                      스터디 시작일
+                      스터디 시작일 <span css={ValidStar}>*</span>
                     </label>
                     <input
                       type="date"
                       name="studyStart"
                       min={startDate}
-                      value={startDate}
                       required
                       onChange={handleChangeStartDate}
                       css={InputLeft}
@@ -344,11 +432,14 @@ function MakeStudy() {
                   </div>
                   <div>
                     <label htmlFor="studyEnd" css={Label}>
-                      스터디 만료일
+                      스터디 만료일 <span css={ValidStar}>*</span>
                     </label>
                     <input
                       type="date"
                       name="studyEnd"
+                      min={studyBoardForm.startDate}
+                      max={endMaximumDate}
+                      disabled={studyBoardForm.startDate ? false : true}
                       required
                       onChange={handleChangeEndDate}
                       css={InputLeft}
@@ -358,7 +449,7 @@ function MakeStudy() {
                 <div css={StudyDetailRight}>
                   <div css={SummaryContainer}>
                     <label htmlFor="summary" css={Label}>
-                      스터디 요약글
+                      스터디 요약글 <span css={ValidStar}>*</span>
                     </label>
                     <textarea
                       type="text"
@@ -384,7 +475,7 @@ function MakeStudy() {
                     />
                     <div css={ImageContainer}>
                       <img
-                        src="https://avatars.githubusercontent.com/u/71388830?v=4"
+                        src="/no_image.jpeg"
                         alt="profile_image"
                         ref={imageRef}
                         css={StudyImage}
@@ -398,9 +489,12 @@ function MakeStudy() {
               </div>
               <div css={IntroduceAndRulesContainer}>
                 <div>
-                  <label htmlFor="introduce" css={BigLabel}>
-                    스터디 소개
-                  </label>
+                  <div>
+                    <label htmlFor="introduce" css={BigLabel}>
+                      스터디 소개
+                    </label>
+                    <span css={BigLabelValidStar}> *</span>
+                  </div>
                   <textarea
                     type="text"
                     name="introduce"
@@ -411,9 +505,13 @@ function MakeStudy() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="rules" css={BigLabel}>
-                    스터디 규칙
-                  </label>
+                  <div>
+                    <label htmlFor="rules" css={BigLabel}>
+                      스터디 규칙
+                    </label>
+                    <span css={BigLabelValidStar}> *</span>
+                  </div>
+
                   <textarea
                     type="text"
                     name="rules"
@@ -427,6 +525,8 @@ function MakeStudy() {
               <TaskContainer
                 studyBoardForm={studyBoardForm}
                 setStudyBoardForm={setStudyBoardForm}
+                startDate={studyBoardForm.startDate}
+                endMaximumDate={endMaximumDate}
               />
               <div
                 css={css`

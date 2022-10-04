@@ -13,14 +13,14 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import StudyBoard from './pages/StudyBoard';
 import Callback from './pages/Callback';
-import Header from './components/Common/Header/Header';
+// import Header from './components/Common/Header/Header';
 
 function App() {
   const authenticated = !!useRecoilValue(userInfoState);
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <Routes>
         {/* Public route */}
         <Route path="/" element={<Landing />} />

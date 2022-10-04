@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+
 import 랜딩모바일 from '../asset/랜딩모바일.png';
 import DummyCard from '../components/PageComponent/Landing/DummyCard';
 import 스터디사진1 from '../asset/스터디사진1.png';
@@ -140,7 +141,12 @@ const second = css`
 
 const third = css``;
 
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../atom/atom';
+
 function Landing() {
+  const userInfo = useRecoilValue(userInfoState);
+  console.log('userInfo', userInfo);
   return (
     <div css={MainContainer}>
       <section className="section">
