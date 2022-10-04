@@ -72,7 +72,7 @@ public class JwtTokenProvider {
     //JWT 토큰으르 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {
             Claim claim = getClaim(accessToken);
-            long memberId = JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("memberId").asLong();
+            long memberId = JWT.decode(accessToken).getClaim("memberId").asLong();
 
             if (claim == null) throw new BusinessLogicException(ExceptionCode.CLAIM_NOT_EXIST);
             Member member = memberRepository.findById(memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
@@ -90,7 +90,6 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(token);
-            return true;
         } catch (JWTVerificationException e) {
             if(e.getClass().getSimpleName().equals("TokenExpiredException")){
                 log.info(e.getClass().getSimpleName());
@@ -100,7 +99,7 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             log.info("CustomAuthorizationFilter : JWT 토큰이 잘못되었습니다. message : {}", e.getMessage());
         }
-        return false;
+        return true;
     }
 
     //토큰 남은 유효 시간
@@ -122,11 +121,7 @@ public class JwtTokenProvider {
     }
 
     private Claim getClaim(String accessToken){
-        try{
-            return JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("auth");
-        } catch (TokenExpiredException e){
-            throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
-        }
+        return JWT.decode(accessToken).getClaim("auth");
     }
 
 
