@@ -15,6 +15,7 @@ function TaskBox({
   setSelectedId,
   teamName,
   expiredTaskCount,
+  getStudyInfof,
 }) {
   const userInfo = useRecoilValue(userInfoState);
   const [select, setSelect] = useState({
@@ -50,6 +51,7 @@ function TaskBox({
   useEffect(() => {
     taskHandler();
     setSelectedId(select.memberId);
+    getStudyInfof();
   }, [select]);
 
   return (
@@ -62,7 +64,6 @@ function TaskBox({
             <StudyRuleModal />
           </div>
         </section>
-
         <div className="desktopProgress">
           <UserProgressBar
             taskList={taskList}
@@ -92,6 +93,7 @@ function TaskBox({
                 task={task}
                 select={select}
                 taskHandlerf={taskHandler}
+                getStudyInfof={getStudyInfof}
               />
             </div>
           ))}

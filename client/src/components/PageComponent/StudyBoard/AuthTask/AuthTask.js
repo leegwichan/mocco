@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import { useRef } from 'react';
 import request from '../../../../api';
-import porfile from '../../../../asset/profile.png';
 
 function AuthTask({ authData, setAuthData }) {
   const imgRef = useRef();
@@ -10,7 +9,7 @@ function AuthTask({ authData, setAuthData }) {
     if (!e.target.files) {
       alert('이미지를 업로드해주세요');
     }
-    // console.log(e.target.files[0]);
+
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
 
@@ -23,9 +22,8 @@ function AuthTask({ authData, setAuthData }) {
         // console.log(res);
         setAuthData({ ...authData, image: res.data.data });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err.response.data.message));
   };
-  // console.log(image);
 
   const uploadHandler = (e) => {
     e.preventDefault();
@@ -53,14 +51,14 @@ function AuthTask({ authData, setAuthData }) {
           ref={imgRef}
           type="file"
           id="file"
-          accept="image/jpg, image/jpeg, image/png"
+          accept="image/jpg,image/png"
           onChange={imageHandler}
           required
         />
       </section>
       <section css={writingSection}>
         <img
-          src={authData.image ? authData.image : porfile}
+          src={authData.image ? authData.image : '/no_image.jpeg'}
           alt="auth_image"
           css={authImage}
         />
@@ -84,10 +82,6 @@ function AuthTask({ authData, setAuthData }) {
 
 export default AuthTask;
 
-// const imageSection = css`
-//   display: flex;
-// `;
-
 const imageTitle = css`
   font-size: 15px;
   display: flex;
@@ -107,7 +101,7 @@ const imgInput = css`
 const authImage = css`
   position: relative;
   width: 100%;
-  height: 180px;
+  height: 170px;
   overflow: hidden;
   border: 1px solid #d1d1d1;
 `;
@@ -116,7 +110,7 @@ const uploadButton = css`
   width: 79%;
   position: absolute;
   height: 30px;
-  bottom: 36.3%;
+  bottom: 38%;
   left: 0;
   margin-left: 57px;
   border: none;
@@ -133,8 +127,8 @@ const writingSection = css`
 
 const writingTitle = css`
   font-size: 15px;
-  margin-top: 30px;
-  margin-bottom: 5px;
+  margin-top: 37px;
+  margin-bottom: 3px;
 `;
 
 const writingInput = css`
@@ -144,4 +138,8 @@ const writingInput = css`
   resize: none;
   border-radius: 5px;
   padding: 0.5rem;
+  outline: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

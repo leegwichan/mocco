@@ -42,7 +42,7 @@ const ButtonContainer = css`
   width: 100%;
 `;
 
-function EvalueModal({
+export const ModalContent = ({
   text,
   content,
   firstBtnType,
@@ -52,7 +52,7 @@ function EvalueModal({
   setIsOpen,
   onClick,
   // reset,
-}) {
+}) => {
   const onClose = () => {
     setIsOpen(false);
   };
@@ -75,6 +75,22 @@ function EvalueModal({
       </section>
     </div>
   );
-}
+};
 
-export default EvalueModal;
+export const OneModalContent = ({
+  text,
+  content,
+  btnType,
+  btnText,
+  onClick,
+}) => {
+  return (
+    <div css={Container}>
+      <section className="title">{text}</section>
+      <section css={InnerContainer}>{content}</section>
+      <section css={ButtonContainer}>
+        <Button type={`${btnType}`} text={`${btnText}`} onClick={onClick} />
+      </section>
+    </div>
+  );
+};

@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
 import AuthTaskModal from '../AuthTask/AuthTaskModal';
 
-function TaskItem({ task, select, taskHandlerf }) {
+function TaskItem({ task, select, taskHandlerf, getStudyInfof }) {
   const [isOpen, setIsOpen] = useState(false);
 
   let year = new Date().getFullYear().toString();
@@ -23,27 +23,7 @@ function TaskItem({ task, select, taskHandlerf }) {
         </div>
         <div css={content}>{task.content}</div>
         <div css={mark}>
-          {task.deadline < today && !task.taskCheck.taskChecked ? (
-            <>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                width="73px"
-                height="73px"
-                stroke="#ff0000"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="fail">실패</span>
-            </>
-          ) : task.taskCheck.taskCheckId ? (
+          {task.taskCheck.taskCheckId ? (
             <>
               <svg
                 clipRule="evenodd"
@@ -83,7 +63,9 @@ function TaskItem({ task, select, taskHandlerf }) {
                   fillRule="nonzero"
                 />
               </svg>
-              <span className="check">인증</span>
+              <span className="check">
+                {task.deadline < today ? '만료' : '인증'}
+              </span>
             </>
           )}
           {isOpen && (
@@ -93,6 +75,7 @@ function TaskItem({ task, select, taskHandlerf }) {
               isOpen={isOpen}
               select={select}
               taskHandlerf={taskHandlerf}
+              getStudyInfof={getStudyInfof}
             />
           )}
         </div>
