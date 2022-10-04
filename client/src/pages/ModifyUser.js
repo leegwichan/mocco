@@ -24,7 +24,6 @@ function ModifyUser() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log('e :', event.target);
     request({
       method: 'patch',
       url: `/api/members/${userInfo.memberId}`,
