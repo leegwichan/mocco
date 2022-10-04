@@ -82,40 +82,38 @@ function AuthTaskModal({
             content: { width: 'auto', height: 'auto', borderRadius: '20px' },
           }}
         >
-          {!isAuthOpen ||
-            (!task.taskCheck.taskChecked && (
-              <ModalContent
-                text={`${task.content} 인증`}
-                content={
-                  <AuthTask authData={authData} setAuthData={setAuthData} />
-                }
-                firstBtnType={'small_blue'}
-                secondBtnType={'small_grey'}
-                firstBtnText={'인증'}
-                secondBtnText={'닫기'}
-                setIsOpen={setIsOpen}
-                onClick={authHandler}
-              />
-            ))}
-          {isAuthOpen ||
-            (task.taskCheck.taskChecked && (
-              <OneModalContent
-                text={`${task.content} 인증`}
-                content={
-                  <div>
-                    <img
-                      src={authContent.image}
-                      alt="auth_image"
-                      css={authImage}
-                    />
-                    <div css={authWriting}>{authContent.content}</div>
-                  </div>
-                }
-                btnType={'small_grey'}
-                btnText={'닫기'}
-                onClick={getAuth}
-              />
-            ))}
+          {!isAuthOpen && !task.taskCheck.taskChecked && (
+            <ModalContent
+              text={`${task.content} 인증`}
+              content={
+                <AuthTask authData={authData} setAuthData={setAuthData} />
+              }
+              firstBtnType={'small_blue'}
+              secondBtnType={'small_grey'}
+              firstBtnText={'인증'}
+              secondBtnText={'닫기'}
+              setIsOpen={setIsOpen}
+              onClick={authHandler}
+            />
+          )}
+          {task.taskCheck.taskChecked && (
+            <OneModalContent
+              text={`${task.content} 인증`}
+              content={
+                <div>
+                  <img
+                    src={authContent.image}
+                    alt="auth_image"
+                    css={authImage}
+                  />
+                  <div css={authWriting}>{authContent.content}</div>
+                </div>
+              }
+              btnType={'small_grey'}
+              btnText={'닫기'}
+              onClick={getAuth}
+            />
+          )}
         </Modal>
       )}
       {select.nickname !== userInfo.nickname && task.taskCheck.taskChecked && (
