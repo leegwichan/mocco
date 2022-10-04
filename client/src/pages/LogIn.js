@@ -36,16 +36,10 @@ function LogIn() {
         localStorage.setItem('accessToken', res.headers.accesstoken);
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
         setAuthorizationToken(res.headers.accesstoken);
+        setUserInfoState(res.data.data);
         return res;
       })
-      .then((res) =>
-        request({
-          method: 'get',
-          url: `/api/members/${res.data.memberId}`,
-        })
-      )
       .then((res) => {
-        setUserInfoState(res.data.data);
         navigate(
           location.state
             ? location.state.from
