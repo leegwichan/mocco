@@ -57,11 +57,8 @@ function ProgressList() {
 
   const getEvaluateInfo = (studyData) => {
     return request
-      .get(
-        `/api/study-evaluation/${studyData.studyId}/member/${owner.memberId}`
-      )
+      .get(`/api/study-evaluation/${studyData.studyId}`)
       .then((res) => {
-        console.log(res.data.data);
         setIvalueInfo(res.data.data);
       })
       .catch((err) => {
@@ -70,7 +67,6 @@ function ProgressList() {
   };
 
   const clickHandlerFnc = (studyData) => {
-    console.log(studyData);
     if (
       studyData.studyStatus === 'STUDY_COMPLETE' &&
       studyData.evaluationStatus === 'BEFORE_EVALUATION' &&
@@ -79,7 +75,11 @@ function ProgressList() {
       getEvaluateInfo(studyData);
       setIsOpen(true);
     } else if (studyData.studyStatus === 'STUDY_PROGRESS') {
-      navigate(`/studyboard/${studyData.studyId}/${owner.memberId}`);
+      if (user === undefined) {
+        navigate('/login');
+      } else {
+        navigate(`/studyboard/${studyData.studyId}/${owner.memberId}`);
+      }
     }
   };
 
