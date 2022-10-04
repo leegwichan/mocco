@@ -3,7 +3,7 @@ import Button from '../../../Common/Button';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 import request from '../../../../api';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
 const InputComment = ({ getCommentInfof }) => {
@@ -16,34 +16,43 @@ const InputComment = ({ getCommentInfof }) => {
       },
     });
   const userInfo = useRecoilValue(userInfoState);
+  const navigate = useNavigate();
 
   const commentInfo = {
     content: value,
-    memberId: userInfo.memberId,
+    memberId: userInfo && userInfo.memberId,
     studyId: id,
   };
 
   const addCommentHandler = () => {
-    return request
-      .post('/api/comments', commentInfo)
-      .then(() => {
-        setIsValid(true);
-        setValue('');
-        getCommentInfof();
-      })
-      .catch((res) => alert(res.response.data.message));
+    if (userInfo === null) {
+      navigate('/login');
+    } else {
+      return request
+        .post('/api/comments', commentInfo)
+        .then(() => {
+          setIsValid(true);
+          setValue('');
+          getCommentInfof();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
-    <div css={container}>
+    <section css={container}>
       <input
         type="text"
         placeholder="스터디에 대한 궁금한 점을 물어보세요"
         value={value}
         onChange={handleChange}
       />
-      <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
-    </div>
+      <div className="btn_container">
+        <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
+      </div>
+    </section>
   );
 };
 
@@ -53,13 +62,23 @@ const container = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
+  width: 100%;
 
   input {
-    width: 975px;
     height: 40px;
     border: 1px solid #d1d1d1;
     border-radius: 5px;
     padding: 0.5rem;
+    flex-grow: 1;
+  }
+
+  .btn_container {
+    @media all and (max-width: 768px) {
+      button {
+        font-size: 15px;
+        padding: 0 15px;
+      }
+    }
   }
 `;

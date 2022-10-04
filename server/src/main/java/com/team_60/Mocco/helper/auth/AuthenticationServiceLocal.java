@@ -26,4 +26,8 @@ public class AuthenticationServiceLocal implements AuthenticationService {
     public void AuthenticationCheckStudyLeader(long proposalId,long memberId) {
 
     }
+    @Override
+    public void AuthenticationCheckStudyMemberByTaskId(long taskCheckId, long memberId){
+
+    }
 }

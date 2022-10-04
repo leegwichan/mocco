@@ -28,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/api/register/**","/api/study-info/**","/h2/**","/api/test/**",
                         "/api/*/list",
-                        "/login/oauth2/**","/oauth2/authorization/*");
+                        "/login/oauth2/**","/oauth2/authorization/github");
     }
     @Bean
     public TokenInterceptor tokenInterceptor() {

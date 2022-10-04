@@ -68,6 +68,8 @@ public class TokenInterceptor implements HandlerInterceptor {
                 long id = Long.parseLong(urIList.get(3));
                 if(methodName.equals("approveProposal") || methodName.equals("deniedProposal")){
                     authenticationService.AuthenticationCheckStudyLeader(id,tokenMemberId);
+                } else if(methodName.equals("getTaskCheck")) {
+                    authenticationService.AuthenticationCheckStudyMemberByTaskId(id, tokenMemberId);
                 } else{
                 authenticationService.AuthenticationCheckWithId(n.getParameter().getName(), id, tokenMemberId);
                 }
