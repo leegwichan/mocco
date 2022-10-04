@@ -30,7 +30,7 @@ const LeftContainer = css`
 
 const TaskNumber = css`
   color: #0b7ff2;
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   @media (max-width: 768px) {
     font-size: 1.5rem;
     line-height: 200%;
