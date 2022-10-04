@@ -17,6 +17,15 @@ const Container = css`
   z-index: 3;
 `;
 
+const HeaderContainer = css`
+  display: flex;
+  max-width: calc(1200px + 4rem);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  justify-content: space-between;
+`;
+
 function Header() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState); //eslint-disable-line no-unused-vars
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); //eslint-disable-line no-unused-vars
@@ -106,15 +115,7 @@ function Header() {
   };
   return (
     <header css={Container}>
-      <div
-        css={css`
-          display: flex;
-          max-width: 1200px;
-          height: 100%;
-          margin: 0 auto;
-          justify-content: space-between;
-        `}
-      >
+      <div css={HeaderContainer}>
         {/* 왼쪽 컨테이너 */}
         <div
           css={css`
@@ -185,6 +186,7 @@ function Header() {
                     css={css`
                       height: 60%;
                       border-radius: 50%;
+                      aspect-ratio: 1/1;
                     `}
                   />
                   {alarm.length !== 0 ? (

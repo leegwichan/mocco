@@ -77,6 +77,7 @@ function ProfileModal({
               height: 100%;
               background-color: #ffffff;
               border-radius: 50%;
+              aspect-ratio: 1/1;
             `}
           />
         </div>
