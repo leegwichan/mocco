@@ -1,10 +1,11 @@
 import { css } from '@emotion/react';
 import { singleStudyState, userInfoState } from '../../../atom/atom';
 import { useRecoilValue } from 'recoil';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import request from '../../../api';
 import TaskItem from './TaskItem';
 import Button from '../../Common/Button';
+import StudyMember from './StudyMember';
 
 const StudySection = ({ id }) => {
   const studyInfo = useRecoilValue(singleStudyState);
@@ -54,23 +55,7 @@ const StudySection = ({ id }) => {
           <div css={info}>
             <span className="info">{`${studyInfo.startDate} ~ ${studyInfo.endDate}`}</span>
             <span className="info">{`${studyInfo.capacity}명`}</span>
-            {studyInfo.member?.nickname ? (
-              <Link
-                to={`/main/${studyInfo.member.nickname}`}
-                css={css`
-                  text-decoration: none;
-                `}
-              >
-                <div css={profile}>
-                  <img
-                    css={image}
-                    src={studyInfo.member.profileImage}
-                    alt="profile"
-                  />
-                  <span className="main_link">{studyInfo.member.nickname}</span>
-                </div>
-              </Link>
-            ) : null}
+            {studyInfo.member?.nickname ? <StudyMember /> : null}
           </div>
         </section>
         <div>
@@ -212,30 +197,30 @@ const taskContainer = css`
   }
 `;
 
-const profile = css`
-  display: flex;
-  align-items: center;
+// const profile = css`
+//   display: flex;
+//   align-items: center;
 
-  .main_link {
-    color: black;
-    font-size: 20px;
-    &:hover {
-      cursor: pointer;
-      color: #066ff2;
-    }
-  }
+//   .main_link {
+//     color: black;
+//     font-size: 20px;
+//     &:hover {
+//       cursor: pointer;
+//       color: #066ff2;
+//     }
+//   }
 
-  @media all and (max-width: 768px) {
-    .main_link {
-      font-size: 15px;
-      font-weight: 500;
-    }
-  }
-`;
+//   @media all and (max-width: 768px) {
+//     .main_link {
+//       font-size: 15px;
+//       font-weight: 500;
+//     }
+//   }
+// `;
 
-const image = css`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-`;
+// const image = css`
+//   width: 40px;
+//   height: 40px;
+//   border-radius: 50%;
+//   margin-right: 10px;
+// `;

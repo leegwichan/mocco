@@ -69,7 +69,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
       </div>
       <div className="btn">
         <span className="day">{proposal.createdAt}</span>
-        {studyInfo.member.memberId === proposal.member.memberId && (
+        {studyInfo.member.memberId !== proposal.member.memberId && (
           <>
             <Button
               type={'small_blue'}
