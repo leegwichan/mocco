@@ -75,6 +75,8 @@ function ProfileModal({
             alt="프로필사진"
             css={css`
               height: 100%;
+              background-color: #ffffff;
+              border-radius: 50%;
             `}
           />
         </div>
