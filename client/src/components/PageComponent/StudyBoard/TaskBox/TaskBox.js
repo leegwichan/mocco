@@ -19,9 +19,9 @@ function TaskBox({
   const userInfo = useRecoilValue(userInfoState);
   console.log(userInfo);
   const [select, setSelect] = useState({
-    memberId: userInfo.data.memberId,
-    nickname: userInfo.data.nickname,
-    profileImage: userInfo.data.profileImage,
+    memberId: userInfo.memberId,
+    nickname: userInfo.nickname,
+    profileImage: userInfo.profileImage,
   });
   const [taskList, setTaskList] = useState([]);
   const navigate = useNavigate();
@@ -51,7 +51,6 @@ function TaskBox({
   };
 
   useEffect(() => {
-    console.log('유즈');
     taskHandler();
     setSelectedId(select.memberId);
   }, [select]);
