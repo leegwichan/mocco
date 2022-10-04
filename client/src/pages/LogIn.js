@@ -66,11 +66,12 @@ function LogIn() {
   return (
     <div
       css={css`
-        margin-top: 64px;
-        height: calc(100% - 64px);
+        padding-top: 64px;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+        /* border: 1px solid gray; */
       `}
     >
       <div
