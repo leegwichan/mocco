@@ -59,7 +59,7 @@ function WithdrawalModal({ onClose }) {
 
     request({
       method: 'delete',
-      url: `/api/members/${userInfo.memberId}`,
+      url: `/api/members`,
     })
       .then(onclose)
       .then(() => alert('회원 탈퇴 성공'));

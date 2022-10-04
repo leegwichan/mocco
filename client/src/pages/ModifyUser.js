@@ -12,7 +12,6 @@ function ModifyUser() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [changPasswordmodalOn, setChangePasswordModalOn] = useState(false);
   const [withdrawalModalOn, setWithdrawalModalOn] = useState(false);
-  console.log('u :', userInfo);
   const openChangePasswordModal = () => setChangePasswordModalOn(true);
   const closeChangePasswordModal = () => setChangePasswordModalOn(false);
 
@@ -26,7 +25,7 @@ function ModifyUser() {
     event.preventDefault();
     request({
       method: 'patch',
-      url: `/api/members/${userInfo.memberId}`,
+      url: `/api/members`,
       data: {
         nickname: event.target.nickname.value,
         introduction: event.target.introduction.value,
@@ -39,8 +38,6 @@ function ModifyUser() {
     }).then((res) => setUserInfo(res.data.data));
   };
 
-  console.log('prev :', previewUrl);
-  console.log('userProfile :', userInfo.profileImage);
   // 이미지 업로드 기능
   const onUploadImage = useCallback((e) => {
     if (!e.target.files) {
