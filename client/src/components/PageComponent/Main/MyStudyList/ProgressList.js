@@ -75,11 +75,7 @@ function ProgressList() {
       getEvaluateInfo(studyData);
       setIsOpen(true);
     } else if (studyData.studyStatus === 'STUDY_PROGRESS') {
-      if (user === undefined) {
-        navigate('/login');
-      } else {
-        navigate(`/studyboard/${studyData.studyId}/${owner.memberId}`);
-      }
+      navigate(`/studyboard/${studyData.studyId}/${owner.memberId}`);
     }
   };
 
