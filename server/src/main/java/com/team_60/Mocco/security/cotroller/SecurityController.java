@@ -1,6 +1,9 @@
 package com.team_60.Mocco.security.cotroller;
 
 import com.team_60.Mocco.dto.SingleResponseDto;
+import com.team_60.Mocco.helper.httpclient.GithubRestClient;
+import com.team_60.Mocco.helper.httpclient.dto.GithubRestClientDto;
+import com.team_60.Mocco.helper.interceptor.IdRequired;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.mapper.MemberMapper;
@@ -32,6 +35,7 @@ public class SecurityController {
     private final SecurityService securityService;
     private final MemberService memberService;
     private final MemberMapper mapper;
+    private final GithubRestClient githubRestClient;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid SecurityDto.Login login, HttpServletResponse response) throws IOException {
@@ -73,11 +77,18 @@ public class SecurityController {
 
     @GetMapping("/finding-password")
     public ResponseEntity resetPassword(@RequestParam @Email(message = "이메일 형식어야 합니다.") String email){
-
         memberService.resetMemberPasswordByEmail(email);
         return new ResponseEntity(
                 new SingleResponseDto<>(email), HttpStatus.OK
         );
+    }
+    @PostMapping("/github-login")
+    public ResponseEntity githubLogin (@RequestBody MemberDto.GithubInfo requestBody, HttpServletResponse response) throws IOException {
+        GithubRestClientDto.UserInfo githubUserInfo
+                = githubRestClient.getGithubUserInfo(requestBody.getAuthorizationCode());
+        Member member = mapper.githubRestClientUserInfoDtoToMember(githubUserInfo);
+
+        return securityService.githubLogin(member,response);
     }
 //    @GetMapping("/successLogin")
 //    public ResponseEntity successLoginPage(HttpServletRequest request, HttpServletResponse response){

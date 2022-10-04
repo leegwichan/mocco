@@ -1,5 +1,6 @@
 package com.team_60.Mocco.security.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,6 +12,7 @@ public class SecurityDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class Login {
         @Email(message = "이메일 형식을 맞추어야 합니다.")
         private String email;

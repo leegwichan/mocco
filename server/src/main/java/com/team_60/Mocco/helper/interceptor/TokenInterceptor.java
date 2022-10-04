@@ -37,9 +37,12 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
         String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
         long tokenMemberId = jwtTokenProvider.getMemberId(accessToken);
+        String studyProgress = "StudyProgressController";
+
         try {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-        if (handlerMethod.getBean().getClass().getSimpleName().equals("StudyProgressController")) {
+            String controllerName = handlerMethod.getBean().getClass().getSimpleName();
+        if (controllerName.startsWith(studyProgress)) {
             long studyId = Long.parseLong(Arrays.stream(request.getRequestURI().split("/")).collect(Collectors.toList()).get(4));
             if (Arrays.stream(request.getRequestURI().split("/")).collect(Collectors.toList()).size() < 6) {
                 authenticationService.AuthenticationCheckStudyMember(studyId, tokenMemberId);
@@ -49,16 +52,15 @@ public class TokenInterceptor implements HandlerInterceptor {
             }
             return true;
         }
-
-        Arrays.stream(handlerMethod.getMethodParameters()).forEach(n -> {
-            if (handlerMethod.hasMethodAnnotation(IdRequired.class)) {
-                request.setAttribute("memberId", tokenMemberId);
-            }
-            if (n.hasParameterAnnotation(PathVariable.class) && (!handlerMethod.getMethod().getName().equals("getMember"))) {
-                long id = Long.parseLong(Arrays.stream(request.getRequestURI().split("/")).collect(Collectors.toList()).get(3));
-                authenticationService.AuthenticationCheckWithId(n.getParameter().getName(), id, tokenMemberId);
-            }
-        });
+            Arrays.stream(handlerMethod.getMethodParameters()).forEach(n -> {
+                if (handlerMethod.hasMethodAnnotation(IdRequired.class)) {
+                    request.setAttribute("memberId", tokenMemberId);
+                }
+                if (n.hasParameterAnnotation(PathVariable.class) && (!handlerMethod.getMethod().getName().equals("getMember"))) {
+                    long id = Long.parseLong(Arrays.stream(request.getRequestURI().split("/")).collect(Collectors.toList()).get(3));
+                    authenticationService.AuthenticationCheckWithId(n.getParameter().getName(), id, tokenMemberId);
+                }
+            });
             return true;
         }  catch (ClassCastException e) {
             throw new BusinessLogicException(BAD_TOKEN_REQUEST);

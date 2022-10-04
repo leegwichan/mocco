@@ -1,26 +1,33 @@
 package com.team_60.Mocco.security.service;
 
+import com.team_60.Mocco.dto.SingleResponseDto;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
+import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.member.dto.MemberDto;
 import com.team_60.Mocco.member.entity.Member;
 import com.team_60.Mocco.member.mapper.MemberMapper;
 import com.team_60.Mocco.member.repository.MemberRepository;
 import com.team_60.Mocco.security.dto.SecurityDto;
 import com.team_60.Mocco.security.filter.JwtTokenProvider;
+import com.team_60.Mocco.security.oauth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +41,7 @@ public class SecurityService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    //private final AuthenticationProvider authenticationProvider;
     private final MemberMapper mapper;
     private final RedisTemplate redisTemplate;
 
@@ -45,14 +53,16 @@ public class SecurityService {
             throw new BusinessLogicException(USERNAME_NOT_FOUND);
         }
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
+        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        //Authentication authentication = authenticationProvider.authenticate(authenticationToken);
         Map<String, Object> tokenInfo = jwtTokenProvider.generateToken(authentication,response);
         redisTemplate.opsForValue()
                 .set("RefreshToken:"+authentication.getName(),tokenInfo.get(REFRESH_TOKEN_HEADER), REFRESH_TOKEN_EXP, TimeUnit.MILLISECONDS);
 
         MemberDto.Response responseDto = mapper.memberToMemberResponseDto(member);
 
-        return new ResponseEntity(responseDto, HttpStatus.OK);
+        return new ResponseEntity(new SingleResponseDto<>(responseDto), HttpStatus.OK);
     }
     public ResponseEntity logout(HttpServletRequest request){
         if(request.getHeader(ACCESS_TOKEN_HEADER) == null || request.getHeader(ACCESS_TOKEN_HEADER).length()<8){
@@ -117,26 +127,23 @@ public class SecurityService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//권한 추가해주는 기능
-//    public ResponseEntity authority(HttpServletRequest request){
-//
-//        String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
-//        String email = JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(accessToken).getClaim("email").asString();
-//
-//        Member member = memberRepository.findByEmail(email)
-//                .orElseThrow(()->new UsernameNotFoundException("No authentication information"));
-//
-//        //add ROLE_ADMIN
-//        member.setRoles(member.getRoles().concat(",ROLE_ADMIN"));
-//        memberRepository.save(member);
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//    public String getMemberRoles(HttpServletRequest request){
-//        String accessToken = request.getHeader(ACCESS_TOKEN_HEADER).substring(TOKEN_HEADER_PREFIX.length());
-//        String roles = jwtTokenProvider.getAuthentication(accessToken).getAuthorities().toString();
-//
-//        return roles;
-//    }
+    public ResponseEntity githubLogin(Member member, HttpServletResponse response) throws IOException {
+        Member findMember = memberRepository.findByProviderId(member.getProviderId())
+                .orElseThrow(()->{throw new BusinessLogicException(MEMBER_NOT_FOUND);});
+        if(!findMember.getGithubNickname().equals(member.getGithubNickname())){
+            findMember.setGithubNickname(member.getGithubNickname());
+            memberRepository.save(findMember);
+        }
+        PrincipalDetails principal = new PrincipalDetails(findMember);
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(principal, principal.getPassword());
+        Map<String, Object> tokenInfo = jwtTokenProvider.generateToken(authenticationToken,response);
+        redisTemplate.opsForValue()
+                .set("RefreshToken:"+authenticationToken.getName(),tokenInfo.get(REFRESH_TOKEN_HEADER), REFRESH_TOKEN_EXP, TimeUnit.MILLISECONDS);
+
+        MemberDto.Response responseDto = mapper.memberToMemberResponseDto(findMember);
+
+        return new ResponseEntity(new SingleResponseDto<>(responseDto), HttpStatus.OK);
+    }
 
 }
