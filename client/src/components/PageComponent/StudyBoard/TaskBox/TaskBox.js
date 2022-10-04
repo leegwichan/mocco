@@ -7,8 +7,15 @@ import { userInfoState, mypageOwnerAtom } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import UserProgressBar from './UserProgressBar';
 import { useNavigate } from 'react-router-dom';
+import StudyRuleModal from '../StudyRuleModal';
 
-function TaskBox({ studyInfo, studyId, setSelectedId }) {
+function TaskBox({
+  studyInfo,
+  studyId,
+  setSelectedId,
+  teamName,
+  expiredTaskCount,
+}) {
   const userInfo = useRecoilValue(userInfoState);
   const [select, setSelect] = useState({
     memberId: userInfo.memberId,
@@ -31,7 +38,7 @@ function TaskBox({ studyInfo, studyId, setSelectedId }) {
         setTaskList(res);
         console.log(res);
         // console.log(res);
-        })
+      })
       .catch((err) => {
         if (err.response.data.message === '스터디의 멤버가 아닙니다.') {
           navigate(`/main/${myPageOwner.memberId}`);
@@ -48,8 +55,15 @@ function TaskBox({ studyInfo, studyId, setSelectedId }) {
   return (
     <div css={taskBox}>
       <div css={taskTop}>
-        <div>Task</div>
-        <div>
+        <div className="task">Task</div>
+        <section>
+          <div className="teamName">{teamName}</div>
+          <div className="rule">
+            <StudyRuleModal />
+          </div>
+        </section>
+
+        <div className="desktopProgress">
           <UserProgressBar
             taskList={taskList}
             total={taskList.length}
@@ -62,6 +76,14 @@ function TaskBox({ studyInfo, studyId, setSelectedId }) {
           setSelect={setSelect}
         />
       </div>
+      <section className="mobileProgress">
+        <UserProgressBar
+          taskList={taskList}
+          total={taskList.length}
+          select={select.memberId}
+          expiredTaskCount={expiredTaskCount}
+        />
+      </section>
       <div css={tasks}>
         {taskList &&
           taskList.map((task) => (
@@ -82,7 +104,24 @@ export default TaskBox;
 
 const taskBox = css`
   background-color: #f0f8ff;
-  padding: 50px;
+  padding: 0px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media all and (max-width: 767px) {
+    padding: 20px;
+    height: auto;
+  }
+  .mobileProgress {
+    @media all and (min-width: 767px) {
+      display: none;
+    }
+  }
+  .desktopProgress {
+    @media all and (max-width: 767px) {
+      display: none;
+    }
+  }
 `;
 
 const taskTop = css`
@@ -90,10 +129,34 @@ const taskTop = css`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 50px;
+  width: 80vw;
+  max-width: 1100px;
 
-  div:nth-of-type(1) {
+  section {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .task {
     font-size: 40px;
     font-weight: 600;
+    @media all and (max-width: 767px) {
+      display: none;
+    }
+  }
+  .teamName {
+    font-size: 20px;
+    font-weight: 600;
+    @media all and (min-width: 767px) {
+      display: none;
+    }
+  }
+  .rule {
+    @media all and (min-width: 767px) {
+      display: none;
+    }
   }
 `;
 

@@ -40,7 +40,8 @@ function ProgressBar({
               <Character
                 src={isSame ? 좌절하는사람자신파랑 : 좌절하는사람}
                 alt={isSame ? '좌절하는 사용자 캐릭터' : '좌절하는 캐릭터'}
-                width="100px"
+                width="10vw"
+                max_width={'100px'}
               />
             </div>
           )}
@@ -48,7 +49,8 @@ function ProgressBar({
             <Character
               src={isSame ? 달리는사람자신파랑 : 달리는사람}
               alt={isSame ? '달려가는 사용자 캐릭터' : '달려가는 캐릭터'}
-              width="100px"
+              width="10vw"
+              max_width={'100px'}
             />
           )}
         </div>
@@ -57,8 +59,8 @@ function ProgressBar({
             <Character
               className="괴물"
               src={달리는괴물}
-              alt="괴물캐릭터"
-              width="150px"
+              width="12vw"
+              max_width={'150px'}
             />
           )}
         </div>
@@ -70,7 +72,8 @@ function ProgressBar({
 export default ProgressBar;
 
 const Container = css`
-  width: 960px;
+  width: 78vw;
+  max-width: 970px;
   height: 10px;
   display: flex;
   align-items: center;

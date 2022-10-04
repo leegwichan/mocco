@@ -19,7 +19,8 @@ const Header = css`
 `;
 
 const totalContainer = css`
-  max-width: 1200px;
+  max-width: 1260px;
+  padding: 0px 2rem;
   height: 2000px;
   margin: auto;
   margin-top: 50px;
@@ -28,7 +29,6 @@ const totalContainer = css`
     margin-bottom: 10%;
   }
   @media all and (max-width: 1023px) {
-    padding: 0px 24px;
     margin-top: 34px;
     margin-bottom: 10%;
   }
