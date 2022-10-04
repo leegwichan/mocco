@@ -36,7 +36,7 @@ const StudySection = ({ id }) => {
         <section css={topContainer}>
           <div css={titleContainer}>
             <div css={title}>{studyInfo.teamName}</div>
-            {studyInfo.member?.memberId === userInfo.memberId && (
+            {studyInfo.member?.memberId !== userInfo.memberId && (
               <div className="btn">
                 <Button
                   type={'small_white'}

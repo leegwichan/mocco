@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { singleStudyState } from '../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { css } from '@emotion/react';
@@ -7,6 +7,7 @@ import { useState } from 'react';
 function StudyMember() {
   const studyInfo = useRecoilValue(singleStudyState);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const onChange = () => {
     setIsOpen(!isOpen);
@@ -15,46 +16,54 @@ function StudyMember() {
   return (
     <section css={container}>
       <div onClick={onChange} role="presentation" css={selected}>
-        <Link
-          to={`/main/${studyInfo.member.nickname}`}
-          css={css`
-            text-decoration: none;
-          `}
-        >
-          <div className="profile">
-            <img
-              css={image}
-              src={studyInfo.member.profileImage}
-              alt="profile"
-            />
-            {/* <span className="main_link">{studyInfo.member.nickname}</span> */}
-            <span className="main_link">가나다라마바사아</span>
-          </div>
-        </Link>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="#0b6ff2"
-          width="30"
-          height="30"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+        <div className="profile">
+          <img
+            css={image}
+            src={studyInfo.member.profileImage}
+            alt="profile"
+            role="presentation"
+            onClick={() => navigate(`/main/${studyInfo.member.memberId}`)}
           />
-        </svg>
+          <span
+            className="main_link"
+            role="presentation"
+            onClick={() => navigate(`/main/${studyInfo.member.memberId}`)}
+          >
+            {studyInfo.member.nickname}
+          </span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="#0b6ff2"
+            width="30"
+            height="30"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        </div>
       </div>
       <ul css={memberList} className={isOpen ? 'showList' : 'noneList'}>
         {studyInfo.studyMemberList &&
           studyInfo.studyMemberList.map((user, idx) => {
             return (
-              <li key={idx} role="presentation" css={member}>
-                <img src={user.profileImage} alt="p" css={image} />
-                {user.nickname}
-              </li>
+              <Link
+                to={`/main/${user.memberId}`}
+                css={css`
+                  text-decoration: none;
+                `}
+                key={idx}
+              >
+                <li role="presentation" css={member}>
+                  <img src={user.profileImage} alt="p" css={image} />
+                  {user.nickname}
+                </li>
+              </Link>
             );
           })}
       </ul>
@@ -70,7 +79,7 @@ const container = css`
   background-color: #ffffff;
   border-radius: 10px;
   z-index: 2;
-  box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
+  /* box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%); */
   border: 2px solid #0b6ff2;
 
   &:hover {
@@ -79,15 +88,13 @@ const container = css`
 `;
 
 const selected = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  padding-bottom: 5px;
+  padding: 7px 10px;
 
   .profile {
+    text-decoration: none;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   .main_link {
@@ -112,7 +119,6 @@ const image = css`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid red;
   margin-right: 10px;
 `;
 
@@ -121,7 +127,7 @@ const memberList = css`
   background-color: #ffffff;
   margin-top: 10px;
   position: absolute;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
   list-style: none;
   border: 2px solid #0b6ff2;
@@ -136,10 +142,12 @@ const memberList = css`
 `;
 
 const member = css`
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #000000;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 7px 20px;
   align-items: center;
   transition: background-color 0.2s ease-in;
   border-radius: 20px;

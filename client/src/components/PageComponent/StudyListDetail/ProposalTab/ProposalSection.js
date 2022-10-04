@@ -12,20 +12,30 @@ function ProposalSection({ proposal, getProposalInfof }) {
 
   const selectHandler = () => {
     return request
-      .patch(`/api/proposals/approve/${proposal.proposalId}`)
+      .patch(`/api/proposals/${proposal.proposalId}/approve`)
       .then(() => {
         // console.log(res);
         getProposalInfof();
       })
+      .then(() => {
+        request(`/api/study-info/board/${studyInfo.studyId}`).then((res) => {
+          // console.log('둘째', res);
+          if (studyInfo.capacity === res.data.data.studyMemberList.length) {
+            request
+              .patch(`/api/study-board/${studyInfo.studyId}/finish-recruit`)
+              .then(() => alert('스터디 모집이 마감되었습니다'))
+              .catch((err) => console.log(err));
+          }
+        });
+      })
       .catch((err) => {
         alert(err.response.data.message);
       });
-    // }
   };
 
   const refuseHandler = () => {
     return request
-      .patch(`/api/proposals/denied/${proposal.proposalId}`)
+      .patch(`/api/proposals/${proposal.proposalId}/denied`)
       .then(() => {
         getProposalInfof();
       })
