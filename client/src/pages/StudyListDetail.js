@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import request from '../api';
 import { singleStudyState } from '../atom/atom';
 import { useSetRecoilState } from 'recoil';
-// import Footer from '../components/Common/Footer';
+import Footer from '../components/Common/Footer';
 
 function StudyListDetail() {
   const { id } = useParams();
@@ -33,7 +33,7 @@ function StudyListDetail() {
         <StudySection id={id} />
         <TabSection />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 }
