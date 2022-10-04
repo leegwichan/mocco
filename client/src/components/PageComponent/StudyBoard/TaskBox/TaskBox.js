@@ -19,9 +19,9 @@ function TaskBox({
 }) {
   const userInfo = useRecoilValue(userInfoState);
   const [select, setSelect] = useState({
-    memberId: userInfo.data.memberId,
-    nickname: userInfo.data.nickname,
-    profileImage: userInfo.data.rofileImage,
+    memberId: userInfo.memberId,
+    nickname: userInfo.nickname,
+    profileImage: userInfo.rofileImage,
   });
   const [taskList, setTaskList] = useState([]);
   const navigate = useNavigate();
