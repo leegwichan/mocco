@@ -34,8 +34,8 @@ public class StudyServiceImpl implements StudyService{
     private final MemberService memberService;
     private final StudyMemberService studyMemberService;
     private final TaskService taskService;
-    @Value("${image.default.study}")
-    private String studyImageList;
+//    @Value("${image.default.study}")
+//    private String studyImageList;
 
 
     @Override
@@ -44,7 +44,7 @@ public class StudyServiceImpl implements StudyService{
         Member member = memberService.findVerifiedMember(study.getTeamLeader().getMemberId());
         study.setStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS);
         study.setTeamLeader(member);
-        if (study.getImage() == null) study.setImage(studyImageList);
+        //if (study.getImage() == null) study.setImage(studyImageList);
         validateStudy(study);
         //스터디 생성
         Study createdStudy = studyRepository.save(study);
