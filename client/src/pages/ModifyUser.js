@@ -18,6 +18,7 @@ function ModifyUser() {
   const openWithdrawalModal = () => setWithdrawalModalOn(true);
   const closeWithdrawalModal = () => setWithdrawalModalOn(false);
 
+  console.log('userInfo', userInfo);
   const [previewUrl, setPreviewUrl] = useState(userInfo.profileImage);
   const inputRef = useRef(null);
 
@@ -37,13 +38,11 @@ function ModifyUser() {
       },
     }).then((res) => setUserInfo(res.data.data));
   };
-
   // 이미지 업로드 기능
   const onUploadImage = useCallback((e) => {
     if (!e.target.files) {
       return;
     }
-    console.log('a');
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
 
@@ -136,7 +135,7 @@ function ModifyUser() {
       <ModifyUserInput
         labelText="자기소개"
         type="textarea"
-        defaultValue={userInfo.location}
+        defaultValue={userInfo.introduction}
         name="introduction"
       />
       <ModifyUserInput

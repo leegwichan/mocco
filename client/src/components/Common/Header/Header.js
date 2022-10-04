@@ -24,7 +24,7 @@ function Header() {
   const [alarm, setAlarm] = useState([]); //eslint-disable-line no-unused-vars
   const [subscribeId, setSubscribeId] = useState({}); //eslint-disable-line no-unused-vars
   const navigate = useNavigate();
-
+  console.log('userInfo', userInfo);
   // 알람 받기
   useEffect(() => {
     if (userInfo) {
