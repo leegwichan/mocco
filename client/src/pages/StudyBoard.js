@@ -92,7 +92,7 @@ const totalContainer = css`
 `;
 
 const contentContainer = css`
-  max-width: 1200px + 2rem;
+  max-width: calc(1200px + 2rem);
   padding: 0px 2rem;
   margin: 0 auto;
 `;
