@@ -26,7 +26,7 @@ public class ProposalController {
     private final ProposalService proposalService;
     private final ProposalMapper mapper;
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity getProposalsByStudyId(@RequestParam("study-id") @Positive long studyId){
         List<Proposal> findProposals = proposalService.findProposalsByStudyId(studyId);
         List<ProposalDto.Response> responses = mapper.proposalsToProposalResponseDtos(findProposals);

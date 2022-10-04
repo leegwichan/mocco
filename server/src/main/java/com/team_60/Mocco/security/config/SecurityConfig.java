@@ -37,7 +37,8 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring().antMatchers("/api/register/**","/api/study-info/**","/h2/**","api/test/**",
-                "/login/oauth2/**","/oauth2/authorization/*");
+                "/api/*/list",
+                "/login/oauth2/**","/oauth2/authorization/github");
     }
 
     @Bean

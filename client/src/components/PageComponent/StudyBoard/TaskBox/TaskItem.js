@@ -19,7 +19,7 @@ function TaskItem({ task, select, taskHandlerf }) {
     <div>
       <div css={taskContainer}>
         <div css={deadline}>
-          <div>~{task.deadline}</div>
+          <div>~{task.deadline.slice(2)}</div>
         </div>
         <div css={content}>{task.content}</div>
         <div css={mark}>
@@ -104,7 +104,8 @@ function TaskItem({ task, select, taskHandlerf }) {
 export default TaskItem;
 
 const taskContainer = css`
-  width: 990px;
+  width: 80vw;
+  max-width: 1100px;
   height: 128px;
   background-color: #ffffff;
   box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
@@ -123,26 +124,52 @@ const taskContainer = css`
     color: #ff0000;
     font-weight: 500;
   }
+
+  @media all and (max-width: 767px) {
+    min-width: 305px;
+    height: 70px;
+    .check {
+      font-size: 11px;
+    }
+  }
 `;
 
 const deadline = css`
-  width: 168px;
+  width: 15vw;
   height: 128px;
   background-color: #0b6ff2;
   border-radius: 20px;
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   div:nth-of-type(1) {
     font-size: 25px;
     font-weight: 500;
     color: #ffffff;
     text-align: center;
-    padding: 45px 0;
+  }
+
+  @media all and (max-width: 767px) {
+    min-width: 50px;
+    height: 70px;
+    padding: 5px;
+
+    div:nth-of-type(1) {
+      font-size: 13px;
+      font-weight: 600;
+    }
   }
 `;
 
 const content = css`
   font-size: 30px;
   /* margin-left: -25rem; */
+  @media all and (max-width: 767px) {
+    font-size: 20px;
+  }
 `;
 
 const mark = css`
@@ -151,4 +178,11 @@ const mark = css`
   flex-direction: column;
   align-items: center;
   font-size: 15px;
+  @media all and (max-width: 767px) {
+    margin-right: 13px;
+    svg {
+      width: 42px;
+      height: 42px;
+    }
+  }
 `;

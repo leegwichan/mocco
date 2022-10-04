@@ -16,6 +16,7 @@ import Callback from './pages/Callback';
 import Header from './components/Common/Header/Header';
 import { css } from '@emotion/react';
 
+
 function App() {
   const authenticated = !!useRecoilValue(userInfoState);
 

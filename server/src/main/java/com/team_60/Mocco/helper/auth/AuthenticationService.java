@@ -9,4 +9,7 @@ public interface AuthenticationService {
 
     void AuthenticationCheckStudyMember(long studyId, long memberId); //studyRoom
 
+    void AuthenticationCheckStudyLeader(long proposalId,long memberId);
+    void AuthenticationCheckStudyMemberByTaskId(long taskId, long memberId);
+
 }

@@ -18,6 +18,7 @@ public enum ExceptionCode {
     STUDY_NOT_COMPLETE(400, "스터디가 아직 종료되지 않았습니다."),
     STUDY_NOT_DELETE(400, "스터디가 모집중이 아니어서 삭제할 수 없습니다."),
     NOT_STUDY_MEMBER(400, "스터디의 멤버가 아닙니다."),
+    NOT_STUDY_TEAM_LEADER(400,"스터디 팀장이 아닙니다."),
     NOT_STUDY_EVALUATION_STATUS(400, "이미 투표를 했거나 투표기간이 지났습니다."),
     NOT_EVALUATION_MEMBER(400, "투표 대상이 아닌 사람을 투표했습니다."),
     NOT_ALL_EVALUATION(400, "전 Member 를 투표를 하지 않았습니다."),
@@ -59,6 +60,7 @@ public enum ExceptionCode {
     BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다."),
     NOT_SAME_USER(400,"잘못된 유저 접근입니다."),
     NOT_PASSWORD_MATCHED(400, "기존 비밀번호가 틀렸습니다."),
+    NOT_CORRECT_ARGUMENT(400, "올바르지 않은 형식의 요청입니다."),
 
     URI_MAKING_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. URIBuilder Error"),
     STRING_ENTITY_ERROR(500, "서버에서 통신중에 에러가 발생했습니다. StringEntity Error, Response Error"),

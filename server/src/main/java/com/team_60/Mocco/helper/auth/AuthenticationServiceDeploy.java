@@ -18,6 +18,7 @@ import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.service.StudyService;
 import com.team_60.Mocco.study_member.entity.StudyMember;
+import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task_check.entity.TaskCheck;
 import com.team_60.Mocco.task_check.service.TaskCheckService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -103,7 +105,23 @@ public class AuthenticationServiceDeploy implements AuthenticationService {
     @Override
     public void AuthenticationCheckStudyMember(long studyId, long memberId){ //studyRoom
         List<StudyMember> studyMemberList = studyService.findVerifiedStudy(studyId).getStudyMemberList();
-        studyMemberList.stream().forEach(n -> {if(n.getMember().getMemberId() != memberId)
-            throw new BusinessLogicException(ExceptionCode.NOT_STUDY_MEMBER);});
+        List<Long> memberIdList = studyMemberList.stream()
+                .map(n -> n.getMember().getMemberId()).collect(Collectors.toList());
+        if(!memberIdList.contains(memberId)){
+            throw new BusinessLogicException(ExceptionCode.NOT_STUDY_MEMBER);
+        }
+    }
+
+    @Override
+    public void AuthenticationCheckStudyLeader(long proposalId, long memberId){
+        Proposal proposal = proposalService.findVerifiedProposal(proposalId);
+        if(proposal.getStudy().getTeamLeader().getMemberId() != memberId){
+            throw new BusinessLogicException(ExceptionCode.NOT_STUDY_TEAM_LEADER);
+        }
+    }
+    @Override
+    public void AuthenticationCheckStudyMemberByTaskId(long taskCheckId, long memberId){
+        TaskCheck taskCheck = taskCheckService.findVerifiedTaskCheck(taskCheckId);
+        AuthenticationCheckStudyMember(taskCheck.getTask().getStudy().getStudyId(), memberId);
     }
 }
