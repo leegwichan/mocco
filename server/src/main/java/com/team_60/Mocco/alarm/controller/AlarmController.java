@@ -28,9 +28,8 @@ public class AlarmController {
 
     @IdRequired
     @GetMapping(value = "/subscribe", produces = "text/event-stream")
-    public SseEmitter alarmSubscribe(HttpServletRequest request){
-        long memberId = (long) request.getAttribute("memberId");
-        return alarmService.publishAlarm(memberId);
+    public SseEmitter alarmSubscribe(@RequestParam("member-id") long memberId){
+        return alarmService.subscribeAlarm(memberId);
     }
 
     @IdRequired
