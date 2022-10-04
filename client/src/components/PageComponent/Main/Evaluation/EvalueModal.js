@@ -132,9 +132,6 @@ function EvalueModal({
 
   const fnc = (ratingIndex, member) => {
     //star 컴포넌트에서 각 멤버 점수 가져옴
-    console.log(
-      `'점수' ${ratingIndex}'멤버아이디' ${member} 스터디아이디 ${studyInfo.studyId}`
-    );
 
     obj = {
       memberId: member,
@@ -142,7 +139,6 @@ function EvalueModal({
     };
 
     useEffect(() => {
-      console.log(obj);
       arr.push(obj);
 
       function isSame(arr, obj) {
@@ -186,8 +182,6 @@ function EvalueModal({
 
   const submitHandler = () => {
     let opacity = studyInfo.memberList.length;
-    console.log('정원 ' + opacity);
-    console.log('점수 기록 ' + lastArr.length);
 
     if (opacity > lastArr.length) {
       alert('모든 스터디원에게 1점 이상의 후기를 남겨주세요');
@@ -197,7 +191,6 @@ function EvalueModal({
         memberId: memberId,
         evaluations: lastArr,
       };
-      console.log(patchObj);
       submitEvalueData(patchObj);
     }
   };

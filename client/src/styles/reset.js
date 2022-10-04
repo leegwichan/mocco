@@ -82,6 +82,13 @@ const reset = css`
   th {
     padding: 0;
   }
+  button {
+    cursor: pointer;
+  }
+  textarea {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
 `;
 
 export default reset;
