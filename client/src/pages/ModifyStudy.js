@@ -135,21 +135,17 @@ const content_container = css`
 
     @media all and (max-width: 768px) {
       button {
-        font-size: 15px;
-        height: 38px;
-        padding: 0 20px;
+        font-size: 1rem;
       }
     }
   }
 `;
 
 const edit_title = css`
-  font-size: 35px;
-  font-weight: 500;
+  font-size: 2.5rem;
   margin-bottom: 30px;
 
   @media all and (max-width: 768px) {
     font-size: 2rem;
-    font-weight: 500;
   }
 `;

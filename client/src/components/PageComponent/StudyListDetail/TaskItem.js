@@ -15,7 +15,7 @@ function TaskItem({ task, idx }) {
 export default TaskItem;
 
 const container = css`
-  height: 88px;
+  min-height: 88px;
   background-color: #f0f8ff;
   border-radius: 15px;
   display: flex;
@@ -32,7 +32,9 @@ const container = css`
 
   .task_info {
     width: 85%;
-    height: 54px;
+    margin: 10px 0;
+    min-height: 54px;
+    height: auto;
     margin: 0 1rem;
     background-color: #ffffff;
     display: flex;
@@ -42,6 +44,7 @@ const container = css`
     span {
       font-size: 15px;
       margin-left: 35px;
+      word-break: break-all;
     }
 
     .deadline {
@@ -54,7 +57,7 @@ const container = css`
     margin-top: 26px;
 
     .study_rule {
-      font-size: 15px;
+      font-size: 18px;
     }
 
     .task_info {
@@ -63,12 +66,12 @@ const container = css`
 
       span {
         margin-left: 15px;
-        font-size: 13px;
+        font-size: 0.9rem;
       }
 
       .deadline {
         margin-right: 15px;
-        font-size: 13px;
+        font-size: 0.9rem;
       }
     }
   }

@@ -70,17 +70,12 @@ const task_container = css`
 
     @media all and (max-width: 768px) {
       div {
-        font-size: 20px;
-        font-weight: 500;
+        font-size: 1.5rem;
       }
     }
 
-    @media all and (max-width: 768px) {
-      button {
-        font-size: 15px;
-        height: 38px;
-        padding: 0 20px;
-      }
+    button {
+      font-size: 1rem;
     }
   }
 `;

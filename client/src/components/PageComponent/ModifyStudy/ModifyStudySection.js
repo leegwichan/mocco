@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import request from '../../../api';
 
 function ModifyStudySection({ editContent, setEditContent }) {
@@ -49,6 +49,19 @@ function ModifyStudySection({ editContent, setEditContent }) {
     imgRef.current.click();
   };
 
+  let beginDate = new Date();
+  beginDate.setDate(beginDate.getDate() + 1);
+  beginDate = beginDate.toISOString().slice(0, 10);
+  console.log(beginDate);
+
+  const [endMaximumDate, setEndMaximumDate] = useState();
+  useEffect(() => {
+    let end = new Date(startDate);
+    end.setDate(end.getDate() + 180);
+    end = end.toISOString().slice(0, 10);
+    setEndMaximumDate(end);
+  }, [startDate]);
+
   return (
     <div>
       <div css={edit_container}>
@@ -76,6 +89,7 @@ function ModifyStudySection({ editContent, setEditContent }) {
             <input
               type="date"
               name="startDate"
+              min={beginDate}
               defaultValue={startDate}
               onChange={onEditChange}
             />
@@ -86,6 +100,8 @@ function ModifyStudySection({ editContent, setEditContent }) {
               type="date"
               name="endDate"
               defaultValue={endDate}
+              min={startDate}
+              max={endMaximumDate}
               onChange={onEditChange}
             />
           </div>
@@ -115,11 +131,7 @@ function ModifyStudySection({ editContent, setEditContent }) {
             </div>
             <div css={imageSection}>
               <img
-                src={
-                  image === null
-                    ? 'https://avatars.githubusercontent.com/u/71388830?v=4'
-                    : image
-                }
+                src={image === null ? '/no_image.jpeg' : image}
                 alt="스터디 대표 사진"
               />
               <button onClick={uploadHandler}>이미지 업로드</button>
@@ -184,7 +196,6 @@ const edit_left = css`
   }
 
   @media all and (max-width: 768px) {
-    order: 2;
     width: 100%;
     margin: 0 auto;
   }
@@ -203,7 +214,6 @@ const edit_right = css`
   }
 
   @media all and (max-width: 768px) {
-    order: 1;
     width: 100%;
     margin: 0 auto;
   }
@@ -218,12 +228,12 @@ const detailContainer = css`
     padding: 0.5rem;
     border: 1px solid #999999;
     border-radius: 5px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     resize: none;
   }
 
   @media all and (max-width: 768px) {
-    order: 2;
+    font-size: 1rem;
   }
 `;
 
@@ -231,7 +241,6 @@ const imageContaier = css`
   flex: 6 0;
 
   @media all and (max-width: 768px) {
-    order: 1;
   }
 `;
 
@@ -290,12 +299,12 @@ const introduce_rule_container = css`
 
   @media all and (max-width: 768px) {
     label {
-      font-size: 20px;
-      font-weight: 500;
+      font-size: 1.5rem;
     }
 
     textarea {
       height: 200px;
+      font-size: 1rem;
     }
   }
 `;

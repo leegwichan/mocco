@@ -27,6 +27,7 @@ const CommentSection = ({
       editHandler();
     },
   });
+  console.log(userInfo);
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -154,10 +155,10 @@ const container = css`
 
     @media all and (max-width: 768px) {
       button {
-        width: 50px;
-        height: 30px;
+        font-size: 15px;
+        height: 35px;
+        width: 48px;
         margin-left: 7px;
-        font-size: 13px;
       }
     }
   }
@@ -207,10 +208,10 @@ const editContainer = css`
 
     @media all and (max-width: 768px) {
       button {
-        width: 50px;
-        height: 30px;
+        font-size: 15px;
+        height: 35px;
+        width: 48px;
         margin-left: 7px;
-        font-size: 13px;
       }
     }
   }

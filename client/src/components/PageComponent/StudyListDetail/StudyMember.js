@@ -93,6 +93,7 @@ const container = css`
 
   @media all and (max-width: 767px) {
     height: 47px;
+    margin-top: 10px;
   }
 `;
 
@@ -108,7 +109,7 @@ const selected = css`
 
   .main_link {
     color: black;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 500;
 
     &:hover {
@@ -121,7 +122,7 @@ const selected = css`
     padding: 3px 8px;
 
     .main_link {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 500;
     }
   }
@@ -154,7 +155,7 @@ const memberList = css`
 `;
 
 const member = css`
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 500;
   color: #000000;
   display: flex;
@@ -169,7 +170,7 @@ const member = css`
   }
 
   @media all and (max-width: 768px) {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
   }
 `;

@@ -109,12 +109,12 @@ const container = css`
 
   @media all and (max-width: 768px) {
     .detail_title {
-      font-size: 20px;
+      font-size: 1.3rem;
       font-weight: 500;
     }
 
     .study_content {
-      font-size: 15px;
+      font-size: 1.1rem;
       padding-top: 16px;
     }
   }
@@ -136,9 +136,9 @@ const titleContainer = css`
       @media all and (max-width: 768px) {
         margin-left: 0px;
         margin-right: 5px;
-        font-size: 12px;
-        height: 25px;
-        width: 45px;
+        font-size: 15px;
+        height: 35px;
+        width: 48px;
       }
     }
   }
@@ -154,8 +154,7 @@ const title = css`
   color: #000000;
 
   @media all and (max-width: 768px) {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 2rem;
   }
 `;
 
@@ -172,8 +171,8 @@ const info = css`
 
   @media all and (max-width: 768px) {
     .info {
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 1.3rem;
+      margin-top: 10px;
     }
   }
 `;
