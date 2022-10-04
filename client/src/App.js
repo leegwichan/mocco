@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from './atom/atom';
-import PrivateRoute from './components/Common/Authentication/PrivateRoute';
+import PrivateRoute from './components/Common/authentication/PrivateRoute';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -13,8 +13,6 @@ import ModifyStudy from './pages/ModifyStudy';
 import ModifyUser from './pages/ModifyUser';
 import StudyBoard from './pages/StudyBoard';
 import Callback from './pages/Callback';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfUse from './pages/TermsOfUse';
 import Header from './components/Common/Header/Header';
 
 function App() {
