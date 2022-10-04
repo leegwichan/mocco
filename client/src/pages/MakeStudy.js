@@ -28,11 +28,18 @@ const ContentContainer = css`
 const MakeStudyTitle = css`
   font-size: 2.5rem;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 const StudyDetailContainer = css`
   display: flex;
   width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const StudyDetailLeft = css`
@@ -40,6 +47,11 @@ const StudyDetailLeft = css`
   width: 45%;
   margin-right: 5%;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-right: 0;
+  }
 `;
 
 const StudyDetailRight = css`
@@ -47,6 +59,10 @@ const StudyDetailRight = css`
   width: 45%;
   margin-left: 5%;
   flex-direction: column;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 
 const Label = css`
@@ -62,6 +78,9 @@ const InputLeft = css`
   border: 1px solid #999999;
   border-radius: 5px;
   font-size: 1.2rem;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const SummaryContainer = css`
@@ -110,6 +129,9 @@ const SummaryTextArea = css`
   border-radius: 5px;
   font-size: 1.2rem;
   resize: none;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const IntroduceAndRulesContainer = css`
@@ -121,6 +143,9 @@ const BigLabel = css`
   display: inline-block;
   border-bottom: 3px solid #0b6ff2;
   font-size: 2rem;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const BigTextArea = css`
@@ -133,6 +158,10 @@ const BigTextArea = css`
   border-radius: 5px;
   font-size: 1.2rem;
   resize: none;
+  @media (max-width: 768px) {
+    height: 200px;
+    font-size: 1rem;
+  }
 `;
 
 const Submit = css`
@@ -172,10 +201,21 @@ const Cancel = css`
   &:active {
     transform: scale(0.9);
   }
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const ValidStar = css`
   color: red;
+`;
+
+const BigLabelValidStar = css`
+  color: red;
+  font-size: 2rem;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 function MakeStudy() {
@@ -228,16 +268,6 @@ function MakeStudy() {
   const handleMakeStudyButton = (e) => {
     e.preventDefault();
     // 유효성 검사
-    for (let task of studyBoardForm.taskList) {
-      if (
-        task.content === null ||
-        task.deadline === null ||
-        task.content > 100
-      ) {
-        alert('task는 100자 이하로 입력해야 합니다');
-        return;
-      }
-    }
     if (
       studyBoardForm.teamName === '' ||
       studyBoardForm.teamName > 30 ||
@@ -265,6 +295,20 @@ function MakeStudy() {
     if (studyBoardForm.rule === '' || studyBoardForm.rule > 2000) {
       alert('스터디 규칙은 2000자 이하로 입력해야 합니다');
       return;
+    }
+    if (studyBoardForm.taskList === null) {
+      alert('최소 1개의 task가 존재해야 합니다');
+      return;
+    }
+    for (let task of studyBoardForm.taskList) {
+      if (
+        task.content === null ||
+        task.deadline === null ||
+        task.content > 100
+      ) {
+        alert('task는 100자 이하로 입력해야 합니다');
+        return;
+      }
     }
     request
       .post('/api/study-board', studyBoardForm)
@@ -338,7 +382,7 @@ function MakeStudy() {
       <main css={MainContainer}>
         <div css={ContentContainer}>
           <section css={MakeStudyTitle}>
-            <h1>스터디 공고 작성하기</h1>
+            <h1>스터디 공고 작성</h1>
           </section>
           <section>
             <form action="submit">
@@ -449,15 +493,7 @@ function MakeStudy() {
                     <label htmlFor="introduce" css={BigLabel}>
                       스터디 소개
                     </label>
-                    <span
-                      css={css`
-                        color: red;
-                        font-size: 2rem;
-                      `}
-                    >
-                      {' '}
-                      *
-                    </span>
+                    <span css={BigLabelValidStar}> *</span>
                   </div>
                   <textarea
                     type="text"
@@ -473,15 +509,7 @@ function MakeStudy() {
                     <label htmlFor="rules" css={BigLabel}>
                       스터디 규칙
                     </label>
-                    <span
-                      css={css`
-                        color: red;
-                        font-size: 2rem;
-                      `}
-                    >
-                      {' '}
-                      *
-                    </span>
+                    <span css={BigLabelValidStar}> *</span>
                   </div>
 
                   <textarea

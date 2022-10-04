@@ -6,11 +6,17 @@ const BigLabel = css`
   display: inline-block;
   border-bottom: 3px solid #0b6ff2;
   font-size: 2rem;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const ValidStar = css`
   color: red;
   font-size: 2rem;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const AddTask = css`
@@ -27,6 +33,9 @@ const AddTask = css`
     background-color: white;
     border: 1px solid #0b6ff2;
   }
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const DisableAddTask = css`
@@ -37,6 +46,9 @@ const DisableAddTask = css`
   border: none;
   border-radius: 8px;
   background-color: #999999;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 function TaskContainer({

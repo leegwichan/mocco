@@ -11,10 +11,15 @@ const TaskContainer = css`
 `;
 
 const DeleteButton = css`
-  font-size: 20px;
+  font-size: 1.5rem;
   line-height: 40px;
   border: none;
   background-color: white;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 300%;
+    padding: 0;
+  }
 `;
 
 const LeftContainer = css`
@@ -25,7 +30,11 @@ const LeftContainer = css`
 
 const TaskNumber = css`
   color: #0b7ff2;
-  font-size: 40px;
+  font-size: 3.5rem;
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    line-height: 200%;
+  }
 `;
 
 const TaskInput = css`
@@ -37,6 +46,9 @@ const TaskInput = css`
   font-size: 1.2rem;
   border: 1px solid #999999;
   border-radius: 5px;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const DueDate = css`
@@ -47,6 +59,9 @@ const DueDate = css`
   font-size: 1.2rem;
   border: 1px solid #999999;
   border-radius: 5px;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 function Task({
