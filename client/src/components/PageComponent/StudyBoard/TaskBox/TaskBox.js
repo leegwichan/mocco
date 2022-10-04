@@ -19,14 +19,14 @@ function TaskBox({
 }) {
   const userInfo = useRecoilValue(userInfoState);
   const [select, setSelect] = useState({
-    memberId: userInfo.memberId,
-    nickname: userInfo.nickname,
-    profileImage: userInfo.profileImage,
+    memberId: userInfo.data.memberId,
+    nickname: userInfo.data.nickname,
+    profileImage: userInfo.data.rofileImage,
   });
   const [taskList, setTaskList] = useState([]);
   const navigate = useNavigate();
   const myPageOwner = useRecoilValue(mypageOwnerAtom);
-
+  console.log('select', userInfo);
   const taskHandler = () => {
     request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
       .then((res) => {
