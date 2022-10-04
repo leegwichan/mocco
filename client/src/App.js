@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from './atom/atom';
 import PrivateRoute from './components/Common/Authentication/PrivateRoute';
@@ -22,7 +22,15 @@ function App() {
     <div>
       <Header />
       <Routes>
+        {/* Public route */}
         <Route path="/" element={<Landing />} />
+        <Route path="/studylist" element={<StudyList />} />
+
+        {/* Restricted public route */}
+        {!authenticated && <Route path="/login" element={<LogIn />} />}
+        {!authenticated && <Route path="/signup" element={<SignUp />} />}
+
+        {/* Private route */}
         <Route
           path="/makestudy"
           element={
@@ -32,18 +40,15 @@ function App() {
             />
           }
         />
-        {!authenticated && <Route path="/login" element={<LogIn />} />}
-        {!authenticated && <Route path="/signup" element={<SignUp />} />}
-        {/* <Route path="/login" element={<LogIn />} /> */}
-        <Route path="/main/:id" element={<Main />} />
-        <Route path="/studylist" element={<StudyList />} />
-        {/* <Route path="/makestudy" element={<MakeStudy />} /> */}
         <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
+
+        {/* else */}
         <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
         <Route path="/modifyuser" element={<ModifyUser />} />
         <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/main/:id" element={<Main />} />
+        <Route path="*" element={<Landing />} />
       </Routes>
     </div>
   );
