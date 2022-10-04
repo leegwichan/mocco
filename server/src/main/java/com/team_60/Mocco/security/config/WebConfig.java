@@ -27,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(tokenInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/api/register/**","/api/study-info/**","/h2/**","/api/test/**",
+                        "/api/*/list",
                         "/login/oauth2/**","/oauth2/authorization/*");
     }
     @Bean

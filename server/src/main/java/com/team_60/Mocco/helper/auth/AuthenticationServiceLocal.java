@@ -22,4 +22,8 @@ public class AuthenticationServiceLocal implements AuthenticationService {
     public void AuthenticationCheckStudyMember(long studyId, long memberId) {
 
     }
+    @Override
+    public void AuthenticationCheckStudyLeader(long proposalId,long memberId) {
+
+    }
 }

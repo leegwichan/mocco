@@ -30,6 +30,7 @@ function StudyBoard() {
     request(`/api/study-progress/main/${studyId}/member/${memberId}`)
       .then((res) => {
         setStudyInfo(res.data.data);
+        console.log(studyInfo);
         return res;
       })
       .then((res) => {
