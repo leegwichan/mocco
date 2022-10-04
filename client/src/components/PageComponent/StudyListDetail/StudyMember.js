@@ -1,11 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { singleStudyState } from '../../../atom/atom';
+import { useNavigate } from 'react-router-dom';
+import { singleStudyState, userInfoState } from '../../../atom/atom';
 import { useRecoilValue } from 'recoil';
 import { css } from '@emotion/react';
 import { useState } from 'react';
 
 function StudyMember() {
   const studyInfo = useRecoilValue(singleStudyState);
+  const userInfo = useRecoilValue(userInfoState);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -22,15 +23,20 @@ function StudyMember() {
             src={studyInfo.member.profileImage}
             alt="profile"
             role="presentation"
-            onClick={() => navigate(`/main/${studyInfo.member.memberId}`)}
+            onClick={() =>
+              userInfo !== null &&
+              navigate(`/main/${studyInfo.member.memberId}`)
+            }
           />
           <span
             className="main_link"
             role="presentation"
-            onClick={() => navigate(`/main/${studyInfo.member.memberId}`)}
+            onClick={() =>
+              userInfo !== null &&
+              navigate(`/main/${studyInfo.member.memberId}`)
+            }
           >
-            {/* {studyInfo.member.nickname} */}
-            가나다라마바사아
+            {studyInfo.member.nickname}
           </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,18 +59,17 @@ function StudyMember() {
         {studyInfo.studyMemberList &&
           studyInfo.studyMemberList.map((user, idx) => {
             return (
-              <Link
-                to={`/main/${user.memberId}`}
-                css={css`
-                  text-decoration: none;
-                `}
+              <li
                 key={idx}
+                role="presentation"
+                css={member}
+                onClick={() =>
+                  userInfo !== null && navigate(`/main/${user.memberId}`)
+                }
               >
-                <li role="presentation" css={member}>
-                  <img src={user.profileImage} alt="p" css={image} />
-                  {user.nickname}
-                </li>
-              </Link>
+                <img src={user.profileImage} alt="p" css={image} />
+                {user.nickname}
+              </li>
             );
           })}
       </ul>

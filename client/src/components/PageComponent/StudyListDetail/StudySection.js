@@ -13,21 +13,17 @@ const StudySection = ({ id }) => {
   const navigate = useNavigate();
 
   const deleteHandler = () => {
-    if (studyInfo.member.memberId !== userInfo.memberId) {
-      alert('권한이 없습니다');
-    } else {
-      return request.delete(`/api/study-board/${id}`).then(() => {
-        navigate('/studylist');
-      });
-    }
-  };
-
-  const editHandler = () => {
     // if (studyInfo.member.memberId !== userInfo.memberId) {
     //   alert('권한이 없습니다');
     // } else {
-    navigate(`/studylist/modify/${id}`);
+    return request.delete(`/api/study-board/${id}`).then(() => {
+      navigate('/studylist');
+    });
     // }
+  };
+
+  const editHandler = () => {
+    navigate(`/studylist/modify/${id}`);
   };
 
   return (
@@ -36,21 +32,22 @@ const StudySection = ({ id }) => {
         <section css={topContainer}>
           <div css={titleContainer}>
             <div css={title}>{studyInfo.teamName}</div>
-            {studyInfo.member?.memberId !== userInfo.memberId && (
-              <div className="btn">
-                <Button
-                  type={'small_white'}
-                  text={'수정'}
-                  onClick={editHandler}
-                />
+            {userInfo !== null &&
+              studyInfo.member?.memberId === userInfo.memberId && (
+                <div className="btn">
+                  <Button
+                    type={'small_white'}
+                    text={'수정'}
+                    onClick={editHandler}
+                  />
 
-                <Button
-                  type={'small_grey'}
-                  text={'삭제'}
-                  onClick={deleteHandler}
-                />
-              </div>
-            )}
+                  <Button
+                    type={'small_grey'}
+                    text={'삭제'}
+                    onClick={deleteHandler}
+                  />
+                </div>
+              )}
           </div>
           <div css={info}>
             <span className="info">{`${studyInfo.startDate} ~ ${studyInfo.endDate}`}</span>

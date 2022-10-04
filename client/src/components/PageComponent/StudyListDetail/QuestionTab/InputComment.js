@@ -3,7 +3,7 @@ import Button from '../../../Common/Button';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 import request from '../../../../api';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
 const InputComment = ({ getCommentInfof }) => {
@@ -16,22 +16,29 @@ const InputComment = ({ getCommentInfof }) => {
       },
     });
   const userInfo = useRecoilValue(userInfoState);
+  const navigate = useNavigate();
 
   const commentInfo = {
     content: value,
-    memberId: userInfo.memberId,
+    memberId: userInfo && userInfo.memberId,
     studyId: id,
   };
 
   const addCommentHandler = () => {
-    return request
-      .post('/api/comments', commentInfo)
-      .then(() => {
-        setIsValid(true);
-        setValue('');
-        getCommentInfof();
-      })
-      .catch((res) => alert(res.response.data.message));
+    if (userInfo === null) {
+      navigate('/login');
+    } else {
+      return request
+        .post('/api/comments', commentInfo)
+        .then(() => {
+          setIsValid(true);
+          setValue('');
+          getCommentInfof();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (

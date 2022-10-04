@@ -4,13 +4,14 @@ import request from '../../../../api/index';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
 import { userInfoState, singleStudyState } from '../../../../atom/atom';
 import { useRecoilValue } from 'recoil';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
 function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const navigate = useNavigate();
   const { value, setIsValid, handleChange, handleClick } = useInputValid({
     initialvalues: reply.content,
     onClick: () => {
@@ -58,22 +59,21 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
       </svg>
       <section css={container}>
         <div className="reply_box">
-          <Link
-            to={`/main/${member.memberId}`}
-            css={css`
-              text-decoration: none;
-            `}
+          <div
+            css={profile}
+            role="presentation"
+            onClick={() =>
+              userInfo !== null && navigate(`/main/${member.memberId}`)
+            }
           >
-            <div css={profile}>
-              <img src={member.profileImage} alt="프로필 이미지" css={image} />
-              <span className="main_link">{member.nickname}</span>
-              {userInfo.memberId === studyInfo.member.memberId ? (
-                <span>
-                  <Button type="small_lightblue" text="스터디장" />
-                </span>
-              ) : null}
-            </div>
-          </Link>
+            <img src={member.profileImage} alt="프로필 이미지" css={image} />
+            <span className="main_link">{member.nickname}</span>
+            {userInfo.memberId === studyInfo.member.memberId ? (
+              <span>
+                <Button type="small_lightblue" text="스터디장" />
+              </span>
+            ) : null}
+          </div>
           <div
             css={css`
               margin-top: 16px;

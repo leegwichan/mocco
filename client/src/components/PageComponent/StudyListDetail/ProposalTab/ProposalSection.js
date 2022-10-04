@@ -2,13 +2,14 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { singleStudyState, userInfoState } from '../../../../atom/atom';
 
 function ProposalSection({ proposal, getProposalInfof }) {
   const studyInfo = useRecoilValue(singleStudyState);
   const userInfo = useRecoilValue(userInfoState);
+  const navigate = useNavigate();
 
   const selectHandler = () => {
     return request
@@ -55,21 +56,20 @@ function ProposalSection({ proposal, getProposalInfof }) {
 
   return (
     <div css={container}>
-      <Link
-        to={`/main/${proposal.member.memberId}`}
-        css={css`
-          text-decoration: none;
-        `}
+      <div
+        css={profile}
+        role="presentation"
+        onClick={() =>
+          userInfo !== null && navigate(`/main/${proposal.member.memberId}`)
+        }
       >
-        <div css={profile}>
-          <img
-            src={proposal.member.profileImage}
-            alt="프로필 이미지"
-            css={image}
-          />
-          <span className="main_link">{proposal.member.nickname}</span>
-        </div>
-      </Link>
+        <img
+          src={proposal.member.profileImage}
+          alt="프로필 이미지"
+          css={image}
+        />
+        <span className="main_link">{proposal.member.nickname}</span>
+      </div>
       <div
         css={css`
           margin-top: 16px;
@@ -79,7 +79,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
       </div>
       <div className="btn">
         <span className="day">{proposal.createdAt}</span>
-        {studyInfo.member.memberId !== proposal.member.memberId && (
+        {studyInfo.member.memberId === userInfo.memberId && (
           <>
             <Button
               type={'small_blue'}
