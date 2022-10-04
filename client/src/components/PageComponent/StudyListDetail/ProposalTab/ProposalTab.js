@@ -14,7 +14,7 @@ function ProposaTab() {
   }, []);
 
   const getProposalInfo = () => {
-    return request(`/api/proposals?study-id=${id}`).then((res) => {
+    return request(`/api/proposals/list?study-id=${id}`).then((res) => {
       // console.log('프로포셜', res.data.data);
       setProposals(res.data.data);
     });

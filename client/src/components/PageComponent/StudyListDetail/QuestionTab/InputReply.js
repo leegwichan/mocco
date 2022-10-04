@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
 import { useInputValid } from '../hooks/useInputValid';
+import { useNavigate } from 'react-router-dom';
 
 function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
   const { value, setIsValid, handleChange, handleClick } = useInputValid({
@@ -10,22 +11,27 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
       replyHandler();
     },
   });
+  const navigate = useNavigate();
 
   const replyInfo = {
-    memberId: userInfo.memberId,
+    memberId: userInfo && userInfo.memberId,
     commentId: commentId,
     content: value,
   };
 
   const replyHandler = () => {
-    return request
-      .post(`/api/replies`, replyInfo)
-      .then(() => {
-        setIsReplyOpen(false);
-        setIsValid(true);
-        getCommentInfof();
-      })
-      .catch((err) => console.log(err));
+    if (userInfo === null) {
+      navigate(`/login`);
+    } else {
+      return request
+        .post(`/api/replies`, replyInfo)
+        .then(() => {
+          setIsReplyOpen(false);
+          setIsValid(true);
+          getCommentInfof();
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (

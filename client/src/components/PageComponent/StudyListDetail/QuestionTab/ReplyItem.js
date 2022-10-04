@@ -68,7 +68,8 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
           >
             <img src={member.profileImage} alt="프로필 이미지" css={image} />
             <span className="main_link">{member.nickname}</span>
-            {userInfo.memberId === studyInfo.member.memberId ? (
+            {userInfo !== null &&
+            userInfo.memberId === studyInfo.member.memberId ? (
               <span>
                 <Button type="small_lightblue" text="스터디장" />
               </span>
@@ -86,7 +87,7 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
             <span className="day">
               {createdAt !== modifiedAt ? modifiedAt : createdAt}
             </span>
-            {userInfo.memberId === member.memberId && (
+            {userInfo !== null && userInfo.memberId === member.memberId && (
               <>
                 <Button
                   type={'small_white'}

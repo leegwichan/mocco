@@ -65,7 +65,8 @@ const CommentSection = ({
           >
             <img src={member.profileImage} alt="프로필 이미지" css={image} />
             <span className="main_link">{member.nickname}</span>
-            {userInfo.memberId === studyInfo.member.memberId ? (
+            {userInfo !== null &&
+            userInfo.memberId === studyInfo.member.memberId ? (
               <span>
                 <Button type="small_lightblue" text="스터디장" />
               </span>
@@ -89,7 +90,7 @@ const CommentSection = ({
               text={'답글'}
               onClick={() => setIsReplyOpen(true)}
             />
-            {userInfo.memberId === member.memberId && (
+            {userInfo !== null && userInfo.memberId === member.memberId && (
               <>
                 <Button
                   type={'small_white'}

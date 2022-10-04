@@ -94,9 +94,10 @@ function ProposalSection({ proposal, getProposalInfof }) {
             />
           </>
         )}
-        {userInfo.memberId === proposal.member.memberId && (
-          <Button type={'small_grey'} text={'취소'} onClick={deleteHander} />
-        )}
+        {userInfo !== null &&
+          userInfo.memberId === proposal.member.memberId && (
+            <Button type={'small_grey'} text={'취소'} onClick={deleteHander} />
+          )}
       </div>
     </div>
   );

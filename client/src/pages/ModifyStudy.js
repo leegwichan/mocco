@@ -97,17 +97,12 @@ function ModifyStudy() {
               setTaskArr={setTaskArr}
               id={id}
             />
-            <div
-              css={css`
-                text-align: right;
-              `}
-            >
+            <div className="btn">
               <Button
                 type={'big_grey'}
                 text={'취소'}
                 onClick={() => navigate(`/studylist/detail/${id}`)}
               />
-
               <Button
                 type={'big_blue'}
                 text={'스터디 수정하기'}
@@ -134,6 +129,18 @@ const content_container = css`
   max-width: 1260px;
   padding: 0 2rem;
   margin: 0 auto;
+
+  .btn {
+    text-align: right;
+
+    @media all and (max-width: 768px) {
+      button {
+        font-size: 15px;
+        height: 38px;
+        padding: 0 20px;
+      }
+    }
+  }
 `;
 
 const edit_title = css`

@@ -27,7 +27,7 @@ function StudyBoard() {
   }, []);
 
   const getStudyInfo = () => {
-    request(`/api/study-progress/${studyId}/member/${memberId}`)
+    request(`/api/study-progress/main/${studyId}/member/${memberId}`)
       .then((res) => {
         setStudyInfo(res.data.data);
         return res;
