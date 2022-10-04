@@ -20,16 +20,15 @@ const Header = css`
 
 const totalContainer = css`
   max-width: 1260px;
+  padding: 0px 2rem;
   height: 2000px;
   margin: auto;
-  padding: 0px 1rem;
   margin-top: 50px;
   margin-bottom: 100px;
   .githubmargin {
     margin-bottom: 10%;
   }
   @media all and (max-width: 1023px) {
-    /* padding: 0px 24px; */
     margin-top: 34px;
     margin-bottom: 10%;
   }
@@ -38,9 +37,6 @@ const totalContainer = css`
 const title = css`
   font-size: 30px;
   font-weight: 600;
-  @media all and (max-width: 767px) {
-    /* font-size: 30px; */
-  }
 `;
 
 const infoSection = css`
@@ -82,7 +78,6 @@ function Main() {
     return request
       .get(`/api/members/${id}`)
       .then((res) => {
-        console.log(res.data.data);
         setOwner(res.data.data);
         return res;
       })
