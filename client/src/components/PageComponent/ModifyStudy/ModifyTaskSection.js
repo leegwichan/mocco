@@ -18,7 +18,7 @@ function ModifyTaskSection({
   const addTaskHandler = (e) => {
     e.preventDefault();
     setTaskArr([...taskArr, { ...newTaskInfo }]);
-    console.log(taskArr);
+    // console.log(taskArr);
   };
 
   return (

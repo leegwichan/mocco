@@ -15,6 +15,7 @@ function TaskBox({
   setSelectedId,
   teamName,
   expiredTaskCount,
+  getStudyInfof,
 }) {
   const userInfo = useRecoilValue(userInfoState);
   console.log(userInfo);
@@ -26,6 +27,7 @@ function TaskBox({
   const [taskList, setTaskList] = useState([]);
   const navigate = useNavigate();
   const myPageOwner = useRecoilValue(mypageOwnerAtom);
+  // console.log('select', userInfo);
 
   const taskHandler = () => {
     console.log(select);
@@ -39,9 +41,9 @@ function TaskBox({
       })
       .then((res) => {
         setTaskList(res);
-        console.log(res);
         // console.log(res);
       })
+      .then(() => getStudyInfof())
       .catch((err) => {
         if (err.response.data.message === '스터디의 멤버가 아닙니다.') {
           navigate(`/main/${myPageOwner.memberId}`);
@@ -51,6 +53,7 @@ function TaskBox({
   };
 
   useEffect(() => {
+    // getStudyInfof();
     taskHandler();
     setSelectedId(select.memberId);
   }, [select]);
@@ -65,7 +68,6 @@ function TaskBox({
             <StudyRuleModal />
           </div>
         </section>
-
         <div className="desktopProgress">
           <UserProgressBar
             taskList={taskList}
@@ -95,6 +97,7 @@ function TaskBox({
                 task={task}
                 select={select}
                 taskHandlerf={taskHandler}
+                getStudyInfof={getStudyInfof}
               />
             </div>
           ))}
@@ -137,9 +140,9 @@ const taskTop = css`
 
   section {
     width: auto;
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
   }
 
   .task {

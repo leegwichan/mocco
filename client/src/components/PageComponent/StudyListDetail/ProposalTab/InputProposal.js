@@ -26,7 +26,7 @@ function InputProposal({ getProposalInfof }) {
 
   const addProposalHandler = () => {
     if (userInfo === null) {
-      navigate('/login');
+      navigate('/login', { state: { from: `/studylist/detail/${id}` } });
     } else {
       request
         .post('/api/proposals', proposalInfo)

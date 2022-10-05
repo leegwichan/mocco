@@ -26,7 +26,7 @@ const InputComment = ({ getCommentInfof }) => {
 
   const addCommentHandler = () => {
     if (userInfo === null) {
-      navigate('/login');
+      navigate('/login', { state: { from: `/studylist/detail/${id}` } });
     } else {
       return request
         .post('/api/comments', commentInfo)

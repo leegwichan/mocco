@@ -20,17 +20,16 @@ function App() {
   const authenticated = !!useRecoilValue(userInfoState);
 
   return (
-    <div>
-      <div
-        css={css`
-          height: 100%;
-        `}
-      >
-        <Header />
-        <Routes>
-          {/* Public route */}
-          <Route path="/" element={<Landing />} />
-          <Route path="/studylist" element={<StudyList />} />
+    <div
+      css={css`
+        height: 100%;
+      `}
+    >
+      <Header />
+      <Routes>
+        {/* Public route */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/studylist" element={<StudyList />} />
 
           {/* Restricted public route */}
           {!authenticated && <Route path="/login" element={<LogIn />} />}

@@ -16,15 +16,11 @@ function StudyBoard() {
   const nowStudy = {
     ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
   }[0];
-  // console.log(nowStudy);
+  console.log(nowStudy);
   const [totalTask, setTotalTask] = useState(0);
   const [expiredTaskCount, setExpiredTaskCount] = useState(0);
   const [memberProgressArr, setMemberProgressArr] = useState();
   const [selectedId, setSelectedId] = useState(memberId);
-
-  useEffect(() => {
-    getStudyInfo();
-  }, []);
 
   const getStudyInfo = () => {
     request(`/api/study-progress/main/${studyId}/member/${memberId}`)
@@ -48,6 +44,12 @@ function StudyBoard() {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    getStudyInfo();
+  }, []);
+
+  console.log(selectedId);
 
   return (
     <main css={totalContainer}>
