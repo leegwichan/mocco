@@ -16,7 +16,7 @@ const Blue = css`
   font-size: 14px;
   font-weight: 600;
   width: 100%;
-  padding: 10px;
+  padding: 10px 13px 10px 7px;
   display: flex;
   align-items: center;
   justify-content: center;
