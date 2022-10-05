@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import request from '../api/index';
 import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
@@ -216,13 +216,15 @@ function LogIn() {
           `}
         >
           <p>아직 회원이 아니신가요?</p>
-          <p
+          <Link
+            to="/signup"
             css={css`
               color: #0b6ff2;
+              text-decoration: none;
             `}
           >
             회원가입
-          </p>
+          </Link>
         </div>
       </div>
 

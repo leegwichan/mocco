@@ -379,7 +379,13 @@ function SignUp() {
                 align-items: center;
               `}
             >
-              (필수)
+              <span
+                css={css`
+                  margin-left: 5px;
+                `}
+              >
+                (필수)
+              </span>
               <span
                 css={css`
                   color: #0b6ff2;
