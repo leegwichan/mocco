@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { css } from '@emotion/react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import request from '../api/index';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
 import ForgotPasswordModal from '../components/PageComponent/Login/ForgotPasswordModal';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function LogIn() {
-  const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,8 +41,6 @@ function LogIn() {
         return res;
       })
       .then((res) => {
-        console.log('u', userInfo);
-        console.log('res', res.data);
         navigate(
           location.state ? location.state.from : `/main/${res.data.memberId}`
         );
