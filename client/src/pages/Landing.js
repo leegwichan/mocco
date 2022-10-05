@@ -350,14 +350,9 @@ function Landing() {
   const bar = useRef(null);
 
   useEffect(() => {
-    request
-      .get('/api/study-info/study-count')
-      .then((res) => {
-        setStudy({ ...res.data.data });
-      })
-      .then(() => {
-        // console.log(study);
-      });
+    request.get('/api/study-info/study-count').then((res) => {
+      setStudy({ ...res.data.data });
+    });
     bar.current.style.width = '70%';
   }, []);
 

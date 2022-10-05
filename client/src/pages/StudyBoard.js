@@ -7,7 +7,6 @@ import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRuleModal';
 import ProgressSection from '../components/PageComponent/StudyBoard/Progress/ProgressSection';
-import Footer from '../components/Common/Footer';
 
 function StudyBoard() {
   const { studyId, memberId } = useParams();
@@ -74,7 +73,6 @@ function StudyBoard() {
           />
         </section>
       </div>
-      <Footer />
     </main>
   );
 }

@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import request from '../api';
 import { singleStudyState } from '../atom/atom';
 import { useSetRecoilState } from 'recoil';
-import Footer from '../components/Common/Footer';
 
 function StudyListDetail() {
   const { id } = useParams();
@@ -15,10 +14,7 @@ function StudyListDetail() {
   const getStudyInfo = () => {
     request(`/api/study-info/board/${id}`)
       .then((res) => {
-        // console.log('나는 전체 데이터', res);
         setStudyInfo(res.data.data);
-        // console.log(studyInfo);
-        // console.log(res.data.data.member.nickname);
       })
       .catch((err) => console.log(err));
   };
@@ -33,7 +29,6 @@ function StudyListDetail() {
         <StudySection id={id} />
         <TabSection />
       </div>
-      <Footer />
     </main>
   );
 }
@@ -42,12 +37,11 @@ export default StudyListDetail;
 
 const container = css`
   width: 100vw;
-  height: calc(100vh - 64px);
-  padding-top: 100px;
+  padding-top: 8rem;
 `;
 
 const mainContainer = css`
-  max-width: calc(1200px + 2rem);
+  max-width: calc(1200px + 4rem);
   padding: 0 2rem;
   margin: auto;
 `;
