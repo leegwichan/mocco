@@ -34,7 +34,7 @@ function Footer() {
           </a>
         </div>
         <div css={text}>
-          <Link to={`/termsuse`}>Terms of Use</Link> |
+          <Link to={`/termsofuse`}>Terms of Use</Link> |
           <Link to={`/privacypolicy`}> Privacy Policy</Link>
         </div>
         <div css={text}>2022 ⓒ Copyright Mocco</div>
