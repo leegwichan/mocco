@@ -123,7 +123,7 @@ function ModifyStudySection({ editContent, setEditContent }) {
                 type="file"
                 name="image"
                 ref={imgRef}
-                accept="image/jpg, image/png"
+                accept="image/png,image/jpg,image/jpeg"
                 onChange={imageHandler}
                 css={imgInput}
                 required
