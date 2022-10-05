@@ -18,6 +18,7 @@ function TaskBox({
   getStudyInfof,
 }) {
   const userInfo = useRecoilValue(userInfoState);
+  console.log(userInfo);
   const [select, setSelect] = useState({
     memberId: userInfo.memberId,
     nickname: userInfo.nickname,
@@ -29,6 +30,8 @@ function TaskBox({
   // console.log('select', userInfo);
 
   const taskHandler = () => {
+    console.log(select);
+    console.log('d');
     request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
       .then((res) => {
         console.log(res);
