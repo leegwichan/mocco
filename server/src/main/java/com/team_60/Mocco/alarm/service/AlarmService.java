@@ -8,7 +8,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.util.List;
 
 public interface AlarmService {
-    SseEmitter publishAlarm(long memberId);
+    SseEmitter subscribeAlarm(long memberId);
     void unsubscribeAlarm(String subscribeId);
     List<Alarm> findAlarmsByMemberId(long memberId);
     void deleteAlarm(long alarmId);
