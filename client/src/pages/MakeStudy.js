@@ -320,7 +320,7 @@ function MakeStudy() {
   const imageRef = useRef();
 
   // input 파일 변경시 서버에 이미지 파일 전송
-  const handleChangeImage = useCallback((e) => {
+  const handleChangeImage = (e) => {
     if (!e.target.files) {
       return;
     }
@@ -340,11 +340,15 @@ function MakeStudy() {
       )
       .then((res) => {
         imageRef.current.src = res.data.data;
+        console.log(res.data.data);
         setStudyBoardForm({ ...studyBoardForm, image: res.data.data });
       })
-      .then(() => console.log(studyBoardForm))
+      .then(() => {
+        console.log('이미지 업로드 성공');
+        console.log(studyBoardForm);
+      })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   // 이미지 업로드 버튼 클릭 시 input 대신 클릭되게 설정
   const handleUploadClick = useCallback((e) => {
@@ -464,7 +468,7 @@ function MakeStudy() {
                     <input
                       type="file"
                       name="studyPhoto"
-                      accept="image/png,image/jpg"
+                      accept="image/png,image/jpg,image/jpeg"
                       ref={fileInputRef}
                       css={FileInput}
                       onChange={handleChangeImage}
