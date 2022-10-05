@@ -84,7 +84,7 @@ const Total = css`
 
 const Container = css`
   width: 40vw;
-  max-width: 535px;
+  max-width: 560px;
   margin: 0px 15px;
   height: 45px;
   display: flex;

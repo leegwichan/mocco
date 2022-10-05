@@ -18,7 +18,7 @@ function TaskBox({
   getStudyInfof,
 }) {
   const userInfo = useRecoilValue(userInfoState);
-  console.log(userInfo);
+
   const [select, setSelect] = useState({
     memberId: userInfo.memberId,
     nickname: userInfo.nickname,
@@ -30,11 +30,8 @@ function TaskBox({
   // console.log('select', userInfo);
 
   const taskHandler = () => {
-    console.log(select);
-    console.log('d');
     request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
       .then((res) => {
-        console.log(res);
         return res.data.data.taskList.sort(
           (a, b) => new Date(a.deadline) - new Date(b.deadline)
         );
@@ -115,8 +112,6 @@ const taskBox = css`
   flex-direction: column;
   align-items: center;
   @media all and (max-width: 767px) {
-    padding: 20px;
-    height: auto;
   }
   .mobileProgress {
     @media all and (min-width: 767px) {
@@ -140,9 +135,9 @@ const taskTop = css`
 
   section {
     width: auto;
-    /* display: flex;
+    display: flex;
     justify-content: center;
-    align-items: center; */
+    align-items: center;
   }
 
   .task {

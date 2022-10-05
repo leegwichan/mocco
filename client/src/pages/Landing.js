@@ -353,11 +353,10 @@ function Landing() {
     request
       .get('/api/study-info/study-count')
       .then((res) => {
-        console.log(res);
         setStudy({ ...res.data.data });
       })
       .then(() => {
-        console.log(study);
+        // console.log(study);
       });
     bar.current.style.width = '70%';
   }, []);
