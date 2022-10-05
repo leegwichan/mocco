@@ -29,6 +29,7 @@ const reset = css`
   }
 
   html,
+  #root,
   body {
     height: 100%;
   }
