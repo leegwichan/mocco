@@ -18,6 +18,7 @@ import com.team_60.Mocco.security.filter.JwtTokenProvider;
 import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study.service.StudyService;
 import com.team_60.Mocco.study_member.entity.StudyMember;
+import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task_check.entity.TaskCheck;
 import com.team_60.Mocco.task_check.service.TaskCheckService;
 import lombok.extern.slf4j.Slf4j;
@@ -117,6 +118,10 @@ public class AuthenticationServiceDeploy implements AuthenticationService {
         if(proposal.getStudy().getTeamLeader().getMemberId() != memberId){
             throw new BusinessLogicException(ExceptionCode.NOT_STUDY_TEAM_LEADER);
         }
-
+    }
+    @Override
+    public void AuthenticationCheckStudyMemberByTaskId(long taskCheckId, long memberId){
+        TaskCheck taskCheck = taskCheckService.findVerifiedTaskCheck(taskCheckId);
+        AuthenticationCheckStudyMember(taskCheck.getTask().getStudy().getStudyId(), memberId);
     }
 }
