@@ -312,6 +312,7 @@ function MakeStudy() {
     }
     request
       .post('/api/study-board', studyBoardForm)
+      .then((res) => navigate(`/studylist/detail/${res.data.data.studyId}`))
       .catch((err) => console.log(err));
   };
 

@@ -80,6 +80,14 @@ const task_title = css`
     color: #0b7ff2;
     font-size: 40px;
   }
+
+  @media all and (max-width: 768px) {
+    margin-top: -3px;
+
+    span {
+      font-size: 30px;
+    }
+  }
 `;
 
 const task_input = css`

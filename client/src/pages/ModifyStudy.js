@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import request from '../api/index';
 import ModifyTaskSection from '../components/PageComponent/ModifyStudy/ModifyTaskSection';
-import ModifyStudyItem from '../components/PageComponent/ModifyStudy/ModifyStudyItem';
+import ModifyStudySection from '../components/PageComponent/ModifyStudy/ModifyStudySection';
 import Footer from '../components/Common/Footer';
 
 function ModifyStudy() {
@@ -17,6 +17,7 @@ function ModifyStudy() {
     teamName: studyInfo.teamName,
     startDate: studyInfo.startDate,
     endDate: studyInfo.endDate,
+    image: studyInfo.image,
     capacity: studyInfo.capacity,
     summary: studyInfo.summary,
     detail: studyInfo.detail,
@@ -81,11 +82,11 @@ function ModifyStudy() {
     <main css={main_container}>
       <div css={content_container}>
         <section css={edit_title}>
-          <div>스터디 공고 수정하기</div>
+          <div>스터디 공고 수정</div>
         </section>
         <section>
           <form action="submit">
-            <ModifyStudyItem
+            <ModifyStudySection
               editContent={editContent}
               setEditContent={setEditContent}
             />
@@ -96,17 +97,12 @@ function ModifyStudy() {
               setTaskArr={setTaskArr}
               id={id}
             />
-            <div
-              css={css`
-                text-align: right;
-              `}
-            >
+            <div className="btn">
               <Button
                 type={'big_grey'}
                 text={'취소'}
                 onClick={() => navigate(`/studylist/detail/${id}`)}
               />
-
               <Button
                 type={'big_blue'}
                 text={'스터디 수정하기'}
@@ -126,16 +122,30 @@ export default ModifyStudy;
 const main_container = css`
   width: 100vw;
   height: calc(100vh - 64px);
-  padding-top: 60px;
+  padding-top: 100px;
 `;
 
 const content_container = css`
-  max-width: 1200px;
+  max-width: calc(1200px + 2rem);
+  padding: 0 2rem;
   margin: 0 auto;
+
+  .btn {
+    text-align: right;
+
+    @media all and (max-width: 768px) {
+      button {
+        font-size: 1rem;
+      }
+    }
+  }
 `;
 
 const edit_title = css`
-  font-size: 35px;
-  font-weight: 500;
+  font-size: 2.5rem;
   margin-bottom: 30px;
+
+  @media all and (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;

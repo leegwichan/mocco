@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../../../../atom/atom';
 import request from '../../../../api';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
 function InputProposal({ getProposalInfof }) {
@@ -15,40 +15,45 @@ function InputProposal({ getProposalInfof }) {
       },
     });
   const userInfo = useRecoilValue(userInfoState);
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const proposalInfo = {
     content: value,
-    memberId: userInfo.memberId,
+    memberId: userInfo && userInfo.memberId,
     studyId: id,
   };
 
   const addProposalHandler = () => {
-    request
-      .post('/api/proposals', proposalInfo)
-      .then(() => {
-        setIsValid(true);
-        setValue('');
-        getProposalInfof();
-      })
-      .catch((err) => {
-        console.log(err.response.data.message);
-        alert(err.response.data.message);
-      });
+    if (userInfo === null) {
+      navigate('/login', { state: { from: `/studylist/detail/${id}` } });
+    } else {
+      request
+        .post('/api/proposals', proposalInfo)
+        .then(() => {
+          setIsValid(true);
+          setValue('');
+          getProposalInfof();
+        })
+        .catch((err) => {
+          // console.log(err.response.data.message);
+          alert(err.response.data.message);
+        });
+    }
   };
 
   return (
-    <div>
-      <div css={container}>
-        <input
-          type="text"
-          placeholder="신청을 위한 한 마디를 적어주세요"
-          value={value}
-          onChange={handleChange}
-        />
+    <section css={container}>
+      <input
+        type="text"
+        placeholder="신청을 위한 한 마디를 적어주세요"
+        value={value}
+        onChange={handleChange}
+      />
+      <div className="btn_container">
         <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -58,13 +63,23 @@ const container = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
+  width: 100%;
 
   input {
-    width: 975px;
     height: 40px;
     border: 1px solid #d1d1d1;
     border-radius: 5px;
     padding: 0.5rem;
+    flex-grow: 1;
+  }
+
+  .btn_container {
+    @media all and (max-width: 768px) {
+      button {
+        font-size: 15px;
+        padding: 0 15px;
+      }
+    }
   }
 `;

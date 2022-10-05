@@ -5,15 +5,16 @@ import CommentSection from './CommentSection';
 import DeletedComment from './DeletedComment';
 import { useParams } from 'react-router-dom';
 import ReplySection from './ReplySection';
+import { css } from '@emotion/react';
 
 function QuestionTab() {
   const { id } = useParams();
   const [comments, setComments] = useState([]);
 
   const getCommentInfo = useCallback(() => {
-    return request(`/api/comments?study-id=${id}`)
+    return request(`/api/comments/list?study-id=${id}`)
       .then((res) => {
-        console.log('나는 댓글만 데이터', res.data.data);
+        // console.log('나는 댓글만 데이터', res.data.data);
         setComments(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -24,12 +25,12 @@ function QuestionTab() {
   }, []);
 
   return (
-    <div>
+    <div css={container}>
       <InputComment getCommentInfof={getCommentInfo} />
       <ul>
         {comments.map((comment, idx) =>
           comment.commentStatus === 'COMMENT_ACTIVE' ? (
-            <div key={comment.commentId}>
+            <main key={comment.commentId}>
               <CommentSection
                 content={comment.content}
                 commentId={comment.commentId}
@@ -42,9 +43,15 @@ function QuestionTab() {
                 replys={comment.replyList}
                 getCommentInfof={getCommentInfo}
               />
-            </div>
+            </main>
           ) : (
-            <DeletedComment key={idx} />
+            <div key={comment.commentId}>
+              <DeletedComment key={idx} />
+              <ReplySection
+                replys={comment.replyList}
+                getCommentInfof={getCommentInfo}
+              />
+            </div>
           )
         )}
       </ul>
@@ -53,3 +60,14 @@ function QuestionTab() {
 }
 
 export default QuestionTab;
+
+const container = css`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 20px;
+
+  @media all and (max-width: 768px) {
+    padding: 0px;
+  }
+`;

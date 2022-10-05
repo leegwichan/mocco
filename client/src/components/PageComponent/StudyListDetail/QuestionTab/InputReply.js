@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import Button from '../../../Common/Button';
 import request from '../../../../api';
 import { useInputValid } from '../hooks/useInputValid';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
   const { value, setIsValid, handleChange, handleClick } = useInputValid({
@@ -10,27 +11,46 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
       replyHandler();
     },
   });
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   const replyInfo = {
-    memberId: userInfo.memberId,
+    memberId: userInfo && userInfo.memberId,
     commentId: commentId,
     content: value,
   };
 
   const replyHandler = () => {
-    return request
-      .post(`/api/replies`, replyInfo)
-      .then(() => {
-        setIsReplyOpen(false);
-        setIsValid(true);
-        getCommentInfof();
-      })
-      .catch((err) => console.log(err));
+    if (userInfo === null) {
+      navigate('/login', { state: { from: `/studylist/detail/${id}` } });
+    } else {
+      return request
+        .post(`/api/replies`, replyInfo)
+        .then(() => {
+          setIsReplyOpen(false);
+          setIsValid(true);
+          getCommentInfof();
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
-    <div>
-      <div css={reply_input}>
+    <section css={container}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="50"
+        height="50"
+        fill="#0b6ff2"
+        className="bi bi-arrow-return-right"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fillRule="evenodd"
+          d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"
+        />
+      </svg>
+      <section css={replyInput}>
         <textarea
           value={value}
           onChange={handleChange}
@@ -44,30 +64,67 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
             onClick={() => setIsReplyOpen(false)}
           />
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 
 export default InputReply;
 
-const reply_input = css`
+const container = css`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  svg {
+    margin-left: 20px;
+    margin-top: -10px;
+
+    @media all and (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+`;
+
+const replyInput = css`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+  flex-grow: 1;
 
   textarea {
-    width: 990px;
+    width: 99%;
     height: 40px;
     border-radius: 5px;
     border: 1px solid #d1d1d1;
     padding: 10px;
+    resize: none;
+    outline: none;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media all and (max-width: 768px) {
+      width: 96%;
+    }
   }
+
   .button_container {
     display: flex;
     justify-content: flex-end;
     padding: 0 20px;
     margin-top: 10px;
+
+    @media all and (max-width: 768px) {
+      button {
+        font-size: 15px;
+        height: 35px;
+        width: 48px;
+        margin-left: 7px;
+      }
+    }
   }
 `;
