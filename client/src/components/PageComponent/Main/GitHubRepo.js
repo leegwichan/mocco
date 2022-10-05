@@ -22,7 +22,8 @@ const gitHubBtn = css`
   font-size: 14px;
   font-weight: 600;
   height: 65px;
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+
   border: none;
   .icon {
     margin-right: 8px;
@@ -60,7 +61,8 @@ const gitHubBtnGray = css`
   font-size: 14px;
   font-weight: 600;
   height: 65px;
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+
   border: none;
   display: flex;
   align-items: center;

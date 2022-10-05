@@ -45,7 +45,9 @@ function LogIn() {
         console.log('u', userInfo);
         console.log('res', res.data);
         navigate(
-          location.state ? location.state.from : `/main/${res.data.memberId}`
+          location.state
+            ? location.state.from
+            : `/main/${res.data.data.memberId}`
         );
       })
       .catch((err) => console.log(err));
