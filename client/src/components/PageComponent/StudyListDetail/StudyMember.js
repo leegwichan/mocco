@@ -137,7 +137,7 @@ const selected = css`
   }
 
   @media all and (max-width: 768px) {
-    padding: 3px 8px;
+    padding: 2px 8px;
 
     .main_link {
       font-size: 16px;
@@ -170,6 +170,10 @@ const memberList = css`
   &.noneList {
     display: none;
   }
+
+  @media all and (max-width: 768px) {
+    margin-left: -2px;
+  }
 `;
 
 const member = css`
@@ -190,5 +194,6 @@ const member = css`
   @media all and (max-width: 768px) {
     font-size: 16px;
     font-weight: 500;
+    height: 47px;
   }
 `;
