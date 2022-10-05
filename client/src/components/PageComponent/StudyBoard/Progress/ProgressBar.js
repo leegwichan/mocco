@@ -21,8 +21,8 @@ function ProgressBar({
 
   useEffect(() => {
     setIsSame(false);
-    console.log('캐릭터 ' + characterMemberId);
-    console.log('선택된 유저 캐 ' + selectedId);
+    // console.log('캐릭터 ' + characterMemberId);
+    // console.log('선택된 유저 캐 ' + selectedId);
     if (characterMemberId === selectedId) {
       setIsSame(true);
     }

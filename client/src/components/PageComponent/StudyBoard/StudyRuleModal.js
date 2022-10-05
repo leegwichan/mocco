@@ -16,7 +16,7 @@ function StudyRuleModal() {
   const getStudyRule = () => {
     setIsOpen(true);
     return request(`/api/study-progress/rule/${studyId}`).then((res) => {
-      console.log(res);
+      // console.log(res);
       setContent(res.data.data.rule);
     });
   };
@@ -28,8 +28,8 @@ function StudyRuleModal() {
   const editHandler = () => {
     return request
       .patch(`/api/study-progress/rule/${studyId}`, { rule: editContent })
-      .then((res) => {
-        console.log('edit', res);
+      .then(() => {
+        // console.log('edit', res);
         setIsEditOpen(false);
         getStudyRule();
       });

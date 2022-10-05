@@ -12,6 +12,7 @@ const Container = css`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   padding: 49px 31px 18px 31px;
+  position: relative;
   .title {
     font-family: 'Inter';
     font-style: normal;
@@ -20,20 +21,30 @@ const Container = css`
     line-height: 36px;
     color: #0b6ff2;
     margin-bottom: 31px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   @media all and (max-width: 1023px) {
     height: 55vw;
     min-height: 400px;
     width: 50vw;
     min-width: 350px;
+    padding: 29px 11px 8px 11px;
     .title {
-      font-size: 3vw;
-      margin-bottom: 15px;
+      font-size: 25px;
+      /* overflow: hidden; */
+      margin-bottom: 30px;
     }
   }
   @media all and (max-width: 700px) {
     .title {
-      font-size: 21px;
+      font-size: 18px;
+      margin-bottom: 30px;
     }
   }
 `;

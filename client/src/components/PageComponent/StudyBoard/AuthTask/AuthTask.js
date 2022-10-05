@@ -37,7 +37,7 @@ function AuthTask({ authData, setAuthData }) {
     setAuthData({ ...authData, content: e.target.value });
   };
 
-  console.log('어쓰', authData);
+  // console.log('어쓰', authData);
 
   return (
     <form encType="multipart/form-data">

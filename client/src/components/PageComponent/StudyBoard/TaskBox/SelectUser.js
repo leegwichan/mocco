@@ -107,7 +107,7 @@ const selected = css`
 const memberList = css`
   width: 215px;
   background-color: #ffffff;
-  margin-top: 16rem;
+  margin-top: 15px;
   position: absolute;
   border-radius: 20px;
   overflow: hidden;
@@ -124,7 +124,7 @@ const memberList = css`
   }
 
   @media all and (max-width: 767px) {
-    margin-top: 14rem;
+    margin-top: 8px;
     width: 150px;
     border-radius: 15px;
   }
@@ -159,5 +159,6 @@ const member = css`
   @media all and (max-width: 767px) {
     padding: 12px;
     font-size: 15px;
+    height: 55px;
   }
 `;

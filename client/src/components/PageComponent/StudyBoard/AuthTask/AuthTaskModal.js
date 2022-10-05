@@ -36,9 +36,9 @@ function AuthTaskModal({
       request
         .post('/api/task-check', authData)
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setAuthContent(res.data.data);
-          console.log(authContent);
+          // console.log(authContent);
         })
         .then(() => setIsAuthOpen(true))
         .then(() => taskHandlerf())
@@ -51,7 +51,7 @@ function AuthTaskModal({
     setIsOpen(false);
     getStudyInfof();
   };
-  console.log(task);
+  // console.log(task);
 
   const getAuthTask = () => {
     request(`/api/task-check/${task.taskCheck.taskCheckId}`).then((res) => {
@@ -59,8 +59,8 @@ function AuthTaskModal({
       setAuthContent(res.data.data);
     });
   };
-  console.log(authContent);
-  console.log('task', task);
+  // console.log(authContent);
+  // console.log('task', task);
 
   useEffect(() => {
     if (task.taskCheck.taskCheckId !== null) {
@@ -70,7 +70,7 @@ function AuthTaskModal({
 
   const onClose = () => {
     setIsOpen(false);
-    console.log('클릭됨');
+    // console.log('클릭됨');
   };
 
   return (
