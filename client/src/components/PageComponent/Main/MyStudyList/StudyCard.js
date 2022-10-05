@@ -5,7 +5,7 @@ const Card = css`
   height: 250px;
   margin-bottom: 4rem;
   border-radius: 10px;
-  box-shadow: 2px 8px 2px -2px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 8px 5px -2px rgb(0 0 0 /25%);
   transition: all 0.1s linear;
   &:hover {
     transform: translateY(-1rem);

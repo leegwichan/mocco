@@ -1,7 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from './atom/atom';
-import PrivateRoute from './components/Common/Authentication/PrivateRoute';
+// import { css } from '@emotion/react';
+import PrivateRoute from './components/Common/authentication/PrivateRoute';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -20,11 +21,7 @@ function App() {
   const authenticated = !!useRecoilValue(userInfoState);
 
   return (
-    <div
-      css={css`
-        height: 100%;
-      `}
-    >
+    <div>
       <Header />
       <Routes>
         {/* Public route */}
@@ -33,6 +30,7 @@ function App() {
 
         {/* Restricted public route */}
         {!authenticated && <Route path="/login" element={<LogIn />} />}
+        {!authenticated && <Route path="/signup" element={<SignUp />} />}
         {/* {!authenticated && <Route path="/signup" element={<SignUp />} />} */}
         <Route path="/signup" element={<SignUp />} />
 
@@ -54,8 +52,11 @@ function App() {
         <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />
         <Route path="/main/:id" element={<Main />} />
+        <Route path="/termsofuse" element={<TermsOfUse />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="*" element={<Landing />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

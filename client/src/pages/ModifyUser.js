@@ -24,7 +24,6 @@ function ModifyUser() {
   const openWithdrawalModal = () => setWithdrawalModalOn(true);
   const closeWithdrawalModal = () => setWithdrawalModalOn(false);
 
-  console.log('userInfo', userInfo);
   const [previewUrl, setPreviewUrl] = useState(userInfo.profileImage);
   const inputRef = useRef(null);
 
@@ -99,7 +98,7 @@ function ModifyUser() {
       css={css`
         max-width: 350px;
         margin: 0 auto;
-        padding: 100px 0px;
+        padding-top: 8rem;
       `}
       onSubmit={onSubmit}
     >

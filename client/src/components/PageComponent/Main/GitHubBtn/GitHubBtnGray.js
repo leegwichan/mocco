@@ -12,7 +12,7 @@ const gray = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
   border: none;
   @media all and (max-width: 767px) {
     height: 30%;

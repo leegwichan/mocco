@@ -27,7 +27,7 @@ public class AlarmServiceImpl implements AlarmService{
     private final SseService sseService;
 
     @Override
-    public SseEmitter publishAlarm(long memberId) {
+    public SseEmitter subscribeAlarm(long memberId) {
         Member findMember = memberService.findVerifiedMember(memberId);
         SseEmitter sseEmitter = sseService.subscribeAlarm(findMember);
 

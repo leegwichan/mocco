@@ -42,7 +42,9 @@ function LogIn() {
       })
       .then((res) => {
         navigate(
-          location.state ? location.state.from : `/main/${res.data.memberId}`
+          location.state
+            ? location.state.from
+            : `/main/${res.data.data.memberId}`
         );
       })
       .catch((err) => console.log(err));
@@ -55,8 +57,8 @@ function LogIn() {
   return (
     <div
       css={css`
-        padding-top: 64px;
-        height: 100%;
+        padding-top: 4rem;
+        min-height: calc(100vh - 4rem);
         display: flex;
         justify-content: center;
         align-items: center;

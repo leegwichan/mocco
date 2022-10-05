@@ -2,21 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'; // esli
 import { css } from '@emotion/react';
 import request from '../api/index';
 import TaskContainer from '../components/PageComponent/MakeStudy/TaskContainer';
-import Footer from '../components/Common/Footer';
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
 import { useNavigate } from 'react-router-dom';
 
-const Header = css`
-  width: 100vw;
-  height: 64px;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
 const MainContainer = css`
   width: 100vw;
-  height: calc(100vh - 64px);
-  padding-top: 60px;
+  padding-top: 8rem;
 `;
 
 const ContentContainer = css`
@@ -312,6 +304,7 @@ function MakeStudy() {
     }
     request
       .post('/api/study-board', studyBoardForm)
+      .then((res) => navigate(`/studylist/detail/${res.data.data.studyId}`))
       .catch((err) => console.log(err));
   };
 
@@ -378,7 +371,6 @@ function MakeStudy() {
 
   return (
     <>
-      <header css={Header}></header>
       <main css={MainContainer}>
         <div css={ContentContainer}>
           <section css={MakeStudyTitle}>
@@ -396,7 +388,9 @@ function MakeStudy() {
                     <input
                       type="text"
                       name="studyName"
-                      placeholder="2자 이상 30자 이하"
+                      placeholder="2자 이상 10자 이하"
+                      minLength={2}
+                      maxLength={10}
                       onChange={handleChangeName}
                       required
                       css={InputLeft}
@@ -454,7 +448,9 @@ function MakeStudy() {
                     <textarea
                       type="text"
                       name="summary"
-                      placeholder="ex) React 기초를 다지는 스터디입니다."
+                      placeholder="1자 이상 50자 이하"
+                      minLength={1}
+                      maxLength={50}
                       spellCheck="false"
                       required
                       onChange={handleChangeSummary}
@@ -498,6 +494,8 @@ function MakeStudy() {
                   <textarea
                     type="text"
                     name="introduce"
+                    placeholder="5000자 이하"
+                    maxLength={5000}
                     spellCheck="false"
                     required
                     onChange={handleChangeDetail}
@@ -515,6 +513,8 @@ function MakeStudy() {
                   <textarea
                     type="text"
                     name="rules"
+                    placeholder="2000자 이하"
+                    maxLength={2000}
                     spellCheck="false"
                     required
                     onChange={handleChangeRule}
@@ -543,7 +543,6 @@ function MakeStudy() {
             </form>
           </section>
         </div>
-        <Footer />
       </main>
     </>
   );
