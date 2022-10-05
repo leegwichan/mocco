@@ -386,23 +386,25 @@ function SignUp() {
               >
                 (필수)
               </span>
-              <span
+              <Link
+                to="/termsofuse"
                 css={css`
                   color: #0b6ff2;
                   text-decoration: underline;
                 `}
               >
                 서비스 이용약관
-              </span>
+              </Link>
               과
-              <span
+              <Link
+                to="/privacypolicy"
                 css={css`
                   color: #0b6ff2;
                   text-decoration: underline;
                 `}
               >
                 개인정보 취급방침
-              </span>
+              </Link>
               에 동의합니다.
             </p>
           </div>
