@@ -11,10 +11,10 @@ import WithdrawalModal from '../components/PageComponent/ModifyUser/WithdrawalMo
 function ModifyUser() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
-  const [loadingCheckNickname, setLoadingCheckNickname] = useState(false);
-  const [nicknameValue, setNicknameValue] = useState('');
-  const [nicknameChecked, setNicknameChecked] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+  // const [loadingCheckNickname, setLoadingCheckNickname] = useState(false);
+  // const [nicknameValue, setNicknameValue] = useState('');
+  // const [nicknameChecked, setNicknameChecked] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState(null);
 
   const [changPasswordmodalOn, setChangePasswordModalOn] = useState(false);
   const [withdrawalModalOn, setWithdrawalModalOn] = useState(false);
@@ -50,19 +50,17 @@ function ModifyUser() {
     }
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
-    if (nicknameChecked) {
-      request({
-        method: 'post',
-        url: '/api/members/image',
-        params: { 'file-size': e.target.files[0].size },
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        data: formData,
-      }).then((res) => {
-        setPreviewUrl(res.data.data);
-      });
-    }
+    request({
+      method: 'post',
+      url: '/api/members/image',
+      params: { 'file-size': e.target.files[0].size },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      data: formData,
+    }).then((res) => {
+      setPreviewUrl(res.data.data);
+    });
   });
 
   const onUploadImageButtonClick = useCallback(() => {
@@ -73,25 +71,25 @@ function ModifyUser() {
   }, []);
 
   // 닉네임 중복체크
-  const onChangeNickname = (event) => {
-    setNicknameValue(event.currentTarget.value);
-    setNicknameChecked(false);
-    setErrorMessage(null);
-  };
+  // const onChangeNickname = (event) => {
+  //   setNicknameValue(event.currentTarget.value);
+  //   setNicknameChecked(false);
+  //   setErrorMessage(null);
+  // };
 
-  const onClick = () => {
-    setLoadingCheckNickname(true);
-    request({
-      method: 'get',
-      url: '/api/register/nickname-check',
-      params: { nickname: nicknameValue },
-    })
-      .then(() => setNicknameChecked(true))
-      .catch((error) => setErrorMessage(error.response.data.message))
-      .finally(() => {
-        setLoadingCheckNickname(false);
-      });
-  };
+  // const onClick = () => {
+  //   setLoadingCheckNickname(true);
+  //   request({
+  //     method: 'get',
+  //     url: '/api/register/nickname-check',
+  //     params: { nickname: nicknameValue },
+  //   })
+  //     .then(() => setNicknameChecked(true))
+  //     .catch((error) => setErrorMessage(error.response.data.message))
+  //     .finally(() => {
+  //       setLoadingCheckNickname(false);
+  //     });
+  // };
 
   return (
     <form
@@ -122,9 +120,9 @@ function ModifyUser() {
           type="text"
           defaultValue={userInfo.nickname}
           name="nickname"
-          onChange={onChangeNickname}
+          // onChange={onChangeNickname}
         />
-        <ModifyUserButton
+        {/* <ModifyUserButton
           buttonText={nicknameChecked ? '✔' : '중복확인'}
           type="button"
           onClick={onClick}
@@ -134,10 +132,10 @@ function ModifyUser() {
             min-width: 40px;
             margin-left: 8px;
           `}
-        />
+        /> */}
       </div>
 
-      {errorMessage && (
+      {/* {errorMessage && (
         <span
           css={css`
             margin-bottom: 12px;
@@ -158,7 +156,7 @@ function ModifyUser() {
         >
           사용가능한 닉네임 입니다.
         </p>
-      ) : null}
+      ) : null} */}
 
       <ModifyUserInput
         labelText="위치"
