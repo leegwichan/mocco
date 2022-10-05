@@ -15,7 +15,7 @@ import StudyBoard from './pages/StudyBoard';
 import Callback from './pages/Callback';
 import Header from './components/Common/Header/Header';
 import { css } from '@emotion/react';
-// import Footer from './components/Common/Footer';
+import Footer from './components/Common/Footer';
 
 function App() {
   const authenticated = !!useRecoilValue(userInfoState);
@@ -35,8 +35,6 @@ function App() {
         {/* Restricted public route */}
         {!authenticated && <Route path="/login" element={<LogIn />} />}
         {!authenticated && <Route path="/signup" element={<SignUp />} />}
-        {/* {!authenticated && <Route path="/signup" element={<SignUp />} />} */}
-        <Route path="/signup" element={<SignUp />} />
 
         {/* Private route */}
         <Route
@@ -58,7 +56,7 @@ function App() {
         <Route path="/main/:id" element={<Main />} />
         <Route path="*" element={<Landing />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
