@@ -323,7 +323,7 @@ function SignUp() {
           </label>
           <input
             type="password"
-            name="password"
+            name="passwordConfirm"
             id="passwordConfirm"
             css={css`
               width: 100%;
