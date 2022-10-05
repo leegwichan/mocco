@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import request from '../api/index';
 import ModifyTaskSection from '../components/PageComponent/ModifyStudy/ModifyTaskSection';
 import ModifyStudySection from '../components/PageComponent/ModifyStudy/ModifyStudySection';
-import Footer from '../components/Common/Footer';
 
 function ModifyStudy() {
   const navigate = useNavigate();
@@ -112,7 +111,6 @@ function ModifyStudy() {
           </form>
         </section>
       </div>
-      <Footer />
     </main>
   );
 }
@@ -121,7 +119,6 @@ export default ModifyStudy;
 
 const main_container = css`
   width: 100vw;
-  height: calc(100vh - 64px);
   padding-top: 100px;
 `;
 

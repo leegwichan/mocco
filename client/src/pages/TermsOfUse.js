@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import Footer from '../components/Common/Footer';
 
 function TermsOfUse() {
   return (
@@ -201,7 +200,6 @@ function TermsOfUse() {
           </div>
         </section>
       </div>
-      <Footer />
     </main>
   );
 }
@@ -209,7 +207,6 @@ function TermsOfUse() {
 export default TermsOfUse;
 
 const container = css`
-  height: calc(100vh - 64px);
   width: 100vw;
   padding-top: 100px;
 `;

@@ -10,7 +10,6 @@ import GitHubGrass from '../components/PageComponent/Main/GitHubGrass';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { userInfoState, mypageOwnerAtom } from '../atom/atom';
 import { useParams } from 'react-router-dom';
-import Footer from '../components/Common/Footer';
 
 const Header = css`
   width: 100vw;
@@ -21,7 +20,6 @@ const Header = css`
 const totalContainer = css`
   max-width: 1260px;
   padding: 0px 2rem;
-  height: 2000px;
   margin: auto;
   margin-top: 50px;
   margin-bottom: 100px;
@@ -124,7 +122,6 @@ function Main() {
           <DoneList />
         </section>
       </section>
-      <Footer />
     </>
   );
 }
