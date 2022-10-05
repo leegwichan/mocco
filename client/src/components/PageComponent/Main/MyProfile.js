@@ -55,7 +55,7 @@ const nameLocation = css`
     width: 17px;
   }
   .smallText {
-    font-size: 8px;
+    font-size: 0.7rem;
   }
   .location {
     display: flex;
