@@ -57,8 +57,8 @@ function LogIn() {
   return (
     <div
       css={css`
-        padding-top: 4rem;
-        min-height: calc(100vh - 4rem);
+        padding-top: 64px;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
