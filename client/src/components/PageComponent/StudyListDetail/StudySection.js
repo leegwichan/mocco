@@ -40,7 +40,6 @@ const StudySection = ({ id }) => {
                     text={'수정'}
                     onClick={editHandler}
                   />
-
                   <Button
                     type={'small_grey'}
                     text={'삭제'}
