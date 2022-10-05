@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { css } from '@emotion/react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import request from '../api/index';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
 import ForgotPasswordModal from '../components/PageComponent/Login/ForgotPasswordModal';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function LogIn() {
-  const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,8 +41,6 @@ function LogIn() {
         return res;
       })
       .then((res) => {
-        console.log('u', userInfo);
-        console.log('res', res.data);
         navigate(
           location.state
             ? location.state.from
@@ -57,13 +54,6 @@ function LogIn() {
 
   const closeForgotPasswordModal = () => setModalOn(false);
 
-  const onClick = () => {
-    request({
-      method: 'get',
-      url: '/oauth2/authorization/github',
-    });
-  };
-
   return (
     <div
       css={css`
@@ -72,7 +62,6 @@ function LogIn() {
         display: flex;
         justify-content: center;
         align-items: center;
-        /* border: 1px solid gray; */
       `}
     >
       <div
@@ -190,17 +179,14 @@ function LogIn() {
           </button>
         </form>
 
-        {/* github oauth login */}
-        <button onClick={onClick}>
-          <p
-            css={css`
-              text-align: center;
-              font-size: 14px;
-            `}
-          >
-            소셜로 로그인 하기
-          </p>
-        </button>
+        <p
+          css={css`
+            text-align: center;
+            font-size: 14px;
+          `}
+        >
+          소셜로 로그인 하기
+        </p>
 
         <div
           css={css`
