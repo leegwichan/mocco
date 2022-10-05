@@ -85,7 +85,6 @@ const first = css`
         font-size: 17px;
         line-height: 27px;
         color: #0f6ad5;
-        margin-left: 4%;
         @media all and (max-width: 767px) {
           font-size: 2vw;
         }
@@ -353,7 +352,7 @@ function Landing() {
     request.get('/api/study-info/study-count').then((res) => {
       setStudy({ ...res.data.data });
     });
-    bar.current.style.width = '70%';
+    bar.current.style.width = '100%';
   }, []);
 
   const clickHandler = () => {
@@ -374,7 +373,7 @@ function Landing() {
             </span>
             <div className="progressContainer">
               <div className="bar" ref={bar}></div>
-              <span>70%</span>
+              <span></span>
             </div>
           </div>
         </div>

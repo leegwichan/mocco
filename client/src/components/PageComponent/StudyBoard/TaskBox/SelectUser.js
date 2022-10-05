@@ -115,7 +115,8 @@ const selected = css`
   @media all and (max-width: 767px) {
     font-size: 15px;
     padding: 7px;
-    width: 150px;
+    width: 25vw;
+    min-width: 125px;
     svg {
       width: 16px;
     }
