@@ -50,19 +50,17 @@ function ModifyUser() {
     }
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
-    if (nicknameChecked) {
-      request({
-        method: 'post',
-        url: '/api/members/image',
-        params: { 'file-size': e.target.files[0].size },
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        data: formData,
-      }).then((res) => {
-        setPreviewUrl(res.data.data);
-      });
-    }
+    request({
+      method: 'post',
+      url: '/api/members/image',
+      params: { 'file-size': e.target.files[0].size },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      data: formData,
+    }).then((res) => {
+      setPreviewUrl(res.data.data);
+    });
   });
 
   const onUploadImageButtonClick = useCallback(() => {
