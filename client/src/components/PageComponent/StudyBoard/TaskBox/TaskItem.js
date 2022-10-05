@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
 import AuthTaskModal from '../AuthTask/AuthTaskModal';
 
-function TaskItem({ task, select, taskHandlerf }) {
+function TaskItem({ task, select, taskHandlerf, getStudyInfof }) {
   const [isOpen, setIsOpen] = useState(false);
 
   let year = new Date().getFullYear().toString();
@@ -13,7 +13,8 @@ function TaskItem({ task, select, taskHandlerf }) {
 
   const today = `${year}-${month}-${day}`;
 
-  console.log(today);
+  // console.log(today);
+  // console.log('select', select);
 
   return (
     <div>
@@ -23,27 +24,7 @@ function TaskItem({ task, select, taskHandlerf }) {
         </div>
         <div css={content}>{task.content}</div>
         <div css={mark}>
-          {task.deadline < today && !task.taskCheck.taskChecked ? (
-            <>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                width="73px"
-                height="73px"
-                stroke="#ff0000"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="fail">실패</span>
-            </>
-          ) : task.taskCheck.taskCheckId ? (
+          {task.taskCheck.taskCheckId ? (
             <>
               <svg
                 clipRule="evenodd"
@@ -71,7 +52,7 @@ function TaskItem({ task, select, taskHandlerf }) {
                 fillRule="evenodd"
                 strokeLinejoin="round"
                 strokeMiterlimit="2"
-                fill="#0b68ff"
+                fill={task.deadline < today ? '#999999' : '#0b68ff'}
                 width="73px"
                 height="73px"
                 viewBox="0 0 24 24"
@@ -83,7 +64,11 @@ function TaskItem({ task, select, taskHandlerf }) {
                   fillRule="nonzero"
                 />
               </svg>
-              <span className="check">인증</span>
+              {task.deadline < today ? (
+                <span className="fail">인증 필요</span>
+              ) : (
+                <span className="check">인증 </span>
+              )}
             </>
           )}
           {isOpen && (
@@ -93,6 +78,7 @@ function TaskItem({ task, select, taskHandlerf }) {
               isOpen={isOpen}
               select={select}
               taskHandlerf={taskHandlerf}
+              getStudyInfof={getStudyInfof}
             />
           )}
         </div>
@@ -121,7 +107,7 @@ const taskContainer = css`
   }
 
   .fail {
-    color: #ff0000;
+    color: #999999;
     font-weight: 500;
   }
 
@@ -135,7 +121,7 @@ const taskContainer = css`
 `;
 
 const deadline = css`
-  width: 15vw;
+  width: 18%;
   height: 128px;
   background-color: #0b6ff2;
   border-radius: 20px;
@@ -150,6 +136,10 @@ const deadline = css`
     font-weight: 500;
     color: #ffffff;
     text-align: center;
+  }
+
+  @media all and (max-width: 940px) {
+    width: 21%;
   }
 
   @media all and (max-width: 767px) {
@@ -178,6 +168,7 @@ const mark = css`
   flex-direction: column;
   align-items: center;
   font-size: 15px;
+
   @media all and (max-width: 767px) {
     margin-right: 13px;
     svg {

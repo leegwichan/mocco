@@ -37,7 +37,7 @@ function ModifyStudySection({ editContent, setEditContent }) {
         formData
       )
       .then((res) => setEditContent({ ...editContent, image: res.data.data }))
-      .then(() => console.log(editContent))
+      // .then(() => console.log(editContent))
       .catch((err) => console.log(err));
   };
 
@@ -52,7 +52,7 @@ function ModifyStudySection({ editContent, setEditContent }) {
   let beginDate = new Date();
   beginDate.setDate(beginDate.getDate() + 1);
   beginDate = beginDate.toISOString().slice(0, 10);
-  console.log(beginDate);
+  // console.log(beginDate);
 
   const [endMaximumDate, setEndMaximumDate] = useState();
   useEffect(() => {

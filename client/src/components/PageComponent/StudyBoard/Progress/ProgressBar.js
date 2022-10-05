@@ -21,19 +21,19 @@ function ProgressBar({
 
   useEffect(() => {
     setIsSame(false);
-    console.log('캐릭터 ' + characterMemberId);
-    console.log('선택된 유저 캐 ' + selectedId);
+    // console.log('캐릭터 ' + characterMemberId);
+    // console.log('선택된 유저 캐 ' + selectedId);
     if (characterMemberId === selectedId) {
       setIsSame(true);
     }
-    console.log(selectedId);
-    console.log(endTask);
+    // console.log('나는 셀렉트야', selectedId);
+    // console.log(endTask);
     bar.current.style.width = (endTask / totalTask) * 100 + '%';
   }, [selectedId, endTask]);
 
   return (
     <section>
-      <div css={Container} type="button" role="presentation">
+      <div css={Container} type="button" role="presentation" key={selectedId}>
         <div css={Progress} ref={bar}></div>
         <div css={Charac}>
           {who === 'character' && endTask < mocco && (
