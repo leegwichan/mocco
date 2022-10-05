@@ -85,7 +85,7 @@ export default StudyBoard;
 
 const totalContainer = css`
   width: 100vw;
-  height: calc(100vh - 64px);
+  /* height: calc(100vh - 64px); */
   padding-top: 100px;
   @media all and (max-width: 767px) {
     padding-top: 68px;
