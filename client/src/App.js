@@ -31,35 +31,31 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/studylist" element={<StudyList />} />
 
-          {/* Restricted public route */}
-          {!authenticated && <Route path="/login" element={<LogIn />} />}
-          {/* {!authenticated && <Route path="/signup" element={<SignUp />} />} */}
-          <Route path="/signup" element={<SignUp />} />
+        {/* Restricted public route */}
+        {!authenticated && <Route path="/login" element={<LogIn />} />}
+        {/* {!authenticated && <Route path="/signup" element={<SignUp />} />} */}
+        <Route path="/signup" element={<SignUp />} />
 
-          {/* Private route */}
-          <Route
-            path="/makestudy"
-            element={
-              <PrivateRoute
-                authenticated={authenticated}
-                element={<MakeStudy />}
-              />
-            }
-          />
-          <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
+        {/* Private route */}
+        <Route
+          path="/makestudy"
+          element={
+            <PrivateRoute
+              authenticated={authenticated}
+              element={<MakeStudy />}
+            />
+          }
+        />
+        <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
 
-          {/* else */}
-          <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
-          <Route path="/modifyuser" element={<ModifyUser />} />
-          <Route
-            path="/studyboard/:studyId/:memberId"
-            element={<StudyBoard />}
-          />
-          <Route path="/oauthcallback" exact={true} element={<Callback />} />
-          <Route path="/main/:id" element={<Main />} />
-          <Route path="*" element={<Landing />} />
-        </Routes>
-      </div>
+        {/* else */}
+        <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
+        <Route path="/modifyuser" element={<ModifyUser />} />
+        <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
+        <Route path="/oauthcallback" exact={true} element={<Callback />} />
+        <Route path="/main/:id" element={<Main />} />
+        <Route path="*" element={<Landing />} />
+      </Routes>
     </div>
   );
 }

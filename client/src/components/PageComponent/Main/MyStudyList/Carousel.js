@@ -92,7 +92,6 @@ function Carousel({ studyArr, progress, done, clickHandler }) {
   function goNext() {
     if (currentIdx < length - 3) {
       moveSlide(currentIdx + 1);
-      console.log(currentIdx);
     } else {
       moveSlide(0);
     }
