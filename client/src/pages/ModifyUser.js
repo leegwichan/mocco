@@ -10,6 +10,12 @@ import WithdrawalModal from '../components/PageComponent/ModifyUser/WithdrawalMo
 
 function ModifyUser() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  const [loadingCheckNickname, setLoadingCheckNickname] = useState(false);
+  const [nicknameValue, setNicknameValue] = useState('');
+  const [nicknameChecked, setNicknameChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const [changPasswordmodalOn, setChangePasswordModalOn] = useState(false);
   const [withdrawalModalOn, setWithdrawalModalOn] = useState(false);
   const openChangePasswordModal = () => setChangePasswordModalOn(true);
@@ -45,18 +51,19 @@ function ModifyUser() {
     }
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
-
-    request({
-      method: 'post',
-      url: '/api/members/image',
-      params: { 'file-size': e.target.files[0].size },
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      data: formData,
-    }).then((res) => {
-      setPreviewUrl(res.data.data);
-    });
+    if (nicknameChecked) {
+      request({
+        method: 'post',
+        url: '/api/members/image',
+        params: { 'file-size': e.target.files[0].size },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        data: formData,
+      }).then((res) => {
+        setPreviewUrl(res.data.data);
+      });
+    }
   });
 
   const onUploadImageButtonClick = useCallback(() => {
@@ -65,6 +72,27 @@ function ModifyUser() {
     }
     inputRef.current.click();
   }, []);
+
+  // 닉네임 중복체크
+  const onChangeNickname = (event) => {
+    setNicknameValue(event.currentTarget.value);
+    setNicknameChecked(false);
+    setErrorMessage(null);
+  };
+
+  const onClick = () => {
+    setLoadingCheckNickname(true);
+    request({
+      method: 'get',
+      url: '/api/register/nickname-check',
+      params: { nickname: nicknameValue },
+    })
+      .then(() => setNicknameChecked(true))
+      .catch((error) => setErrorMessage(error.response.data.message))
+      .finally(() => {
+        setLoadingCheckNickname(false);
+      });
+  };
 
   return (
     <form
@@ -85,15 +113,53 @@ function ModifyUser() {
       >
         <h3>회원정보 수정</h3>
       </div>
-      <div>
+      <div
+        css={css`
+          display: flex;
+        `}
+      >
         <ModifyUserInput
           labelText="닉네임"
           type="text"
           defaultValue={userInfo.nickname}
           name="nickname"
+          onChange={onChangeNickname}
         />
-        <ModifyUserButton />
+        <ModifyUserButton
+          buttonText={nicknameChecked ? '✔' : '중복확인'}
+          type="button"
+          onClick={onClick}
+          disabled={nicknameChecked || loadingCheckNickname}
+          css={css`
+            margin-top: 33px;
+            min-width: 40px;
+            margin-left: 8px;
+          `}
+        />
       </div>
+
+      {errorMessage && (
+        <span
+          css={css`
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: red;
+          `}
+        >
+          {errorMessage}
+        </span>
+      )}
+      {nicknameChecked ? (
+        <p
+          css={css`
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: green;
+          `}
+        >
+          사용가능한 닉네임 입니다.
+        </p>
+      ) : null}
 
       <ModifyUserInput
         labelText="위치"

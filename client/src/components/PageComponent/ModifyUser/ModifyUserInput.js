@@ -3,7 +3,11 @@ import { forwardRef } from 'react';
 
 const ModifyUserInput = forwardRef((props, ref) => {
   return (
-    <div>
+    <div
+      css={css`
+        flex: 1;
+      `}
+    >
       <label htmlFor={props.name}>
         <h3 css={labelTextStyle}>{props.labelText}</h3>
       </label>
