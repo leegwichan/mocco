@@ -21,9 +21,9 @@ function UserProgressBar({ taskList, total, select, expiredTaskCount }) {
 
     // moccoBar.current.style.width = (expiredTaskCount / total) * 100 + '%';
   }, [taskList, select, endTask]);
-  console.log('total' + total);
-  console.log('endTask' + endTask);
-  console.log('expiredTaskCount' + expiredTaskCount);
+  // console.log('total' + total);
+  // console.log('endTask' + endTask);
+  // console.log('expiredTaskCount' + expiredTaskCount);
 
   return (
     <div css={Total}>

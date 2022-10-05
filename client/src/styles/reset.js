@@ -29,7 +29,6 @@ const reset = css`
   }
 
   html,
-  #root,
   body {
     height: 100%;
   }
@@ -82,13 +81,6 @@ const reset = css`
   td,
   th {
     padding: 0;
-  }
-  button {
-    cursor: pointer;
-  }
-  textarea {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 `;
 

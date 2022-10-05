@@ -12,6 +12,7 @@ const Container = css`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   padding: 49px 31px 18px 31px;
+  position: relative;
   .title {
     font-family: 'Inter';
     font-style: normal;
@@ -20,6 +21,31 @@ const Container = css`
     line-height: 36px;
     color: #0b6ff2;
     margin-bottom: 31px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media all and (max-width: 1023px) {
+    height: 55vw;
+    min-height: 400px;
+    width: 50vw;
+    min-width: 350px;
+    padding: 29px 11px 8px 11px;
+    .title {
+      font-size: 25px;
+      /* overflow: hidden; */
+      margin-bottom: 30px;
+    }
+  }
+  @media all and (max-width: 700px) {
+    .title {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
   }
 `;
 
@@ -34,15 +60,29 @@ const InnerContainer = css`
   :overflow-y {
     overflow: scroll;
   }
+  @media all and (max-width: 1023px) {
+    height: 50vw;
+    min-height: 270px;
+    width: 43vw;
+    min-width: 300px;
+    padding: 4%;
+    .title {
+      font-size: 3vw;
+    }
+  }
 `;
 
 const ButtonContainer = css`
   display: flex;
   justify-content: flex-end;
   width: 100%;
+
+  @media all and (max-width: 700px) {
+    margin-bottom: 5px;
+  }
 `;
 
-function EvalueModal({
+export const ModalContent = ({
   text,
   content,
   firstBtnType,
@@ -52,7 +92,7 @@ function EvalueModal({
   setIsOpen,
   onClick,
   // reset,
-}) {
+}) => {
   const onClose = () => {
     setIsOpen(false);
   };
@@ -75,6 +115,22 @@ function EvalueModal({
       </section>
     </div>
   );
-}
+};
 
-export default EvalueModal;
+export const OneModalContent = ({
+  text,
+  content,
+  btnType,
+  btnText,
+  onClick,
+}) => {
+  return (
+    <div css={Container}>
+      <section className="title">{text}</section>
+      <section css={InnerContainer}>{content}</section>
+      <section css={ButtonContainer}>
+        <Button type={`${btnType}`} text={`${btnText}`} onClick={onClick} />
+      </section>
+    </div>
+  );
+};
