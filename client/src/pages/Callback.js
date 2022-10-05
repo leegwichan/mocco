@@ -94,7 +94,6 @@ function Callback() {
         const response = await request.patch(`/api/members/github-user`, body);
         console.log(response);
         console.log(response.data);
-        navigate(`/main/${memberId}`);
       } catch (err) {
         console.log(err);
         if (
@@ -103,11 +102,11 @@ function Callback() {
             '이 계정의 깃허브를 연동한 유저가 이미 존재합니다.'
         ) {
           alert(err.response.data.message);
-          navigate(-2);
+          navigate(`/main/${memberId}`);
         }
         if (err.response.data.status === 500) {
-          alert(err.response.data.message);
-          navigate(-2);
+          console.log(err.response.data.message);
+          navigate(`/main/${memberId}`);
         }
       }
     }

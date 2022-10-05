@@ -29,19 +29,19 @@ const Container = css`
   }
 `;
 
-function ShortListSection(studyArr, progress, done, clickHandler) {
-  console.log(studyArr);
+function ShortListSection(studyArr, progress, done) {
   return (
     <div css={Container}>
       <ul>
         {studyArr &&
           progress &&
           studyArr.studyArr.map((studyData, idx) => (
-            <li key={idx} role="presentation">
-              <StudyCard
-                studyData={studyData}
-                onClick={() => clickHandler(studyData)}
-              />
+            <li
+              key={idx}
+              role="presentation"
+              onClick={() => studyArr.clickFunc(studyData)}
+            >
+              <StudyCard studyData={studyData} />
             </li>
           ))}
         {studyArr &&
