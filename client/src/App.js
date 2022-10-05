@@ -15,7 +15,10 @@ import ModifyUser from './pages/ModifyUser';
 import StudyBoard from './pages/StudyBoard';
 import Callback from './pages/Callback';
 import Header from './components/Common/Header/Header';
-import { css } from '@emotion/react';
+import TermsOfUse from './pages/TermsOfUse';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Footer from './components/Common/Footer';
+// import { css } from '@emotion/react';
 
 function App() {
   const authenticated = !!useRecoilValue(userInfoState);
