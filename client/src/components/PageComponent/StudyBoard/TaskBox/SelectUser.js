@@ -113,10 +113,10 @@ const selected = css`
   word-break: break-all;
 
   @media all and (max-width: 767px) {
-    font-size: 15px;
+    font-size: 1px;
     padding: 7px;
     width: 25vw;
-    min-width: 125px;
+    min-width: 110px;
     svg {
       width: 16px;
     }

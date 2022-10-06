@@ -42,6 +42,11 @@ const gitHubBtn = css`
     width: 30%;
     height: 100%;
     font-size: 11px;
+    .icon {
+      margin-right: 4px;
+      width: 15px;
+      height: 15px;
+    }
   }
 `;
 
@@ -76,6 +81,11 @@ const gitHubBtnGray = css`
     width: 30%;
     height: 100%;
     font-size: 11px;
+    .icon {
+      margin-right: 4px;
+      width: 15px;
+      height: 15px;
+    }
   }
 `;
 
