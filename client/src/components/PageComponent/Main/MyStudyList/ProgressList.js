@@ -67,6 +67,7 @@ function ProgressList() {
   };
 
   const clickHandlerFnc = (studyData) => {
+    console.log('클릭');
     if (
       studyData.studyStatus === 'STUDY_COMPLETE' &&
       studyData.evaluationStatus === 'BEFORE_EVALUATION' &&
@@ -127,7 +128,7 @@ function ProgressList() {
         <ShortListSection
           studyArr={studyArr}
           progress={'propgress'}
-          clickHandler={clickHandlerFnc}
+          clickFunc={clickHandlerFnc}
         />
       ) : (
         <Carousel
