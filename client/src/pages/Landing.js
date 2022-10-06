@@ -86,7 +86,7 @@ const first = css`
         font-weight: 600;
         font-size: 17px;
         line-height: 27px;
-        color: #0f6ad5;
+        color: #0b6ff2;
         @media all and (max-width: 767px) {
           font-size: 2vw;
         }
@@ -96,7 +96,7 @@ const first = css`
       width: 0%;
       height: 4vw;
       max-height: 34px;
-      background: #0f6ad5;
+      background: #0f6bfd;
       border-radius: 10px;
       animation: progress 3s ease-in-out forwards;
       @keyframes progress {
@@ -156,7 +156,7 @@ const second = css`
     border: none;
     :hover {
       background: white;
-      color: #0f6ad4;
+      color: #0b6ff2;
     }
     @media all and (max-width: 767px) {
       display: none;

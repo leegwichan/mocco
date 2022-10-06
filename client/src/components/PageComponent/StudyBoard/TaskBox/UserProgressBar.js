@@ -111,7 +111,7 @@ const Container = css`
 
 const Progress = css`
   height: 100%;
-  background: #0f6ad5;
+  background: #0b6ff2;
   border-radius: 10px;
   margin-right: 5px;
 `;
