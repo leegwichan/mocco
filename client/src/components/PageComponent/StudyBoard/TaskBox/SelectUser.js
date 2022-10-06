@@ -144,8 +144,9 @@ const memberList = css`
 
   @media all and (max-width: 767px) {
     margin-top: 8px;
-    width: 150px;
     border-radius: 15px;
+    width: 25.3vw;
+    min-width: 110px;
   }
 `;
 
@@ -176,8 +177,10 @@ const member = css`
   }
 
   @media all and (max-width: 767px) {
-    padding: 12px;
-    font-size: 15px;
+    /* padding: 12px;
+    font-size: 15px; */
     height: 55px;
+    font-size: 1px;
+    padding: 7px;
   }
 `;
