@@ -15,8 +15,10 @@ function TaskBox({
   setSelectedId,
   teamName,
   expiredTaskCount,
+  getStudyInfof,
 }) {
   const userInfo = useRecoilValue(userInfoState);
+
   const [select, setSelect] = useState({
     memberId: userInfo.memberId,
     nickname: userInfo.nickname,
@@ -25,20 +27,20 @@ function TaskBox({
   const [taskList, setTaskList] = useState([]);
   const navigate = useNavigate();
   const myPageOwner = useRecoilValue(mypageOwnerAtom);
+  // console.log('select', userInfo);
 
   const taskHandler = () => {
     request(`/api/study-progress/sub/${studyId}/member/${select.memberId}`)
       .then((res) => {
-        console.log(res);
         return res.data.data.taskList.sort(
           (a, b) => new Date(a.deadline) - new Date(b.deadline)
         );
       })
       .then((res) => {
         setTaskList(res);
-        console.log(res);
         // console.log(res);
       })
+      .then(() => getStudyInfof())
       .catch((err) => {
         if (err.response.data.message === '스터디의 멤버가 아닙니다.') {
           navigate(`/main/${myPageOwner.memberId}`);
@@ -48,6 +50,7 @@ function TaskBox({
   };
 
   useEffect(() => {
+    // getStudyInfof();
     taskHandler();
     setSelectedId(select.memberId);
   }, [select]);
@@ -56,13 +59,12 @@ function TaskBox({
     <div css={taskBox}>
       <div css={taskTop}>
         <div className="task">Task</div>
-        <section>
+        <section className="top">
           <div className="teamName">{teamName}</div>
           <div className="rule">
             <StudyRuleModal />
           </div>
         </section>
-
         <div className="desktopProgress">
           <UserProgressBar
             taskList={taskList}
@@ -70,11 +72,13 @@ function TaskBox({
             select={select.memberId}
           />
         </div>
-        <SelectUser
-          memberInfo={studyInfo.memberList}
-          select={select}
-          setSelect={setSelect}
-        />
+        <div>
+          <SelectUser
+            memberInfo={studyInfo.memberList}
+            select={select}
+            setSelect={setSelect}
+          />
+        </div>
       </div>
       <section className="mobileProgress">
         <UserProgressBar
@@ -92,6 +96,7 @@ function TaskBox({
                 task={task}
                 select={select}
                 taskHandlerf={taskHandler}
+                getStudyInfof={getStudyInfof}
               />
             </div>
           ))}
@@ -109,8 +114,6 @@ const taskBox = css`
   flex-direction: column;
   align-items: center;
   @media all and (max-width: 767px) {
-    padding: 20px;
-    height: auto;
   }
   .mobileProgress {
     @media all and (min-width: 767px) {
@@ -134,6 +137,9 @@ const taskTop = css`
 
   section {
     width: auto;
+  }
+
+  .top {
     display: flex;
     justify-content: center;
     align-items: center;

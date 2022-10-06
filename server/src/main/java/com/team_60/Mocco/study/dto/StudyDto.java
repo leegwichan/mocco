@@ -25,7 +25,7 @@ public class StudyDto {
         @Max(value = 0, message = "Study 식별자는 양수이어야 합니다.")
         private long studyId;
 
-        @Size(max = 30, message = "스터디 이름은 최대 30자입니다.")
+        @Size(max = 10, message = "스터디 이름은 최대 10자입니다.")
         @NotBlank(message = "스터디 이름은 빈칸일 수 없습니다.")
         private String teamName;
 

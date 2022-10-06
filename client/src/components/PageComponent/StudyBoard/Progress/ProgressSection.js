@@ -74,7 +74,6 @@ const CountNumber = css`
   font-size: small;
   color: rgba(67, 145, 249, 1);
   box-shadow: -2px 1px 1px rgba(0, 0, 0, 0.2);
-
   font-weight: 700;
   text-align: center;
 `;
@@ -101,7 +100,8 @@ function ProgressSection({
   memberProgressArr,
   selectedId,
 }) {
-  console.log(memberProgressArr);
+  // console.log('셀렉티드', studyInfo);
+  // console.log(memberProgressArr);
   return (
     <div css={Total} style={{ backgroundImage: `url(${모꼬배경})` }}>
       <div css={CounterContainer}>

@@ -208,7 +208,7 @@ function ProfileModal({
               width: 60%;
               height: 100%;
               font-size: 1.1rem;
-              line-height: 200%;
+              line-height: 150%;
             `}
           >
             내 알림

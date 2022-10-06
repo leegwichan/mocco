@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import { useRef } from 'react';
 import request from '../../../../api';
-import porfile from '../../../../asset/profile.png';
 
 function AuthTask({ authData, setAuthData }) {
   const imgRef = useRef();
@@ -10,7 +9,7 @@ function AuthTask({ authData, setAuthData }) {
     if (!e.target.files) {
       alert('이미지를 업로드해주세요');
     }
-    // console.log(e.target.files[0]);
+
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
 
@@ -23,9 +22,8 @@ function AuthTask({ authData, setAuthData }) {
         // console.log(res);
         setAuthData({ ...authData, image: res.data.data });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err.response.data.message));
   };
-  // console.log(image);
 
   const uploadHandler = (e) => {
     e.preventDefault();
@@ -39,28 +37,29 @@ function AuthTask({ authData, setAuthData }) {
     setAuthData({ ...authData, content: e.target.value });
   };
 
-  console.log('어쓰', authData);
+  // console.log('어쓰', authData);
 
   return (
     <form encType="multipart/form-data">
       <section>
-        <div htmlFor="file" css={imageTitle}>
+        <label htmlFor="file" css={imageTitle}>
           사진 인증하기
           <span className="noEdit">한 번 인증하면 수정할 수 없습니다</span>
-        </div>
+        </label>
         <input
           css={imgInput}
           ref={imgRef}
           type="file"
           id="file"
-          accept="image/jpg, image/jpeg, image/png"
+          accept="image/jpg,image/png"
+          name="file"
           onChange={imageHandler}
           required
         />
       </section>
       <section css={writingSection}>
         <img
-          src={authData.image ? authData.image : porfile}
+          src={authData.image ? authData.image : '/no_image.jpeg'}
           alt="auth_image"
           css={authImage}
         />
@@ -84,10 +83,6 @@ function AuthTask({ authData, setAuthData }) {
 
 export default AuthTask;
 
-// const imageSection = css`
-//   display: flex;
-// `;
-
 const imageTitle = css`
   font-size: 15px;
   display: flex;
@@ -98,6 +93,14 @@ const imageTitle = css`
     font-size: 12px;
     color: #999999;
   }
+
+  @media all and (max-width: 1023px) {
+    font-size: 13px;
+
+    span {
+      font-size: 11px;
+    }
+  }
 `;
 
 const imgInput = css`
@@ -107,16 +110,28 @@ const imgInput = css`
 const authImage = css`
   position: relative;
   width: 100%;
-  height: 180px;
+  height: 170px;
   overflow: hidden;
   border: 1px solid #d1d1d1;
+
+  @media all and (max-width: 1023px) {
+    height: 140px;
+  }
+
+  @media all and (max-width: 900px) {
+    height: 120px;
+  }
+
+  @media all and (max-width: 800px) {
+    height: 100px;
+  }
 `;
 
 const uploadButton = css`
   width: 79%;
   position: absolute;
   height: 30px;
-  bottom: 36.3%;
+  bottom: 38%;
   left: 0;
   margin-left: 57px;
   border: none;
@@ -124,6 +139,26 @@ const uploadButton = css`
   background-color: #0b6ff2;
   color: #ffffff;
   font-weight: 500;
+
+  @media all and (max-width: 1023px) {
+    margin-left: 50px;
+    bottom: 44%;
+  }
+
+  @media all and (max-width: 900px) {
+    margin-left: 45px;
+    bottom: 41%;
+  }
+
+  @media all and (max-width: 800px) {
+    margin-left: 40px;
+    bottom: 38%;
+  }
+
+  @media all and (max-width: 743px) {
+    margin-left: 35px;
+    bottom: 40%;
+  }
 `;
 
 const writingSection = css`
@@ -133,8 +168,21 @@ const writingSection = css`
 
 const writingTitle = css`
   font-size: 15px;
-  margin-top: 30px;
-  margin-bottom: 5px;
+  margin-top: 37px;
+  margin-bottom: 3px;
+
+  @media all and (max-width: 1023px) {
+    font-size: 13px;
+    margin-top: 37px;
+  }
+
+  @media all and (max-width: 935px) {
+    margin-top: 33px;
+  }
+
+  @media all and (max-width: 862px) {
+    margin-top: 31px;
+  }
 `;
 
 const writingInput = css`
@@ -144,4 +192,16 @@ const writingInput = css`
   resize: none;
   border-radius: 5px;
   padding: 0.5rem;
+  outline: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media all and (max-width: 862px) {
+    height: 80px;
+  }
+
+  @media all and (max-width: 825px) {
+    height: 63px;
+  }
 `;

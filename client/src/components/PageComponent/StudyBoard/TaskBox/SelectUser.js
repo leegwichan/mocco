@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
-import porfile from '../../../../asset/profile.png';
 
 function UserSelect({ memberInfo, select, setSelect }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,35 +13,53 @@ function UserSelect({ memberInfo, select, setSelect }) {
     const clickedMember = memberInfo.filter(
       (user) => user.nickname === innerText
     );
+    // console.log('내가 클릭드야', clickedMember);
     setSelect({ ...clickedMember }[0]);
     setIsOpen(false);
   };
-  //   console.log('내가 셀렉트야', select);
 
   return (
     <section css={container}>
       <label onClick={onChange} role="presentation" css={selected}>
         {select && (
           <>
-            <img src={porfile} alt="p" css={image} />
+            <img src={select.profileImage} alt="profile" css={image} />
             <span> {select.nickname}</span>
           </>
         )}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="#0b6ff2"
-          width="30"
-          height="30"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-          />
-        </svg>
+        {isOpen ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="#0b6ff2"
+            width="30"
+            height="30"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4.5 15.75l7.5-7.5 7.5 7.5"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="#0b6ff2"
+            width="30"
+            height="30"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        )}
       </label>
       <ul css={memberList} className={isOpen ? 'showList' : 'noneList'}>
         {memberInfo &&
@@ -54,7 +71,7 @@ function UserSelect({ memberInfo, select, setSelect }) {
                 role="presentation"
                 css={member}
               >
-                <img src={porfile} alt="p" css={image} />
+                <img src={user.profileImage} alt="p" css={image} />
                 {user.nickname}
               </li>
             );
@@ -92,10 +109,14 @@ const selected = css`
   font-size: 20px;
   font-weight: 500;
   padding: 10px;
+  width: 215px;
+  word-break: break-all;
 
   @media all and (max-width: 767px) {
-    font-size: 15px;
+    font-size: 1px;
     padding: 7px;
+    width: 25vw;
+    min-width: 110px;
     svg {
       width: 16px;
     }
@@ -103,14 +124,15 @@ const selected = css`
 `;
 
 const memberList = css`
-  width: 230px;
+  width: 215px;
   background-color: #ffffff;
-  margin-top: 10px;
+  margin-top: 15px;
   position: absolute;
   border-radius: 20px;
   overflow: hidden;
   list-style: none;
   border: 2px solid #0b6ff2;
+  word-break: break-all;
 
   &.showList {
     display: block;
@@ -121,14 +143,17 @@ const memberList = css`
   }
 
   @media all and (max-width: 767px) {
-    width: 150px;
+    margin-top: 8px;
     border-radius: 15px;
+    width: 25.3vw;
+    min-width: 110px;
   }
 `;
 
 const image = css`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 
   @media all and (max-width: 767px) {
     width: 30px;
@@ -141,16 +166,21 @@ const member = css`
   font-size: 20px;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 10px 20px;
   align-items: center;
   transition: background-color 0.2s ease-in;
   border-radius: 20px;
+  height: 80px;
 
   &:hover {
     color: #0b6ff2;
   }
 
   @media all and (max-width: 767px) {
-    padding: 12px;
+    /* padding: 12px;
+    font-size: 15px; */
+    height: 55px;
+    font-size: 1px;
+    padding: 7px;
   }
 `;

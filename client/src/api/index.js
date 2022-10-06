@@ -20,7 +20,7 @@ request.interceptors.response.use(
         method: 'post',
         url: '/api/register/refresh',
         headers: { RefreshToken: refreshToken, AccessToken: accessToken },
-        proxy: true,
+        // proxy: true,
       });
       console.log(data);
     }

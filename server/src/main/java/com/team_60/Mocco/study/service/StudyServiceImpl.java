@@ -11,7 +11,6 @@ import com.team_60.Mocco.study_member.serive.StudyMemberService;
 import com.team_60.Mocco.task.entity.Task;
 import com.team_60.Mocco.task.service.TaskService;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,8 +34,7 @@ public class StudyServiceImpl implements StudyService{
     private final StudyMemberService studyMemberService;
     private final TaskService taskService;
     @Value("${image.default.study}")
-    private String studyImageList;
-
+    private String studyDefaultImage;
 
     @Override
     public Study createStudy(Study study) {
@@ -44,7 +42,7 @@ public class StudyServiceImpl implements StudyService{
         Member member = memberService.findVerifiedMember(study.getTeamLeader().getMemberId());
         study.setStudyStatus(Study.StudyStatus.RECRUIT_PROGRESS);
         study.setTeamLeader(member);
-        if (study.getImage() == null) study.setImage(studyImageList);
+        if (study.getImage() == null) study.setImage(studyDefaultImage);
         validateStudy(study);
         //스터디 생성
         Study createdStudy = studyRepository.save(study);
