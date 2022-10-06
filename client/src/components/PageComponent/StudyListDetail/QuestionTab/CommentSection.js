@@ -27,7 +27,7 @@ const CommentSection = ({
       editHandler();
     },
   });
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -65,9 +65,8 @@ const CommentSection = ({
             }
           >
             <img src={member.profileImage} alt="프로필 이미지" css={image} />
-            <span className="main_link">{member.nickname}</span>
-            {userInfo !== null &&
-            userInfo.memberId === studyInfo.member.memberId ? (
+            <span className="main_link">{member && member.nickname}</span>
+            {member && member.memberId === studyInfo.member.memberId ? (
               <span>
                 <Button type="small_lightblue" text="스터디장" />
               </span>
