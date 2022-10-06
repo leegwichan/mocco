@@ -3,7 +3,6 @@ import { css } from '@emotion/react';
 import GitHubBtnBlue from './GitHubBtn/GitHubBtnBlue';
 import GitHubBtnMyGray from './GitHubBtn/GitHubBtnMyGray';
 import GitHubBtnGray from './GitHubBtn/GitHubBtnGray';
-import Avatar from '../../Common/Avatar';
 import { useRecoilValue } from 'recoil';
 import { mypageOwnerAtom } from '../../../atom/atom';
 import ProfileStar from './ProfileStar';
@@ -23,8 +22,14 @@ const container = css`
 `;
 
 const roundImg = css`
-  border-radius: 100%;
-  max-width: 82%;
+  height: 115px;
+  max-width: 115px;
+  width: 82%;
+  height: 100%;
+  border-radius: 50%;
+  @media all and (max-width: 767px) {
+    height: 100px;
+  }
 `;
 
 const name = css`
@@ -50,7 +55,7 @@ const nameLocation = css`
     width: 17px;
   }
   .smallText {
-    font-size: 8px;
+    font-size: 0.7rem;
   }
   .location {
     display: flex;
@@ -102,13 +107,12 @@ function MyProfile({ githubId, isConnectedGit, isOwner }) {
 
   return (
     <section css={container}>
-      <section css={roundImg}>
-        {owner.profileImage !== null ? (
-          <img src={owner.profileImage} alt={'프로필 이미지'} />
-        ) : (
-          <Avatar css={roundImg} />
-        )}
-      </section>
+      <img
+        css={roundImg}
+        className="img"
+        src={owner.profileImage}
+        alt={'프로필 이미지'}
+      />
       <section css={withoutImg}>
         <section css={nameLocation}>
           {owner.location && (

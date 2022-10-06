@@ -27,21 +27,39 @@ function UserSelect({ memberInfo, select, setSelect }) {
             <span> {select.nickname}</span>
           </>
         )}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="#0b6ff2"
-          width="30"
-          height="30"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-          />
-        </svg>
+        {isOpen ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="#0b6ff2"
+            width="30"
+            height="30"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4.5 15.75l7.5-7.5 7.5 7.5"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="#0b6ff2"
+            width="30"
+            height="30"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        )}
       </label>
       <ul css={memberList} className={isOpen ? 'showList' : 'noneList'}>
         {memberInfo &&
@@ -95,9 +113,10 @@ const selected = css`
   word-break: break-all;
 
   @media all and (max-width: 767px) {
-    font-size: 15px;
+    font-size: 1px;
     padding: 7px;
-    width: 150px;
+    width: 25vw;
+    min-width: 110px;
     svg {
       width: 16px;
     }
@@ -125,8 +144,9 @@ const memberList = css`
 
   @media all and (max-width: 767px) {
     margin-top: 8px;
-    width: 150px;
     border-radius: 15px;
+    width: 25.3vw;
+    min-width: 110px;
   }
 `;
 
@@ -157,8 +177,10 @@ const member = css`
   }
 
   @media all and (max-width: 767px) {
-    padding: 12px;
-    font-size: 15px;
+    /* padding: 12px;
+    font-size: 15px; */
     height: 55px;
+    font-size: 1px;
+    padding: 7px;
   }
 `;

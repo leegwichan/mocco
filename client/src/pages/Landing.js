@@ -8,6 +8,8 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 달리는괴물 from '../asset/달리는괴물.png';
 import 달리는사람 from '../asset/달리는사람.png';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../atom/atom';
 
 const MainContainer = css`
   width: 100vw;
@@ -84,8 +86,7 @@ const first = css`
         font-weight: 600;
         font-size: 17px;
         line-height: 27px;
-        color: #0f6ad5;
-        margin-left: 4%;
+        color: #0b6ff2;
         @media all and (max-width: 767px) {
           font-size: 2vw;
         }
@@ -95,7 +96,7 @@ const first = css`
       width: 0%;
       height: 4vw;
       max-height: 34px;
-      background: #0f6ad5;
+      background: #0f6bfd;
       border-radius: 10px;
       animation: progress 3s ease-in-out forwards;
       @keyframes progress {
@@ -155,7 +156,7 @@ const second = css`
     border: none;
     :hover {
       background: white;
-      color: #0f6ad4;
+      color: #0b6ff2;
     }
     @media all and (max-width: 767px) {
       display: none;
@@ -346,24 +347,23 @@ const charac = css`
 
 function Landing() {
   const [study, setStudy] = useState(null);
+  const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const bar = useRef(null);
 
   useEffect(() => {
-    request
-      .get('/api/study-info/study-count')
-      .then((res) => {
-        console.log(res);
-        setStudy({ ...res.data.data });
-      })
-      .then(() => {
-        console.log(study);
-      });
-    bar.current.style.width = '70%';
+    request.get('/api/study-info/study-count').then((res) => {
+      setStudy({ ...res.data.data });
+    });
+    bar.current.style.width = '100%';
   }, []);
 
   const clickHandler = () => {
     navigate('studylist');
+  };
+
+  const handleEnterStudyClick = () => {
+    navigate('/studylist');
   };
 
   return (
@@ -380,7 +380,7 @@ function Landing() {
             </span>
             <div className="progressContainer">
               <div className="bar" ref={bar}></div>
-              <span>70%</span>
+              <span></span>
             </div>
           </div>
         </div>
@@ -469,6 +469,33 @@ function Landing() {
           <img className="human" src={달리는사람} alt="달리는사람"></img>
         </div>
       </section>
+      {/* 비로그인 시 스터디 참여하기 버튼 */}
+      {!userInfo && console.log('비로그인')}
+      {!userInfo && console.log(userInfo)}
+      {!userInfo && (
+        <button
+          onClick={handleEnterStudyClick}
+          css={css`
+            position: fixed;
+            left: 10%;
+            bottom: 1rem;
+            width: 80%;
+            height: 3rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #0b6bff;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 5;
+            @media (min-width: 769px) {
+              display: none;
+            }
+          `}
+        >
+          스터디 참여하기
+        </button>
+      )}
     </div>
   );
 }

@@ -105,7 +105,7 @@ const btn = css`
     font-size: 15px;
     height: 32px;
     padding: 0 9px;
-    color: #0f6ad4;
+    color: #0b6ff2;
     background-color: #f0f8ff;
   }
 

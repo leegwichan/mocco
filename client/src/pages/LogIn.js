@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import request from '../api/index';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
 import ForgotPasswordModal from '../components/PageComponent/Login/ForgotPasswordModal';
 import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function LogIn() {
-  const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,10 +41,10 @@ function LogIn() {
         return res;
       })
       .then((res) => {
-        console.log('u', userInfo);
-        console.log('res', res.data);
         navigate(
-          location.state ? location.state.from : `/main/${res.data.memberId}`
+          location.state
+            ? location.state.from
+            : `/main/${res.data.data.memberId}`
         );
       })
       .catch((err) => console.log(err));
@@ -55,13 +54,6 @@ function LogIn() {
 
   const closeForgotPasswordModal = () => setModalOn(false);
 
-  const onClick = () => {
-    request({
-      method: 'get',
-      url: '/oauth2/authorization/github',
-    });
-  };
-
   return (
     <div
       css={css`
@@ -70,7 +62,6 @@ function LogIn() {
         display: flex;
         justify-content: center;
         align-items: center;
-        /* border: 1px solid gray; */
       `}
     >
       <div
@@ -188,17 +179,14 @@ function LogIn() {
           </button>
         </form>
 
-        {/* github oauth login */}
-        <button onClick={onClick}>
-          <p
-            css={css`
-              text-align: center;
-              font-size: 14px;
-            `}
-          >
-            소셜로 로그인 하기
-          </p>
-        </button>
+        <p
+          css={css`
+            text-align: center;
+            font-size: 14px;
+          `}
+        >
+          소셜로 로그인 하기
+        </p>
 
         <div
           css={css`
@@ -228,13 +216,15 @@ function LogIn() {
           `}
         >
           <p>아직 회원이 아니신가요?</p>
-          <p
+          <Link
+            to="/signup"
             css={css`
               color: #0b6ff2;
+              text-decoration: none;
             `}
           >
             회원가입
-          </p>
+          </Link>
         </div>
       </div>
 

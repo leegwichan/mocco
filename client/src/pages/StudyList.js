@@ -6,11 +6,10 @@ import MakeStudyButton from '../components/PageComponent/StudyList/MakeStudyButt
 import StudyListTitle from '../components/PageComponent/StudyList/StudyListTitle';
 import request from '../api/index';
 import { useLocation } from 'react-router-dom';
-import Footer from '../components/Common/Footer';
 
 const MainContainer = css`
   width: 100vw;
-  height: calc(100vh - 4rem);
+  min-height: calc(100vh - 4rem);
   padding-top: 8rem;
 `;
 
@@ -143,7 +142,7 @@ function StudyList() {
               <section>
                 <ul css={StudyCardContainer}>
                   {studyLists.map((studyData, i) => {
-                    if (studyLists.length - 4 === i) {
+                    if (studyLists.length - 1 === i) {
                       return (
                         <StudyCard
                           key={i}
@@ -161,7 +160,6 @@ function StudyList() {
             {isLastList ? (
               <>
                 <div css={LastListAlert}>더 이상 불러올 내용이 없습니다.</div>
-                <Footer />
               </>
             ) : null}
           </div>

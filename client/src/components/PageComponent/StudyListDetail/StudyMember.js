@@ -38,21 +38,39 @@ function StudyMember() {
           >
             {studyInfo.member.nickname}
           </span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="#0b6ff2"
-            width="30"
-            height="30"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-            />
-          </svg>
+          {isOpen ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="#0b6ff2"
+              width="30"
+              height="30"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.5 15.75l7.5-7.5 7.5 7.5"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="#0b6ff2"
+              width="30"
+              height="30"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          )}
         </div>
       </div>
       <ul css={memberList} className={isOpen ? 'showList' : 'noneList'}>
@@ -94,6 +112,7 @@ const container = css`
   @media all and (max-width: 767px) {
     height: 47px;
     margin-top: 10px;
+    width: 200px;
   }
 `;
 
@@ -119,7 +138,7 @@ const selected = css`
   }
 
   @media all and (max-width: 768px) {
-    padding: 3px 8px;
+    padding: 2px 8px;
 
     .main_link {
       font-size: 16px;
@@ -152,6 +171,10 @@ const memberList = css`
   &.noneList {
     display: none;
   }
+
+  @media all and (max-width: 768px) {
+    margin-left: -2px;
+  }
 `;
 
 const member = css`
@@ -172,5 +195,6 @@ const member = css`
   @media all and (max-width: 768px) {
     font-size: 16px;
     font-weight: 500;
+    height: 47px;
   }
 `;

@@ -14,7 +14,7 @@ const Card = css`
   .tag {
     font-weight: 700;
     font-size: 1rem;
-    color: #0f6ad4;
+    color: #0b6ff2;
     position: absolute;
     top: -1.6rem;
   }

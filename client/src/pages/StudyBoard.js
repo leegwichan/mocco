@@ -7,7 +7,6 @@ import request from '../api';
 import TaskBox from '../components/PageComponent/StudyBoard/TaskBox/TaskBox';
 import StudyRuleModal from '../components/PageComponent/StudyBoard/StudyRuleModal';
 import ProgressSection from '../components/PageComponent/StudyBoard/Progress/ProgressSection';
-import Footer from '../components/Common/Footer';
 
 function StudyBoard() {
   const { studyId, memberId } = useParams();
@@ -16,7 +15,6 @@ function StudyBoard() {
   const nowStudy = {
     ...userInfo.progressStudy.filter((el) => el.studyId === Number(studyId)),
   }[0];
-  console.log(nowStudy);
   const [totalTask, setTotalTask] = useState(0);
   const [expiredTaskCount, setExpiredTaskCount] = useState(0);
   const [memberProgressArr, setMemberProgressArr] = useState();
@@ -26,7 +24,6 @@ function StudyBoard() {
     request(`/api/study-progress/main/${studyId}/member/${memberId}`)
       .then((res) => {
         setStudyInfo(res.data.data);
-        console.log(studyInfo);
         return res;
       })
       .then((res) => {
@@ -48,8 +45,6 @@ function StudyBoard() {
   useEffect(() => {
     getStudyInfo();
   }, []);
-
-  console.log(selectedId);
 
   return (
     <main css={totalContainer}>
@@ -78,7 +73,6 @@ function StudyBoard() {
           />
         </section>
       </div>
-      <Footer />
     </main>
   );
 }
@@ -87,10 +81,10 @@ export default StudyBoard;
 
 const totalContainer = css`
   width: 100vw;
-  height: calc(100vh - 64px);
   padding-top: 100px;
   @media all and (max-width: 767px) {
     padding-top: 68px;
+    background-color: #f0f8ff;
   }
 `;
 

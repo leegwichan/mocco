@@ -17,8 +17,7 @@ const gray = css`
   font-weight: 600;
   width: 100%;
   padding: 10px;
-  padding-bottom: 8px;
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
   border: none;
   display: flex;
   align-items: center;
