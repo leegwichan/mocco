@@ -145,7 +145,7 @@ const main = css`
   .small {
     width: 65px;
     height: 51px;
-    margin-left: 10px;
+    margin-left: 15px;
   }
 
   svg {
@@ -194,7 +194,7 @@ const container = css`
   }
 
   .small_box {
-    width: 98.2%;
+    width: 98.7%;
     margin-bottom: 30px;
     border-radius: 15px;
     box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
