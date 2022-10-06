@@ -59,7 +59,7 @@ function TaskBox({
     <div css={taskBox}>
       <div css={taskTop}>
         <div className="task">Task</div>
-        <section>
+        <section className="top">
           <div className="teamName">{teamName}</div>
           <div className="rule">
             <StudyRuleModal />
@@ -72,11 +72,13 @@ function TaskBox({
             select={select.memberId}
           />
         </div>
-        <SelectUser
-          memberInfo={studyInfo.memberList}
-          select={select}
-          setSelect={setSelect}
-        />
+        <div>
+          <SelectUser
+            memberInfo={studyInfo.memberList}
+            select={select}
+            setSelect={setSelect}
+          />
+        </div>
       </div>
       <section className="mobileProgress">
         <UserProgressBar
@@ -135,6 +137,9 @@ const taskTop = css`
 
   section {
     width: auto;
+  }
+
+  .top {
     display: flex;
     justify-content: center;
     align-items: center;

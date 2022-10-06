@@ -29,6 +29,10 @@ function AuthTaskModal({
       alert('인증 이미지를 삽입해주세요');
       return;
     }
+    if (authData.content.length === 0) {
+      alert('인증글을 입력해주세요');
+      return;
+    }
     if (authData.content.length >= 300) {
       alert('300자 이내로 입력해주세요');
       return;

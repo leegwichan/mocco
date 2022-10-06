@@ -112,6 +112,7 @@ const container = css`
   @media all and (max-width: 767px) {
     height: 47px;
     margin-top: 10px;
+    width: 200px;
   }
 `;
 
