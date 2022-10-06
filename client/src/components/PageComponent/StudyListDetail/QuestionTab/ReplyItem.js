@@ -51,6 +51,11 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         height="50"
         fill="#0b6ff2"
         viewBox="0 0 16 16"
+        className={
+          member && member.memberId === studyInfo.member.memberId
+            ? 'small'
+            : null
+        }
       >
         <path
           fillRule="evenodd"
@@ -58,7 +63,13 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         />
       </svg>
       <section css={container}>
-        <div className="reply_box">
+        <div
+          className={
+            member && member.memberId === studyInfo.member.memberId
+              ? 'small_box'
+              : 'reply_box'
+          }
+        >
           <div
             css={profile}
             role="presentation"
@@ -67,10 +78,9 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
             }
           >
             <img src={member.profileImage} alt="프로필 이미지" css={image} />
-            <span className="main_link">{member.nickname}</span>
-            {userInfo !== null &&
-            userInfo.memberId === studyInfo.member.memberId ? (
-              <span>
+            <span className="main_link">{member && member.nickname}</span>
+            {member && member.memberId === studyInfo.member.memberId ? (
+              <span className="studyLeader">
                 <Button type="small_lightblue" text="스터디장" />
               </span>
             ) : null}
@@ -132,6 +142,12 @@ const main = css`
   justify-content: space-between;
   width: 100%;
 
+  .small {
+    width: 65px;
+    height: 51px;
+    margin-left: 15px;
+  }
+
   svg {
     margin-left: 20px;
     margin-top: 10px;
@@ -164,6 +180,37 @@ const container = css`
         cursor: pointer;
         color: #066ff2;
       }
+    }
+
+    .studyLeader {
+      /* border: 1px solid red; */
+    }
+
+    @media all and (max-width: 768px) {
+      font-size: 15px;
+      width: 96%;
+      padding: 10px 20px;
+    }
+  }
+
+  .small_box {
+    width: 98.7%;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
+    padding: 20px;
+    font-size: 20px;
+
+    .main_link {
+      color: black;
+      &:hover {
+        cursor: pointer;
+        color: #066ff2;
+      }
+    }
+
+    .studyLeader {
+      /* border: 1px solid red; */
     }
 
     @media all and (max-width: 768px) {
