@@ -26,7 +26,7 @@ public class S3ImageUploadImpl implements S3ImageUpload{
     private String dir;
 
     private final AmazonS3Client s3Client;
-    private final String[] acceptFileExtensions = new String[]{".jpg", ".png", ".JPG", ".PNG"};
+    private final String[] acceptFileExtensions = new String[]{".jpg", ".png", ".jpeg", ".JPG", ".PNG", ".JPEG"};
 
     @Override
     public String upload(InputStream inputStream, String originFileName,
@@ -44,7 +44,8 @@ public class S3ImageUploadImpl implements S3ImageUpload{
 
     private void checkFileExtension(String originalFileName){
         for (String acceptFileExtension : acceptFileExtensions){
-            if (originalFileName.substring(originalFileName.length()-4).equals(acceptFileExtension)){
+            if (originalFileName.substring(originalFileName.length()-acceptFileExtension.length())
+                    .equals(acceptFileExtension)){
                 return;
             }
         }
