@@ -41,7 +41,9 @@ function ModifyUser() {
         githubRepository3: event.target.githubRepository3.value || null,
         profileImage: previewUrl,
       },
-    }).then((res) => setUserInfo(res.data.data));
+    })
+      .then((res) => setUserInfo(res.data.data))
+      .then(() => alert('회원 정보 수정이 완료되었습니다.'));
   };
   // 이미지 업로드 기능
   const onUploadImage = useCallback((e) => {
