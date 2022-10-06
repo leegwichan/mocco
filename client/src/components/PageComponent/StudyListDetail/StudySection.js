@@ -57,17 +57,41 @@ const StudySection = ({ id }) => {
         <div>
           <div className="detail_title">스터디 요약</div>
           <hr />
-          <div className="study_content">{studyInfo.summary}</div>
+          <div
+            className="study_content"
+            css={css`
+              white-space: pre-wrap;
+              word-wrap: break-word;
+            `}
+          >
+            {studyInfo.summary}
+          </div>
         </div>
         <div>
           <div className="detail_title">스터디 상세 설명</div>
           <hr />
-          <div className="study_content">{studyInfo.detail}</div>
+          <div
+            className="study_content"
+            css={css`
+              white-space: pre-wrap;
+              word-wrap: break-word;
+            `}
+          >
+            {studyInfo.detail}
+          </div>
         </div>
         <div>
           <div className="detail_title">스터디 규칙</div>
           <hr />
-          <div className="study_content">{studyInfo.rule}</div>
+          <div
+            className="study_content"
+            css={css`
+              white-space: pre-wrap;
+              word-wrap: break-word;
+            `}
+          >
+            {studyInfo.rule}
+          </div>
         </div>
         <div css={taskContainer}>
           <div className="task_title">스터디 Task</div>

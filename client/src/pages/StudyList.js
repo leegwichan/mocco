@@ -142,7 +142,7 @@ function StudyList() {
               <section>
                 <ul css={StudyCardContainer}>
                   {studyLists.map((studyData, i) => {
-                    if (studyLists.length - 4 === i) {
+                    if (studyLists.length - 1 === i) {
                       return (
                         <StudyCard
                           key={i}
