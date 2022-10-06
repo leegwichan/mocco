@@ -78,8 +78,8 @@ function StudyCard({ studyData, boxRef }) {
         </div>
         <div css={Content}>
           <div css={Summary}>
-            {studyData.summary.length > 20
-              ? `${studyData.summary.slice(0, 20)} ...`
+            {studyData.summary.length > 26
+              ? `${studyData.summary.slice(0, 25)} ...`
               : studyData.summary}
           </div>
           <hr css={DivideLine} />

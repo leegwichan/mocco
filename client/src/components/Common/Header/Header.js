@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'; // eslint-d
 import { useRecoilState } from 'recoil';
 import { userInfoState } from '../../../atom/atom';
 import { css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import request from '../../../api/index';
 import Button from '../Button';
 import ProfileModal from './ProfileModal';
@@ -23,11 +23,33 @@ const HeaderContainer = css`
   max-width: calc(1200px + 4rem);
   height: 100%;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 2rem 0 1.2rem;
   justify-content: space-between;
   @media (max-width: 768px) {
-    padding: 0 1rem;
+    padding: 0 0.8rem 0 0;
   }
+`;
+
+const LowerHeader = css`
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  height: 4rem;
+  background-color: #ffffff;
+  z-index: 5;
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
+const LowerHeaderFindStudy = css`
+  height: 100%;
+  flex: 1 0;
+  border: none;
+  background: none;
+  font-size: 0.8rem;
+  color: #555555;
 `;
 
 function Header() {
@@ -117,7 +139,8 @@ function Header() {
               align-items: center;
             `}
           >
-            <div
+            <Link
+              to={'/'}
               css={css`
                 height: 100%;
                 @media (max-width: 768px) {
@@ -132,7 +155,7 @@ function Header() {
                   height: 100%;
                 `}
               />
-            </div>
+            </Link>
             <div
               css={css`
                 @media (max-width: 768px) {
@@ -250,110 +273,92 @@ function Header() {
           </div>
         </div>
       </header>
-      <div
-        css={css`
-          position: fixed;
-          bottom: 0;
-          display: flex;
-          width: 100%;
-          height: 4rem;
-          background-color: #ffffff;
-          z-index: 5;
-          @media (min-width: 769px) {
-            display: none;
-          }
-        `}
-      >
-        <button
-          onClick={handleFindStudyClick}
-          css={css`
-            height: 100%;
-            flex: 1 0;
-            border: none;
-            background: none;
-            font-size: 0.8rem;
-            color: #555555;
-          `}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
+      {/* 반응형 하단 바 */}
+      {userInfo && (
+        <div css={LowerHeader}>
+          <button onClick={handleFindStudyClick} css={LowerHeaderFindStudy}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+              css={css`
+                height: 50%;
+              `}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"
+              />
+            </svg>
+
+            <div>스터디 찾기</div>
+          </button>
+
+          <button
+            onClick={handleMyPageClick}
             css={css`
-              height: 50%;
+              height: 100%;
+              flex: 1 0;
+              border: none;
+              background: none;
+              font-size: 0.8rem;
+              color: #555555;
             `}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"
-            />
-          </svg>
-          <div>스터디 찾기</div>
-        </button>
-        <button
-          onClick={handleMyPageClick}
-          css={css`
-            height: 100%;
-            flex: 1 0;
-            border: none;
-            background: none;
-            font-size: 0.8rem;
-            color: #555555;
-          `}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+              css={css`
+                height: 50%;
+              `}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+              />
+            </svg>
+            <div>마이 페이지</div>
+          </button>
+          <button
+            onClick={handleProfileClick}
             css={css`
-              height: 50%;
+              height: 100%;
+              flex: 1 0;
+              border: none;
+              background: none;
+              color: #555555;
             `}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-            />
-          </svg>
-          <div>마이 페이지</div>
-        </button>
-        <button
-          onClick={handleProfileClick}
-          css={css`
-            height: 100%;
-            flex: 1 0;
-            border: none;
-            background: none;
-            color: #555555;
-          `}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-            css={css`
-              height: 50%;
-            `}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-          </svg>
-          <div>My</div>
-        </button>
-      </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+              css={css`
+                height: 50%;
+              `}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <div>My</div>
+          </button>
+        </div>
+      )}
     </>
   );
 }
