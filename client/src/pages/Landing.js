@@ -8,6 +8,8 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 달리는괴물 from '../asset/달리는괴물.png';
 import 달리는사람 from '../asset/달리는사람.png';
+import { useRecoilValue } from 'recoil';
+import { userInfoState } from '../atom/atom';
 
 const MainContainer = css`
   width: 100vw;
@@ -345,6 +347,7 @@ const charac = css`
 
 function Landing() {
   const [study, setStudy] = useState(null);
+  const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const bar = useRef(null);
 
@@ -357,6 +360,10 @@ function Landing() {
 
   const clickHandler = () => {
     navigate('studylist');
+  };
+
+  const handleEnterStudyClick = () => {
+    navigate('/studylist');
   };
 
   return (
@@ -462,6 +469,33 @@ function Landing() {
           <img className="human" src={달리는사람} alt="달리는사람"></img>
         </div>
       </section>
+      {/* 비로그인 시 스터디 참여하기 버튼 */}
+      {!userInfo && console.log('비로그인')}
+      {!userInfo && console.log(userInfo)}
+      {!userInfo && (
+        <button
+          onClick={handleEnterStudyClick}
+          css={css`
+            position: fixed;
+            left: 10%;
+            bottom: 1rem;
+            width: 80%;
+            height: 3rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #0b6bff;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 5;
+            @media (min-width: 769px) {
+              display: none;
+            }
+          `}
+        >
+          스터디 참여하기
+        </button>
+      )}
     </div>
   );
 }
