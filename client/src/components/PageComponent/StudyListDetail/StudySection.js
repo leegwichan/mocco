@@ -194,8 +194,9 @@ const info = css`
 
   @media all and (max-width: 768px) {
     .info {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       margin-top: 10px;
+      margin-bottom: 7px;
     }
   }
 `;
