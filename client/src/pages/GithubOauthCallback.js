@@ -82,7 +82,6 @@ function GithubOauthCallback() {
   const location = useLocation();
   const setUserInfoState = useSetRecoilState(userInfoState);
   const bar = useRef(null);
-  console.log(location);
 
   useEffect(() => {
     bar.current.style.width = '100%';
@@ -100,7 +99,6 @@ function GithubOauthCallback() {
         localStorage.setItem('refreshToken', res.headers.refreshtoken);
         setAuthorizationToken(res.headers.accesstoken);
         setUserInfoState(res.data.data);
-        console.log('res', res);
         return res;
       })
       .then((res) => {
