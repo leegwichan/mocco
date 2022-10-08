@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
-// import request from '../api';
-// import { useRecoilValue } from 'recoil';
-// import { userInfoState } from '../atom/atom';
-import { useLocation } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { userInfoState } from '../atom/atom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 import 달리는사람 from '../asset/달리는사람.png';
 import 달리는괴물 from '../asset/달리는괴물.png';
 import request from '../api';
@@ -78,8 +78,9 @@ const Loading = css`
 `;
 
 function GithubOauthCallback() {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
+  const setUserInfoState = useSetRecoilState(userInfoState);
   const bar = useRef(null);
   console.log(location);
 
@@ -93,7 +94,23 @@ function GithubOauthCallback() {
       data: {
         authorizationCode: code,
       },
-    });
+    })
+      .then((res) => {
+        localStorage.setItem('accessToken', res.headers.accesstoken);
+        localStorage.setItem('refreshToken', res.headers.refreshtoken);
+        setAuthorizationToken(res.headers.accesstoken);
+        setUserInfoState(res.data.data);
+        console.log('res', res);
+        return res;
+      })
+      .then((res) => {
+        navigate(
+          location.state
+            ? location.state.from
+            : `/main/${res.data.data.memberId}`
+        );
+      })
+      .catch((err) => console.log(err));
   }, [location.search]);
 
   return (
