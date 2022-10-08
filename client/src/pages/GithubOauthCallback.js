@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react'; // eslint-disable-line no-unused-vars
 import { css } from '@emotion/react';
-import request from '../api';
-import { useRecoilValue } from 'recoil';
-import { userInfoState } from '../atom/atom';
-import { useLocation, useNavigate } from 'react-router-dom';
+// import request from '../api';
+// import { useRecoilValue } from 'recoil';
+// import { userInfoState } from '../atom/atom';
+import { useLocation } from 'react-router-dom';
 import 달리는사람 from '../asset/달리는사람.png';
 import 달리는괴물 from '../asset/달리는괴물.png';
+import request from '../api';
 
 const Loading = css`
   display: flex;
@@ -77,47 +78,27 @@ const Loading = css`
 `;
 
 function GithubOauthCallback() {
-  const member = useRecoilValue(userInfoState);
-  const memberId = member.memberId;
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   const location = useLocation();
   const bar = useRef(null);
+  console.log(location);
 
   useEffect(() => {
     bar.current.style.width = '100%';
-    let code = location.search.substring(6);
-    let body = {
-      authorizationCode: code,
-    };
-    async function getData() {
-      try {
-        const response = await request.patch(`/api/members/github-user`, body);
-        console.log(response);
-        console.log(response.data);
-        navigate(`/main/${memberId}`);
-      } catch (err) {
-        console.log(err);
-        if (
-          err.response.data.status === 400 &&
-          err.response.data.message ===
-            '이 계정의 깃허브를 연동한 유저가 이미 존재합니다.'
-        ) {
-          alert(err.response.data.message);
-          navigate(-2);
-        }
-        if (err.response.data.status === 500) {
-          alert(err.response.data.message);
-          navigate(-2);
-        }
-      }
-    }
-    getData();
-  }, [location]);
+    const params = new URLSearchParams(location.search);
+    const code = params.get('code');
+    request({
+      method: 'post',
+      url: '/api/register/github-login',
+      data: {
+        authorizationCode: code,
+      },
+    });
+  }, [location.search]);
 
   return (
     <div css={Loading}>
-      <img className="mocco" src={달리는괴물} alt="달리는괴물"></img>
-
+      n<img className="mocco" src={달리는괴물} alt="달리는괴물"></img>
       <div>
         <div className="txtWithCharac">
           <div className="txt">깃헙 로그인중...</div>
