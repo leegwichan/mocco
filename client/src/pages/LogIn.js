@@ -179,14 +179,20 @@ function LogIn() {
           </button>
         </form>
 
-        <p
+        <a
+          href="https://github.com/login/oauth/authorize?client_id=Iv1.56f7d0178056b5a9&redirect_uri=http://localhost:3000/oauth/github/callback"
           css={css`
             text-align: center;
             font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            color: black;
+            display: flex;
+            justify-content: center;
           `}
         >
           소셜로 로그인 하기
-        </p>
+        </a>
 
         <a
           href="https://github.com/login/oauth/authorize?client_id=Iv1.56f7d0178056b5a9&redirect_uri=http://localhost:3000/oauth/github/callback"
