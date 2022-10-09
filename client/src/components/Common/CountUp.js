@@ -2,20 +2,18 @@ import { useState } from 'react';
 import { css } from '@emotion/react';
 
 const numberSpace = css`
-  width: 68.27px;
+  width: 68px;
 `;
 export const CountUp = ({ number }) => {
   const [isLoading, setIsLoading] = useState(true);
-
-  // let number;
-  // setTimeout(() => {
-  //   number = max;
-  // }, 3000);
-
   setTimeout(() => {
     setIsLoading(false);
     console.log(isLoading);
   }, 3000);
+  // let number;
+  // setTimeout(() => {
+  //   number = max;
+  // }, 3000);
 
   // let current = max;
   // let number;
