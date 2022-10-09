@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 
 const intro = css`
   border: 1px solid #d1d1d1;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   width: 65%;
   padding: 25px;
