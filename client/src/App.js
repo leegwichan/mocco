@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from './atom/atom';
-import PrivateRoute from './components/Common/authentication/PrivateRoute';
+import PrivateRoute from './components/Common/Authentication/PrivateRoute';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -16,6 +16,7 @@ import Callback from './pages/Callback';
 import Header from './components/Common/Header/Header';
 import TermsOfUse from './pages/TermsOfUse';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import GithubOauthCallback from './pages/GithubOauthCallback';
 import { css } from '@emotion/react';
 import Footer from './components/Common/Footer';
 
@@ -58,6 +59,10 @@ function App() {
         <Route path="/main/:id" element={<Main />} />
         <Route path="/termsofuse" element={<TermsOfUse />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+        <Route
+          path="/oauth/github/callback"
+          element={<GithubOauthCallback />}
+        />
         <Route path="*" element={<Landing />} />
       </Routes>
       <Footer />

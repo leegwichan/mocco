@@ -36,7 +36,6 @@ public class StudyServiceImpl implements StudyService{
     @Value("${image.default.study}")
     private String studyDefaultImage;
 
-
     @Override
     public Study createStudy(Study study) {
         if(study.getTaskList() == null) throw new BusinessLogicException(ExceptionCode.TASK_NOT_EXIST);

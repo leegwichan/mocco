@@ -70,6 +70,8 @@ public class TokenInterceptor implements HandlerInterceptor {
                     authenticationService.AuthenticationCheckStudyLeader(id,tokenMemberId);
                 } else if(methodName.equals("getTaskCheck")) {
                     authenticationService.AuthenticationCheckStudyMemberByTaskId(id, tokenMemberId);
+                } else if(methodName.equals("getEvaluationInfo")){
+                    authenticationService.AuthenticationCheckStudyMember(id, tokenMemberId);
                 } else{
                 authenticationService.AuthenticationCheckWithId(n.getParameter().getName(), id, tokenMemberId);
                 }

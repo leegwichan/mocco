@@ -27,7 +27,7 @@ public class Study extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long studyId;
 
-    @Column(length = 30, nullable = false)
+    @Column(length = 15, nullable = false)
     private String teamName;
 
     @Column(length = 50, nullable = false)

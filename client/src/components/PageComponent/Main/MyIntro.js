@@ -8,6 +8,8 @@ const intro = css`
   width: 65%;
   padding: 25px;
   font-size: 15px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
   .empty {
     width: 100%;
     height: 100%;

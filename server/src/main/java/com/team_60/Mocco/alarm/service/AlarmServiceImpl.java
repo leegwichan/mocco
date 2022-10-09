@@ -27,6 +27,7 @@ public class AlarmServiceImpl implements AlarmService{
     private final SseService sseService;
 
     @Override
+    @Transactional(readOnly = true)
     public SseEmitter subscribeAlarm(long memberId) {
         Member findMember = memberService.findVerifiedMember(memberId);
         SseEmitter sseEmitter = sseService.subscribeAlarm(findMember);
@@ -37,6 +38,7 @@ public class AlarmServiceImpl implements AlarmService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void unsubscribeAlarm(String subscribeId) {
         sseService.unsubscribeAlarm(subscribeId);
     }
@@ -55,7 +57,6 @@ public class AlarmServiceImpl implements AlarmService{
         alarmRepository.delete(findAlarm);
     }
 
-    @Transactional
     @Override
     public void deleteAlarmsByMemberId(long memberId) {
         Member findMember = memberService.findVerifiedMember(memberId);
