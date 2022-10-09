@@ -180,6 +180,11 @@ function SignUp() {
                 font-weight: normal;
                 color: #ffffff;
                 margin-left: 8px;
+                border: 1px solid #0b6ff2;
+                &:hover {
+                  color: #0b6ff2;
+                  background-color: #ffffff;
+                }
               `}
               type="button"
               onClick={onClick}
@@ -395,6 +400,11 @@ function SignUp() {
               margin-bottom: 30px;
               font-size: 18px;
               font-weight: normal;
+              border: 1px solid #0b6ff2;
+              &:hover {
+                color: #0b6ff2;
+                background-color: #ffffff;
+              }
             `}
           >
             회원가입

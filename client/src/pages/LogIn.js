@@ -165,6 +165,11 @@ function LogIn() {
               border-width: 0px;
               margin-top: 12px;
               margin-bottom: 30px;
+              border: 1px solid #0b6ff2;
+              &:hover {
+                color: #0b6ff2;
+                background-color: #ffffff;
+              }
             `}
           >
             로그인
