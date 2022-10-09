@@ -121,11 +121,15 @@ function Header() {
     setIsProfileModalOpen(false);
   };
 
+  // 로그아웃
   const handleLogoutClick = () => {
-    request.post('/api/register/logout').then(() => {
-      setAuthorizationToken();
-      setUserInfo(null);
-    });
+    request
+      .post('/api/register/logout')
+      .then(() => {
+        setAuthorizationToken();
+        setUserInfo(null);
+      })
+      .then(() => navigate('/'));
   };
   return (
     <>
