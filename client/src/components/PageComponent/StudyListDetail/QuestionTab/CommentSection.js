@@ -66,16 +66,18 @@ const CommentSection = ({
           >
             <img src={member.profileImage} alt="프로필 이미지" css={image} />
             <span className="main_link">{member && member.nickname}</span>
-            {member && member.memberId === studyInfo.member.memberId ? (
+            {member?.memberId &&
+            member.memberId === studyInfo.member.memberId ? (
               <span>
                 <Button type="small_lightblue" text="스터디장" />
               </span>
             ) : null}
           </div>
-
           <div
             css={css`
               margin-top: 16px;
+              white-space: pre-wrap;
+              word-wrap: break-word;
             `}
           >
             {content}

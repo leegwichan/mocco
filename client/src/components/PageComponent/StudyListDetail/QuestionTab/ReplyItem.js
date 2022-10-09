@@ -88,6 +88,8 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
           <div
             css={css`
               margin-top: 16px;
+              white-space: pre-wrap;
+              word-wrap: break-word;
             `}
           >
             {reply.content}

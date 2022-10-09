@@ -74,6 +74,8 @@ function ProposalSection({ proposal, getProposalInfof }) {
       <div
         css={css`
           margin-top: 16px;
+          white-space: pre-wrap;
+          word-wrap: break-word;
         `}
       >
         {proposal.content}
