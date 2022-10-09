@@ -16,14 +16,6 @@ function LogIn() {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    // setTimeout(() => {
-    //   localStorage.setItem('accessToken', 'accessToken-test');
-    //   localStorage.setItem('refreshToken', 'refreshToken-test');
-
-    //   setUserInfoState({ memberId: '29', username: 'seraheo' });
-    //   navigate(location.state ? location.state.from : `/main/29`);
-    // }, 1000);
-
     request({
       method: 'post',
       url: '/api/register/login',
@@ -47,7 +39,7 @@ function LogIn() {
             : `/main/${res.data.data.memberId}`
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err.response.data.message));
   };
 
   const openForgotPasswordModal = () => setModalOn(true);
