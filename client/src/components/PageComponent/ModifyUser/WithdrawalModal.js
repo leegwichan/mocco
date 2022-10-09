@@ -47,7 +47,7 @@ function WarningDescription() {
 
 function WithdrawalModal({ onClose }) {
   const userInfo = useRecoilValue(userInfoState);
-
+  const [complete, setComplete] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
   const onChange = (event) => {
@@ -62,57 +62,117 @@ function WithdrawalModal({ onClose }) {
       url: `/api/members`,
     })
       .then(onclose)
-      .then(() => alert('회원 탈퇴 성공'));
+      .then(() => setComplete(true));
   };
 
   return (
     <Modal onClose={onClose}>
-      <form
-        css={css`
-          margin: 0 32px;
-        `}
-        onSubmit={onSubmit}
-      >
-        <h3
-          css={css`
-            text-align: center;
-            margin-top: 32px;
-            margin-bottom: 15px;
-            font-size: 18px;
-            font-weight: bold;
-          `}
-        >
-          회원 탈퇴
-        </h3>
-        <div
-          css={css`
-            margin-bottom: 15px;
-          `}
-        >
-          <h4
+      {complete ? (
+        <div css={modalContentWrapper}>
+          <h3
             css={css`
-              font-size: 14px;
+              font-size: 16px;
+            `}
+          >
+            MOCCO 회원 탈퇴가 완료되었습니다.
+          </h3>
+          <span
+            css={css`
+              font-size: 18px;
+              flex: 1;
+              display: flex;
+              align-items: center;
+              margin: 0 16px;
+            `}
+          >
+            <p
+              css={css`
+                font-size: 11px;
+              `}
+            >
+              그동안 MOCCO 서비스를 아끼고 사랑해 주셔서 감사합니다. 더욱더
+              노력하고 발전하는 MOCCO가 되겠습니다.
+            </p>
+          </span>
+          <button css={modalButton} type="button" onClick={onClose}>
+            MOCCO 첫화면
+          </button>
+        </div>
+      ) : (
+        <form
+          css={css`
+            margin: 0 32px;
+          `}
+          onSubmit={onSubmit}
+        >
+          <h3
+            css={css`
+              text-align: center;
+              margin-top: 32px;
+              margin-bottom: 15px;
+              font-size: 18px;
+              font-weight: bold;
+            `}
+          >
+            회원 탈퇴
+          </h3>
+          <div
+            css={css`
               margin-bottom: 15px;
             `}
           >
-            {userInfo.nickname}님,
-            <br /> 정말 탈퇴하시겠어요?
-          </h4>
-          <WarningDescription />
-          <WarningDescription />
-          <WarningDescription />
-        </div>
-        <ModifyUserInput
-          labelText="탈퇴하시려면 이메일을 입력해주세요."
-          name="checkEmail"
-          onChange={onChange}
-        />
-        <div>
-          <ModifyUserButton buttonText="탈퇴하기" disabled={disabled} />
-        </div>
-      </form>
+            <h4
+              css={css`
+                font-size: 14px;
+                margin-bottom: 15px;
+              `}
+            >
+              {userInfo.nickname}님,
+              <br /> 정말 탈퇴하시겠어요?
+            </h4>
+            <WarningDescription />
+            <WarningDescription />
+            <WarningDescription />
+          </div>
+          <ModifyUserInput
+            labelText="탈퇴하시려면 이메일을 입력해주세요."
+            name="checkEmail"
+            onChange={onChange}
+          />
+          <div>
+            <ModifyUserButton buttonText="탈퇴하기" disabled={disabled} />
+          </div>
+        </form>
+      )}
     </Modal>
   );
 }
+
+const modalContentWrapper = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 250px;
+  width: 300px;
+  padding-top: 30px;
+`;
+
+const modalButton = css`
+  width: 240px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #0b6ff2;
+  margin-bottom: 24px;
+  font-size: 18px;
+  color: #ffffff;
+  border: none;
+  border: 1px solid #0b6ff2;
+
+  &:hover {
+    color: #0b6ff2;
+    background-color: #ffffff;
+  }
+`;
 
 export default WithdrawalModal;
