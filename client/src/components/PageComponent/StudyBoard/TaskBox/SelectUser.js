@@ -89,9 +89,8 @@ const container = css`
   background-color: #ffffff;
   border-radius: 20px;
   z-index: 2;
-  box-shadow: 0px 0px 15px 3px rgb(0 0 0 / 10%);
+  box-shadow: 0px 0px 15px 2px rgb(0 0 0 / 10%);
   border: 2px solid #0b6ff2;
-
   &:hover {
     cursor: pointer;
   }
@@ -106,9 +105,9 @@ const selected = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 500;
-  padding: 10px;
+  padding: 10px 6px;
   width: 215px;
   word-break: break-all;
 
@@ -116,7 +115,7 @@ const selected = css`
     font-size: 1px;
     padding: 7px;
     width: 25vw;
-    min-width: 110px;
+    min-width: 120px;
     svg {
       width: 16px;
     }
@@ -146,7 +145,7 @@ const memberList = css`
     margin-top: 8px;
     border-radius: 15px;
     width: 25.3vw;
-    min-width: 110px;
+    min-width: 120px;
   }
 `;
 
