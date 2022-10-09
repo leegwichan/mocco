@@ -114,6 +114,11 @@ const container = css`
     margin-top: 10px;
     width: 200px;
   }
+
+  @media all and (max-width: 420px) {
+    margin-top: 10px;
+    width: 175px;
+  }
 `;
 
 const selected = css`
@@ -145,6 +150,15 @@ const selected = css`
       font-weight: 500;
     }
   }
+
+  @media all and (max-width: 420px) {
+    padding: 2px 8px;
+
+    .main_link {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+  }
 `;
 
 const image = css`
@@ -152,6 +166,11 @@ const image = css`
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
+
+  @media all and (max-width: 420px) {
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 const memberList = css`
@@ -174,6 +193,12 @@ const memberList = css`
 
   @media all and (max-width: 768px) {
     margin-left: -2px;
+    width: 200px;
+  }
+
+  @media all and (max-width: 420px) {
+    margin-left: -2px;
+    width: 175px;
   }
 `;
 
@@ -196,5 +221,11 @@ const member = css`
     font-size: 16px;
     font-weight: 500;
     height: 47px;
+  }
+
+  @media all and (max-width: 420px) {
+    font-size: 0.85rem;
+    font-weight: 500;
+    height: 43px;
   }
 `;

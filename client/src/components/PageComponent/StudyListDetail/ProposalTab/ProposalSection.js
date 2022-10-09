@@ -135,6 +135,17 @@ const container = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 13px;
+        height: 32px;
+        width: 40px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }
@@ -147,6 +158,10 @@ const container = css`
 
     @media all and (max-width: 768px) {
       font-size: 12px;
+    }
+
+    @media all and (max-width: 420px) {
+      font-size: 10px;
     }
   }
 

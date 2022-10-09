@@ -68,7 +68,7 @@ const CommentSection = ({
             <span className="main_link">{member && member.nickname}</span>
             {member?.memberId &&
             member.memberId === studyInfo.member.memberId ? (
-              <span>
+              <span className="studyLeader">
                 <Button type="small_lightblue" text="스터디장" />
               </span>
             ) : null}
@@ -160,6 +160,17 @@ const container = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 13px;
+        height: 32px;
+        width: 48px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }
@@ -171,7 +182,13 @@ const container = css`
     margin-right: 10px;
 
     @media all and (max-width: 768px) {
+      margin-top: 13px;
       font-size: 12px;
+    }
+
+    @media all and (max-width: 420px) {
+      margin-top: 0px;
+      font-size: 10px;
     }
   }
 
@@ -184,8 +201,16 @@ const container = css`
   }
 
   @media all and (max-width: 768px) {
-    font-size: 15px;
+    font-size: 14px;
     padding: 10px 20px;
+  }
+
+  .studyLeader {
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 14px;
+      }
+    }
   }
 `;
 
@@ -213,6 +238,17 @@ const editContainer = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 13px;
+        height: 32px;
+        width: 40px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }

@@ -36,7 +36,6 @@ function InputProposal({ getProposalInfof }) {
           getProposalInfof();
         })
         .catch((err) => {
-          // console.log(err.response.data.message);
           alert(err.response.data.message);
         });
     }
@@ -72,6 +71,10 @@ const container = css`
     border-radius: 5px;
     padding: 0.5rem;
     flex-grow: 1;
+
+    @media all and (max-width: 420px) {
+      font-size: 12px;
+    }
   }
 
   .btn_container {
@@ -79,6 +82,13 @@ const container = css`
       button {
         font-size: 15px;
         padding: 0 15px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 13px;
+        padding: 0 6px;
       }
     }
   }

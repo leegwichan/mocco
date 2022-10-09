@@ -79,7 +79,6 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
               margin-top: 16px;
               white-space: pre-wrap;
               word-wrap: break-word;
-              border: 1px solid red;
             `}
           >
             {reply.content}
@@ -179,37 +178,92 @@ const container = css`
     }
 
     @media all and (max-width: 768px) {
-      font-size: 15px;
+      font-size: 14px;
       width: 96%;
       padding: 10px 20px;
     }
-  }
-
-  .button_container {
-    margin-top: 16px;
-    display: flex;
-    justify-content: flex-end;
 
     @media all and (max-width: 768px) {
-      button {
+      font-size: 13px;
+      width: 96%;
+      padding: 10px 20px;
+    }
+
+    .studyLeader {
+      @media all and (max-width: 420px) {
+        button {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .button_container {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+
+      @media all and (max-width: 768px) {
+        button {
+          font-size: 15px;
+          height: 35px;
+          width: 48px;
+          margin-left: 7px;
+          padding-top: 4px;
+        }
+      }
+
+      @media all and (max-width: 420px) {
+        button {
+          font-size: 13px;
+          height: 32px;
+          width: 44px;
+          margin-left: 7px;
+          padding-top: 0px;
+        }
+      }
+
+      .day {
+        margin-top: 13px;
+        margin-right: 10px;
         font-size: 15px;
-        height: 35px;
-        width: 48px;
-        margin-left: 7px;
+        color: #999999;
+
+        @media all and (max-width: 768px) {
+          margin-top: 13px;
+          font-size: 12px;
+        }
+
+        @media all and (max-width: 420px) {
+          margin-top: 0px;
+          font-size: 10px;
+        }
       }
     }
   }
+`;
 
-  .day {
-    margin-top: 13px;
-    margin-right: 10px;
-    font-size: 15px;
-    color: #999999;
+const profile = css`
+  display: flex;
+  align-items: center;
 
-    @media all and (max-width: 768px) {
-      font-size: 12px;
+  .main_link {
+    color: black;
+    margin: 12px;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+
+    @media all and (max-width: 420px) {
+      margin: 12px 5px;
     }
   }
+`;
+
+const image = css`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 `;
 
 const edited = css`
@@ -240,6 +294,17 @@ const editContainer = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 13px;
+        height: 32px;
+        width: 40px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }
@@ -255,24 +320,4 @@ const editInput = css`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const profile = css`
-  display: flex;
-  align-items: center;
-
-  .main_link {
-    color: black;
-    margin: 12px;
-    &:hover {
-      cursor: pointer;
-      color: #066ff2;
-    }
-  }
-`;
-
-const image = css`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
 `;
