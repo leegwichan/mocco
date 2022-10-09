@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../../Common/Modal';
 import { css } from '@emotion/react';
 import ModifyUserInput from './ModifyUserInput';
 import ModifyUserButton from './ModifyUserButton';
 import request from '../../../api';
-import { useRecoilValue } from 'recoil';
-import { userInfoState } from '../../../atom/atom';
+import { useRecoilState } from 'recoil';
+import { userInfoState, preventAuthenticatedState } from '../../../atom/atom';
+import setAuthorizationToken from '../../../utils/setAuthorizationToken';
 
 function WarningDescription() {
   return (
@@ -46,12 +48,14 @@ function WarningDescription() {
 }
 
 function WithdrawalModal({ onClose }) {
-  const userInfo = useRecoilValue(userInfoState);
+  const navigate = useNavigate();
   const [complete, setComplete] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+  const [, setPreventAuthenticated] = useRecoilState(preventAuthenticatedState);
 
   const onChange = (event) => {
-    setDisabled(event.currentTarget.value !== userInfo.email);
+    setDisabled(event.currentTarget.value !== userInfo?.email);
   };
 
   const onSubmit = (event) => {
@@ -61,8 +65,17 @@ function WithdrawalModal({ onClose }) {
       method: 'delete',
       url: `/api/members`,
     })
-      .then(onclose)
+      .then(() => {
+        setAuthorizationToken();
+        setPreventAuthenticated(true);
+        setUserInfo(null);
+      })
       .then(() => setComplete(true));
+  };
+
+  const onMoveLanding = () => {
+    setPreventAuthenticated(false);
+    navigate('/');
   };
 
   return (
@@ -94,7 +107,7 @@ function WithdrawalModal({ onClose }) {
               노력하고 발전하는 MOCCO가 되겠습니다.
             </p>
           </span>
-          <button css={modalButton} type="button" onClick={onClose}>
+          <button css={modalButton} type="button" onClick={onMoveLanding}>
             MOCCO 첫화면
           </button>
         </div>
@@ -127,7 +140,7 @@ function WithdrawalModal({ onClose }) {
                 margin-bottom: 15px;
               `}
             >
-              {userInfo.nickname}님,
+              {userInfo?.nickname}님,
               <br /> 정말 탈퇴하시겠어요?
             </h4>
             <WarningDescription />
