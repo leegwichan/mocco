@@ -14,6 +14,7 @@ const Container = css`
   .none {
     display: none;
   }
+
   @media all and (max-width: 1023px) {
     .icon {
       display: none;
@@ -28,7 +29,10 @@ const Slides_Wraper = css`
   margin: 0 auto;
   overflow: hidden;
   box-sizing: border-box;
-  @media all and (max-width: 1023px) {
+  @media all and (max-width: 1578px) {
+    padding: 2.5vw 4vw;
+  }
+  @media all and (max-width: 1082px) {
     height: 100%;
     overflow: visible;
     padding: 0vw;
@@ -49,7 +53,7 @@ const Slides = css`
     float: left;
     margin-right: 70px;
   }
-  @media all and (max-width: 1023px) {
+  @media all and (max-width: 1082px) {
     height: 100%;
     padding: 0vw;
     width: 100%;

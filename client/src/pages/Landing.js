@@ -10,6 +10,7 @@ import 달리는괴물 from '../asset/달리는괴물.png';
 import 달리는사람 from '../asset/달리는사람.png';
 import { useRecoilValue } from 'recoil';
 import { userInfoState } from '../atom/atom';
+import { CountUp } from '../components/Common/CountUp';
 
 const MainContainer = css`
   width: 100vw;
@@ -45,6 +46,7 @@ const MainContainer = css`
 
   .imgContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 10px -5px 0px 9vw;
@@ -56,20 +58,30 @@ const first = css`
     width: 30vw;
     max-width: 272px;
   }
-
   .progress {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 7vw;
+    padding-bottom: 4vw;
     .firstTxt {
-      font-weight: 700;
-      font-size: 48px;
+      font-weight: 600;
+      font-size: 45px;
       color: #000000;
       margin-bottom: 1rem;
 
       @media all and (max-width: 767px) {
         font-size: 4vw;
+      }
+    }
+    .progressCountUp {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 25px;
+      line-height: 27px;
+      color: #0b6ff2;
+      @media all and (max-width: 767px) {
+        font-size: 2vw;
       }
     }
     .progressContainer {
@@ -82,21 +94,13 @@ const first = css`
       border-radius: 10px;
       display: flex;
       align-items: center;
-      span {
-        font-weight: 600;
-        font-size: 17px;
-        line-height: 27px;
-        color: #0b6ff2;
-        @media all and (max-width: 767px) {
-          font-size: 2vw;
-        }
-      }
+      margin-right: 10px;
     }
     .bar {
       width: 0%;
       height: 4vw;
       max-height: 34px;
-      background: #0f6bfd;
+      background: #0b6ff2;
       border-radius: 10px;
       animation: progress 3s ease-in-out forwards;
       @keyframes progress {
@@ -260,21 +264,27 @@ const third = css`
     align-items: center;
     font-weight: 500;
     font-size: 18px;
-    @media all and (max-width: 1023px) {
-      height: 7vw;
+    .txtCheck {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 2vw;
+    }
+    svg {
+      width: 40px;
     }
     @media all and (max-width: 767px) {
       width: 55vw;
       min-width: 275px;
       height: 12vw;
-      font-size: 3.5vw;
+      font-size: 3vw;
     }
   }
 
   .date {
-    margin-right: 2vw;
-    width: 6vw;
-    max-width: 70px;
+    width: 10vw;
+    max-width: 80px;
     min-width: 50px;
     height: 60px;
     background: #0b6ff2;
@@ -287,15 +297,12 @@ const third = css`
     font-size: 15px;
     line-height: 19px;
     color: #ffffff;
-    @media all and (max-width: 1023px) {
-      height: 7vw;
-    }
     @media all and (max-width: 767px) {
       font-size: 2.3vw;
       height: 12vw;
     }
     @media all and (max-width: 500px) {
-      font-size: 3vw;
+      font-size: 2vw;
     }
   }
 
@@ -345,6 +352,14 @@ const charac = css`
   }
 `;
 
+const illustBy = css`
+  color: white;
+  font-size: 1px;
+  a {
+    color: white;
+  }
+`;
+
 function Landing() {
   const [study, setStudy] = useState(null);
   const userInfo = useRecoilValue(userInfoState);
@@ -372,15 +387,25 @@ function Landing() {
         <div css={first} className="contentsContainer">
           <div className="imgContainer">
             <img src={랜딩모바일} alt="스마트폰실사용 화면"></img>
+            <div css={illustBy}>
+              Illustration by
+              <a href="https://icons8.com/illustrations/author/zD2oqC8lLBBA">
+                Icons 8
+              </a>
+              from
+              <a href="https://icons8.com/illustrations">Ouch!</a>
+            </div>
           </div>
           <div className="progress">
             <span className="firstTxt">
               <p>언제 어디서나</p>
               <p>모꼬와 함께 온라인 스터디</p>
             </span>
-            <div className="progressContainer">
-              <div className="bar" ref={bar}></div>
-              <span></span>
+            <div className="progressCountUp">
+              <div className="progressContainer">
+                <div className="bar" ref={bar}></div>
+              </div>
+              <CountUp number={100} />
             </div>
           </div>
         </div>
@@ -436,19 +461,67 @@ function Landing() {
             <div className="taskBars">
               <div className="task">
                 <div className="date">04/03</div>
-                리액트 강의 1~30강 듣기
+                <div className="txtCheck">
+                  리액트 강의 1~30강 듣기
+                  <svg
+                    clipRule="evenodd"
+                    fillRule="evenodd"
+                    strokeLinejoin="round"
+                    strokeMiterlimit="2"
+                    fill="#0b68ff"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm0 1.5c-4.69 0-8.498 3.807-8.498 8.497s3.808 8.498 8.498 8.498 8.497-3.808 8.497-8.498-3.807-8.497-8.497-8.497zm-5.049 8.886 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z"
+                      fillRule="nonzero"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
             <div className="taskBars">
               <div className="task">
                 <div className="date">04/12</div>
-                개인 토이 프로젝트
+                <div className="txtCheck">
+                  개인 토이 프로젝트
+                  <svg
+                    clipRule="evenodd"
+                    fillRule="evenodd"
+                    strokeLinejoin="round"
+                    strokeMiterlimit="2"
+                    fill="#0b68ff"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm0 1.5c-4.69 0-8.498 3.807-8.498 8.497s3.808 8.498 8.498 8.498 8.497-3.808 8.497-8.498-3.807-8.497-8.497-8.497zm-5.049 8.886 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z"
+                      fillRule="nonzero"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
             <div className="taskBars">
               <div className="task">
                 <div className="date">04/30</div>
-                스터디 서브 프로젝트
+                <div className="txtCheck">
+                  스터디 서브 프로젝트
+                  <svg
+                    clipRule="evenodd"
+                    fillRule="evenodd"
+                    strokeLinejoin="round"
+                    strokeMiterlimit="2"
+                    fill="#0b68ff"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m11.998 2.005c5.517 0 9.997 4.48 9.997 9.997 0 5.518-4.48 9.998-9.997 9.998-5.518 0-9.998-4.48-9.998-9.998 0-5.517 4.48-9.997 9.998-9.997zm0 1.5c-4.69 0-8.498 3.807-8.498 8.497s3.808 8.498 8.498 8.498 8.497-3.808 8.497-8.498-3.807-8.497-8.497-8.497zm-5.049 8.886 3.851 3.43c.142.128.321.19.499.19.202 0 .405-.081.552-.242l5.953-6.509c.131-.143.196-.323.196-.502 0-.41-.331-.747-.748-.747-.204 0-.405.082-.554.243l-5.453 5.962-3.298-2.938c-.144-.127-.321-.19-.499-.19-.415 0-.748.335-.748.746 0 .205.084.409.249.557z"
+                      fillRule="nonzero"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </section>

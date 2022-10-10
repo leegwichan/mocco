@@ -92,8 +92,8 @@ function Callback() {
     async function getData() {
       try {
         const response = await request.patch(`/api/members/github-user`, body);
-        console.log(response);
         console.log(response.data);
+        navigate(`/main/${memberId}`);
       } catch (err) {
         console.log(err);
         if (
