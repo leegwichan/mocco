@@ -26,8 +26,13 @@ const positiveButtonStyle = css`
   margin-bottom: 30px;
   font-size: 18px;
   font-weight: normal;
+  border: 1px solid #0b6ff2;
   &:disabled {
     background-color: #999999;
+  }
+  &:hover {
+    color: #0b6ff2;
+    background-color: #ffffff;
   }
 `;
 
@@ -42,6 +47,11 @@ const negativeButtonStyle = css`
   margin-bottom: 30px;
   font-size: 18px;
   font-weight: normal;
+  border: 1px solid #999999;
+  &:hover {
+    color: #999999;
+    background-color: #ffffff;
+  }
 `;
 
 export default ModifyUserButton;

@@ -1,6 +1,7 @@
+import { useMemo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { userInfoState } from './atom/atom';
+import { userInfoState, preventAuthenticatedState } from './atom/atom';
 import PrivateRoute from './components/Common/authentication/PrivateRoute';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
@@ -21,7 +22,15 @@ import { css } from '@emotion/react';
 import Footer from './components/Common/Footer';
 
 function App() {
-  const authenticated = !!useRecoilValue(userInfoState);
+  const authenticated = useRecoilValue(userInfoState);
+  const preventAuthenticated = useRecoilValue(preventAuthenticatedState);
+
+  const isAuth = useMemo(() => {
+    if (!authenticated && preventAuthenticated) {
+      return true;
+    }
+    return authenticated;
+  }, [authenticated]);
 
   return (
     <div
@@ -43,17 +52,19 @@ function App() {
         <Route
           path="/makestudy"
           element={
-            <PrivateRoute
-              authenticated={authenticated}
-              element={<MakeStudy />}
-            />
+            <PrivateRoute authenticated={isAuth} element={<MakeStudy />} />
           }
         />
         <Route path="/studylist/detail/:id" element={<StudyListDetail />} />
 
         {/* else */}
         <Route path="/studylist/modify/:id" element={<ModifyStudy />} />
-        <Route path="/modifyuser" element={<ModifyUser />} />
+        <Route
+          path="/modifyuser"
+          element={
+            <PrivateRoute authenticated={isAuth} element={<ModifyUser />} />
+          }
+        />
         <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
         <Route path="/oauthcallback" exact={true} element={<Callback />} />
         <Route path="/main/:id" element={<Main />} />

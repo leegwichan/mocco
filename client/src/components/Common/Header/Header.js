@@ -53,7 +53,7 @@ const LowerHeaderFindStudy = css`
 `;
 
 function Header() {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoState); //eslint-disable-line no-unused-vars
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false); //eslint-disable-line no-unused-vars
   const [alarm, setAlarm] = useState([]); //eslint-disable-line no-unused-vars
   const [subscribeId, setSubscribeId] = useState({}); //eslint-disable-line no-unused-vars
@@ -121,11 +121,15 @@ function Header() {
     setIsProfileModalOpen(false);
   };
 
+  // 로그아웃
   const handleLogoutClick = () => {
-    request.post('/api/register/logout').then(() => {
-      setAuthorizationToken();
-      setUserInfo(null);
-    });
+    request
+      .post('/api/register/logout')
+      .then(() => {
+        setAuthorizationToken();
+        setUserInfo(null);
+      })
+      .then(() => navigate('/'));
   };
   return (
     <>
