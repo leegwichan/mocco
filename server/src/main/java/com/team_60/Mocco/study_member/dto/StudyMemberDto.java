@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 public class StudyMemberDto {
 
     @AllArgsConstructor
@@ -18,6 +20,8 @@ public class StudyMemberDto {
         private int capacity;
         private String summary;
         private Study.StudyStatus studyStatus;
+        private List<Long> membersId;
+        private long teamLeaderId;
         private StudyMember.StudyMemberEvaluationStatus evaluationStatus;
     }
 }

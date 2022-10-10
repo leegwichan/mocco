@@ -11,6 +11,7 @@ import com.team_60.Mocco.study.entity.Study;
 import com.team_60.Mocco.study_member.entity.StudyMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -27,7 +28,7 @@ public class AlarmServiceImpl implements AlarmService{
     private final SseService sseService;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
     public SseEmitter subscribeAlarm(long memberId) {
         Member findMember = memberService.findVerifiedMember(memberId);
         SseEmitter sseEmitter = sseService.subscribeAlarm(findMember);
@@ -38,7 +39,7 @@ public class AlarmServiceImpl implements AlarmService{
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
     public void unsubscribeAlarm(String subscribeId) {
         sseService.unsubscribeAlarm(subscribeId);
     }
