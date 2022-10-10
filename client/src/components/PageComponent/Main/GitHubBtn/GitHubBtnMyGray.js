@@ -36,7 +36,7 @@ const icon = css`
 `;
 
 function GitHubBtnMyGray() {
-  const connectURI = `https://github.com/login/oauth/authorize?client_id=Iv1.56f7d0178056b5a9&redirect_uri=http://localhost:3000/oauthcallback`;
+  const connectURI = `https://github.com/login/oauth/authorize?client_id=Iv1.56f7d0178056b5a9&redirect_uri=${location.origin}/oauthcallback`;
   return (
     <a href={connectURI} css={None}>
       <button css={gray} type="button">
