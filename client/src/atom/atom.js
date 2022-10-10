@@ -9,6 +9,11 @@ export const userInfoState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const preventAuthenticatedState = atom({
+  key: 'preventAuthenticatedState',
+  default: false,
+});
+
 export const singleStudyState = atom({
   key: 'singleStudyState',
   default: {},

@@ -11,13 +11,6 @@ const RatingContainer = css`
     color: #f6d01a;
   }
 `;
-const RatingStar = css`
-  width: 35px;
-
-  @media all and (max-width: 767px) {
-    width: 25px;
-  }
-`;
 
 function Star({ member, fnc }) {
   const ArrayIndexes = [1, 2, 3, 4, 5];
@@ -27,7 +20,6 @@ function Star({ member, fnc }) {
     <div css={RatingContainer}>
       {ArrayIndexes.map((idx, index) => (
         <svg
-          css={RatingStar}
           key={`rating_${index}`}
           className={idx <= ratingIndex ? 'active' : 'inactive'}
           onClick={() => setRatingIndex(idx)}
