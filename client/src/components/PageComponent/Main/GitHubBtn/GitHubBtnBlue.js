@@ -20,7 +20,7 @@ const Blue = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
   border: none;
   :hover {
     background-color: white;

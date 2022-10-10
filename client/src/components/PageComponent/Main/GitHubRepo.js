@@ -22,7 +22,7 @@ const gitHubBtn = css`
   font-size: 14px;
   font-weight: 600;
   height: 65px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
 
   border: none;
   .icon {
@@ -30,7 +30,7 @@ const gitHubBtn = css`
     fill: white;
   }
   :hover {
-    background-color: white;
+    background-color: #f0f8ff;
     a {
       color: #0b6ff2;
     }

@@ -81,9 +81,6 @@ const Evaluation = css`
   display: flex;
   align-items: center;
   font-size: smaller;
-  @media all and (max-width: 767px) {
-    /* height: 80%; */
-  }
 `;
 
 const withoutImg = css`
