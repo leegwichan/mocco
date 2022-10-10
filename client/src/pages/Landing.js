@@ -543,8 +543,8 @@ function Landing() {
         </div>
       </section>
       {/* 비로그인 시 스터디 참여하기 버튼 */}
-      {!userInfo && console.log('비로그인')}
-      {!userInfo && console.log(userInfo)}
+      {/* {!userInfo && console.log('비로그인')}
+      {!userInfo && console.log(userInfo)} */}
       {!userInfo && (
         <button
           onClick={handleEnterStudyClick}

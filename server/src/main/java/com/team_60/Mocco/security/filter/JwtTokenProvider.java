@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -92,12 +91,12 @@ public class JwtTokenProvider {
             JWT.require(Algorithm.HMAC512(JWT_SECRET)).build().verify(token);
         } catch (JWTVerificationException e) {
             if(e.getClass().getSimpleName().equals("TokenExpiredException")){
-                log.info(e.getClass().getSimpleName());
                 throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
             }
             throw new BusinessLogicException(ExceptionCode.FAIL_DECODE_TOKEN);
         } catch (Exception e) {
             log.info("CustomAuthorizationFilter : JWT 토큰이 잘못되었습니다. message : {}", e.getMessage());
+            throw new BusinessLogicException(ExceptionCode.FAIL_DECODE_TOKEN);
         }
         return true;
     }
@@ -116,6 +115,8 @@ public class JwtTokenProvider {
         } catch (TokenExpiredException e){
             throw new BusinessLogicException(ExceptionCode.TOKEN_EXPIRED_EXCEPTION);
         } catch (JWTDecodeException e){
+            throw new BusinessLogicException(ExceptionCode.FAIL_DECODE_TOKEN);
+        } catch (Exception e){
             throw new BusinessLogicException(ExceptionCode.FAIL_DECODE_TOKEN);
         }
     }

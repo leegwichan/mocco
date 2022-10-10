@@ -31,9 +31,11 @@ public interface StudyProgressMapper {
                         MemberMapper.memberToMemberSubResponseDto(studyMember.getMember()))
                 .collect(Collectors.toList());
 
+        MemberDto.SubResponse teamLeader = MemberMapper.memberToMemberSubResponseDto(study.getTeamLeader());
+
         List<TaskDto.CheckResponse> taskList = studyToTaskCheckResponseDto(study, memberId);
 
-        return new StudyProgressDto.Response(progress, memberList, taskList);
+        return new StudyProgressDto.Response(progress, memberList, teamLeader, taskList);
     }
 
     default StudyProgressDto.SubResponse studyToStudyProgressSubResponseDto(Study study, long memberId){
