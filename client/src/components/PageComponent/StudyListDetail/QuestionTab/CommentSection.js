@@ -65,9 +65,9 @@ const CommentSection = ({
             }
           >
             <img src={member.profileImage} alt="프로필 이미지" css={image} />
-            <span className="main_link">{member && member.nickname}</span>
+            <span className="main_link">{member && member?.nickname}</span>
             {member?.memberId &&
-            member.memberId === studyInfo.member.memberId ? (
+            member?.memberId === studyInfo.member?.memberId ? (
               <span className="studyLeader">
                 <Button type="small_lightblue" text="스터디장" />
               </span>
