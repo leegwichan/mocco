@@ -31,12 +31,11 @@ public class SseService {
         SSE_EMITTERS.put(emitterId, emitter);
 
         try {
-            emitter.send((new SseDto(emitterId)));
+            emitter.send(new SseDto(emitterId));
             log.info("구독 성공! memberId : {}", emitterId);
         } catch (Exception e){
             log.info("구독 실패! memberId : {}", emitterId);
         }
-
         emitter.onTimeout(() -> SSE_EMITTERS.remove(emitterId));
         emitter.onCompletion(() -> SSE_EMITTERS.remove(emitterId));
         return emitter;
