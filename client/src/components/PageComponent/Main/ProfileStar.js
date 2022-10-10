@@ -2,7 +2,6 @@ import { css } from '@emotion/react';
 
 const Star = css`
   display: flex;
-  margin: -5px 0px;
 `;
 
 function ProfileStar({ evaluation }) {
