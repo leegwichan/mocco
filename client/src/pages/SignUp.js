@@ -83,44 +83,6 @@ function SignUp() {
         };
       });
     }
-
-    // if (
-    //   event.target.password.value === event.target.passwordConfirm.value &&
-    //   setNicknameChecked(true) &&
-    //   setButtonActive(true)
-    // ) {
-    //   request({
-    //     method: 'post',
-    //     url: '/api/register/signup',
-    //     data: {
-    //       email: event.target.email.value,
-    //       password: event.target.password.value,
-    //       nickname: event.target.nickname.value,
-    //     },
-    //   })
-    //     .then(() => navigate('/login'))
-    //     .catch((error) => {
-    //       if (error.response) {
-    //         setErrorMessage((prev) => ({
-    //           ...prev,
-    //           password: null,
-    //           email: error.response.data.message,
-    //         }));
-    //       }
-    //     });
-    // } else if (
-    //   event.target.password.value !== event.target.passwordConfirm.value
-    // ) {
-    //   setErrorMessage((prev) => ({
-    //     ...prev,
-    //     password: '비밀번호가 일치하지 않습니다.',
-    //   }));
-    // } else if (buttonActive) {
-    //   setErrorMessage((prev) => ({
-    //     ...prev,
-    //     agreePersonalInformation: '개인정보 취급방침에 동의 해 주세요.',
-    //   }));
-    // }
   };
 
   // 닉네임 중복체크
@@ -218,6 +180,11 @@ function SignUp() {
                 font-weight: normal;
                 color: #ffffff;
                 margin-left: 8px;
+                border: 1px solid #0b6ff2;
+                &:hover {
+                  color: #0b6ff2;
+                  background-color: #ffffff;
+                }
               `}
               type="button"
               onClick={onClick}
@@ -433,6 +400,11 @@ function SignUp() {
               margin-bottom: 30px;
               font-size: 18px;
               font-weight: normal;
+              border: 1px solid #0b6ff2;
+              &:hover {
+                color: #0b6ff2;
+                background-color: #ffffff;
+              }
             `}
           >
             회원가입
