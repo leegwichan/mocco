@@ -27,6 +27,7 @@ public class StudyProgressDto {
     public static class Response{
         TaskDto.MemberProgressResponse progress;
         List<MemberDto.SubResponse> memberList;
+        MemberDto.SubResponse teamLeader;
         List<TaskDto.CheckResponse> taskList;
     }
 
