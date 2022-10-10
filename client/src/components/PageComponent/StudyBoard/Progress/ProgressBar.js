@@ -85,13 +85,13 @@ const Container = css`
       height: 0px;
     }
     20% {
-      height: 40px;
+      height: 20px;
     }
     40% {
       height: 0px;
     }
     60% {
-      height: 50px;
+      height: 20px;
     }
     80% {
       height: 0px;

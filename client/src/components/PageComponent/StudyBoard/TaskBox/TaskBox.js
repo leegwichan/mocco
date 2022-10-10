@@ -75,6 +75,7 @@ function TaskBox({
         <div>
           <SelectUser
             memberInfo={studyInfo.memberList}
+            leaderInfo={studyInfo.teamLeader}
             select={select}
             setSelect={setSelect}
           />
@@ -113,8 +114,6 @@ const taskBox = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media all and (max-width: 767px) {
-  }
   .mobileProgress {
     @media all and (min-width: 767px) {
       display: none;

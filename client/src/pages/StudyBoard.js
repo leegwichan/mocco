@@ -24,6 +24,7 @@ function StudyBoard() {
     request(`/api/study-progress/main/${studyId}/member/${memberId}`)
       .then((res) => {
         setStudyInfo(res.data.data);
+        console.log(res.data.data);
         return res;
       })
       .then((res) => {
