@@ -17,9 +17,7 @@ function ProfileModal({
   const modalRef = useRef(null);
 
   const handleModalClose = (e) => {
-    console.log('클릭중');
     if (isProfileModalOpen && !modalRef.current.contains(e.target)) {
-      console.log('성공');
       setIsProfileModalOpen(false);
     }
   };
