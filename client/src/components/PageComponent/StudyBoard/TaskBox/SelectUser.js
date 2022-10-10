@@ -127,6 +127,7 @@ const memberList = css`
   background-color: #ffffff;
   margin-top: 15px;
   position: absolute;
+  z-index: 1;
   border-radius: 20px;
   overflow: hidden;
   list-style: none;
