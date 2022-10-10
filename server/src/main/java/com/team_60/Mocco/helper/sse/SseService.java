@@ -31,18 +31,19 @@ public class SseService {
         SSE_EMITTERS.put(emitterId, emitter);
 
         try {
-            emitter.send((new SseDto(emitterId)));
+            emitter.send(new SseDto(emitterId));
             log.info("구독 성공! memberId : {}", emitterId);
         } catch (Exception e){
             log.info("구독 실패! memberId : {}", emitterId);
         }
-
         emitter.onTimeout(() -> SSE_EMITTERS.remove(emitterId));
         emitter.onCompletion(() -> SSE_EMITTERS.remove(emitterId));
         return emitter;
     }
 
     public void unsubscribeAlarm(String subscribeId){
+        SseEmitter sseEmitter = SSE_EMITTERS.get(subscribeId);
+        sseEmitter.complete();
         SSE_EMITTERS.remove(subscribeId);
     }
 
@@ -61,6 +62,7 @@ public class SseService {
                     emitter.send(response, MediaType.APPLICATION_JSON);
                     log.info("Success Send SSE id : {}", id);
                 } catch (Exception e){
+                    emitter.complete();
                     SSE_EMITTERS.remove(id);
                     log.info("Fail Send SSE id : {}", id);
                 }

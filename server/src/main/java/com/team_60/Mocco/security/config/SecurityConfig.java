@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -60,7 +61,14 @@ public class SecurityConfig {
                 .failureHandler(failureHandler)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET).authenticated()
+                .antMatchers("/api/alarm/unsubscribe").authenticated()
+                .antMatchers(HttpMethod.POST).hasRole("USER")
+                .antMatchers(HttpMethod.PATCH).hasRole("USER")
+                .antMatchers(HttpMethod.DELETE).hasRole("USER");
         return http.build();
     }
 
