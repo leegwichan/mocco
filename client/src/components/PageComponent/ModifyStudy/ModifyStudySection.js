@@ -57,7 +57,7 @@ function ModifyStudySection({ editContent, setEditContent }) {
   const [endMaximumDate, setEndMaximumDate] = useState();
   useEffect(() => {
     let end = new Date(startDate);
-    end.setDate(end.getDate() + 180);
+    end.setDate(end.getDate() + 240);
     end = end.toISOString().slice(0, 10);
     setEndMaximumDate(end);
   }, [startDate]);
