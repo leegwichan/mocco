@@ -1,13 +1,8 @@
 import { useMemo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-<<<<<<< HEAD
-import { userInfoState } from './atom/atom';
-import PrivateRoute from './components/Common/authentication/PrivateRoute';
-=======
 import { userInfoState, preventAuthenticatedState } from './atom/atom';
-import PrivateRoute from './components/Common/Authentication/PrivateRoute';
->>>>>>> d432e7bfcb0ab076665fa108f2418f8bc7001ccd
+import PrivateRoute from './components/Common/authentication/PrivateRoute';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
