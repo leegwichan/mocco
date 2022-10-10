@@ -215,7 +215,7 @@ function MakeStudy() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState); // eslint-disable-line no-unused-vars
   // studyboard post를 위한 state
   const [studyBoardForm, setStudyBoardForm] = useState({
-    memberId: userInfo.memberId,
+    memberId: userInfo?.memberId,
     teamName: null,
     capacity: null,
     image: null,
