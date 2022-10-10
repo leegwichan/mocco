@@ -20,7 +20,7 @@ function TaskItem({ task, select, taskHandlerf, getStudyInfof }) {
     <div>
       <div css={taskContainer}>
         <div css={deadline}>
-          <div>~{task.deadline.slice(2)}</div>
+          <div>{task.deadline.slice(2)}</div>
         </div>
         <div css={content}>{task.content}</div>
         <div css={mark}>
@@ -126,7 +126,7 @@ const deadline = css`
   background-color: #0b6ff2;
   border-radius: 20px;
   display: flex;
-
+  padding: 5px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -155,10 +155,11 @@ const deadline = css`
 `;
 
 const content = css`
-  font-size: 30px;
+  padding: 5px;
+  font-size: 22px;
   /* margin-left: -25rem; */
   @media all and (max-width: 767px) {
-    font-size: 20px;
+    font-size: 3vw;
   }
 `;
 
