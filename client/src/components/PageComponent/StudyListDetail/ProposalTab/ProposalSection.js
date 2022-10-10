@@ -141,9 +141,9 @@ const container = css`
 
     @media all and (max-width: 420px) {
       button {
-        font-size: 13px;
+        font-size: 11px;
         height: 32px;
-        width: 40px;
+        width: 38px;
         margin-left: 7px;
         padding-top: 0px;
       }
