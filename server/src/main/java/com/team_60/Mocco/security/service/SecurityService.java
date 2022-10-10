@@ -41,7 +41,6 @@ public class SecurityService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    //private final AuthenticationProvider authenticationProvider;
     private final MemberMapper mapper;
     private final RedisTemplate redisTemplate;
 
@@ -55,7 +54,6 @@ public class SecurityService {
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
         // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        //Authentication authentication = authenticationProvider.authenticate(authenticationToken);
         Map<String, Object> tokenInfo = jwtTokenProvider.generateToken(authentication,response);
         redisTemplate.opsForValue()
                 .set("RefreshToken:"+authentication.getName(),tokenInfo.get(REFRESH_TOKEN_HEADER), REFRESH_TOKEN_EXP, TimeUnit.MILLISECONDS);

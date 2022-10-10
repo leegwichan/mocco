@@ -44,21 +44,22 @@ public interface StudyProgressMapper {
     }
 
     private TaskDto.MemberProgressResponse studyToTaskMemberProgressResponseDto(Study study){
-        Map<Member, Integer> taskCompleteCount = new HashMap<>();
+        Map<Long, Integer> taskCompleteCount = new HashMap<>();
         for (StudyMember studyMember : study.getStudyMemberList()){
-            taskCompleteCount.put(studyMember.getMember(), 0);
+            taskCompleteCount.put(studyMember.getMember().getMemberId(), 0);
         }
 
         study.getTaskList().stream().forEach(task -> task.getTaskCheckList().stream().forEach(
-                taskCheck -> taskCompleteCount.put(taskCheck.getMember(), taskCompleteCount.get(taskCheck.getMember()) +1)
+                taskCheck -> taskCompleteCount.put(taskCheck.getMember().getMemberId(),
+                        taskCompleteCount.get(taskCheck.getMember().getMemberId()) +1)
         ));
 
         int expiredTaskCount = (int) study.getTaskList().stream().filter(task ->
                 task.getDeadline().isBefore(LocalDate.now(ZoneId.of("Asia/Seoul")))).count();
 
         List<TaskDto.MemberProgress> memberProgress = new ArrayList<>();
-        for (Member member : taskCompleteCount.keySet()){
-            memberProgress.add(new TaskDto.MemberProgress(member.getMemberId(), taskCompleteCount.get(member)));
+        for (Long memberId : taskCompleteCount.keySet()){
+            memberProgress.add(new TaskDto.MemberProgress(memberId, taskCompleteCount.get(memberId)));
         }
 
         return new TaskDto.MemberProgressResponse(study.getTaskList().size(), expiredTaskCount, memberProgress);
