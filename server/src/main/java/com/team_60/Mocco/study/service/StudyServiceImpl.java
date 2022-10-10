@@ -159,7 +159,7 @@ public class StudyServiceImpl implements StudyService{
         }
         long studyDays = ChronoUnit.DAYS.between(study.getStartDate(), study.getEndDate());
         log.info(studyDays+" : 스터디 기간 범위");
-        if(studyDays<7 || studyDays>180) {
+        if(studyDays<7 || studyDays>240) {
             throw new BusinessLogicException(ExceptionCode.NOT_CORRECT_PERIOD);
         }
 
