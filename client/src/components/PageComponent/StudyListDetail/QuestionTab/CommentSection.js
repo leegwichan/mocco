@@ -21,12 +21,13 @@ const CommentSection = ({
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
   const navigate = useNavigate();
-  const { value, setIsValid, handleChange, handleClick } = useInputValid({
-    initialvalues: content,
-    onClick: () => {
-      editHandler();
-    },
-  });
+  const { value, setIsValid, handleChange, handleClick, handlePress } =
+    useInputValid({
+      initialvalues: content,
+      onClick: () => {
+        editHandler();
+      },
+    });
   // console.log(userInfo);
 
   const deleteHandler = (e) => {
@@ -110,7 +111,12 @@ const CommentSection = ({
         </section>
         {isEditOpen && (
           <section css={editContainer}>
-            <textarea css={editInput} value={value} onChange={handleChange} />
+            <textarea
+              css={editInput}
+              value={value}
+              onChange={handleChange}
+              onKeyPress={handlePress}
+            />
             <div className="btn">
               <Button
                 type={'small_white'}

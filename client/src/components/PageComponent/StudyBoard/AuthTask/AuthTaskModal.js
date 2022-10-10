@@ -59,7 +59,7 @@ function AuthTaskModal({
 
   const getAuthTask = () => {
     request(`/api/task-check/${task.taskCheck.taskCheckId}`).then((res) => {
-      console.log('먹힘', res);
+      // console.log('먹힘', res);
       setAuthContent(res.data.data);
     });
   };

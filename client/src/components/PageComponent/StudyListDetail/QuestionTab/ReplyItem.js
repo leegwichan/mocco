@@ -12,12 +12,13 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const navigate = useNavigate();
-  const { value, setIsValid, handleChange, handleClick } = useInputValid({
-    initialvalues: reply.content,
-    onClick: () => {
-      editHandler();
-    },
-  });
+  const { value, setIsValid, handleChange, handleClick, handlePress } =
+    useInputValid({
+      initialvalues: reply.content,
+      onClick: () => {
+        editHandler();
+      },
+    });
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -106,7 +107,12 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         </div>
         {isEditOpen && (
           <div css={editContainer}>
-            <textarea css={editInput} value={value} onChange={handleChange} />
+            <textarea
+              css={editInput}
+              value={value}
+              onChange={handleChange}
+              onKeyPress={handlePress}
+            />
             <div className="btn">
               <Button
                 type={'small_white'}

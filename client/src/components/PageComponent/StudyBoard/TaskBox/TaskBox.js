@@ -69,7 +69,7 @@ function TaskBox({
           <UserProgressBar
             taskList={taskList}
             total={taskList.length}
-            select={select.memberId}
+            select={select?.memberId}
           />
         </div>
         <div>

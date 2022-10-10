@@ -7,13 +7,19 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
 function InputProposal({ getProposalInfof }) {
-  const { value, setIsValid, setValue, handleChange, handleClick } =
-    useInputValid({
-      initialvalues: '',
-      onClick: () => {
-        addProposalHandler();
-      },
-    });
+  const {
+    value,
+    setIsValid,
+    setValue,
+    handleChange,
+    handleClick,
+    handlePress,
+  } = useInputValid({
+    initialvalues: '',
+    onClick: () => {
+      addProposalHandler();
+    },
+  });
   const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -48,6 +54,7 @@ function InputProposal({ getProposalInfof }) {
         placeholder="신청을 위한 한 마디를 적어주세요"
         value={value}
         onChange={handleChange}
+        onKeyPress={handlePress}
       />
       <div className="btn_container">
         <Button type={'big_blue'} text={'등록'} onClick={handleClick} />

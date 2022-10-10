@@ -17,7 +17,7 @@ function UserSelect({ memberInfo, select, setSelect, leaderInfo }) {
     setIsOpen(false);
   };
 
-  console.log(leaderInfo);
+  // console.log(leaderInfo);
 
   return (
     <section css={container}>

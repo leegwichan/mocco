@@ -5,12 +5,13 @@ import { useInputValid } from '../hooks/useInputValid';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
-  const { value, setIsValid, handleChange, handleClick } = useInputValid({
-    initialvalues: '',
-    onClick: () => {
-      replyHandler();
-    },
-  });
+  const { value, setIsValid, handleChange, handleClick, handlePress } =
+    useInputValid({
+      initialvalues: '',
+      onClick: () => {
+        replyHandler();
+      },
+    });
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -55,6 +56,7 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
           value={value}
           onChange={handleChange}
           placeholder="답글을 입력하세요"
+          onKeyPress={handlePress}
         />
         <div className="button_container">
           <Button type={'small_blue'} text={'등록'} onClick={handleClick} />
