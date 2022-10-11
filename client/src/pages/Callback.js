@@ -89,26 +89,29 @@ function Callback() {
     let body = {
       authorizationCode: code,
     };
-    async function getData() {
-      try {
-        request.patch(`/api/members/github-user`, body);
-        navigate(`/main/${memberId}`);
-      } catch (err) {
-        console.log(err);
-        if (
-          err.response.data.status === 400 &&
-          err.response.data.message ===
-            '이 계정의 깃허브를 연동한 유저가 이미 존재합니다.'
-        ) {
-          alert(err.response.data.message);
-          navigate(`/main/${memberId}`);
-        }
-        if (err.response.data.status === 500) {
-          console.log(err.response.data.message);
-          navigate(`/main/${memberId}`);
-        }
-      }
-    }
+    const getData = () => {
+      return request
+        .patch(`/api/members/github-user`, body)
+        .then((res) => {
+          console.log(res);
+          return res;
+        })
+        .then(() => navigate(`/main/${memberId}`))
+        .catch((err) => {
+          if (
+            err.response.data.status === 400 &&
+            err.response.data.message ===
+              '이 계정의 깃허브를 연동한 유저가 이미 존재합니다.'
+          ) {
+            alert(err.response.data.message);
+            navigate(`/main/${memberId}`);
+          }
+          if (err.response.data.status === 500) {
+            console.log(err.response.data.message);
+            navigate(`/main/${memberId}`);
+          }
+        });
+    };
     getData();
   }, [location]);
 
