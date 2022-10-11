@@ -17,6 +17,7 @@ const Container = css`
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
+  /* padding: 49px 31px 18px 31px; */
   padding: 9% 6% 4% 6%;
 
   .title {
@@ -53,7 +54,6 @@ const InnerContainer = css`
   :overflow-y {
     overflow: scroll;
   }
-
   @media all and (max-width: 1023px) {
     height: 50vw;
     min-height: 280px;
@@ -98,7 +98,6 @@ const ContentContainer = css`
     width: 11vw;
     text-align: center;
   }
-
   @media all and (max-width: 1023px) {
     border-radius: 8px;
     height: 5vw;
@@ -167,8 +166,7 @@ function EvalueModal({
 
   async function submitEvalueData(patchObj) {
     try {
-      const response = await request.post('/api/study-evaluation', patchObj);
-      console.log(response);
+      request.post('/api/study-evaluation', patchObj);
       alert('스터디 평가를 완료했습니다');
       setIsOpen(false);
     } catch (err) {

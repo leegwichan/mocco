@@ -22,20 +22,23 @@ const container = css`
 `;
 
 const roundImg = css`
-  height: 115px;
-  max-width: 115px;
-  width: 82%;
+  max-height: 130px;
+  max-width: 130px;
+  width: 100%;
   height: 100%;
   border-radius: 50%;
+  margin-bottom: 8px;
   @media all and (max-width: 767px) {
-    height: 100px;
+    width: 100%;
+    height: 100%;
+    max-height: 150px;
+    max-width: 150px;
   }
 `;
 
 const name = css`
   font-size: 20px;
   font-weight: 500;
-  margin: 2px;
   @media all and (max-width: 767px) {
     font-size: 25px;
     margin: 8px;
@@ -60,7 +63,6 @@ const nameLocation = css`
   .location {
     display: flex;
     justify-content: center;
-    margin-bottom: -2px;
     width: 100%;
   }
   @media all and (max-width: 767px) {

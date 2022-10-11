@@ -8,7 +8,6 @@ const Container = css`
   ul {
     display: flex;
     flex-direction: row;
-
     max-width: 1000px;
     align-items: flex-start;
     padding: 2.5vw;
@@ -23,18 +22,17 @@ const Container = css`
       flex-wrap: wrap;
       justify-content: center;
       max-width: 1000px;
-
       padding: 4%;
     }
   }
 `;
 
-function ShortListSection(studyArr, progress, done) {
+function ShortListSection(studyArr) {
   return (
     <div css={Container}>
       <ul>
         {studyArr &&
-          progress &&
+          studyArr.progress === 'progress' &&
           studyArr.studyArr.map((studyData, idx) => (
             <li
               key={idx}
@@ -45,7 +43,7 @@ function ShortListSection(studyArr, progress, done) {
             </li>
           ))}
         {studyArr &&
-          done &&
+          studyArr.done === 'done' &&
           studyArr.studyArr.map((studyData, idx) => (
             <li key={idx} role="presentation">
               <StudyCard studyData={studyData} />
