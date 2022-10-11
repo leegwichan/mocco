@@ -195,7 +195,7 @@
     - ID : MoccoWorld@gmail.com
     - PW : mocco1234!
     - 테스트용 계정으므로 임의로 데이터 변경이 불가합니다. 눈으로만 봐주세요~
-  - [Slido](https://admin.sli.do/event/cA9fTYyYmArdXv6xhyYEfH/questions)
+  - [Slido](https://app.sli.do/event/cA9fTYyYmArdXv6xhyYEfH/live/questions)
     - Mocco 서비스를 사용하신 후 Slido에 피드백을 남겨주세요.
     - 피드백을 남겨주시면 저희 서비스 개선에 큰 도움이 됩니다.
     - 피드백 기간 10/11 ~ 18
