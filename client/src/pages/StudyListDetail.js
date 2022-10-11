@@ -12,11 +12,10 @@ function StudyListDetail() {
   const setStudyInfo = useSetRecoilState(singleStudyState);
 
   const getStudyInfo = () => {
-    request(`/api/study-info/board/${id}`)
-      .then((res) => {
-        setStudyInfo(res.data.data);
-      })
-      .catch((err) => console.log(err));
+    request(`/api/study-info/board/${id}`).then((res) => {
+      setStudyInfo(res.data.data);
+    });
+    // .catch((err) => console.log(err));
   };
 
   useEffect(() => {

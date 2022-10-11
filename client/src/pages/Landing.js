@@ -465,7 +465,7 @@ function Landing() {
               <div className="task">
                 <div className="date">04/03</div>
                 <div className="txtCheck">
-                  리액트 강의 1~30강 듣기
+                  리액트 강의 1~30강
                   <svg
                     clipRule="evenodd"
                     fillRule="evenodd"

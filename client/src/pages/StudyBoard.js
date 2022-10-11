@@ -37,10 +37,10 @@ function StudyBoard() {
       })
       .then((res) => {
         setMemberProgressArr(res.data.data.progress.memberProgress);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
   useEffect(() => {

@@ -111,7 +111,7 @@ function Callback() {
       return request
         .patch(`/api/members/github-user`, body)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           return res;
         })
         .then(() => navigate(`/main/${memberId}`))
@@ -125,7 +125,7 @@ function Callback() {
             navigate(`/main/${memberId}`);
           }
           if (err.response.data.status === 500) {
-            console.log(err.response.data.message);
+            // console.log(err.response.data.message);
             navigate(`/main/${memberId}`);
           }
         });

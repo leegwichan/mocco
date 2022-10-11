@@ -36,9 +36,9 @@ function ModifyStudySection({ editContent, setEditContent }) {
         `/api/study-board/image?file-size=${e.target.files[0].size}`,
         formData
       )
-      .then((res) => setEditContent({ ...editContent, image: res.data.data }))
-      // .then(() => console.log(editContent))
-      .catch((err) => console.log(err));
+      .then((res) => setEditContent({ ...editContent, image: res.data.data }));
+    // .then(() => console.log(editContent))
+    // .catch((err) => console.log(err));
   };
 
   const uploadHandler = (e) => {

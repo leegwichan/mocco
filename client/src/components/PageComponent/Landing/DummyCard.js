@@ -62,7 +62,7 @@ const Summary = css`
     font-size: 15px;
   }
   @media all and (max-width: 767px) {
-    font-size: 13px;
+    font-size: 11px;
   }
 `;
 

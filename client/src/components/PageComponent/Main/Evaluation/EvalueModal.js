@@ -170,7 +170,7 @@ function EvalueModal({
       alert('스터디 평가를 완료했습니다');
       setIsOpen(false);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }
 

@@ -60,10 +60,10 @@ function ProgressList() {
       .get(`/api/study-evaluation/${studyData.studyId}`)
       .then((res) => {
         setIvalueInfo(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
   const clickHandlerFnc = (studyData) => {

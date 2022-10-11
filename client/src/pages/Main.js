@@ -92,10 +92,10 @@ function Main() {
         if (res.data.data.memberId === loginUser.memberId) {
           setIsOwner(true);
         }
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
   return (
