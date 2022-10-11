@@ -55,9 +55,11 @@ const btn = css`
     color: #ffffff;
     border: 1px solid #0b6ff2;
 
-    &:hover {
-      color: #0b6ff2;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #0b6ff2;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -68,9 +70,11 @@ const btn = css`
     background-color: #999999;
     color: #ffffff;
     border: 1px solid #999999;
-    &hover {
-      color: #999999;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &hover {
+        color: #999999;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -81,9 +85,11 @@ const btn = css`
     background-color: #ffffff;
     color: #0b6ff2;
     border: 1px solid #0b6ff2;
-    &hover {
-      color: #ffffff;
-      background-color: #0b6ff2;
+    @media (hover: hover) {
+      &hover {
+        color: #ffffff;
+        background-color: #0b6ff2;
+      }
     }
   }
 
@@ -94,10 +100,11 @@ const btn = css`
     background-color: #0b6ff2;
     color: #ffffff;
     border: 1px solid #0b6ff2;
-
-    &:hover {
-      color: #0b6ff2;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #0b6ff2;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -116,10 +123,11 @@ const btn = css`
     background-color: #ffffff;
     color: #0b6ff2;
     border: 1px solid #0b6ff2;
-
-    &:hover {
-      color: #ffffff;
-      background-color: #0b6ff2;
+    @media (hover: hover) {
+      &:hover {
+        color: #ffffff;
+        background-color: #0b6ff2;
+      }
     }
   }
 
@@ -130,10 +138,11 @@ const btn = css`
     background-color: #999999;
     color: #ffffff;
     border: 1px solid #999999;
-
-    &:hover {
-      color: #646464;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #646464;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -144,10 +153,11 @@ const btn = css`
     background-color: #0b6ff2;
     color: #ffffff;
     border: 1px solid #0b6ff2;
-
-    &:hover {
-      color: #0b6ff2;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #0b6ff2;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -158,10 +168,11 @@ const btn = css`
     background-color: #999999;
     color: #ffffff;
     border: 1px solid #999999;
-
-    &:hover {
-      color: #a4a4a4;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #a4a4a4;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -172,10 +183,11 @@ const btn = css`
     background-color: #0b6ff2;
     color: #ffffff;
     border: 1px solid #0b6ff2;
-
-    &:hover {
-      color: #0b6ff2;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #0b6ff2;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -186,10 +198,11 @@ const btn = css`
     background-color: #999999;
     color: #ffffff;
     border: 1px solid #999999;
-
-    &:hover {
-      color: #a4a4a4;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #a4a4a4;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -198,11 +211,12 @@ const btn = css`
     height: 32px;
     color: black;
     background-color: #ffffff;
-
-    &:hover {
-      color: #0b6ff2;
-      background-color: #f0f8ff;
-      box-shadow: 0px 5px 2px -2px rgba(0, 0, 0, 0.25);
+    @media (hover: hover) {
+      &:hover {
+        color: #0b6ff2;
+        background-color: #f0f8ff;
+        box-shadow: 0px 5px 2px -2px rgba(0, 0, 0, 0.25);
+      }
     }
   }
 
@@ -212,10 +226,11 @@ const btn = css`
     background-color: #0b6ff2;
     color: #ffffff;
     border: 1px solid #0b6ff2;
-
-    &:hover {
-      color: #0b6ff2;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #0b6ff2;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -228,10 +243,11 @@ const btn = css`
     color: #ffffff;
     border: 1px solid #0b6ff2;
     border-radius: 5px;
-
-    &:hover {
-      color: #0b6ff2;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #0b6ff2;
+        background-color: #ffffff;
+      }
     }
   }
 
@@ -244,10 +260,11 @@ const btn = css`
     color: #ffffff;
     border: 1px solid #999999;
     border-radius: 5px;
-
-    &:hover {
-      color: #a4a4a4;
-      background-color: #ffffff;
+    @media (hover: hover) {
+      &:hover {
+        color: #a4a4a4;
+        background-color: #ffffff;
+      }
     }
   }
 `;

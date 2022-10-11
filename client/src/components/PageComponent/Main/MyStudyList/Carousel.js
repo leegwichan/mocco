@@ -37,6 +37,16 @@ const Slides_Wraper = css`
     overflow: visible;
     padding: 0vw;
   }
+  @media all and (max-width: 639px) {
+    display: flex;
+    justify-content: center;
+    /* ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 326px;
+    } */
+  }
 `;
 
 const Slides = css`
@@ -63,6 +73,20 @@ const Slides = css`
       justify-content: center;
       max-width: 1000px;
       width: 100vw;
+    }
+  }
+  @media all and (max-width: 639px) {
+    height: 100%;
+    padding: 0vw;
+    max-width: 326px;
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 326px;
+    }
+    li {
+      margin-right: 0px;
     }
   }
 `;
