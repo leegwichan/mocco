@@ -93,31 +93,27 @@ function StudyList() {
   // 스터디 리스트 받아오기 : 검색어 없을때 / 검색어 있을때
   const getStudyLists = () => {
     if (searchContent === null) {
-      request(`/api/study-info/board?page=${apiPage}&size=20`)
-        .then((res) => {
-          if (res.data.pageInfo.totalPages < apiPage) {
-            setIsLastList(true);
-            return;
-          } else {
-            setStudyLists([...studyLists, ...res.data.data]);
-            setApiPage(apiPage + 1);
-          }
-        })
-        .catch((err) => console.log(err));
+      request(`/api/study-info/board?page=${apiPage}&size=20`).then((res) => {
+        if (res.data.pageInfo.totalPages < apiPage) {
+          setIsLastList(true);
+          return;
+        } else {
+          setStudyLists([...studyLists, ...res.data.data]);
+          setApiPage(apiPage + 1);
+        }
+      });
     } else {
       request(
         `/api/study-info/search?page=${apiPage}&size=20&query=${searchContent}`
-      )
-        .then((res) => {
-          if (res.data.pageInfo.totalPages < apiPage) {
-            setIsLastList(true);
-            return;
-          } else {
-            setStudyLists([...studyLists, ...res.data.data]);
-            setApiPage(apiPage + 1);
-          }
-        })
-        .catch((err) => console.log(err));
+      ).then((res) => {
+        if (res.data.pageInfo.totalPages < apiPage) {
+          setIsLastList(true);
+          return;
+        } else {
+          setStudyLists([...studyLists, ...res.data.data]);
+          setApiPage(apiPage + 1);
+        }
+      });
     }
   };
 

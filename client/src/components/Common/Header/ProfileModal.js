@@ -31,9 +31,7 @@ function ProfileModal({
 
   // 삭제 버튼 클릭 핸들러
   const handleDeleteAll = () => {
-    request
-      .delete(`/api/alarm?member-id=${userInfo.memberId}`)
-      .catch((err) => console.log(err));
+    request.delete(`/api/alarm?member-id=${userInfo.memberId}`);
     setAlarm([]);
   };
 

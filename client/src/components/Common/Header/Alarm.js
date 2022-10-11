@@ -6,7 +6,6 @@ import { userInfoState } from '../../../atom/atom';
 function Alarm({ alarm, handleDeleteAlarm, isLink }) {
   const { memberId } = useRecoilValue(userInfoState);
 
-  console.log(alarm);
   if (isLink) {
     return (
       <li
