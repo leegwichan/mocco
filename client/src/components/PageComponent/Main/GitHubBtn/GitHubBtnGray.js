@@ -20,7 +20,7 @@ const gray = css`
 `;
 
 const icon = css`
-  margin: 0px 6px 0px 14px;
+  margin: 0px 6px 0px 0px;
   fill: white;
 `;
 

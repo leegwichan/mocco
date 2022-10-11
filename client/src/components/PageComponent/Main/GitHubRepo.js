@@ -29,13 +29,24 @@ const gitHubBtn = css`
     margin-right: 8px;
     fill: white;
   }
-  :hover {
+  /* :hover {
     background-color: #f0f8ff;
     a {
       color: #0b6ff2;
     }
     .icon {
       fill: #0b6ff2;
+    }
+  } */
+  @media (hover: hover) {
+    &:hover {
+      background-color: #f0f8ff;
+      a {
+        color: #0b6ff2;
+      }
+      .icon {
+        fill: #0b6ff2;
+      }
     }
   }
   @media all and (max-width: 767px) {
@@ -100,7 +111,12 @@ function GitHubRepo({ githubRepositoryList }) {
         }
       >
         {githubRepositoryList && githubRepositoryList[0] ? (
-          <a href={githubRepositoryList[0]} css={textdeco}>
+          <a
+            href={githubRepositoryList[0]}
+            target="_blank"
+            rel="noopener noreferrer"
+            css={textdeco}
+          >
             <svg
               className="icon"
               xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +151,12 @@ function GitHubRepo({ githubRepositoryList }) {
         }
       >
         {githubRepositoryList && githubRepositoryList[1] ? (
-          <a href={githubRepositoryList[1]} css={textdeco}>
+          <a
+            href={githubRepositoryList[1]}
+            target="_blank"
+            rel="noopener noreferrer"
+            css={textdeco}
+          >
             <svg
               className="icon"
               xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +192,12 @@ function GitHubRepo({ githubRepositoryList }) {
         }
       >
         {githubRepositoryList && githubRepositoryList[2] ? (
-          <a href={githubRepositoryList[2]} css={textdeco}>
+          <a
+            href={githubRepositoryList[2]}
+            target="_blank"
+            rel="noopener noreferrer"
+            css={textdeco}
+          >
             <svg
               className="icon"
               xmlns="http://www.w3.org/2000/svg"

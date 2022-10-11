@@ -14,6 +14,11 @@ const Loading = css`
   padding-top: 4rem;
   height: calc(100vh - 4rem);
 
+  @media all and (max-width: 767px) {
+    align-items: center;
+    height: 100%;
+  }
+
   div {
     font-size: 2rem;
   }
@@ -38,6 +43,12 @@ const Loading = css`
         font-size: 2vw;
       }
     }
+    @media all and (max-width: 767px) {
+      width: 55vw;
+      max-width: 300px;
+      height: 6vw;
+      max-height: 30px;
+    }
   }
   .bar {
     width: 0%;
@@ -50,6 +61,12 @@ const Loading = css`
       0% {
         width: 0;
       }
+    }
+    @media all and (max-width: 767px) {
+      width: 55vw;
+      max-width: 300px;
+      height: 6vw;
+      max-height: 30px;
     }
   }
   .txt {
@@ -122,7 +139,7 @@ function Callback() {
 
       <div>
         <div className="txtWithCharac">
-          <div className="txt">깃허브 연동중...</div>
+          <div className="txt">깃헙 연동중...</div>
           <img className="human" src={달리는사람} alt="달리는사람"></img>
         </div>
         <div className="progressContainer">

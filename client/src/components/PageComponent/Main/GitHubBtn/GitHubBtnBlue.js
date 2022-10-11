@@ -25,6 +25,8 @@ const Blue = css`
   :hover {
     background-color: white;
     color: #0b6ff2;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
+
     .hover {
       fill: #0b6ff2;
     }
@@ -35,13 +37,18 @@ const Blue = css`
 `;
 
 const Icon = css`
-  margin: 0px 6px 0px 14px;
+  margin: 0px 6px 0px 0px;
   fill: white;
 `;
 
 function GitHubBtnBlue({ githubId }) {
   return (
-    <a href={'https://github.com/' + githubId} css={None}>
+    <a
+      href={'https://github.com/' + githubId}
+      target="_blank"
+      rel="noopener noreferrer"
+      css={None}
+    >
       <button css={Blue}>
         <svg
           css={Icon}
