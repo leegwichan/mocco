@@ -117,6 +117,9 @@ const taskContainer = css`
     .check {
       font-size: 11px;
     }
+    .fail {
+      font-size: 11px;
+    }
   }
 `;
 
