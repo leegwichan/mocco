@@ -42,7 +42,6 @@ const infoSection = css`
   justify-content: space-between;
   margin-top: 33px;
   margin-bottom: 10%;
-  height: 229px;
 
   @media all and (max-width: 767px) {
     flex-direction: column;
