@@ -38,7 +38,7 @@ function Alarm({ alarm, handleDeleteAlarm, isLink }) {
           to={
             alarm.alarmType === 'STUDY_ENTER'
               ? `/studylist/detail/${alarm.study.studyId}`
-              : `/studyboard/${alarm.alarmId}/${memberId}`
+              : `/studyboard/${alarm.study.studyId}/${memberId}`
           }
           css={css`
             color: black;
