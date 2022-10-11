@@ -124,7 +124,7 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public void resetMemberPasswordByEmail(String email) {
         Member findMember = findMemberByEmailExpectByPresent(email);
-        String newPassword  = newPasswordManager.makeNewPasswordAndSendTextEmail(email);
+        String newPassword  = newPasswordManager.makeNewPasswordAndSendEmail(email, findMember);
         String encodePassword = encoder.encode(newPassword);
 
         findMember.setPassword(encodePassword);
