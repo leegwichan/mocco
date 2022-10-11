@@ -73,7 +73,7 @@ function ProfileModal({
           width: calc(100vw);
           height: calc(100vh - 8rem);
           top: 4rem;
-          right: -1rem;
+          right: calc(-1rem + 3px);
         }
       `}
     >
@@ -187,6 +187,7 @@ function ProfileModal({
           css={css`
             display: flex;
             height: 10%;
+            min-height: 1.5rem;
             padding: 0.5rem;
             align-items: center;
             border-bottom: 1px solid #999999;
@@ -196,7 +197,7 @@ function ProfileModal({
             css={css`
               display: inline-block;
               width: 10%;
-              height: 100%;
+              height: 90%;
               margin-right: 5%;
               text-align: center;
             `}
@@ -238,7 +239,7 @@ function ProfileModal({
             css={css`
               display: inline-block;
               width: 25%;
-              padding: 0.5rem 0;
+              padding: 0.3rem 0;
               border: 1px solid #0a6ff2;
               border-radius: 0.2rem;
               background-color: #0a6ff2;

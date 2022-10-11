@@ -1,10 +1,8 @@
 package com.team_60.Mocco.test;
 
-import com.team_60.Mocco.alarm.entity.Alarm;
 import com.team_60.Mocco.alarm.service.AlarmService;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
-import com.team_60.Mocco.helper.mail.sender.EmailSendable;
 import com.team_60.Mocco.helper.sse.SseService;
 import com.team_60.Mocco.helper.stub.StubData;
 import com.team_60.Mocco.helper.upload.ImageUploadType;
@@ -19,12 +17,10 @@ import org.springframework.context.annotation.Profile;
 import com.team_60.Mocco.member.service.MemberService;
 import com.team_60.Mocco.study.mapper.StudyMapper;
 import com.team_60.Mocco.study.service.StudyService;
-import com.team_60.Mocco.task.mapper.TaskMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -39,7 +35,6 @@ import java.util.ArrayList;
 public class TestController {
 
     private final StudyRepository studyRepository;
-    private final EmailSendable emailSender;
     private final S3ImageUpload imageUpload;
     private MemberService memberService;
 
@@ -47,17 +42,6 @@ public class TestController {
     private StudyMapper studyMapper;
     private SseService sseService;
     private AlarmService alarmService;
-
-    @GetMapping("/mail")
-    public String checkSendMail(@RequestParam String email) {
-        String[] mail = new String[]{email};
-        try{
-            emailSender.send(mail, "SEB39_MAIN_TEAM60 이메일 전송 테스트입니다.", "SEB39_MAIN_TEAM60 이메일 전송 테스트입니다.");
-        } catch (Exception e){
-            return "이메일 전송 실패! 에러 발생!";
-        }
-        return email + " 메일함 확인하세요.";
-    }
 
     @GetMapping("/image")
     public String checkImageUpload(@RequestParam("images") MultipartFile multipartFile,

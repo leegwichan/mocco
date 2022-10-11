@@ -51,9 +51,6 @@ public class TokenInterceptor implements HandlerInterceptor {
                 long studyId = Long.parseLong(urIList.get(4));
                 if (urIList.size() < 6) {
                     authenticationService.AuthenticationCheckStudyMember(studyId, tokenMemberId);
-                } else {
-                    long memberId = Long.parseLong(urIList.get(6));
-                    authenticationService.AuthenticationCheckStudyMember(studyId, memberId);
                 }
                 return true;
             }

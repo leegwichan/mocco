@@ -37,7 +37,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring().antMatchers("/api/register/**","/api/study-info/**","/h2/**","api/test/**",
+        return (web) -> web.ignoring().antMatchers("/api/register/**","/api/study-info/**","/h2/**","/api/test/**",
                 "/api/*/list", "/login/oauth2/**","/oauth2/authorization/*","/api/alarm/subscribe");
     }
 
@@ -49,6 +49,11 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers("/api/alarm/unsubscribe").permitAll()
+                .anyRequest().hasRole("USER")
+                .and()
                 .addFilterBefore(new JwtAuthenticationFilter(redisTemplate,jwtTokenProvider),UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
                 .redirectionEndpoint()
@@ -61,14 +66,8 @@ public class SecurityConfig {
                 .failureHandler(failureHandler)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET).authenticated()
-                .antMatchers("/api/alarm/unsubscribe").authenticated()
-                .antMatchers(HttpMethod.POST).hasRole("USER")
-                .antMatchers(HttpMethod.PATCH).hasRole("USER")
-                .antMatchers(HttpMethod.DELETE).hasRole("USER");
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
         return http.build();
     }
 
@@ -89,3 +88,4 @@ public class SecurityConfig {
     }
 
 }
+

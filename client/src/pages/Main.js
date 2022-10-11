@@ -71,6 +71,10 @@ function Main() {
     getUserInfo(id);
   }, [id]);
 
+  useEffect(() => {
+    getUserInfo(id);
+  }, [owner.githubNickname, id]);
+
   const getUserInfo = (id) => {
     return request
       .get(`/api/members/${id}`)

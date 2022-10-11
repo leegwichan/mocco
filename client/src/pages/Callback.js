@@ -11,7 +11,8 @@ const Loading = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1000px;
+  padding-top: 4rem;
+  height: calc(100vh - 4rem);
 
   div {
     font-size: 2rem;
@@ -89,26 +90,29 @@ function Callback() {
     let body = {
       authorizationCode: code,
     };
-    async function getData() {
-      try {
-        request.patch(`/api/members/github-user`, body);
-        navigate(`/main/${memberId}`);
-      } catch (err) {
-        console.log(err);
-        if (
-          err.response.data.status === 400 &&
-          err.response.data.message ===
-            '이 계정의 깃허브를 연동한 유저가 이미 존재합니다.'
-        ) {
-          alert(err.response.data.message);
-          navigate(`/main/${memberId}`);
-        }
-        if (err.response.data.status === 500) {
-          console.log(err.response.data.message);
-          navigate(`/main/${memberId}`);
-        }
-      }
-    }
+    const getData = () => {
+      return request
+        .patch(`/api/members/github-user`, body)
+        .then((res) => {
+          console.log(res);
+          return res;
+        })
+        .then(() => navigate(`/main/${memberId}`))
+        .catch((err) => {
+          if (
+            err.response.data.status === 400 &&
+            err.response.data.message ===
+              '이 계정의 깃허브를 연동한 유저가 이미 존재합니다.'
+          ) {
+            alert(err.response.data.message);
+            navigate(`/main/${memberId}`);
+          }
+          if (err.response.data.status === 500) {
+            console.log(err.response.data.message);
+            navigate(`/main/${memberId}`);
+          }
+        });
+    };
     getData();
   }, [location]);
 
@@ -118,7 +122,7 @@ function Callback() {
 
       <div>
         <div className="txtWithCharac">
-          <div className="txt">깃헙 연동중...</div>
+          <div className="txt">깃허브 연동중...</div>
           <img className="human" src={달리는사람} alt="달리는사람"></img>
         </div>
         <div className="progressContainer">
