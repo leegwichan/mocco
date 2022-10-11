@@ -170,9 +170,9 @@ const container = css`
       }
     }
 
-    @media all and (max-width: 420px) {
+    @media all and (max-width: 432px) {
       button {
-        font-size: 11px;
+        font-size: 10px;
         height: 32px;
         width: 38px;
         margin-left: 7px;
@@ -248,7 +248,7 @@ const editContainer = css`
       }
     }
 
-    @media all and (max-width: 420px) {
+    @media all and (max-width: 430px) {
       button {
         font-size: 11px;
         height: 32px;

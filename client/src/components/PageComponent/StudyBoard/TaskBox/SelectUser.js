@@ -152,7 +152,7 @@ const selected = css`
   word-break: break-all;
 
   @media all and (max-width: 767px) {
-    font-size: 1px;
+    font-size: 10px;
     padding: 7px;
     width: 25vw;
     min-width: 120px;
@@ -220,7 +220,7 @@ const member = css`
     /* padding: 12px;
     font-size: 15px; */
     height: 55px;
-    font-size: 1px;
+    font-size: 10px;
     padding: 7px;
   }
 `;
