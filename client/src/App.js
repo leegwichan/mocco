@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState, preventAuthenticatedState } from './atom/atom';
 import PrivateRoute from './components/Common/Authentication/PrivateRoute';
-
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -68,14 +67,15 @@ function App() {
           }
         />
         <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
+        <Route
+          path="/oauth/github/callback"
+          exact={true}
+          element={<GithubOauthCallback />}
+        />
         <Route path="/callback" exact={true} element={<Callback />} />
         <Route path="/main/:id" element={<Main />} />
         <Route path="/termsofuse" element={<TermsOfUse />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-        <Route
-          path="/oauth/github/callback"
-          element={<GithubOauthCallback />}
-        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

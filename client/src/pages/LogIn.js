@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { css } from '@emotion/react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import request from '../api/index';
 import { useSetRecoilState } from 'recoil';
 import { userInfoState } from '../atom/atom';
@@ -9,7 +9,6 @@ import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 function LogIn() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [modalOn, setModalOn] = useState(false);
   const setUserInfoState = useSetRecoilState(userInfoState);
