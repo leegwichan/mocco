@@ -194,7 +194,12 @@
   - 스터디 확인용 계정
     - ID : MoccoWorld@gmail.com
     - PW : mocco1234!
-    - 스터디 진행 화면 확인용 계정입니다. 임의로 데이터를 변경하시면 저희가 많이 힘듦니다. 눈으로만 봐주세요~
+    - 테스트용 계정으므로 임의로 데이터 변경이 불가합니다. 눈으로만 봐주세요~
+  - [Slido](https://admin.sli.do/event/cA9fTYyYmArdXv6xhyYEfH/questions)
+    - Mocco 서비스를 사용하신 후 Slido에 피드백을 남겨주세요.
+    - 피드백을 남겨주시면 저희 서비스 개선에 큰 도움이 됩니다.
+    - 피드백 기간 10/11 ~ 18
+    
 <br>
 
 ## 👀 [WIKI 보러가기](https://github.com/codestates-seb/seb39_main_060/wiki)
