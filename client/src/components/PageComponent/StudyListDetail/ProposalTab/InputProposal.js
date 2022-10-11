@@ -7,13 +7,19 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useInputValid } from '../hooks/useInputValid';
 
 function InputProposal({ getProposalInfof }) {
-  const { value, setIsValid, setValue, handleChange, handleClick } =
-    useInputValid({
-      initialvalues: '',
-      onClick: () => {
-        addProposalHandler();
-      },
-    });
+  const {
+    value,
+    setIsValid,
+    setValue,
+    handleChange,
+    handleClick,
+    handlePress,
+  } = useInputValid({
+    initialvalues: '',
+    onClick: () => {
+      addProposalHandler();
+    },
+  });
   const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -36,7 +42,6 @@ function InputProposal({ getProposalInfof }) {
           getProposalInfof();
         })
         .catch((err) => {
-          // console.log(err.response.data.message);
           alert(err.response.data.message);
         });
     }
@@ -49,6 +54,7 @@ function InputProposal({ getProposalInfof }) {
         placeholder="신청을 위한 한 마디를 적어주세요"
         value={value}
         onChange={handleChange}
+        onKeyPress={handlePress}
       />
       <div className="btn_container">
         <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
@@ -72,6 +78,10 @@ const container = css`
     border-radius: 5px;
     padding: 0.5rem;
     flex-grow: 1;
+
+    @media all and (max-width: 420px) {
+      font-size: 12px;
+    }
   }
 
   .btn_container {
@@ -79,6 +89,13 @@ const container = css`
       button {
         font-size: 15px;
         padding: 0 15px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 13px;
+        padding: 0 6px;
       }
     }
   }

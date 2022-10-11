@@ -8,13 +8,19 @@ import { useInputValid } from '../hooks/useInputValid';
 
 const InputComment = ({ getCommentInfof }) => {
   const { id } = useParams();
-  const { value, setIsValid, setValue, handleChange, handleClick } =
-    useInputValid({
-      initialvalues: '',
-      onClick: () => {
-        addCommentHandler();
-      },
-    });
+  const {
+    value,
+    setIsValid,
+    setValue,
+    handleChange,
+    handleClick,
+    handlePress,
+  } = useInputValid({
+    initialvalues: '',
+    onClick: () => {
+      addCommentHandler();
+    },
+  });
   const userInfo = useRecoilValue(userInfoState);
   const navigate = useNavigate();
 
@@ -28,16 +34,14 @@ const InputComment = ({ getCommentInfof }) => {
     if (userInfo === null) {
       navigate('/login', { state: { from: `/studylist/detail/${id}` } });
     } else {
-      return request
-        .post('/api/comments', commentInfo)
-        .then(() => {
-          setIsValid(true);
-          setValue('');
-          getCommentInfof();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      return request.post('/api/comments', commentInfo).then(() => {
+        setIsValid(true);
+        setValue('');
+        getCommentInfof();
+      });
+      // .catch((err) => {
+      // console.log(err);
+      // });
     }
   };
 
@@ -48,6 +52,7 @@ const InputComment = ({ getCommentInfof }) => {
         placeholder="스터디에 대한 궁금한 점을 물어보세요"
         value={value}
         onChange={handleChange}
+        onKeyPress={handlePress}
       />
       <div className="btn_container">
         <Button type={'big_blue'} text={'등록'} onClick={handleClick} />
@@ -71,6 +76,10 @@ const container = css`
     border-radius: 5px;
     padding: 0.5rem;
     flex-grow: 1;
+
+    @media all and (max-width: 420px) {
+      font-size: 12px;
+    }
   }
 
   .btn_container {
@@ -78,6 +87,13 @@ const container = css`
       button {
         font-size: 15px;
         padding: 0 15px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 13px;
+        padding: 0 6px;
       }
     }
   }

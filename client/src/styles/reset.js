@@ -98,6 +98,10 @@ const reset = css`
   input {
     padding: 0 0.5rem;
   }
+
+  body {
+    overflow-x: hidden;
+  }
 `;
 
 export default reset;

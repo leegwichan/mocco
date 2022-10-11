@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-
 import { userInfoState, preventAuthenticatedState } from './atom/atom';
 import PrivateRoute from './components/Common/Authentication/PrivateRoute';
 
@@ -69,7 +68,7 @@ function App() {
           }
         />
         <Route path="/studyboard/:studyId/:memberId" element={<StudyBoard />} />
-        <Route path="/oauthcallback" exact={true} element={<Callback />} />
+        <Route path="/callback" exact={true} element={<Callback />} />
         <Route path="/main/:id" element={<Main />} />
         <Route path="/termsofuse" element={<TermsOfUse />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />

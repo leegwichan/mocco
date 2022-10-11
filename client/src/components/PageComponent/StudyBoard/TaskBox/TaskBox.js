@@ -20,9 +20,9 @@ function TaskBox({
   const userInfo = useRecoilValue(userInfoState);
 
   const [select, setSelect] = useState({
-    memberId: userInfo.memberId,
-    nickname: userInfo.nickname,
-    profileImage: userInfo.profileImage,
+    memberId: userInfo?.memberId,
+    nickname: userInfo?.nickname,
+    profileImage: userInfo?.profileImage,
   });
   const [taskList, setTaskList] = useState([]);
   const navigate = useNavigate();
@@ -69,12 +69,13 @@ function TaskBox({
           <UserProgressBar
             taskList={taskList}
             total={taskList.length}
-            select={select.memberId}
+            select={select?.memberId}
           />
         </div>
         <div>
           <SelectUser
             memberInfo={studyInfo.memberList}
+            leaderInfo={studyInfo.teamLeader}
             select={select}
             setSelect={setSelect}
           />

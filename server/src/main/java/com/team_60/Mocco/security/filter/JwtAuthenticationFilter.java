@@ -51,17 +51,19 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 request.setAttribute("exception", ExceptionCode.TOKEN_EXPIRED_EXCEPTION.getStatus());
             } catch (IllegalArgumentException e) {
                 request.setAttribute("exception", ExceptionCode.NOT_CORRECT_ARGUMENT.getStatus());
-            } catch (Exception e) {
-                log.error("================================================");
-                log.error("JwtFilter - doFilterInternal() 오류발생");
-                log.error("token : {}", token);
-                log.error("Exception Message : {}", e.getMessage());
-                log.error("Exception StackTrace : {");
-                e.printStackTrace();
-                log.error("}");
-                log.error("================================================");
-                request.setAttribute("exception", ExceptionCode.FILTER_UNKNOWN_ERROR.getStatus());
             }
+        //
+//        catch (Exception e) {
+//                log.error("================================================");
+//                log.error("JwtFilter - doFilterInternal() 오류발생");
+//                log.error("token : {}", token);
+//                log.error("Exception Message : {}", e.getMessage());
+//                log.error("Exception StackTrace : {");
+//                e.printStackTrace();
+//                log.error("}");
+//                log.error("================================================");
+//                request.setAttribute("exception", ExceptionCode.FILTER_UNKNOWN_ERROR.getStatus());
+//            }
         //토큰 유효성 검사
         chain.doFilter(wrappedRequest, response);
     }

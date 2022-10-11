@@ -43,6 +43,7 @@ public class SseService {
 
     public void unsubscribeAlarm(String subscribeId){
         SseEmitter sseEmitter = SSE_EMITTERS.get(subscribeId);
+        if (sseEmitter == null) return;
         sseEmitter.complete();
         SSE_EMITTERS.remove(subscribeId);
     }

@@ -8,8 +8,7 @@ export const useInputValid = ({ initialvalues, onClick }) => {
     setValue(e.target.value);
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
     if (value.length === 0) {
       alert('내용을 입력해주세요');
       setIsValid(false);
@@ -22,6 +21,12 @@ export const useInputValid = ({ initialvalues, onClick }) => {
     }
   };
 
+  const handlePress = (e) => {
+    if (e.key === 'Enter') {
+      handleClick();
+    }
+  };
+
   return {
     value,
     isValid,
@@ -29,5 +34,6 @@ export const useInputValid = ({ initialvalues, onClick }) => {
     setValue,
     handleChange,
     handleClick,
+    handlePress,
   };
 };

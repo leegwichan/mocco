@@ -46,10 +46,11 @@ const MainContainer = css`
 
   .imgContainer {
     display: flex;
+    flex: 1 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 10px -5px 0px 9vw;
+    /* margin: 10px -5px 0px 9vw; */
   }
 `;
 
@@ -60,6 +61,7 @@ const first = css`
   }
   .progress {
     display: flex;
+    flex: 1 0;
     flex-direction: column;
     justify-content: center;
     padding-bottom: 4vw;
@@ -116,7 +118,7 @@ const second = css`
   display: flex;
   align-items: center;
   .midTxt {
-    font-size: 40px;
+    font-size: 35px;
     font-weight: 600;
     margin-bottom: 4%;
     @media all and (max-width: 1023px) {
@@ -156,7 +158,8 @@ const second = css`
     color: white;
     font-weight: 600;
     font-size: 15px;
-    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
+
     border: none;
     :hover {
       background: white;
@@ -200,7 +203,7 @@ const third = css`
   }
 
   .midTxt {
-    font-size: 30px;
+    font-size: 35px;
     font-weight: 600;
     margin-bottom: 4%;
     @media all and (max-width: 1023px) {
@@ -237,7 +240,7 @@ const third = css`
     color: #ffffff;
     font-weight: 600;
     font-size: 15px;
-    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
     border: none;
     :hover {
       background: #ffffff;
@@ -543,8 +546,7 @@ function Landing() {
         </div>
       </section>
       {/* 비로그인 시 스터디 참여하기 버튼 */}
-      {/* {!userInfo && console.log('비로그인')}
-      {!userInfo && console.log(userInfo)} */}
+
       {!userInfo && (
         <button
           onClick={handleEnterStudyClick}

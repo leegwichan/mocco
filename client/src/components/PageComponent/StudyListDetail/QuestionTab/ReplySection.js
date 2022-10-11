@@ -67,19 +67,29 @@ const main = css`
 `;
 
 const arrow = css`
-  margin-left: 20px;
+  margin-left: -15px;
   margin-top: 10px;
+  flex: 1 0;
+
+  @media all and (max-width: 1500px) {
+    margin-left: -14px;
+  }
+
+  @media all and (max-width: 1000px) {
+    margin-left: -11px;
+  }
 
   @media all and (max-width: 768px) {
     width: 40px;
     height: 40px;
+    margin-left: 0px;
   }
 `;
 
 const mainContainer = css`
   display: flex;
   justify-content: flex-end;
-  flex-grow: 1;
+  flex: 9 0;
 `;
 
 const container = css`

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useEffect, useRef } from 'react';
 import request from '../../../api/index';
 import Button from '../Button';
 import Alarm from './Alarm';
@@ -7,14 +8,30 @@ function ProfileModal({
   userInfo,
   handleLogoutClick,
   handleModifyClick,
+  isProfileModalOpen,
+  setIsProfileModalOpen,
   alarm,
   setAlarm,
 }) {
+  // 프로필 모달 바깥 클릭시 프로필 닫기
+  const modalRef = useRef(null);
+
+  const handleModalClose = (e) => {
+    if (isProfileModalOpen && !modalRef.current.contains(e.target)) {
+      setIsProfileModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousedown', handleModalClose);
+    return () => {
+      window.removeEventListener('mousedown', handleModalClose);
+    };
+  }, []);
+
   // 삭제 버튼 클릭 핸들러
   const handleDeleteAll = () => {
-    request
-      .delete(`/api/alarm?member-id=${userInfo.memberId}`)
-      .catch((err) => console.log(err));
+    request.delete(`/api/alarm?member-id=${userInfo.memberId}`);
     setAlarm([]);
   };
 
@@ -28,6 +45,7 @@ function ProfileModal({
   };
   return (
     <div
+      ref={modalRef}
       css={css`
         display: flex;
         position: absolute;
@@ -55,7 +73,7 @@ function ProfileModal({
           width: calc(100vw);
           height: calc(100vh - 8rem);
           top: 4rem;
-          right: -1rem;
+          right: calc(-1rem + 3px);
         }
       `}
     >
@@ -169,6 +187,7 @@ function ProfileModal({
           css={css`
             display: flex;
             height: 10%;
+            min-height: 1.5rem;
             padding: 0.5rem;
             align-items: center;
             border-bottom: 1px solid #999999;
@@ -178,7 +197,7 @@ function ProfileModal({
             css={css`
               display: inline-block;
               width: 10%;
-              height: 100%;
+              height: 90%;
               margin-right: 5%;
               text-align: center;
             `}
@@ -220,7 +239,7 @@ function ProfileModal({
             css={css`
               display: inline-block;
               width: 25%;
-              padding: 0.5rem 0;
+              padding: 0.3rem 0;
               border: 1px solid #0a6ff2;
               border-radius: 0.2rem;
               background-color: #0a6ff2;
@@ -260,13 +279,34 @@ function ProfileModal({
           `}
         >
           {alarm.map((al, idx) => {
-            return (
-              <Alarm
-                key={idx}
-                alarm={al}
-                handleDeleteAlarm={handleDeleteAlarm}
-              />
-            );
+            if (al.alarmType === 'STUDY_NOT_OPEN') {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={false}
+                />
+              );
+            } else if (al.alarmType === 'STUDY_OPEN') {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={true}
+                />
+              );
+            } else {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={true}
+                />
+              );
+            }
           })}
         </ul>
       </div>
