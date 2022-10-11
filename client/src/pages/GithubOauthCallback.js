@@ -125,7 +125,10 @@ function GithubOauthCallback() {
             : `/main/${res.data.data.memberId}`
         );
       })
-      .catch((err) => console.log(err));
+      .catch(() =>
+        alert('회원가입을 하신 후, 마이페이지에서 깃헙 연동 후 사용가능합니다.')
+      )
+      .then(() => navigate('/login'));
   }, [location.search]);
 
   return (

@@ -81,7 +81,7 @@ function ChangePasswordModal({ onClose }) {
           `}
         >
           <ModifyUserButton type="submit" buttonText="변경완료" />
-          <ModifyUserButton onClose={onClose} type="button" buttonText="취소" />
+          <ModifyUserButton onClick={onClose} type="button" buttonText="취소" />
         </div>
       </form>
     </Modal>
