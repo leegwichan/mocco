@@ -82,15 +82,16 @@ export default StudyBoard;
 
 const totalContainer = css`
   width: 100vw;
-  padding-top: 100px;
+  min-height: calc(100vh - 4rem);
+  padding-top: 8rem;
   @media all and (max-width: 767px) {
-    padding-top: 68px;
+    padding-top: 4rem;
     background-color: #f0f8ff;
   }
 `;
 
 const contentContainer = css`
-  max-width: 1260px;
+  max-width: calc(1200px + 4rem);
   padding: 0px 2rem;
   margin: 0 auto;
 `;

@@ -108,8 +108,8 @@ function SignUp() {
   return (
     <div
       css={css`
-        margin-top: 64px;
-        height: 100%;
+        padding-top: 4rem;
+        height: calc(100vh - 4rem);
         display: flex;
         justify-content: center;
         align-items: center;
