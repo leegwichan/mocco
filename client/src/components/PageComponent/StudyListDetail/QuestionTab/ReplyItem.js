@@ -40,8 +40,8 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         setIsEditOpen(false);
         setIsValid(true);
         getCommentInfof();
-      })
-      .catch((err) => console.log(err));
+      });
+    // .catch((err) => console.log(err));
   };
 
   return (

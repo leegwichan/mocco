@@ -34,16 +34,14 @@ const InputComment = ({ getCommentInfof }) => {
     if (userInfo === null) {
       navigate('/login', { state: { from: `/studylist/detail/${id}` } });
     } else {
-      return request
-        .post('/api/comments', commentInfo)
-        .then(() => {
-          setIsValid(true);
-          setValue('');
-          getCommentInfof();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      return request.post('/api/comments', commentInfo).then(() => {
+        setIsValid(true);
+        setValue('');
+        getCommentInfof();
+      });
+      // .catch((err) => {
+      // console.log(err);
+      // });
     }
   };
 
