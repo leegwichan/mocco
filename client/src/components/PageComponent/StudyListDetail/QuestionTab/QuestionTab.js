@@ -12,12 +12,11 @@ function QuestionTab() {
   const [comments, setComments] = useState([]);
 
   const getCommentInfo = useCallback(() => {
-    return request(`/api/comments/list?study-id=${id}`)
-      .then((res) => {
-        // console.log('나는 댓글만 데이터', res.data.data);
-        setComments(res.data.data);
-      })
-      .catch((err) => console.log(err));
+    return request(`/api/comments/list?study-id=${id}`).then((res) => {
+      // console.log('나는 댓글만 데이터', res.data.data);
+      setComments(res.data.data);
+    });
+    // .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {

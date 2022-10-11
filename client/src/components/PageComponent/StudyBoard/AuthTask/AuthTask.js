@@ -142,17 +142,22 @@ const uploadButton = css`
 
   @media all and (max-width: 1023px) {
     margin-left: 50px;
-    bottom: 44%;
+    bottom: 46%;
   }
 
-  @media all and (max-width: 900px) {
+  @media all and (max-width: 915px) {
     margin-left: 45px;
     bottom: 41%;
   }
 
-  @media all and (max-width: 800px) {
+  @media all and (max-width: 900px) {
+    margin-left: 45px;
+    bottom: 44%;
+  }
+
+  @media all and (max-width: 798px) {
     margin-left: 40px;
-    bottom: 38%;
+    bottom: 42%;
   }
 
   @media all and (max-width: 743px) {

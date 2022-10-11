@@ -67,6 +67,7 @@ public class SecurityConfig {
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
         return http.build();
     }
 

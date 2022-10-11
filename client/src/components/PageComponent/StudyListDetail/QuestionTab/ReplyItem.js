@@ -12,12 +12,13 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
   const studyInfo = useRecoilValue(singleStudyState);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const navigate = useNavigate();
-  const { value, setIsValid, handleChange, handleClick } = useInputValid({
-    initialvalues: reply.content,
-    onClick: () => {
-      editHandler();
-    },
-  });
+  const { value, setIsValid, handleChange, handleClick, handlePress } =
+    useInputValid({
+      initialvalues: reply.content,
+      onClick: () => {
+        editHandler();
+      },
+    });
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -39,8 +40,8 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         setIsEditOpen(false);
         setIsValid(true);
         getCommentInfof();
-      })
-      .catch((err) => console.log(err));
+      });
+    // .catch((err) => console.log(err));
   };
 
   return (
@@ -51,11 +52,6 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         height="50"
         fill="#0b6ff2"
         viewBox="0 0 16 16"
-        className={
-          member && member.memberId === studyInfo.member.memberId
-            ? 'small'
-            : null
-        }
       >
         <path
           fillRule="evenodd"
@@ -63,13 +59,7 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         />
       </svg>
       <section css={container}>
-        <div
-          className={
-            member && member.memberId === studyInfo.member.memberId
-              ? 'small_box'
-              : 'reply_box'
-          }
-        >
+        <div className="reply_box">
           <div
             css={profile}
             role="presentation"
@@ -88,6 +78,8 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
           <div
             css={css`
               margin-top: 16px;
+              white-space: pre-wrap;
+              word-wrap: break-word;
             `}
           >
             {reply.content}
@@ -115,7 +107,12 @@ function ReplyItem({ reply, getCommentInfof, member, createdAt, modifiedAt }) {
         </div>
         {isEditOpen && (
           <div css={editContainer}>
-            <textarea css={editInput} value={value} onChange={handleChange} />
+            <textarea
+              css={editInput}
+              value={value}
+              onChange={handleChange}
+              onKeyPress={handlePress}
+            />
             <div className="btn">
               <Button
                 type={'small_white'}
@@ -142,19 +139,23 @@ const main = css`
   justify-content: space-between;
   width: 100%;
 
-  .small {
-    width: 65px;
-    height: 51px;
-    margin-left: 15px;
-  }
-
   svg {
-    margin-left: 20px;
+    margin-left: -15px;
     margin-top: 10px;
+    flex: 1 0;
+
+    @media all and (max-width: 1500px) {
+      margin-left: -14px;
+    }
+
+    @media all and (max-width: 1000px) {
+      margin-left: -11px;
+    }
 
     @media all and (max-width: 768px) {
       width: 40px;
       height: 40px;
+      margin-left: 0px;
     }
   }
 `;
@@ -164,7 +165,7 @@ const container = css`
   flex-direction: column;
   align-items: flex-end;
   word-break: break-all;
-  flex-grow: 1;
+  flex: 9 0;
 
   .reply_box {
     width: 99%;
@@ -182,69 +183,93 @@ const container = css`
       }
     }
 
-    .studyLeader {
-      /* border: 1px solid red; */
-    }
-
     @media all and (max-width: 768px) {
-      font-size: 15px;
+      font-size: 14px;
       width: 96%;
       padding: 10px 20px;
     }
-  }
 
-  .small_box {
-    width: 98.7%;
-    margin-bottom: 30px;
-    border-radius: 15px;
-    box-shadow: 0px 0px 7px 3px rgb(0 0 0 / 10%);
-    padding: 20px;
-    font-size: 20px;
+    @media all and (max-width: 768px) {
+      font-size: 13px;
+      width: 96%;
+      padding: 10px 20px;
+    }
 
-    .main_link {
-      color: black;
-      &:hover {
-        cursor: pointer;
-        color: #066ff2;
+    .studyLeader {
+      @media all and (max-width: 420px) {
+        button {
+          font-size: 12px;
+        }
       }
     }
 
-    .studyLeader {
-      /* border: 1px solid red; */
-    }
+    .button_container {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
 
-    @media all and (max-width: 768px) {
-      font-size: 15px;
-      width: 96%;
-      padding: 10px 20px;
-    }
-  }
+      @media all and (max-width: 768px) {
+        button {
+          font-size: 15px;
+          height: 35px;
+          width: 48px;
+          margin-left: 7px;
+          padding-top: 4px;
+        }
+      }
 
-  .button_container {
-    margin-top: 16px;
-    display: flex;
-    justify-content: flex-end;
+      @media all and (max-width: 420px) {
+        button {
+          font-size: 11px;
+          height: 32px;
+          width: 38px;
+          margin-left: 7px;
+          padding-top: 0px;
+        }
+      }
 
-    @media all and (max-width: 768px) {
-      button {
+      .day {
+        margin-top: 13px;
+        margin-right: 10px;
         font-size: 15px;
-        height: 35px;
-        width: 48px;
-        margin-left: 7px;
+        color: #999999;
+
+        @media all and (max-width: 768px) {
+          margin-top: 13px;
+          font-size: 12px;
+        }
+
+        @media all and (max-width: 420px) {
+          margin-top: 0px;
+          font-size: 10px;
+        }
       }
     }
   }
+`;
 
-  .day {
-    margin-top: 13px;
-    margin-right: 10px;
-    font-size: 15px;
-    color: #999999;
+const profile = css`
+  display: flex;
+  align-items: center;
 
-    @media all and (max-width: 768px) {
-      font-size: 12px;
+  .main_link {
+    color: black;
+    margin: 12px;
+    &:hover {
+      cursor: pointer;
+      color: #066ff2;
+    }
+
+    @media all and (max-width: 420px) {
+      margin: 12px 5px;
     }
   }
+`;
+
+const image = css`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 `;
 
 const edited = css`
@@ -275,6 +300,17 @@ const editContainer = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 11px;
+        height: 32px;
+        width: 38px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }
@@ -290,24 +326,4 @@ const editInput = css`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const profile = css`
-  display: flex;
-  align-items: center;
-
-  .main_link {
-    color: black;
-    margin: 12px;
-    &:hover {
-      cursor: pointer;
-      color: #066ff2;
-    }
-  }
-`;
-
-const image = css`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
 `;

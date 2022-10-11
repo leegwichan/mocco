@@ -215,7 +215,7 @@ function MakeStudy() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoState); // eslint-disable-line no-unused-vars
   // studyboard post를 위한 state
   const [studyBoardForm, setStudyBoardForm] = useState({
-    memberId: userInfo.memberId,
+    memberId: userInfo?.memberId,
     teamName: null,
     capacity: null,
     image: null,
@@ -304,8 +304,7 @@ function MakeStudy() {
     }
     request
       .post('/api/study-board', studyBoardForm)
-      .then((res) => navigate(`/studylist/detail/${res.data.data.studyId}`))
-      .catch((err) => console.log(err));
+      .then((res) => navigate(`/studylist/detail/${res.data.data.studyId}`));
   };
 
   // 취소 버튼 클릭 시 이전 페이지로 이동
@@ -340,14 +339,8 @@ function MakeStudy() {
       )
       .then((res) => {
         imageRef.current.src = res.data.data;
-        console.log(res.data.data);
         setStudyBoardForm({ ...studyBoardForm, image: res.data.data });
-      })
-      .then(() => {
-        console.log('이미지 업로드 성공');
-        console.log(studyBoardForm);
-      })
-      .catch((err) => console.log(err));
+      });
   };
 
   // 이미지 업로드 버튼 클릭 시 input 대신 클릭되게 설정

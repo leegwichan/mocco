@@ -37,6 +37,16 @@ function StudyMember() {
             }
           >
             {studyInfo.member.nickname}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="#0b6ff2"
+              className="crown"
+            >
+              <path d="M5 19h14v3h-14v-3zm17-12c-1.326 0-2.294 1.272-1.924 2.54.611 2.091-6.357 4.068-7.386-1.604-.262-1.444.021-1.823.728-2.532.359-.36.582-.855.582-1.404 0-1.104-.896-2-2-2s-2 .896-2 2c0 .549.223 1.045.582 1.403.706.71.989 1.089.728 2.532-1.029 5.675-7.996 3.694-7.386 1.604.37-1.267-.598-2.539-1.924-2.539-1.104 0-2 .896-2 2 0 1.22 1.082 2.149 2.273 1.98 1.635-.23 2.727 4.372 2.727 6.02h14c0-1.65 1.092-6.25 2.727-6.019 1.191.168 2.273-.761 2.273-1.981 0-1.104-.896-2-2-2z" />
+            </svg>
           </span>
           {isOpen ? (
             <svg
@@ -86,7 +96,21 @@ function StudyMember() {
                 }
               >
                 <img src={user.profileImage} alt="p" css={image} />
-                {user.nickname}
+                <span>
+                  {user.nickname}
+                  {user.memberId === studyInfo?.member.memberId && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="#0b6ff2"
+                      className="crown"
+                    >
+                      <path d="M5 19h14v3h-14v-3zm17-12c-1.326 0-2.294 1.272-1.924 2.54.611 2.091-6.357 4.068-7.386-1.604-.262-1.444.021-1.823.728-2.532.359-.36.582-.855.582-1.404 0-1.104-.896-2-2-2s-2 .896-2 2c0 .549.223 1.045.582 1.403.706.71.989 1.089.728 2.532-1.029 5.675-7.996 3.694-7.386 1.604.37-1.267-.598-2.539-1.924-2.539-1.104 0-2 .896-2 2 0 1.22 1.082 2.149 2.273 1.98 1.635-.23 2.727 4.372 2.727 6.02h14c0-1.65 1.092-6.25 2.727-6.019 1.191.168 2.273-.761 2.273-1.981 0-1.104-.896-2-2-2z" />
+                    </svg>
+                  )}
+                </span>
               </li>
             );
           })}
@@ -109,10 +133,25 @@ const container = css`
     cursor: pointer;
   }
 
+  .crown {
+    margin-left: 7px;
+
+    @media all and (max-width: 767px) {
+      width: 12px;
+      height: 12px;
+      margin-bottom: -1px;
+    }
+  }
+
   @media all and (max-width: 767px) {
     height: 47px;
     margin-top: 10px;
     width: 200px;
+  }
+
+  @media all and (max-width: 420px) {
+    margin-top: 10px;
+    width: 175px;
   }
 `;
 
@@ -145,6 +184,15 @@ const selected = css`
       font-weight: 500;
     }
   }
+
+  @media all and (max-width: 420px) {
+    padding: 2px 8px;
+
+    .main_link {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+  }
 `;
 
 const image = css`
@@ -152,6 +200,11 @@ const image = css`
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
+
+  @media all and (max-width: 420px) {
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 const memberList = css`
@@ -174,6 +227,12 @@ const memberList = css`
 
   @media all and (max-width: 768px) {
     margin-left: -2px;
+    width: 200px;
+  }
+
+  @media all and (max-width: 420px) {
+    margin-left: -2px;
+    width: 175px;
   }
 `;
 
@@ -196,5 +255,11 @@ const member = css`
     font-size: 16px;
     font-weight: 500;
     height: 47px;
+  }
+
+  @media all and (max-width: 420px) {
+    font-size: 0.85rem;
+    font-weight: 500;
+    height: 43px;
   }
 `;

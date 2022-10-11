@@ -21,13 +21,9 @@ function ProgressBar({
 
   useEffect(() => {
     setIsSame(false);
-    // console.log('캐릭터 ' + characterMemberId);
-    // console.log('선택된 유저 캐 ' + selectedId);
     if (characterMemberId === selectedId) {
       setIsSame(true);
     }
-    // console.log('나는 셀렉트야', selectedId);
-    // console.log(endTask);
     bar.current.style.width = (endTask / totalTask) * 100 + '%';
   }, [selectedId, endTask]);
 

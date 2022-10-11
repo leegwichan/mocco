@@ -73,9 +73,15 @@ function ProgressList() {
       owner.memberId === user.memberId
     ) {
       getEvaluateInfo(studyData);
-      setIsOpen(true);
+      setIsOpen(true); //평가
     } else if (studyData.studyStatus === 'STUDY_PROGRESS') {
-      navigate(`/studyboard/${studyData.studyId}/${owner.memberId}`);
+      if (studyData.membersId.indexOf(user.memberId) !== -1) {
+        navigate(`/studyboard/${studyData.studyId}/${owner.memberId}`);
+      }
+      //유저가 스터디 멤버인지 확인
+      // 맞으면 네비게이트
+      //아니면 그냥 통과
+      //진행중.
     }
   };
 
@@ -126,7 +132,7 @@ function ProgressList() {
       ) : studyArr && studyArr.length < 5 ? (
         <ShortListSection
           studyArr={studyArr}
-          progress={'propgress'}
+          progress={'progress'}
           clickFunc={clickHandlerFnc}
         />
       ) : (
@@ -134,6 +140,7 @@ function ProgressList() {
           studyArr={studyArr}
           progress={'propgress'}
           clickHandler={clickHandlerFnc}
+          memberId={user?.memberId}
         />
       )}
     </div>
