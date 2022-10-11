@@ -35,8 +35,8 @@ function NotFound() {
         `}
       >
         <img src={notFoundImage} alt="404 not found" />
-        <div>존재하지 페이지 입니다.</div>
-        <div>{count}초 뒤 이전 화면으로 돌아갑니다.</div>
+        <p>접근할 수 없는 페이지 입니다.</p>
+        <p>{count}초 뒤 이전 화면으로 돌아갑니다.</p>
       </div>
     </div>
   );
