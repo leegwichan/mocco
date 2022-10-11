@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { userInfoState, preventAuthenticatedState } from './atom/atom';
-import PrivateRoute from './components/Common/authentication/PrivateRoute';
+import PrivateRoute from './components/Common/Authentication/PrivateRoute';
 
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
