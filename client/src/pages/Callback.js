@@ -121,7 +121,7 @@ function Callback() {
 
       <div>
         <div className="txtWithCharac">
-          <div className="txt">깃헙 연동중...</div>
+          <div className="txt">깃허브 연동중...</div>
           <img className="human" src={달리는사람} alt="달리는사람"></img>
         </div>
         <div className="progressContainer">
