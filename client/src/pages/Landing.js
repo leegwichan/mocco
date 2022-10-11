@@ -449,7 +449,7 @@ function Landing() {
             <div className="secondCard">
               <DummyCard
                 hashTag={'#백엔드 #Spring'}
-                summary={'함께 SPRING 공부할 사람 모집 합니다・・・'}
+                summary={'함께 SPRING 공부할 사람 모집・・・'}
                 src={스터디사진2}
                 teamName={'백투더스터디'}
                 capacity={'5'}
