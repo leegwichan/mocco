@@ -46,10 +46,11 @@ const MainContainer = css`
 
   .imgContainer {
     display: flex;
+    flex: 1 0;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 10px -5px 0px 9vw;
+    /* margin: 10px -5px 0px 9vw; */
   }
 `;
 
@@ -60,6 +61,7 @@ const first = css`
   }
   .progress {
     display: flex;
+    flex: 1 0;
     flex-direction: column;
     justify-content: center;
     padding-bottom: 4vw;
@@ -544,8 +546,7 @@ function Landing() {
         </div>
       </section>
       {/* 비로그인 시 스터디 참여하기 버튼 */}
-      {/* {!userInfo && console.log('비로그인')}
-      {!userInfo && console.log(userInfo)} */}
+
       {!userInfo && (
         <button
           onClick={handleEnterStudyClick}

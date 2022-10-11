@@ -53,7 +53,7 @@ const container = css`
   background-color: #d1d1d1;
   box-sizing: border-box;
   flex: 0 0 auto;
-  margin-top: 50px;
+  margin-top: 4rem;
 `;
 
 const wrapper = css`

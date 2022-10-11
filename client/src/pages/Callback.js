@@ -11,7 +11,8 @@ const Loading = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1000px;
+  padding-top: 4rem;
+  height: calc(100vh - 4rem);
 
   @media all and (max-width: 767px) {
     align-items: center;
