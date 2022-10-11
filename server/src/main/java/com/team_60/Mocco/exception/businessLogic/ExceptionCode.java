@@ -59,6 +59,7 @@ public enum ExceptionCode {
     BAD_TOKEN_REQUEST(403,"잘못된 Token 요청입니다."),
     BAD_REQUEST_TOKEN(403,"JWT 토큰이 잘못되었습니다."),
     NOT_SAME_USER(400,"잘못된 유저 접근입니다."),
+    NOT_CORRECT_PASSWORD(401, "잘못된 비밀번호 입니다."),
     NOT_PASSWORD_MATCHED(400, "기존 비밀번호가 틀렸습니다."),
     NOT_CORRECT_ARGUMENT(400, "올바르지 않은 형식의 요청입니다."),
 
