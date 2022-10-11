@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoState, preventAuthenticatedState } from './atom/atom';
 import PrivateRoute from './components/Common/Authentication/PrivateRoute';
+
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -20,6 +21,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import GithubOauthCallback from './pages/GithubOauthCallback';
 import { css } from '@emotion/react';
 import Footer from './components/Common/Footer';
+import NotFound from './pages/NotFound';
 
 function App() {
   const authenticated = useRecoilValue(userInfoState);
@@ -74,7 +76,7 @@ function App() {
           path="/oauth/github/callback"
           element={<GithubOauthCallback />}
         />
-        <Route path="*" element={<Landing />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </div>
