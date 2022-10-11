@@ -260,13 +260,34 @@ function ProfileModal({
           `}
         >
           {alarm.map((al, idx) => {
-            return (
-              <Alarm
-                key={idx}
-                alarm={al}
-                handleDeleteAlarm={handleDeleteAlarm}
-              />
-            );
+            if (al.alarmType === 'STUDY_NOT_OPEN') {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={false}
+                />
+              );
+            } else if (al.alarmType === 'STUDY_OPEN') {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={true}
+                />
+              );
+            } else {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={true}
+                />
+              );
+            }
           })}
         </ul>
       </div>
