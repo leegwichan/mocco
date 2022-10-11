@@ -261,6 +261,8 @@ function Header() {
                       userInfo={userInfo}
                       handleLogoutClick={handleLogoutClick}
                       handleModifyClick={handleModifyClick}
+                      isProfileModalOpen={isProfileModalOpen}
+                      setIsProfileModalOpen={setIsProfileModalOpen}
                       alarm={alarm}
                       setAlarm={setAlarm}
                     />
