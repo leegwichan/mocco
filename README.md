@@ -6,6 +6,8 @@
   <br>
 </p>
 
+<br>
+
 ## 프로젝트 개요
 
 <br>
@@ -189,6 +191,13 @@
 ## [접속 링크](https://mocco.kr)
 
 - 22.10.12 ~ 23.04.12 동안 배포 유지 예정
+  - 스터디 확인용 계정
+    - ID : MoccoWorld@gmail.com
+    - PW : mocco1234!
+    - 스터디 진행 화면 확인용 계정입니다. 임의로 데이터를 변경하시면 저희가 많이 힘듦니다. 눈으로만 봐주세요~
+<br>
+
+## 👀 [WIKI 보러가기](https://github.com/codestates-seb/seb39_main_060/wiki)
 
 <br>
 
