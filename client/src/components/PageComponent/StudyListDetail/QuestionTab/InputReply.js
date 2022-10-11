@@ -5,12 +5,13 @@ import { useInputValid } from '../hooks/useInputValid';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
-  const { value, setIsValid, handleChange, handleClick } = useInputValid({
-    initialvalues: '',
-    onClick: () => {
-      replyHandler();
-    },
-  });
+  const { value, setIsValid, handleChange, handleClick, handlePress } =
+    useInputValid({
+      initialvalues: '',
+      onClick: () => {
+        replyHandler();
+      },
+    });
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -55,6 +56,7 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
           value={value}
           onChange={handleChange}
           placeholder="답글을 입력하세요"
+          onKeyPress={handlePress}
         />
         <div className="button_container">
           <Button type={'small_blue'} text={'등록'} onClick={handleClick} />
@@ -77,12 +79,22 @@ const container = css`
   width: 100%;
 
   svg {
-    margin-left: 20px;
-    margin-top: -10px;
+    margin-left: -15px;
+    margin-top: -8px;
+    flex: 1 0;
+
+    @media all and (max-width: 1500px) {
+      margin-left: -14px;
+    }
+
+    @media all and (max-width: 1000px) {
+      margin-left: -11px;
+    }
 
     @media all and (max-width: 768px) {
       width: 40px;
       height: 40px;
+      margin-left: 0px;
     }
   }
 `;
@@ -92,14 +104,14 @@ const replyInput = css`
   flex-direction: column;
   align-items: flex-end;
   margin-bottom: 30px;
-  flex-grow: 1;
+  flex: 9 0;
 
   textarea {
     width: 99%;
     height: 40px;
     border-radius: 5px;
     border: 1px solid #d1d1d1;
-    padding: 10px;
+    padding: 9px;
     resize: none;
     outline: none;
 
@@ -124,6 +136,17 @@ const replyInput = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 11px;
+        height: 32px;
+        width: 38px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }

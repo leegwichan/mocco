@@ -24,7 +24,7 @@ function ProposalSection({ proposal, getProposalInfof }) {
           if (studyInfo.capacity === res.data.data.studyMemberList.length) {
             request
               .patch(`/api/study-board/${studyInfo.studyId}/finish-recruit`)
-              .then(() => alert('스터디 모집이 마감되었습니다'))
+              .then(() => alert('스터디 모집 인원이 충원되었습니다.'))
               .then(() => navigate(`/studylist`))
               .catch((err) => console.log(err));
           }
@@ -74,6 +74,8 @@ function ProposalSection({ proposal, getProposalInfof }) {
       <div
         css={css`
           margin-top: 16px;
+          white-space: pre-wrap;
+          word-wrap: break-word;
         `}
       >
         {proposal.content}
@@ -133,6 +135,17 @@ const container = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 11px;
+        height: 32px;
+        width: 38px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }
@@ -145,6 +158,10 @@ const container = css`
 
     @media all and (max-width: 768px) {
       font-size: 12px;
+    }
+
+    @media all and (max-width: 420px) {
+      font-size: 10px;
     }
   }
 

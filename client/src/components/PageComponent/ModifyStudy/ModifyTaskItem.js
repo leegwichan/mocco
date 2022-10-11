@@ -79,14 +79,15 @@ const task_title = css`
   span {
     color: #0b7ff2;
     font-size: 40px;
+
+    @media all and (max-width: 768px) {
+      font-size: 1.5rem;
+      line-height: 200%;
+    }
   }
 
   @media all and (max-width: 768px) {
     margin-top: -3px;
-
-    span {
-      font-size: 30px;
-    }
   }
 `;
 
@@ -103,6 +104,10 @@ const task_input = css`
     font-size: 1.2rem;
     border: 1px solid #999999;
     border-radius: 5px;
+
+    @media all and (max-width: 768px) {
+      font-size: 1rem;
+    }
   }
 
   input:nth-of-type(2) {
@@ -113,5 +118,9 @@ const task_input = css`
     font-size: 1.2rem;
     border: 1px solid #999999;
     border-radius: 5px;
+
+    @media all and (max-width: 768px) {
+      font-size: 1rem;
+    }
   }
 `;

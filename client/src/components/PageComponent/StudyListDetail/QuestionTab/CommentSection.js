@@ -21,12 +21,13 @@ const CommentSection = ({
   const userInfo = useRecoilValue(userInfoState);
   const studyInfo = useRecoilValue(singleStudyState);
   const navigate = useNavigate();
-  const { value, setIsValid, handleChange, handleClick } = useInputValid({
-    initialvalues: content,
-    onClick: () => {
-      editHandler();
-    },
-  });
+  const { value, setIsValid, handleChange, handleClick, handlePress } =
+    useInputValid({
+      initialvalues: content,
+      onClick: () => {
+        editHandler();
+      },
+    });
   // console.log(userInfo);
 
   const deleteHandler = (e) => {
@@ -65,17 +66,19 @@ const CommentSection = ({
             }
           >
             <img src={member.profileImage} alt="프로필 이미지" css={image} />
-            <span className="main_link">{member && member.nickname}</span>
-            {member && member.memberId === studyInfo.member.memberId ? (
-              <span>
+            <span className="main_link">{member && member?.nickname}</span>
+            {member?.memberId &&
+            member?.memberId === studyInfo.member?.memberId ? (
+              <span className="studyLeader">
                 <Button type="small_lightblue" text="스터디장" />
               </span>
             ) : null}
           </div>
-
           <div
             css={css`
               margin-top: 16px;
+              white-space: pre-wrap;
+              word-wrap: break-word;
             `}
           >
             {content}
@@ -108,7 +111,12 @@ const CommentSection = ({
         </section>
         {isEditOpen && (
           <section css={editContainer}>
-            <textarea css={editInput} value={value} onChange={handleChange} />
+            <textarea
+              css={editInput}
+              value={value}
+              onChange={handleChange}
+              onKeyPress={handlePress}
+            />
             <div className="btn">
               <Button
                 type={'small_white'}
@@ -158,6 +166,17 @@ const container = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 11px;
+        height: 32px;
+        width: 38px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }
@@ -169,7 +188,13 @@ const container = css`
     margin-right: 10px;
 
     @media all and (max-width: 768px) {
+      margin-top: 13px;
       font-size: 12px;
+    }
+
+    @media all and (max-width: 420px) {
+      margin-top: 0px;
+      font-size: 10px;
     }
   }
 
@@ -182,8 +207,16 @@ const container = css`
   }
 
   @media all and (max-width: 768px) {
-    font-size: 15px;
+    font-size: 14px;
     padding: 10px 20px;
+  }
+
+  .studyLeader {
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 14px;
+      }
+    }
   }
 `;
 
@@ -211,6 +244,17 @@ const editContainer = css`
         height: 35px;
         width: 48px;
         margin-left: 7px;
+        padding-top: 4px;
+      }
+    }
+
+    @media all and (max-width: 420px) {
+      button {
+        font-size: 11px;
+        height: 32px;
+        width: 38px;
+        margin-left: 7px;
+        padding-top: 0px;
       }
     }
   }
