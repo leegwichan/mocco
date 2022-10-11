@@ -25,8 +25,8 @@ function ProposalSection({ proposal, getProposalInfof }) {
             request
               .patch(`/api/study-board/${studyInfo.studyId}/finish-recruit`)
               .then(() => alert('스터디 모집 인원이 충원되었습니다.'))
-              .then(() => navigate(`/studylist`))
-              .catch((err) => console.log(err));
+              .then(() => navigate(`/studylist`));
+            // .catch((err) => console.log(err));
           }
         });
       })

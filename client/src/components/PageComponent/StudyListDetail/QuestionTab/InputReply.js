@@ -25,14 +25,12 @@ function InputReply({ setIsReplyOpen, commentId, userInfo, getCommentInfof }) {
     if (userInfo === null) {
       navigate('/login', { state: { from: `/studylist/detail/${id}` } });
     } else {
-      return request
-        .post(`/api/replies`, replyInfo)
-        .then(() => {
-          setIsReplyOpen(false);
-          setIsValid(true);
-          getCommentInfof();
-        })
-        .catch((err) => console.log(err));
+      return request.post(`/api/replies`, replyInfo).then(() => {
+        setIsReplyOpen(false);
+        setIsValid(true);
+        getCommentInfof();
+      });
+      // .catch((err) => console.log(err));
     }
   };
 
