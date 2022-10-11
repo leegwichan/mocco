@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -52,8 +53,9 @@ public class SecurityService {
             throw new BusinessLogicException(USERNAME_NOT_FOUND);
         }
         UsernamePasswordAuthenticationToken authenticationToken = login.toAuthentication();
-        // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        try {
+            // 2. 실제 검증 (사용자 비밀번호 체크)이 이루어지는 부분
+            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         Map<String, Object> tokenInfo = jwtTokenProvider.generateToken(authentication,response);
         redisTemplate.opsForValue()
                 .set("RefreshToken:"+authentication.getName(),tokenInfo.get(REFRESH_TOKEN_HEADER), REFRESH_TOKEN_EXP, TimeUnit.MILLISECONDS);
@@ -61,6 +63,9 @@ public class SecurityService {
         MemberDto.Response responseDto = mapper.memberToMemberResponseDto(member);
 
         return new ResponseEntity(new SingleResponseDto<>(responseDto), HttpStatus.OK);
+        } catch (BadCredentialsException e){
+            throw new BusinessLogicException(ExceptionCode.NOT_CORRECT_PASSWORD);
+        }
     }
     public ResponseEntity logout(HttpServletRequest request){
         if(request.getHeader(ACCESS_TOKEN_HEADER) == null || request.getHeader(ACCESS_TOKEN_HEADER).length()<8){
