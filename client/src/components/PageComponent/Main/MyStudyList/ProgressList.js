@@ -73,15 +73,11 @@ function ProgressList() {
       owner.memberId === user.memberId
     ) {
       getEvaluateInfo(studyData);
-      setIsOpen(true); //평가
+      setIsOpen(true);
     } else if (studyData.studyStatus === 'STUDY_PROGRESS') {
       if (studyData.membersId.indexOf(user.memberId) !== -1) {
         navigate(`/studyboard/${studyData.studyId}/${owner.memberId}`);
       }
-      //유저가 스터디 멤버인지 확인
-      // 맞으면 네비게이트
-      //아니면 그냥 통과
-      //진행중.
     }
   };
 
