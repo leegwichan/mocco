@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { useEffect, useRef } from 'react';
 import request from '../../../api/index';
 import Button from '../Button';
 import Alarm from './Alarm';
@@ -7,14 +8,30 @@ function ProfileModal({
   userInfo,
   handleLogoutClick,
   handleModifyClick,
+  isProfileModalOpen,
+  setIsProfileModalOpen,
   alarm,
   setAlarm,
 }) {
+  // 프로필 모달 바깥 클릭시 프로필 닫기
+  const modalRef = useRef(null);
+
+  const handleModalClose = (e) => {
+    if (isProfileModalOpen && !modalRef.current.contains(e.target)) {
+      setIsProfileModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousedown', handleModalClose);
+    return () => {
+      window.removeEventListener('mousedown', handleModalClose);
+    };
+  }, []);
+
   // 삭제 버튼 클릭 핸들러
   const handleDeleteAll = () => {
-    request
-      .delete(`/api/alarm?member-id=${userInfo.memberId}`)
-      .catch((err) => console.log(err));
+    request.delete(`/api/alarm?member-id=${userInfo.memberId}`);
     setAlarm([]);
   };
 
@@ -28,6 +45,7 @@ function ProfileModal({
   };
   return (
     <div
+      ref={modalRef}
       css={css`
         display: flex;
         position: absolute;
@@ -260,13 +278,34 @@ function ProfileModal({
           `}
         >
           {alarm.map((al, idx) => {
-            return (
-              <Alarm
-                key={idx}
-                alarm={al}
-                handleDeleteAlarm={handleDeleteAlarm}
-              />
-            );
+            if (al.alarmType === 'STUDY_NOT_OPEN') {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={false}
+                />
+              );
+            } else if (al.alarmType === 'STUDY_OPEN') {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={true}
+                />
+              );
+            } else {
+              return (
+                <Alarm
+                  key={idx}
+                  alarm={al}
+                  handleDeleteAlarm={handleDeleteAlarm}
+                  isLink={true}
+                />
+              );
+            }
           })}
         </ul>
       </div>

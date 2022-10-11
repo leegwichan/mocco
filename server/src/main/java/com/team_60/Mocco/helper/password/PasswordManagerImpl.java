@@ -3,6 +3,7 @@ package com.team_60.Mocco.helper.password;
 import com.team_60.Mocco.exception.businessLogic.BusinessLogicException;
 import com.team_60.Mocco.exception.businessLogic.ExceptionCode;
 import com.team_60.Mocco.helper.mail.sender.EmailSendable;
+import com.team_60.Mocco.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -18,14 +19,13 @@ public class PasswordManagerImpl implements NewPasswordManager {
     private final EmailSendable emailSend;
 
     @Override
-    public String makeNewPasswordAndSendTextEmail(String email) {
+    public String makeNewPasswordAndSendEmail(String email, Member member) {
 
         String newPassword = makeNewPassword();
 
         try {
-            emailSend.send(new String[]{email}, "Mocco 비밀번호가 변경되었습니다.",
-                    "비밀번호가 " + newPassword + "로 변경되었습니다.\n웹 페이지로 돌아가 비밀번호를 변경해주세요.");
-        } catch (InterruptedException e){
+            emailSend.sendTemplateEmailByChangingPassword(member, "Mocco 비밀번호가 변경되었습니다.", newPassword);
+        } catch (Exception e){
             throw new BusinessLogicException(ExceptionCode.FAIL_SEND_EMAIL);
         }
 
