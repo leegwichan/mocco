@@ -65,10 +65,9 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET).authenticated()
-                .antMatchers("/api/alarm/unsubscribe").authenticated()
-                .antMatchers(HttpMethod.POST).hasRole("USER")
-                .antMatchers(HttpMethod.PATCH).hasRole("USER")
-                .antMatchers(HttpMethod.DELETE).hasRole("USER");
+                .antMatchers("/api/alarm/unsubscribe").permitAll()
+                .anyRequest().access("hasRole('ROLE_USER')");
+
         return http.build();
     }
 
