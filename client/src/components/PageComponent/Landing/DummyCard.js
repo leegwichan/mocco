@@ -56,13 +56,13 @@ const Content = css`
 `;
 
 const Summary = css`
-  font-size: 1rem;
+  font-size: 18px;
   font-weight: 600;
   @media all and (max-width: 1023px) {
-    font-size: 12px;
+    font-size: 15px;
   }
   @media all and (max-width: 767px) {
-    font-size: 2px;
+    font-size: 13px;
   }
 `;
 
@@ -75,9 +75,9 @@ const DivideLine = css`
 const NameAndCapacity = css`
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
+  font-size: 13px;
   @media all and (max-width: 1023px) {
-    font-size: 5px;
+    font-size: 7px;
   }
 `;
 
