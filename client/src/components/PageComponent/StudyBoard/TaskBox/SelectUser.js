@@ -9,9 +9,10 @@ function UserSelect({ memberInfo, select, setSelect, leaderInfo }) {
   };
 
   const selectHandler = (e) => {
+    const { alt } = e.target;
     const { innerText } = e.target;
     const clickedMember = memberInfo.filter(
-      (user) => user.nickname === innerText
+      (user) => user.nickname === innerText || user.nickname === alt
     );
     setSelect({ ...clickedMember }[0]);
     setIsOpen(false);
@@ -86,7 +87,7 @@ function UserSelect({ memberInfo, select, setSelect, leaderInfo }) {
                 role="presentation"
                 css={member}
               >
-                <img src={user.profileImage} alt="p" css={image} />
+                <img src={user.profileImage} alt={user.nickname} css={image} />
                 <span>
                   {user.nickname}
                   {user.memberId === leaderInfo.memberId && (
