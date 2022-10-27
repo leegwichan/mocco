@@ -39,7 +39,7 @@ jobs:
     - name: Print current directory
       run : pwd
     - name: Build with Gradle
-      run : ./gradlew build
+      run : ./gradlew clean build --exclude-task test
 
     # build한 후 프로젝트를 압축합니다.
     - name: Make zip file
