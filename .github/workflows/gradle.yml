@@ -61,7 +61,7 @@ jobs:
     # CodeDeploy에게 배로 명령을 내립니다.
     - name: Code Deploy
       run: >
-        aws deploy create-deployment --application-name be-pair-52
+        aws deploy create-deployment --application-name mocco-deploy
         --deployment-config-name CodeDeployDefault.AllAtOnce
-        --deployment-group-name be-pair-52-group
+        --deployment-group-name mocco-deploy-dev-group
         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=practice-deploy.zip
