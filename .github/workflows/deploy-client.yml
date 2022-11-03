@@ -27,8 +27,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Downgrade 
+      - name: uninstall react-scripts
       - run: npm uninstall react-scripts
+      
+      - name: reinstall react-scripts
       - run: npm install --save react-scripts@4.0.3
       
       - name: Install Dependencies
