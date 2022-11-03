@@ -30,7 +30,7 @@ mkdir -p /home/ubuntu/logs
 
 JAVA_OPTS="-Dserver.tomcat.accesslog.enabled=true"
 JAVA_OPTS="${JAVA_OPTS} -Dserver.tomcat.basedir=/home/ubuntu/logs"
-JAVA_OPTS="${JAVA_OPTS} server.tomcat.accesslog.directory=accesslog"
+JAVA_OPTS="${JAVA_OPTS} -Dserver.tomcat.accesslog.directory=accesslog"
 
 SPRING_LOGS="--spring.config.location=/home/ubuntu/properties/application.yml --logging.file.path=/home/ubuntu/logs --logging.level.org.hibernate.SQL=DEBUG >> /home/ubuntu/logs/deploy.log 2>/home/ubuntu/logs/deploy_err.log"
 sudo nohup java ${JAVA_OPTS} -jar /home/ubuntu/action/Mocco-0.0.1-SNAPSHOT.jar --spring.profiles.active=deploy ${SPRING_LOGS} &
