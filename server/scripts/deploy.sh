@@ -26,7 +26,7 @@ fi
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ubuntu/action/deploy.log
 
-mkdir -p logs
+mkdir -p /home/ubuntu/logs
 
 JAVA_OPTS="-Dserver.tomcat.accesslog.enabled=true"
 JAVA_OPTS="${JAVA_OPTS} -Dserver.tomcat.basedir=/home/ubuntu/logs"
