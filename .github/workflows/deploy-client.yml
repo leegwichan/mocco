@@ -20,10 +20,10 @@ jobs:
     
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2 # 워크플로에서 액세스할 수 있도록 에서 저장소를 체크아웃
+        uses: actions/checkout@v3 # 워크플로에서 액세스할 수 있도록 에서 저장소를 체크아웃
       
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
