@@ -40,7 +40,7 @@ jobs:
         run: npm run build
 
       - name: S3 Deploy
-        run: aws s3 sync ./dist s3://mocco-dev-bucket/ --acl bucket-owner-full-control # s3 이름 mocco-dev-bucket
+        run: aws s3 sync ./build s3://mocco-dev-bucket
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
